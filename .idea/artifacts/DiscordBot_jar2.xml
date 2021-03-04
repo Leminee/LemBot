@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="DiscordBot:jar2">
+    <output-path>$PROJECT_DIR$/out/artifacts/DiscordBot_jar2</output-path>
+    <root id="archive" name="DiscordBot.jar">
+      <element id="module-output" name="DiscordBot" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../Downloads/JDA-4.2.0_229-withDependencies.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

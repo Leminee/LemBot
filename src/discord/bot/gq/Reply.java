@@ -2,7 +2,6 @@ package discord.bot.gq;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-
 import java.util.Date;
 import java.util.Objects;
 
@@ -45,8 +44,14 @@ public class Reply extends ListenerAdapter {
                //TODO--
 
            }
+       }
+       if((userMessage.startsWith("kann sich wer") ||(userMessage.startsWith("Kann sich wer") || userMessage.startsWith("kennt sich jemand") || userMessage.startsWith("Kennt sich jemand") || userMessage.startsWith("kennt sich wer aus mit")) && userMessage.length() < 40)) {
+           if (!event.getMember().getUser().isBot()) {
+               event.getChannel().sendMessage("Stelle einfach deine Frage! " + userName).queue();
 
+
+           }
        }
 
-    }
+       }
 }

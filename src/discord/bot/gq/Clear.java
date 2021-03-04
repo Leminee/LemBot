@@ -21,9 +21,10 @@ public class Clear extends ListenerAdapter {
 
 
 
-            if (clearCommand[0].equalsIgnoreCase(BotMain.prefix + "clear") && clearCommand[1].equalsIgnoreCase(("-"))) {
+            if (clearCommand[0].equalsIgnoreCase(BotMain.prefix + "clear") && clearCommand[1].equalsIgnoreCase("-")) {
 
                 if (clearCommand.length < 3) {
+
                     EmbedBuilder howToUse = new EmbedBuilder();
                     howToUse.setColor(0x00ffff);
                     howToUse.setTitle("Hilfe");
@@ -45,11 +46,11 @@ public class Clear extends ListenerAdapter {
 
                         try {
                         List<Message> messages = event.getChannel().getHistory().retrievePast(Integer.parseInt(clearCommand[2])).complete();
-                        if (Integer.parseInt(clearCommand[2]) >= 6) {
+                        if (Integer.parseInt(clearCommand[2]) >= 21) {
 
                             EmbedBuilder error = new EmbedBuilder();
                             error.setColor(0xff0000);
-                            error.setTitle("Lösche bitte nicht mehr als 5 Nachrichten!");
+                            error.setTitle("Lösche bitte nicht mehr als 20 Nachrichten!");
                             event.getChannel().sendMessage(error.build()).queue();
                         } else {
 
