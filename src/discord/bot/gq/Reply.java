@@ -15,7 +15,7 @@ public class Reply extends ListenerAdapter {
         Date date = new Date();
 
 
-        if (userMessage.equalsIgnoreCase("Hallo") || userMessage.equalsIgnoreCase(BotMain.prefix + "hallo")) {
+        if (userMessage.equalsIgnoreCase(BotMain.prefix + "hallo")) {
             if (!event.getMember().getUser().isBot()) {
                 event.getChannel().sendTyping().queue();
                 event.getChannel().sendMessage("Hi, Wie geht's dir? " + userName + " Was hast du heute schon gemacht? und was wirst du heute noch tun?").queue();
