@@ -9,13 +9,16 @@ import java.sql.SQLException;
 import java.util.Objects;
 
 public class UserMessageCounter extends ListenerAdapter {
-
+    String userMessage;
+    String userId;
+    String userName;
+    String messageId;
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 
-        String userMessage = event.getMessage().getContentRaw();
-        String userId = Objects.requireNonNull(event.getMember()).getId();
-        String userName = event.getMember().getEffectiveName();
-        String messageId = event.getMessageId();
+        userMessage = event.getMessage().getContentRaw();
+        userId = Objects.requireNonNull(event.getMember()).getId();
+        userName = event.getMember().getEffectiveName();
+        messageId = event.getMessageId();
 
         int numberMessage = 1;
 
@@ -44,19 +47,12 @@ public class UserMessageCounter extends ListenerAdapter {
                     updatePStatement.setString(1, userId);
                     updatePStatement.executeUpdate();
 
-                    String insertQuery = "INSERT INTO user_message_content (id_message, id_discord, content) VALUES (?,?,?)";
-                    PreparedStatement insertPStatement = db.connection.prepareStatement(insertQuery);
-                    insertPStatement.setString(1, messageId);
-                    insertPStatement.setString(2, userId);
-                    byte[] byteA = userMessage.getBytes();
-                    Blob blob = insertPStatement.getConnection().createBlob();
-                    blob.setBytes(1, byteA);
-                    insertPStatement.setBlob(3, blob);
-
-                    insertPStatement.executeUpdate();
+                    insertData();
 
                 } else {
                     userDataPStatement.executeUpdate();
+                    insertData();
+
                 }
 
             } catch (SQLException e) {
@@ -64,6 +60,25 @@ public class UserMessageCounter extends ListenerAdapter {
             }
 
         }
+
+    }
+
+    public void insertData() throws SQLException {
+
+        ConnectionToDB db = new ConnectionToDB();
+        db.initialize();
+
+        String insertQuery = "INSERT INTO user_message_content (id_message, id_discord, content) VALUES (?,?,?)";
+        PreparedStatement insertPStatement = db.connection.prepareStatement(insertQuery);
+        insertPStatement.setString(1, messageId);
+        insertPStatement.setString(2, userId);
+        byte[] byteA = userMessage.getBytes();
+        Blob blob = insertPStatement.getConnection().createBlob();
+        blob.setBytes(1, byteA);
+        insertPStatement.setBlob(3, blob);
+
+        insertPStatement.executeUpdate();
+
 
     }
 }
