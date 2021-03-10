@@ -9,7 +9,6 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.util.List;
 
-
 public class Clear extends ListenerAdapter {
 
     @Override
@@ -18,7 +17,6 @@ public class Clear extends ListenerAdapter {
         String[] clearCommand = event.getMessage().getContentRaw().split("\\s+");
         Member author = event.getMessage().getMember();
 
-
             if (clearCommand[0].equalsIgnoreCase(BotMain.prefix + "clear") && clearCommand[1].equalsIgnoreCase("-")) {
 
                 if (clearCommand.length < 3) {
@@ -26,9 +24,8 @@ public class Clear extends ListenerAdapter {
                     EmbedBuilder howToUse = new EmbedBuilder();
                     howToUse.setColor(0x00ffff);
                     howToUse.setTitle("Hilfe");
-                    howToUse.setDescription("Richtige Command " + "-> " + BotMain.prefix + "clear - [Anzahl der zu löschenden Nachrichten]");
+                    howToUse.setDescription("Richtige Command " + "-> " + BotMain.prefix + "clear - [Anzahl der zu löschenden Nachrichten als Zahl]");
                     event.getChannel().sendMessage(howToUse.build()).queue();
-
 
                 }
 
@@ -39,6 +36,7 @@ public class Clear extends ListenerAdapter {
                         error.setColor(0xff0000);
                         error.setTitle("Permission Denied");
                         event.getChannel().sendMessage(error.build()).queue();
+
                     }
                     else {
 
@@ -52,6 +50,7 @@ public class Clear extends ListenerAdapter {
                             error.setColor(0xff0000);
                             error.setTitle("Lösche bitte nicht mehr als 50 Nachrichten!");
                             event.getChannel().sendMessage(error.build()).queue();
+
                         } else {
 
                             event.getChannel().deleteMessages(messages).queue();
@@ -59,7 +58,7 @@ public class Clear extends ListenerAdapter {
                             EmbedBuilder successDeleted = new EmbedBuilder();
                             successDeleted.setColor(0x00ff60);
                             successDeleted.setTitle("Information");
-                            successDeleted.setDescription("Es wurden " + clearCommand[2] + " Nachrichten erfolgreich gelöscht!");
+                            successDeleted.setDescription("Es wurden " + clearCommand[2] + " Nachrichten durch " + author.getAsMention() + " erfolgreich gelöscht!");
                             event.getChannel().sendMessage(successDeleted.build()).queue();
                         }
 

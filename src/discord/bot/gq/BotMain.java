@@ -4,31 +4,36 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 import javax.security.auth.login.LoginException;
 
 public class BotMain {
 
     public static JDA jda;
     public static String prefix = "?";
-    public static final String token = "ODE1ODk0ODA1ODk2ODg4MzYy.YDzDQA.9cGPspX9uvUevnBtniGjkKYJD9I";
-
+    public static final String token = "ODE1ODk0ODA1ODk2ODg4MzYy.YDzDQA.C8tvPZFhSybO5L-TOpw_CzsmscQ";
 
     public static void main(String[] args) {
 
         try {
-            jda = JDABuilder.createDefault(token).build();
+
+            jda = JDABuilder.createDefault(token).enableIntents(GatewayIntent.GUILD_MEMBERS).enableIntents(GatewayIntent.GUILD_PRESENCES).build();
 
         } catch (LoginException e) {
             e.printStackTrace();
         }
 
-        jda.getPresence().setStatus(OnlineStatus.ONLINE);
-        jda.getPresence().setActivity(Activity.playing("With Commands"));
+        jda.getPresence().setStatus(OnlineStatus.DO_NOT_DISTURB);
+        jda.getPresence().setActivity(Activity.playing("Questions Game"));
 
+        jda.addEventListener(new StoreMemberLeave());
         jda.addEventListener(new Clear());
         jda.addEventListener(new Reply());
         jda.addEventListener(new RemindMe());
-
+        jda.addEventListener(new MemberJoin());
+        jda.addEventListener(new StoreMemberJoin());
+        jda.addEventListener(new UserMessageCounter());
+        jda.addEventListener(new BumpCounter());
 
     }
 }
