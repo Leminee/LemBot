@@ -1,9 +1,9 @@
 <h2> DiscordBot-GQ</h2>
 
-<h4> German Discord Bot. Coded in Java JDA </h4>.  
-<h5>  
+<h3> German Discord Bot. Coded in Java JDA </h3>.  
+<h4>  
 This bot is a german bot. You are allowed to use the it. You can submit changes via Issues or do a pullrequest.</br>
 I would appreciate any feedback
-</h5> 
+</h4> 
  
-<h5> Documentation is coming soon </h5>
+<h6> Documentation is coming soon... </h6>
