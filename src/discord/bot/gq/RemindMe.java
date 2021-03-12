@@ -4,10 +4,13 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import java.util.*;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import static java.util.concurrent.TimeUnit.*;
+import java.util.concurrent.TimeUnit;
 
 public class RemindMe extends ListenerAdapter {
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
@@ -42,7 +45,11 @@ public class RemindMe extends ListenerAdapter {
         final Runnable ping = () -> { int randomNumber = random.nextInt(pingContent.length);
         event.getChannel().sendMessage(pingContent[randomNumber]).queue();};
 
-        scheduler.scheduleAtFixedRate(ping, 2, 2, HOURS);
+        scheduler.schedule(ping, 2, TimeUnit.HOURS);
+
+        //scheduler.scheduleWithFixedDelay(ping,5, 5, TimeUnit.SECONDS);
+
+
     }
 
 }

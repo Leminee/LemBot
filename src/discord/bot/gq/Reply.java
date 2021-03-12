@@ -57,10 +57,8 @@ public class Reply extends ListenerAdapter {
                        "`?ping`: pong -  wenn Bot online ist" + " \n" +
                        "`?clear - [zahl]`: löscht Nachrichten" + " \n" +
                        "`?kick [@username]`: kickt den User" + "\n" +
-                       "`?ban [@username]`: bannt den User" + "\n" +
                        "`?top`: Liste der Top 3 User mit den meisten Nachrichten" + "\n" +
                        "`?topb`: Liste der Top 3 Server-Bumper " + "\n" +
-                       "`?topr`: Liste der 3 am häufigsten gepingten Rollen" + "\n" +
                        "`?topu`: Liste der 3 am häufigsten gepingten User" + "\n" +
                        "`?topc`: Liste der 3 aktivisten Channels" + "\n" +
                        "`?topf`: Liste der 3 befreundesten User" + "\n" +
@@ -91,24 +89,24 @@ public class Reply extends ListenerAdapter {
 
                EmbedBuilder embedBuilder = new EmbedBuilder();
                embedBuilder.setTitle("Liste der TOP 3 Bumper");
-               embedBuilder.setDescription("""
-
-
-                       """);
+               embedBuilder.setDescription("");
                embedBuilder.setColor(Color.darkGray);
 
                 int top = 1;
 
-                while(top <=3) {
+                    while (top <= 3) {
 
-                    if (rS.next()) {
 
-                        embedBuilder.addField(  "TOP " + top, rS.getString(1).toUpperCase(), false);
-                        top++;
+                        if (rS.next()) {
+
+                            embedBuilder.addField("TOP " + top, rS.getString(1).toUpperCase(), false);
+                            top++;
+
+                        }
 
                     }
 
-                }
+                //TODO
 
                event.getChannel().sendMessage(embedBuilder.build()).queue();
 

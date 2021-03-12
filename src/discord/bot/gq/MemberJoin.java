@@ -9,21 +9,25 @@ import java.util.Objects;
 
 public class MemberJoin extends ListenerAdapter {
 
-
     public void onGuildMemberJoin(GuildMemberJoinEvent event) {
 
         String[] messages = {"""
 Hallo [member], Willkommen auf **GoodQuestion (GQ)**!
 
-Stelle Dich bitte in diesem Channel kurz vor, damit ein Moderator dir die entsprechenden Rollen zuweist!
-(Beispiel: Ich bin Lem und lerne momentan Java und SQL.)"""};
+Stelle Dich bitte hier kurz vor, damit ein Moderator Dir die entsprechenden Rollen zuweist!
+(Beispiel: Welche ProgrammierSprachen lernst Du? Welche kannst Du?.) \n  
+"""};//Alternativ kannst Du Dir in dem folgenden Kanal Deine Rollen selbst zuweisen: <#779107472622223400>
 
         TextChannel channel = event.getGuild().getTextChannelById("779107500381175808");
         String avatarUrl = event.getUser().getEffectiveAvatarUrl();
 
-        String output = messages[0].replace("[member]", event.getMember().getAsMention());
+        if (!event.getUser().isBot()) {
 
-        Objects.requireNonNull(channel).sendMessage(output + "\n" + avatarUrl).queue();
+            String output = messages[0].replace("[member]", event.getMember().getAsMention());
+
+            Objects.requireNonNull(channel).sendMessage(output + "\n" + avatarUrl).queue();
+
+        }
 
     }
 }

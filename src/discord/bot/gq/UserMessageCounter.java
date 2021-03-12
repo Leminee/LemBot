@@ -13,6 +13,7 @@ public class UserMessageCounter extends ListenerAdapter {
     String userId;
     String userName;
     String messageId;
+
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 
         userMessage = event.getMessage().getContentRaw();
@@ -78,7 +79,6 @@ public class UserMessageCounter extends ListenerAdapter {
         insertPStatement.setBlob(3, blob);
 
         insertPStatement.executeUpdate();
-
 
     }
 }
