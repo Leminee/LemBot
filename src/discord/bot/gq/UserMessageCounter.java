@@ -9,17 +9,17 @@ import java.sql.SQLException;
 import java.util.Objects;
 
 public class UserMessageCounter extends ListenerAdapter {
-    String userMessage;
+   /* String userMessage;
     String userId;
     String userName;
-    String messageId;
+    String messageId;*/
 
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 
-        userMessage = event.getMessage().getContentRaw();
-        userId = Objects.requireNonNull(event.getMember()).getId();
-        userName = event.getMember().getEffectiveName();
-        messageId = event.getMessageId();
+        String userMessage = event.getMessage().getContentRaw();
+        String userId = Objects.requireNonNull(event.getMember()).getId();
+        String userName = event.getMember().getEffectiveName();
+        String messageId = event.getMessageId();
 
         int numberMessage = 1;
 
@@ -29,17 +29,17 @@ public class UserMessageCounter extends ListenerAdapter {
                 ConnectionToDB db = new ConnectionToDB();
                 db.initialize();
 
-                String insertMessageDataQuery = "INSERT INTO user_message (id_discord, username, number_message) VALUES (?,?,?);";
+                String insertMessageData = "INSERT INTO user_message (id_discord, username, number_message) VALUES (?,?,?);";
 
-                PreparedStatement userDataPStatement = db.connection.prepareStatement(insertMessageDataQuery);
-                userDataPStatement.setString(1, userId);
-                userDataPStatement.setString(2, userName);
-                userDataPStatement.setInt(3, numberMessage);
+                PreparedStatement userData = db.connection.prepareStatement(insertMessageData);
+                userData.setString(1, userId);
+                userData.setString(2, userName);
+                userData.setInt(3, numberMessage);
 
                 String verifQuery = "SELECT id_discord FROM user_message WHERE id_discord = ? ";
-                PreparedStatement usernameInputPStatement = db.connection.prepareStatement(verifQuery);
-                usernameInputPStatement.setString(1, userId);
-                ResultSet rS = usernameInputPStatement.executeQuery();
+                PreparedStatement usernameInput = db.connection.prepareStatement(verifQuery);
+                usernameInput.setString(1, userId);
+                ResultSet rS = usernameInput.executeQuery();
 
                 if (rS.next()) {
 
@@ -48,13 +48,11 @@ public class UserMessageCounter extends ListenerAdapter {
                     updatePStatement.setString(1, userId);
                     updatePStatement.executeUpdate();
 
-                    insertData();
-
                 } else {
-                    userDataPStatement.executeUpdate();
-                    insertData();
+                    userData.executeUpdate();
 
                 }
+                insertData(userMessage, userId,messageId);
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -64,7 +62,7 @@ public class UserMessageCounter extends ListenerAdapter {
 
     }
 
-    public void insertData() throws SQLException {
+    public void insertData(String userMessage, String userId, String messageId) throws SQLException {
 
         ConnectionToDB db = new ConnectionToDB();
         db.initialize();

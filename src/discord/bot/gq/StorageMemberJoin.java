@@ -6,7 +6,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class StoreMemberJoin extends ListenerAdapter {
+public class StorageMemberJoin extends ListenerAdapter {
 
     public void onGuildMemberJoin(GuildMemberJoinEvent event) {
 

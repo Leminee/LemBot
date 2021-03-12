@@ -15,8 +15,7 @@ public class ConnectionToDB {
             String dbPassword = "admin";
             connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
 
-        }
-        catch(SQLException sqlEx) {
+        } catch (SQLException sqlEx) {
             System.out.println(sqlEx.getMessage());
         }
     }

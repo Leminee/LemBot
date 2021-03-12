@@ -11,7 +11,7 @@ public class BotMain {
 
     public static JDA jda;
     public static String prefix = "?";
-    public static final String token = "ODE1ODk0ODA1ODk2ODg4MzYy.YDzDQA.UlqIE-Hcc34gtXIBo1H-AFI1a5U";
+    public static final String token = "ODE1ODk0ODA1ODk2ODg4MzYy.YDzDQA.qQ9MrVc1cQpef-nIx8rE99kuME0";
 
     public static void main(String[] args) {
 
@@ -26,12 +26,12 @@ public class BotMain {
         jda.getPresence().setStatus(OnlineStatus.DO_NOT_DISTURB);
         jda.getPresence().setActivity(Activity.playing("Questions Game"));
 
-        jda.addEventListener(new StoreMemberLeave());
+        jda.addEventListener(new StorageMemberLeave());
         jda.addEventListener(new Clear());
         jda.addEventListener(new Reply());
-        jda.addEventListener(new RemindMe());
+        jda.addEventListener(new Reminder());
         jda.addEventListener(new MemberJoin());
-        jda.addEventListener(new StoreMemberJoin());
+        jda.addEventListener(new StorageMemberJoin());
         jda.addEventListener(new UserMessageCounter());
         jda.addEventListener(new BumpCounter());
 

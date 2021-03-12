@@ -76,6 +76,43 @@ public class Reply extends ListenerAdapter {
            }
        }
 
+       if (userMessage.equalsIgnoreCase(BotMain.prefix + "top")) {
+
+           try {
+
+               ConnectionToDB db = new ConnectionToDB();
+               db.initialize();
+
+               String selectTopUser = "SELECT username, number_message FROM user_message ORDER BY number_message DESC LIMIT 3;";
+               Statement statement = db.connection.createStatement();
+               ResultSet rS = statement.executeQuery(selectTopUser);
+
+               EmbedBuilder embedBuilder = new EmbedBuilder();
+               embedBuilder.setTitle("Liste der TOP 3 User");
+               embedBuilder.setDescription("");
+               embedBuilder.setColor(Color.white);
+
+               int top = 1;
+
+               while (rS.next()) {
+
+                   embedBuilder.addField("TOP " + top, rS.getString(1).toUpperCase(), false);
+                   embedBuilder.addField("Anzahl Nachrichten", rS.getString(2), false);
+                   top++;
+
+               }
+
+               event.getChannel().sendMessage(embedBuilder.build()).queue();
+
+               rS.close();
+               statement.close();
+
+
+           } catch (SQLException throwables) {
+               throwables.printStackTrace();
+           }
+       }
+
        if (userMessage.equalsIgnoreCase(BotMain.prefix + "topb")) {
 
            try {
@@ -83,30 +120,24 @@ public class Reply extends ListenerAdapter {
                ConnectionToDB db = new ConnectionToDB();
                db.initialize();
 
-               String insertDataQuery = "SELECT username FROM user_bump ORDER BY number_bumps DESC LIMIT 3;";
+               String selectTopBumper = "SELECT username, number_bumps FROM user_bump ORDER BY number_bumps DESC LIMIT 3;";
                Statement statement = db.connection.createStatement();
-               ResultSet rS = statement.executeQuery(insertDataQuery);
+               ResultSet rS = statement.executeQuery(selectTopBumper);
 
                EmbedBuilder embedBuilder = new EmbedBuilder();
                embedBuilder.setTitle("Liste der TOP 3 Bumper");
                embedBuilder.setDescription("");
                embedBuilder.setColor(Color.darkGray);
 
-                int top = 1;
+               int top = 1;
 
-                    while (top <= 3) {
+                    while (rS.next()) {
 
-
-                        if (rS.next()) {
-
-                            embedBuilder.addField("TOP " + top, rS.getString(1).toUpperCase(), false);
-                            top++;
-
-                        }
+                        embedBuilder.addField("TOP " + top,rS.getString(1).toUpperCase(), false);
+                        embedBuilder.addField("Anzahl Bumps", rS.getString(2),false);
+                        top++;
 
                     }
-
-                //TODO
 
                event.getChannel().sendMessage(embedBuilder.build()).queue();
 

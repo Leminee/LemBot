@@ -10,15 +10,15 @@ public class AutoRoles {
 
     public void ac(String[] args, MessageReceivedEvent event) {
         String roleName = "";
-        for(String arg : args) {
+        for (String arg : args) {
             roleName += arg + " ";
         }
-        roleName = roleName.substring(0, roleName.length() -1);
+        roleName = roleName.substring(0, roleName.length() - 1);
         List<Role> roleList = event.getGuild().getRoles();
-        for(Role role : roleList) {
+        for (Role role : roleList) {
 
-            }
         }
-
     }
+
+}
 
