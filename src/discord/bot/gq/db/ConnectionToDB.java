@@ -1,4 +1,4 @@
-package discord.bot.gq;
+package discord.bot.gq.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

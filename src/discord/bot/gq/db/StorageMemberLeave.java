@@ -1,4 +1,4 @@
-package discord.bot.gq;
+package discord.bot.gq.db;
 
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;

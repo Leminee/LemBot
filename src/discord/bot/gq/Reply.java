@@ -1,5 +1,6 @@
 package discord.bot.gq;
 
+import discord.bot.gq.db.ConnectionToDB;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -125,16 +126,16 @@ public class Reply extends ListenerAdapter {
                ResultSet rS = statement.executeQuery(selectTopBumper);
 
                EmbedBuilder embedBuilder = new EmbedBuilder();
-               embedBuilder.setTitle("Liste der TOP 3 Bumper");
+               embedBuilder.setTitle("TOP 3 User mit den meisten Bumps");
                embedBuilder.setDescription("");
-               embedBuilder.setColor(Color.darkGray);
+               embedBuilder.setColor(0x26b7b8);
+               embedBuilder.setThumbnail("https://plane-dein-training.de/assets/media/dis.png");
 
                int top = 1;
 
                     while (rS.next()) {
 
-                        embedBuilder.addField("TOP " + top,rS.getString(1).toUpperCase(), false);
-                        embedBuilder.addField("Anzahl Bumps", rS.getString(2),false);
+                        embedBuilder.addField("TOP " + top,  rS.getString(1), false);
                         top++;
 
                     }

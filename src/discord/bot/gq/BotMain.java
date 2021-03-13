@@ -1,5 +1,9 @@
 package discord.bot.gq;
 
+import discord.bot.gq.db.BumpCounter;
+import discord.bot.gq.db.StorageMemberJoin;
+import discord.bot.gq.db.StorageMemberLeave;
+import discord.bot.gq.db.UserMessageCounter;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -11,7 +15,7 @@ public class BotMain {
 
     public static JDA jda;
     public static String prefix = "?";
-    public static final String token = "ODE1ODk0ODA1ODk2ODg4MzYy.YDzDQA.qQ9MrVc1cQpef-nIx8rE99kuME0";
+    public static final String token = "ODE1ODk0ODA1ODk2ODg4MzYy.YDzDQA.fP2bfkcV2reMJnxq4SJ7t3_Pb5w";
 
     public static void main(String[] args) {
 

@@ -1,7 +1,8 @@
-package discord.bot.gq;
+package discord.bot.gq.db;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+
 import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

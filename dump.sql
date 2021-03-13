@@ -3,16 +3,36 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Erstellungszeit: 10. Mrz 2021 um 07:24
+-- Erstellungszeit: 13. Mrz 2021 um 11:47
 -- Server-Version: 5.7.30
 -- PHP-Version: 7.4.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
- 
- 
-   -- Datenbank: `discordbot`
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
 --
+-- Datenbank: `discordbot`
+--
+CREATE DATABASE IF NOT EXISTS `discordbot` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `discordbot`;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `channel`
+--
+
+CREATE TABLE `channel` (
+  `id_channel` varchar(100) NOT NULL,
+  `channel_name` varchar(50) NOT NULL,
+  `number_message` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -45,6 +65,32 @@ CREATE TABLE `ping_data` (
 -- --------------------------------------------------------
 
 --
+-- Tabellenstruktur für Tabelle `role`
+--
+
+CREATE TABLE `role` (
+  `id_role` varchar(100) NOT NULL,
+  `role_name` varchar(50) NOT NULL,
+  `role_color` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `user`
+--
+
+CREATE TABLE `user` (
+  `id_discord` varchar(100) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `user_tag` varchar(50) NOT NULL,
+  `avatar_url` varchar(500) NOT NULL,
+  `status` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `user_bump`
 --
 
@@ -53,19 +99,6 @@ CREATE TABLE `user_bump` (
   `username` varchar(50) NOT NULL,
   `number_bumps` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Daten für Tabelle `user_bump`
-   
-   
---
-
-INSERT INTO `user_bump` (`id_discord`, `username`, `number_bumps`) VALUES
-('3215', 'rar', 54456),
-('334246', 'ehr', 2),
-('4563457', 'egrwhrw', 9),
-('739143338975952959', 'Lem', 1),
-('r43264', 'errhrw', 3);
 
 -- --------------------------------------------------------
 
@@ -92,9 +125,8 @@ CREATE TABLE `user_join` (
   `avatar_url` varchar(500) DEFAULT NULL,
   `joined_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-  
-  
-  -- --------------------------------------------------------
+
+-- --------------------------------------------------------
 
 --
 -- Tabellenstruktur für Tabelle `user_leave`
@@ -124,8 +156,7 @@ CREATE TABLE `user_message` (
 -- --------------------------------------------------------
 
 --
- 
- -- Tabellenstruktur für Tabelle `user_message_content`
+-- Tabellenstruktur für Tabelle `user_message_content`
 --
 
 CREATE TABLE `user_message_content` (
@@ -135,9 +166,27 @@ CREATE TABLE `user_message_content` (
   `postet_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `user_role`
+--
+
+CREATE TABLE `user_role` (
+  `id_user_role` int(11) NOT NULL,
+  `id_discord` varchar(100) NOT NULL,
+  `id_role` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Indizes der exportierten Tabellen
 --
+
+--
+-- Indizes für die Tabelle `channel`
+--
+ALTER TABLE `channel`
+  ADD PRIMARY KEY (`id_channel`);
 
 --
 -- Indizes für die Tabelle `deleted_message`
@@ -152,13 +201,25 @@ ALTER TABLE `ping_data`
   ADD PRIMARY KEY (`id_user`);
 
 --
+-- Indizes für die Tabelle `role`
+--
+ALTER TABLE `role`
+  ADD PRIMARY KEY (`id_role`);
+
+--
+-- Indizes für die Tabelle `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id_discord`);
+
+--
 -- Indizes für die Tabelle `user_bump`
 --
 ALTER TABLE `user_bump`
   ADD PRIMARY KEY (`id_discord`);
 
 --
- -- Indizes für die Tabelle `user_bump_time`
+-- Indizes für die Tabelle `user_bump_time`
 --
 ALTER TABLE `user_bump_time`
   ADD PRIMARY KEY (`id_user_bump_time`),
@@ -190,15 +251,22 @@ ALTER TABLE `user_message_content`
   ADD KEY `id_discord` (`id_discord`);
 
 --
+-- Indizes für die Tabelle `user_role`
+--
+ALTER TABLE `user_role`
+  ADD PRIMARY KEY (`id_user_role`),
+  ADD KEY `id_discord` (`id_discord`),
+  ADD KEY `id_discord_2` (`id_discord`),
+  ADD KEY `role_name` (`id_role`);
+
+--
 -- AUTO_INCREMENT für exportierte Tabellen
 --
 
 --
 -- AUTO_INCREMENT für Tabelle `deleted_message`
 --
- 
- 
- ALTER TABLE `deleted_message`
+ALTER TABLE `deleted_message`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -211,19 +279,25 @@ ALTER TABLE `ping_data`
 -- AUTO_INCREMENT für Tabelle `user_bump_time`
 --
 ALTER TABLE `user_bump_time`
-  MODIFY `id_user_bump_time` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id_user_bump_time` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT für Tabelle `user_join`
 --
 ALTER TABLE `user_join`
-  MODIFY `id_user_join` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_user_join` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT für Tabelle `user_leave`
 --
 ALTER TABLE `user_leave`
-  MODIFY `id_user_leave` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_user_leave` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT für Tabelle `user_role`
+--
+ALTER TABLE `user_role`
+  MODIFY `id_user_role` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints der exportierten Tabellen
@@ -239,4 +313,15 @@ ALTER TABLE `user_bump_time`
 -- Constraints der Tabelle `user_message_content`
 --
 ALTER TABLE `user_message_content`
-  ADD CONSTRAINT `user_message_content_ibfk_1` FOREIGN KEY (`id_discord`) REFERENCES `user_message` (`id_discord`);
+  ADD CONSTRAINT `user_message_content_ibfk_1` FOREIGN KEY (`id_discord`) REFERENCES `user_message` (`id_discord`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints der Tabelle `user_role`
+--
+ALTER TABLE `user_role`
+  ADD CONSTRAINT `user_role_ibfk_1` FOREIGN KEY (`id_discord`) REFERENCES `user` (`id_discord`),
+  ADD CONSTRAINT `user_role_ibfk_2` FOREIGN KEY (`id_role`) REFERENCES `role` (`id_role`);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
