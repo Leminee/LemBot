@@ -6,4 +6,4 @@ This bot is a german bot. You are allowed to use it. You can submit changes via 
 I would appreciate any feedback
 </h4> 
  
-<h6> Documentation is coming soon... </h6>
+<h6> Documentation coming soon... </h6>
