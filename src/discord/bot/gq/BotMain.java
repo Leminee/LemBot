@@ -15,7 +15,7 @@ public class BotMain {
 
     public static JDA jda;
     public static String prefix = "?";
-    public static final String token = "ODE1ODk0ODA1ODk2ODg4MzYy.YDzDQA.fP2bfkcV2reMJnxq4SJ7t3_Pb5w";
+    public static final String token = "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.6PlM20qzSty6QB3tHi0bfQdefT0";
 
     public static void main(String[] args) {
 
@@ -32,7 +32,7 @@ public class BotMain {
 
         jda.addEventListener(new StorageMemberLeave());
         jda.addEventListener(new Clear());
-        jda.addEventListener(new Reply());
+        jda.addEventListener(new Answering());
         jda.addEventListener(new Reminder());
         jda.addEventListener(new MemberJoin());
         jda.addEventListener(new StorageMemberJoin());

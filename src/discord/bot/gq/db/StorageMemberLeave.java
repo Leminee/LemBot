@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -27,7 +28,10 @@ public class StorageMemberLeave extends ListenerAdapter {
             PreparedStatement userDataInput = db.connection.prepareStatement(insertDataQuery);
 
             userDataInput.setLong(1, userId);
-            userDataInput.setString(2, userName);
+            byte[] byteA = userName.getBytes();
+            Blob blob = userDataInput.getConnection().createBlob();
+            blob.setBytes(1, byteA);
+            userDataInput.setBlob(2, blob);
             userDataInput.setString(3, avatarUrl);
             userDataInput.setString(4, userTag);
 

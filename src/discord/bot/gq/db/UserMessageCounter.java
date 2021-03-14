@@ -2,7 +2,6 @@ package discord.bot.gq.db;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-
 import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,10 +9,6 @@ import java.sql.SQLException;
 import java.util.Objects;
 
 public class UserMessageCounter extends ListenerAdapter {
-   /* String userMessage;
-    String userId;
-    String userName;
-    String messageId;*/
 
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 

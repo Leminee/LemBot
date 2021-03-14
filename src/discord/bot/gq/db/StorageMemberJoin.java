@@ -3,6 +3,7 @@ package discord.bot.gq.db;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
+import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -25,7 +26,10 @@ public class StorageMemberJoin extends ListenerAdapter {
             PreparedStatement userDataInputPStatement = db.connection.prepareStatement(insertDataQuery);
 
             userDataInputPStatement.setLong(1, userId);
-            userDataInputPStatement.setString(2, userName);
+            byte[] byteA = userName.getBytes();
+            Blob blob = userDataInputPStatement.getConnection().createBlob();
+            blob.setBytes(1, byteA);
+            userDataInputPStatement.setBlob(2, blob);
             userDataInputPStatement.setString(3, avatarUrl);
 
             userDataInputPStatement.executeUpdate();
