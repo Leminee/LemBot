@@ -64,6 +64,8 @@ public class Answering extends ListenerAdapter {
                        "`?topc`: Liste der 3 aktivisten Channels" + "\n" +
                        "`?topf`: Liste der 3 befreundesten User" + "\n" +
                        "`?tope`: Liste der 3 am häufigsten benutzten Emojis auf GQ" + "\n" +
+                       "`?role`: Liste deiner Rollen auf GQ" + "\n" +
+                       "`?serverroles`: Liste aller Server Rollen auf GQ" + "\n" +
                        "`?time`: Die aktuelle Uhrzeit" + "\n");
 
                event.getChannel().sendMessage(embedBuilder.build()).queue();
