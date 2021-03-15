@@ -11,6 +11,7 @@ public class RoleSystem extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
+
         String userMessage = event.getMessage().getContentRaw();
         List<Role> userRoleList = Objects.requireNonNull(event.getMember()).getRoles();
         List<Role> serverRoleList = Objects.requireNonNull(BotMain.jda.getRoles());
@@ -32,7 +33,7 @@ public class RoleSystem extends ListenerAdapter {
         }
         if (userMessage.equalsIgnoreCase(BotMain.prefix + "srole")) {
             if (!event.getMember().getUser().isBot()) {
-                showRoles.setTitle("Server - Rollen");
+                showRoles.setTitle("Liste aller Rollen auf GQ");
                 showRoles.setColor(0x002d47);
                 showRoles.setThumbnail("https://cotelangues.com/wp-content/uploads/2019/06/Fragezeichen-Tafel-868x524.jpg");
                 StringBuilder sb = new StringBuilder();

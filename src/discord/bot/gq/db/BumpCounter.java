@@ -1,5 +1,6 @@
 package discord.bot.gq.db;
 
+import discord.bot.gq.Reminder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
@@ -22,7 +23,7 @@ public class BumpCounter extends ListenerAdapter {
         User embedAuthor = event.getAuthor();
         Message message = event.getMessage();
 
-        if (isSuccessBump(disBoardEmbed, embedAuthor)) {
+        if (Reminder.isSuccessBump(disBoardEmbed, embedAuthor)) {
 
             String embedContent = message.getEmbeds().get(0).getDescription();
             Pattern p = Pattern.compile("<@(\\d+)>");
@@ -70,22 +71,7 @@ public class BumpCounter extends ListenerAdapter {
                     e.printStackTrace();
                 }
             }
-
         }
-    }
-
-    public static boolean isSuccessBump(List<MessageEmbed> messages, User author) {
-
-        if (!author.getId().equals("302050872383242240")) {
-            return false;
-        }
-        if (messages.isEmpty()) {
-            return false;
-        }
-        if (messages.get(0).getDescription() == null) {
-            return false;
-        }
-        return Objects.requireNonNull(messages.get(0).getDescription()).contains("https://disboard.org/");
     }
 
 }

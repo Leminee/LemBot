@@ -16,7 +16,7 @@ public class MemberJoin extends ListenerAdapter {
 Hallo [member], Willkommen auf **GoodQuestion (GQ)**!
 
 Stelle Dich bitte hier kurz vor, damit ein Moderator Dir die entsprechenden Rollen zuweist!
-(Beispiel: Welche Programmiersprachen lernst Du? Welche kannst Du?.) \n  
+(Beispiel: Welche Programmiersprachen lernst Du? Welche kannst Du?.)
 """};
 
         //Alternativ kannst Du Dir in dem folgenden Kanal Deine Rollen selbst zuweisen: <#779107472622223400>

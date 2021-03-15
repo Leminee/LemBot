@@ -51,7 +51,6 @@ public class TopBumper extends ListenerAdapter {
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
-
         }
     }
 }

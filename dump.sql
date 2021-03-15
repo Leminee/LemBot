@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.5
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Erstellungszeit: 13. Mrz 2021 um 11:47
--- Server-Version: 5.7.30
--- PHP-Version: 7.4.9
+-- Host: localhost
+-- Erstellungszeit: 15. Mrz 2021 um 17:25
+-- Server-Version: 10.3.27-MariaDB-0+deb10u1
+-- PHP-Version: 7.4.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -19,7 +20,7 @@ SET time_zone = "+00:00";
 --
 -- Datenbank: `discordbot`
 --
-CREATE DATABASE IF NOT EXISTS `discordbot` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE DATABASE IF NOT EXISTS `discordbot` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `discordbot`;
 
 -- --------------------------------------------------------
@@ -45,7 +46,7 @@ CREATE TABLE `deleted_message` (
   `id_discord` varchar(100) NOT NULL,
   `username` varchar(50) NOT NULL,
   `content` varchar(2500) NOT NULL,
-  `deleted_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `deleted_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -109,7 +110,7 @@ CREATE TABLE `user_bump` (
 CREATE TABLE `user_bump_time` (
   `id_user_bump_time` int(11) NOT NULL,
   `id_discord` varchar(100) NOT NULL,
-  `bumped_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `bumped_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -121,9 +122,9 @@ CREATE TABLE `user_bump_time` (
 CREATE TABLE `user_join` (
   `id_user_join` int(11) NOT NULL,
   `id_discord` varchar(100) NOT NULL,
-  `username` varchar(50) NOT NULL,
+  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `avatar_url` varchar(500) DEFAULT NULL,
-  `joined_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `joined_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -135,10 +136,10 @@ CREATE TABLE `user_join` (
 CREATE TABLE `user_leave` (
   `id_user_leave` int(11) NOT NULL,
   `id_discord` varchar(100) NOT NULL,
-  `username` varchar(50) DEFAULT NULL,
+  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `avatar_url` varchar(500) DEFAULT NULL,
   `user_tag` varchar(50) NOT NULL,
-  `left_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `left_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -163,7 +164,7 @@ CREATE TABLE `user_message_content` (
   `id_message` varchar(100) NOT NULL,
   `id_discord` varchar(100) NOT NULL,
   `content` varchar(2500) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `postet_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `postet_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -192,7 +193,8 @@ ALTER TABLE `channel`
 -- Indizes für die Tabelle `deleted_message`
 --
 ALTER TABLE `deleted_message`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_discord` (`id_discord`);
 
 --
 -- Indizes für die Tabelle `ping_data`
@@ -279,19 +281,19 @@ ALTER TABLE `ping_data`
 -- AUTO_INCREMENT für Tabelle `user_bump_time`
 --
 ALTER TABLE `user_bump_time`
-  MODIFY `id_user_bump_time` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_user_bump_time` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT für Tabelle `user_join`
 --
 ALTER TABLE `user_join`
-  MODIFY `id_user_join` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_user_join` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT für Tabelle `user_leave`
 --
 ALTER TABLE `user_leave`
-  MODIFY `id_user_leave` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_user_leave` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT für Tabelle `user_role`
@@ -302,6 +304,12 @@ ALTER TABLE `user_role`
 --
 -- Constraints der exportierten Tabellen
 --
+
+--
+-- Constraints der Tabelle `deleted_message`
+--
+ALTER TABLE `deleted_message`
+  ADD CONSTRAINT `deleted_message_ibfk_1` FOREIGN KEY (`id_discord`) REFERENCES `user_message` (`id_discord`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints der Tabelle `user_bump_time`
@@ -321,6 +329,7 @@ ALTER TABLE `user_message_content`
 ALTER TABLE `user_role`
   ADD CONSTRAINT `user_role_ibfk_1` FOREIGN KEY (`id_discord`) REFERENCES `user` (`id_discord`),
   ADD CONSTRAINT `user_role_ibfk_2` FOREIGN KEY (`id_role`) REFERENCES `role` (`id_role`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
