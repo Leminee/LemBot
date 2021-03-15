@@ -38,6 +38,7 @@ public class BotMain {
         jda.addEventListener(new StorageMemberJoin());
         jda.addEventListener(new UserMessageCounter());
         jda.addEventListener(new BumpCounter());
+        jda.addEventListener(new RoleSystem());
 
     }
 }
