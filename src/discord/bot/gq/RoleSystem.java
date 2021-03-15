@@ -9,8 +9,6 @@ import java.util.Objects;
 
 public class RoleSystem extends ListenerAdapter {
 
-
-    // EmbedMessage with UserRoles
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
         String userMessage = event.getMessage().getContentRaw();
@@ -20,7 +18,6 @@ public class RoleSystem extends ListenerAdapter {
 
         if (userMessage.equalsIgnoreCase(BotMain.prefix + "role")) {
             if (!event.getMember().getUser().isBot()) {
-                event.getChannel().sendTyping().queue();
                 showRoles.setTitle("Rollen");
                 showRoles.setColor(0x002d47);
                 showRoles.setThumbnail("https://cotelangues.com/wp-content/uploads/2019/06/Fragezeichen-Tafel-868x524.jpg");
@@ -33,9 +30,8 @@ public class RoleSystem extends ListenerAdapter {
                 event.getChannel().sendMessage(showRoles.build()).queue();
             }
         }
-        if (userMessage.equalsIgnoreCase(BotMain.prefix + "serverroles")) {
+        if (userMessage.equalsIgnoreCase(BotMain.prefix + "srole")) {
             if (!event.getMember().getUser().isBot()) {
-                event.getChannel().sendTyping().queue();
                 showRoles.setTitle("Server - Rollen");
                 showRoles.setColor(0x002d47);
                 showRoles.setThumbnail("https://cotelangues.com/wp-content/uploads/2019/06/Fragezeichen-Tafel-868x524.jpg");

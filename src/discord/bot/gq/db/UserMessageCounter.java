@@ -10,6 +10,7 @@ import java.util.Objects;
 
 public class UserMessageCounter extends ListenerAdapter {
 
+    @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 
         String userMessage = event.getMessage().getContentRaw();

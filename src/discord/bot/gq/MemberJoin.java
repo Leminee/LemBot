@@ -9,6 +9,7 @@ import java.util.Objects;
 
 public class MemberJoin extends ListenerAdapter {
 
+    @Override
     public void onGuildMemberJoin(GuildMemberJoinEvent event) {
 
         String[] messages = {"""

@@ -1,14 +1,12 @@
 package discord.bot.gq;
 
-import discord.bot.gq.db.BumpCounter;
-import discord.bot.gq.db.StorageMemberJoin;
-import discord.bot.gq.db.StorageMemberLeave;
-import discord.bot.gq.db.UserMessageCounter;
+import discord.bot.gq.db.*;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+
 import javax.security.auth.login.LoginException;
 
 public class BotMain {
@@ -32,13 +30,14 @@ public class BotMain {
 
         jda.addEventListener(new StorageMemberLeave());
         jda.addEventListener(new Clear());
-        jda.addEventListener(new Answering());
+        jda.addEventListener(new AutoAnswering());
         jda.addEventListener(new Reminder());
         jda.addEventListener(new MemberJoin());
         jda.addEventListener(new StorageMemberJoin());
         jda.addEventListener(new UserMessageCounter());
         jda.addEventListener(new BumpCounter());
         jda.addEventListener(new RoleSystem());
-
+        jda.addEventListener(new TopBumper());
+        jda.addEventListener(new TopFlooder());
     }
 }

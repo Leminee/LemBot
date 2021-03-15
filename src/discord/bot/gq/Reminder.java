@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 public class Reminder extends ListenerAdapter {
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
+    @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 
         String roleId = "<@&815922232106156033>";

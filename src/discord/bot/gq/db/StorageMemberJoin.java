@@ -9,6 +9,7 @@ import java.sql.SQLException;
 
 public class StorageMemberJoin extends ListenerAdapter {
 
+    @Override
     public void onGuildMemberJoin(GuildMemberJoinEvent event) {
 
         long userId = event.getUser().getIdLong();

@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 
 public class BumpCounter extends ListenerAdapter {
 
+    @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 
         List <MessageEmbed> disBoardEmbed = event.getMessage().getEmbeds();
