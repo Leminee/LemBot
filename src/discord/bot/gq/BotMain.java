@@ -15,7 +15,7 @@ public class BotMain {
 
     public static JDA jda;
     public static String prefix = "?";
-    public static final String token = "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.6PlM20qzSty6QB3tHi0bfQdefT0";
+    public static final String token = "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.BQBP6e26t0MI7MC4WERn0e4O_l8";
 
     public static void main(String[] args) {
 
