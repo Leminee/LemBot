@@ -29,12 +29,11 @@ public class CommandList extends ListenerAdapter {
                         "`?topu`: Liste der 3 am häufigsten gepingten User" + "\n" +
                         "`?topc`: Liste der 3 aktivisten Channels" + "\n" +
                         "`?tope`: Liste der 3 am häufigsten benutzten Emojis auf GQ" + "\n" +
-                        "`?role`: Liste Deiner Rollen auf GQ" + "\n" +
-                        "`?srole`: Liste aller Server Rollen auf GQ" + "\n"+
+                        "`?srole`: Liste aller Rollen auf GQ" + "\n"+
                         "`?clear - [zahl]`: löscht Nachrichten" + " \n" +
                         "`?kick [@username]`: kickt den User" + "\n" +
-                        "`?ban [@username]`: bannt den User" + "\n" +
-                        "(?clear`, `?kick`, `?ban` *nur für Staff*)");
+                        "`?ban` [@username]`: bannt den User" + "\n" +
+                        "(`?clear`, `?kick`, `?ban` *nur für Staff*)");
 
                 event.getChannel().sendMessage(embedBuilder.build()).queue();
             }

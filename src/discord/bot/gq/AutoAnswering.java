@@ -46,5 +46,21 @@ public class AutoAnswering extends ListenerAdapter {
 
             }
         }
+
+        if ((userMessage.equalsIgnoreCase(BotMain.prefix + "send"))) {
+            if (!event.getMember().getUser().isBot()) {
+                event.getChannel().sendMessage("----  **DISCORD ORGANISATION**  ----\n" +
+                        "\n" +
+                        "**GoodQuestion (GQ)** ist in drei Teile aufgeteilt:\n" +
+                        "\n" +
+                        "<:coding:821167071181275146> **CODING**:  Für diejenigen, die Programmiersprachen lernen und/oder Programmierer sind. \n" +
+                        "<:hacking:821144439647895602> **HACKING**: Für Hacker und diejenigen, die sich für Hacking interessieren. \n" +
+                        "<:language:821171703014621225> **Language Learner**:  Für diejenigen, die Englisch, Französisch oder Deutsch lernen. \n" +
+                        "\n" +
+                        "Klicke auf das entsprechende Emoji, um die Kategorie(n) freizuschalten, die Dich interessieren!\n" +
+                        "\n" +
+                        "Durch das Öffnen einer oder mehrerer Kategorien erklärst Du Dich damit einverstanden, die oben genannten Regeln einzuhalten.").queue();
+            }
+        }
     }
 }

@@ -17,7 +17,7 @@ public class Reminder extends ListenerAdapter {
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 
-        String roleId = "<@739143338975952959>";
+        String roleId = "<@&815922232106156033>";
         String[] pingContent = {
                 "Jetzt kann wieder gebumpt werden " + roleId + " :smile: ",
                 "Es ist wieder Zeit zu bumpen " + roleId + " :smile:",

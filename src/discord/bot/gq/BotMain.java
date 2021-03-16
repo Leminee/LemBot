@@ -7,16 +7,17 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
-
 import javax.security.auth.login.LoginException;
 
 public class BotMain {
 
     public static JDA jda;
     public static String prefix = "?";
-    public static final String token = "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.rdgDku0Uy96wsZ92I8wif6sr0Gs";
+    public static final String token = "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.uTx2JA6tdaIUVzxtitYLcAvHgNs";
 
     public static void main(String[] args) {
+        String channelId = "779107472622223400";
+        String messageId = "821186181903024179";
 
         try {
 
@@ -41,5 +42,25 @@ public class BotMain {
         jda.addEventListener(new TopBumper());
         jda.addEventListener(new TopFlooder());
         jda.addEventListener(new CommandList());
+
+        ReactionManager manager = new ReactionManager(jda);
+
+        manager.registerReaction(channelId, messageId, "821167071181275146", "784773593942327297").
+                registerReaction(channelId, messageId, "821144439647895602", "811741950092116038").
+                registerReaction(channelId, messageId, "821171703014621225", "784773877741387806");
+
+
+                /*registerReaction(channelId, messageId, "821144409633849354", "808779281211719680").
+                registerReaction(channelId, messageId, "821144363953553418", "809152859492974692").
+                registerReaction(channelId, messageId, "821144354445328384", "815922232106156033").
+                registerReaction(channelId, messageId, "821168328961163266", "808779520286654554").
+                registerReaction(channelId, messageId, "821169196523192380", "808768626844893184").
+                registerReaction(channelId, messageId, "821171704133845073", "808767910696189975");*/
+
+
+
+
+
+
     }
 }
