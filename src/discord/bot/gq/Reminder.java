@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -38,6 +39,7 @@ public class Reminder extends ListenerAdapter {
             scheduler.schedule(ping, 2, TimeUnit.HOURS);
         }
     }
+
     public static boolean isSuccessBump(List<MessageEmbed> messages, User author) {
 
         if (!author.getId().equals("302050872383242240")) {
@@ -50,7 +52,7 @@ public class Reminder extends ListenerAdapter {
             return false;
         }
 
-        if(messages.get(0).getImage() == null) {
+        if (messages.get(0).getImage() == null) {
             return false;
         }
         return Objects.equals(Objects.requireNonNull(messages.get(0).getImage()).getUrl(), "https://disboard.org/images/bot-command-image-bump.png");

@@ -3,6 +3,7 @@ package discord.bot.gq;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+
 import java.util.Objects;
 
 public class CommandList extends ListenerAdapter {
@@ -29,7 +30,7 @@ public class CommandList extends ListenerAdapter {
                         "`?topu`: Liste der 3 am häufigsten gepingten User" + "\n" +
                         "`?topc`: Liste der 3 aktivisten Channels" + "\n" +
                         "`?tope`: Liste der 3 am häufigsten benutzten Emojis auf GQ" + "\n" +
-                        "`?srole`: Liste aller Rollen auf GQ" + "\n"+
+                        "`?srole`: Liste aller Rollen auf GQ" + "\n" +
                         "`?clear - [zahl]`: löscht Nachrichten" + " \n" +
                         "`?kick [@username]`: kickt den User" + "\n" +
                         "`?ban` [@username]`: bannt den User" + "\n" +

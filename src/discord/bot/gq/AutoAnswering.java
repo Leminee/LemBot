@@ -40,7 +40,7 @@ public class AutoAnswering extends ListenerAdapter {
         }
 
         if ((userMessage.startsWith("kann sich wer") || (userMessage.contains("ann sich wer") || userMessage.startsWith("kennt sich jemand") || userMessage.startsWith("Kennt sich jemand") ||
-                userMessage.startsWith("kennt sich wer aus mit") || userMessage.contains("kann jemand helfen bei")) && userMessage.length() < 35)) {
+                userMessage.startsWith("kennt sich wer aus mit") || userMessage.contains("kann jemand helfen bei")) && userMessage.length() < 40)) {
             if (!event.getMember().getUser().isBot()) {
                 event.getChannel().sendMessage("Stelle einfach deine Frage! " + userName).queue();
 

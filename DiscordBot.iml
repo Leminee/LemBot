@@ -10,16 +10,16 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/JDA-4.2.0_229-withDependencies.jar!/" />
+          <root url="jar://$USER_HOME$/mysql-connector-java-8.0.22/mysql-connector-java-8.0.22.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/mysql-connector-java-8.0.22/mysql-connector-java-8.0.22.jar!/" />
+          <root url="jar://$MODULE_DIR$/JDA-4.2.0_247-withDependencies.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
