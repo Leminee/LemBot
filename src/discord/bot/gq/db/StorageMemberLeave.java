@@ -3,7 +3,6 @@ package discord.bot.gq.db;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
-
 import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

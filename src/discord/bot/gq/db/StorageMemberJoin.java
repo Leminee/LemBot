@@ -2,7 +2,6 @@ package discord.bot.gq.db;
 
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-
 import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

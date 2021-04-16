@@ -2,3 +2,5 @@
 /shelf/
 /.idea/workspace.xml
 /out/artifacts/DiscordBot_jar/DiscordBot.jar
+.DS_Store
+/artifacts

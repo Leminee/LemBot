@@ -4,7 +4,6 @@ import discord.bot.gq.BotMain;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;

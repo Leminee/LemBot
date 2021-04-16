@@ -4,7 +4,6 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -19,10 +18,13 @@ public class Reminder extends ListenerAdapter {
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 
         String roleId = "<@&815922232106156033>";
+        String channelId = "784907135900581928";
         String[] pingContent = {
                 "Jetzt kann wieder gebumpt werden " + roleId + " :smile: ",
                 "Es ist wieder Zeit zu bumpen " + roleId + " :smile:",
                 "Bumpe den Server jetzt! " + roleId + " :smile:"};
+
+
 
         Random random = new Random();
 
@@ -33,7 +35,7 @@ public class Reminder extends ListenerAdapter {
 
             final Runnable ping = () -> {
                 int randomNumber = random.nextInt(pingContent.length);
-                Objects.requireNonNull(event.getJDA().getTextChannelById("784907135900581928")).sendMessage(pingContent[randomNumber]).queue();
+                Objects.requireNonNull(event.getJDA().getTextChannelById(channelId)).sendMessage(pingContent[randomNumber]).queue();
             };
 
             scheduler.schedule(ping, 2, TimeUnit.HOURS);
