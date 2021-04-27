@@ -17,7 +17,7 @@ public class TopFlooder extends ListenerAdapter {
         String userMessage = event.getMessage().getContentRaw();
         String commandTopUser ="top";
 
-        if (TopBumper.handleCommand(userMessage,commandTopUser)) {
+        if (TopBumper.isValidCommand(userMessage,commandTopUser)) {
 
             try {
 

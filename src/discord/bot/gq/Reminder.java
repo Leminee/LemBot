@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -25,6 +26,9 @@ public class Reminder extends ListenerAdapter {
                 "Es ist wieder Zeit zu bumpen " + ConfigSelection.roleId + " :smile:",
                 "Bumpe den Server jetzt! " + ConfigSelection.roleId + " :smile:"};
 
+        ConfigSelection.selectRoleId();
+        ConfigSelection.selectChannelId();
+
 
         if (ConfigSelection.roleId == null || ConfigSelection.channelId == null) {
             return;
@@ -34,7 +38,7 @@ public class Reminder extends ListenerAdapter {
 
         List<MessageEmbed> disBoardEmbed = event.getMessage().getEmbeds();
         User embedAuthor = event.getAuthor();
-        
+
 
         if (isSuccessBump(disBoardEmbed, embedAuthor)) {
 
@@ -64,7 +68,7 @@ public class Reminder extends ListenerAdapter {
         if (messages.get(0).getImage() == null) {
             return false;
         }
-        return Objects.equals(Objects.requireNonNull(messages.get(0).getImage()).getUrl(),successBumpImageUrl);
+        return Objects.equals(Objects.requireNonNull(messages.get(0).getImage()).getUrl(), successBumpImageUrl);
     }
 
 }

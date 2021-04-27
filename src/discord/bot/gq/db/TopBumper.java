@@ -4,7 +4,6 @@ import discord.bot.gq.BotMain;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -17,8 +16,7 @@ public class TopBumper extends ListenerAdapter {
         String userMessage = event.getMessage().getContentRaw();
         String commandTopBumper = "topb";
 
-
-        if (handleCommand(userMessage, commandTopBumper)) {
+        if (isValidCommand(userMessage, commandTopBumper)) {
 
             try {
 
@@ -56,8 +54,9 @@ public class TopBumper extends ListenerAdapter {
         }
     }
 
-    public static boolean handleCommand(String userMessage, String command) {
+    public static boolean isValidCommand(String userMessage, String command) {
 
         return userMessage.equalsIgnoreCase(BotMain.PREFIX + command);
     }
+
 }

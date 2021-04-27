@@ -3,6 +3,7 @@ package discord.bot.gq;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -10,9 +11,13 @@ import java.util.Objects;
 public class MemberJoin extends ListenerAdapter {
 
     @Override
-    public void onGuildMemberJoin(GuildMemberJoinEvent event) {
+    public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
 
         String welcomeChannelID = "779107500381175808";
+
+        if (welcomeChannelID == null) {
+            return;
+        }
 
         String[] messages = {"""
 Hallo [member], Willkommen auf **GoodQuestion (GQ)**!
