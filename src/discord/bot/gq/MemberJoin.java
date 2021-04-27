@@ -12,6 +12,8 @@ public class MemberJoin extends ListenerAdapter {
     @Override
     public void onGuildMemberJoin(GuildMemberJoinEvent event) {
 
+        String welcomeChannelID = "779107500381175808";
+
         String[] messages = {"""
 Hallo [member], Willkommen auf **GoodQuestion (GQ)**!
 
@@ -20,7 +22,7 @@ Stelle Dich bitte hier kurz vor, damit ein Moderator Dir die entsprechenden Roll
 Alternativ kannst Du Dir in dem folgenden Kanal Deine Rollen selbst zuweisen: <#779107472622223400>
 """};
 
-        TextChannel channel = event.getGuild().getTextChannelById("779107500381175808");
+        TextChannel channel = event.getGuild().getTextChannelById(welcomeChannelID);
         String avatarUrl = event.getUser().getEffectiveAvatarUrl();
 
         if (!event.getUser().isBot()) {

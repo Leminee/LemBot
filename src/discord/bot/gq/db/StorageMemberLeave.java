@@ -27,13 +27,9 @@ public class StorageMemberLeave extends ListenerAdapter {
             PreparedStatement userDataInput = db.connection.prepareStatement(insertDataQuery);
 
             userDataInput.setLong(1, userId);
-            byte[] byteA = userName.getBytes();
-            Blob blob = userDataInput.getConnection().createBlob();
-            blob.setBytes(1, byteA);
-            userDataInput.setBlob(2, blob);
+            userDataInput.setBlob(2,setTransformedString(userDataInput,userName));
             userDataInput.setString(3, avatarUrl);
             userDataInput.setString(4, userTag);
-
             userDataInput.executeUpdate();
 
         } catch (SQLException throwables) {
@@ -41,5 +37,14 @@ public class StorageMemberLeave extends ListenerAdapter {
         }
 
     }
+
+    public static Blob setTransformedString(PreparedStatement userDataInput, String userName) throws SQLException {
+        byte[] byteA = userName.getBytes();
+        Blob blob = userDataInput.getConnection().createBlob();
+        blob.setBytes(1, byteA);
+
+        return blob;
+    }
+
 
 }

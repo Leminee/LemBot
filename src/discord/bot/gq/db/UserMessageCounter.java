@@ -2,7 +2,7 @@ package discord.bot.gq.db;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import java.sql.Blob;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,7 +20,7 @@ public class UserMessageCounter extends ListenerAdapter {
 
         int numberMessage = 1;
 
-        if (!userMessage.isEmpty() && !event.getAuthor().isBot()) {
+        if (!userMessage.isEmpty()) {
 
             try {
                 ConnectionToDB db = new ConnectionToDB();
@@ -68,11 +68,7 @@ public class UserMessageCounter extends ListenerAdapter {
         PreparedStatement insertPStatement = db.connection.prepareStatement(insertQuery);
         insertPStatement.setString(1, messageId);
         insertPStatement.setString(2, userId);
-        byte[] byteA = userMessage.getBytes();
-        Blob blob = insertPStatement.getConnection().createBlob();
-        blob.setBytes(1, byteA);
-        insertPStatement.setBlob(3, blob);
-
+        insertPStatement.setBlob(3,StorageMemberLeave.setTransformedString(insertPStatement,userMessage));
         insertPStatement.executeUpdate();
 
     }

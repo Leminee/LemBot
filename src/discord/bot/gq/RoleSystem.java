@@ -17,7 +17,7 @@ public class RoleSystem extends ListenerAdapter {
         List<Role> serverRoleList = Objects.requireNonNull(BotMain.jda.getRoles());
         EmbedBuilder showRoles = new EmbedBuilder();
 
-        if (userMessage.equalsIgnoreCase(BotMain.prefix + "role")) {
+        if (userMessage.equalsIgnoreCase(BotMain.PREFIX + "role")) {
             if (!event.getMember().getUser().isBot()) {
                 showRoles.setTitle("Rollen");
                 showRoles.setColor(0x002d47);
@@ -31,7 +31,7 @@ public class RoleSystem extends ListenerAdapter {
                 event.getChannel().sendMessage(showRoles.build()).queue();
             }
         }
-        if (userMessage.equalsIgnoreCase(BotMain.prefix + "srole")) {
+        if (userMessage.equalsIgnoreCase(BotMain.PREFIX + "srole")) {
             if (!event.getMember().getUser().isBot()) {
                 showRoles.setTitle("Liste aller Rollen auf GQ");
                 showRoles.setColor(0x002d47);

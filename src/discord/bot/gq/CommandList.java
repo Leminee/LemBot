@@ -12,8 +12,9 @@ public class CommandList extends ListenerAdapter {
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 
         String userMessage = event.getMessage().getContentRaw();
+        String helpCommand = "help";
 
-        if (userMessage.equalsIgnoreCase(BotMain.prefix + "help") || userMessage.equalsIgnoreCase(BotMain.prefix + "hilfe")) {
+        if (userMessage.equalsIgnoreCase(BotMain.PREFIX + helpCommand) || userMessage.equalsIgnoreCase(BotMain.PREFIX + "hilfe")) {
             if (!Objects.requireNonNull(event.getMember()).getUser().isBot()) {
 
                 EmbedBuilder embedBuilder = new EmbedBuilder();

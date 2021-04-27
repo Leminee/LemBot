@@ -4,6 +4,7 @@ import discord.bot.gq.BotMain;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -14,15 +15,17 @@ public class TopBumper extends ListenerAdapter {
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 
         String userMessage = event.getMessage().getContentRaw();
+        String commandTopBumper = "topb";
 
-        if (userMessage.equalsIgnoreCase(BotMain.prefix + "topb")) {
+
+        if (handleCommand(userMessage, commandTopBumper)) {
 
             try {
 
                 ConnectionToDB db = new ConnectionToDB();
                 db.initialize();
 
-                String selectTopBumper = "SELECT username, number_bumps FROM user_bump ORDER BY number_bumps DESC LIMIT 3;";
+                String selectTopBumper = "SELECT username, number_bumps FROM user_bump ORDER BY number_bumps DESC, username LIMIT 3;";
                 Statement statement = db.connection.createStatement();
                 ResultSet rS = statement.executeQuery(selectTopBumper);
 
@@ -51,5 +54,10 @@ public class TopBumper extends ListenerAdapter {
                 throwables.printStackTrace();
             }
         }
+    }
+
+    public static boolean handleCommand(String userMessage, String command) {
+
+        return userMessage.equalsIgnoreCase(BotMain.PREFIX + command);
     }
 }

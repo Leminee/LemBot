@@ -18,14 +18,15 @@ public class Delation extends ListenerAdapter {
         String[] clearCommand = event.getMessage().getContentRaw().split("\\s+");
         Member author = event.getMessage().getMember();
 
-        if (clearCommand[0].equalsIgnoreCase(BotMain.prefix + "clear") && clearCommand[1].equalsIgnoreCase("-")) {
+
+        if (clearCommand[0].equalsIgnoreCase(BotMain.PREFIX + "clear") && clearCommand[1].equalsIgnoreCase("-")) {
 
             if (clearCommand.length < 3) {
 
                 EmbedBuilder howToUse = new EmbedBuilder();
                 howToUse.setColor(0x00ffff);
                 howToUse.setTitle("Hilfe");
-                howToUse.setDescription("Richtige Command " + "-> " + BotMain.prefix + "clear - [Anzahl der zu löschenden Nachrichten als Zahl]");
+                howToUse.setDescription("Richtige Command " + "-> " + BotMain.PREFIX + "clear - [Anzahl der zu löschenden Nachrichten als Zahl]");
                 event.getChannel().sendMessage(howToUse.build()).queue();
 
             }

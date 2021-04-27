@@ -22,11 +22,12 @@ public class BumpCounter extends ListenerAdapter {
         List <MessageEmbed> disBoardEmbed = event.getMessage().getEmbeds();
         User embedAuthor = event.getAuthor();
         Message message = event.getMessage();
+        String pingedUser = "<@(\\d+)>";
 
         if (Reminder.isSuccessBump(disBoardEmbed, embedAuthor)) {
 
             String embedContent = message.getEmbeds().get(0).getDescription();
-            Pattern p = Pattern.compile("<@(\\d+)>");
+            Pattern p = Pattern.compile(pingedUser);
             Matcher matcher = p.matcher(Objects.requireNonNull(embedContent));
 
             if (matcher.find()) {

@@ -1,9 +1,9 @@
 package discord.bot.gq.db;
 
-import discord.bot.gq.BotMain;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+
 import java.awt.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,8 +15,9 @@ public class TopFlooder extends ListenerAdapter {
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 
         String userMessage = event.getMessage().getContentRaw();
+        String commandTopUser ="top";
 
-        if (userMessage.equalsIgnoreCase(BotMain.prefix + "top")) {
+        if (TopBumper.handleCommand(userMessage,commandTopUser)) {
 
             try {
 
