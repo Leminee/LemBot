@@ -6,7 +6,6 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -20,17 +19,17 @@ public class Reminder extends ListenerAdapter {
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
 
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        ConfigSelection configSelection = new ConfigSelection();
+        configSelection.selectRoleId();
+        configSelection.selectChannelId();
 
         String[] pingContent = {
-                "Jetzt kann wieder gebumpt werden " + ConfigSelection.roleId + " :smile: ",
-                "Es ist wieder Zeit zu bumpen " + ConfigSelection.roleId + " :smile:",
-                "Bumpe den Server jetzt! " + ConfigSelection.roleId + " :smile:"};
-
-        ConfigSelection.selectRoleId();
-        ConfigSelection.selectChannelId();
+                "Jetzt kann wieder gebumpt werden " + configSelection.getRoleId() + " :smile: ",
+                "Es ist wieder Zeit zu bumpen " + configSelection.getRoleId() + " :smile:",
+                "Bumpe den Server jetzt! " + configSelection.getRoleId() + " :smile:"};
 
 
-        if (ConfigSelection.roleId == null || ConfigSelection.channelId == null) {
+        if (configSelection.getRoleId() == null || configSelection.getChannelId() == null) {
             return;
         }
 
@@ -44,7 +43,7 @@ public class Reminder extends ListenerAdapter {
 
             final Runnable ping = () -> {
                 int randomNumber = random.nextInt(pingContent.length);
-                Objects.requireNonNull(event.getJDA().getTextChannelById(ConfigSelection.channelId)).sendMessage(pingContent[randomNumber]).queue();
+                Objects.requireNonNull(event.getJDA().getTextChannelById(configSelection.getChannelId())).sendMessage(pingContent[randomNumber]).queue();
             };
 
             scheduler.schedule(ping, 2, TimeUnit.HOURS);

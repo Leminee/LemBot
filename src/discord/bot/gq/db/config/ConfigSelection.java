@@ -1,17 +1,15 @@
 package discord.bot.gq.db.config;
 
 import discord.bot.gq.db.ConnectionToDB;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class ConfigSelection {
-    public static String roleId = null;
-    public static String channelId = null;
+    private String roleId = null;
+    private String channelId = null;
 
-
-    public static void selectRoleId() {
+    public void selectRoleId() {
         try {
             ConnectionToDB db = new ConnectionToDB();
             db.initialize();
@@ -21,17 +19,17 @@ public class ConfigSelection {
             ResultSet rS = statement.executeQuery(selectRoleId);
 
             if (rS.next()) {
-                roleId = rS.getString(1);
+                this.roleId = rS.getString(1);
 
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.getMessage();
 
         }
 
     }
 
-    public static void selectChannelId(){
+    public void selectChannelId() {
         try {
 
             ConnectionToDB db = new ConnectionToDB();
@@ -42,7 +40,7 @@ public class ConfigSelection {
             ResultSet rS = statement.executeQuery(selectChannelId);
 
             if (rS.next()) {
-                channelId = rS.getString(1);
+                this.channelId = rS.getString(1);
 
             }
 
@@ -52,5 +50,12 @@ public class ConfigSelection {
 
     }
 
+    public String getRoleId() {
+        return roleId;
+    }
+
+    public String getChannelId() {
+        return channelId;
+    }
 
 }

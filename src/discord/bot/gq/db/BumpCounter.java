@@ -19,7 +19,7 @@ public class BumpCounter extends ListenerAdapter {
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 
-        List <MessageEmbed> disBoardEmbed = event.getMessage().getEmbeds();
+        List<MessageEmbed> disBoardEmbed = event.getMessage().getEmbeds();
         User embedAuthor = event.getAuthor();
         Message message = event.getMessage();
         String pingedUser = "<@(\\d+)>";

@@ -25,7 +25,6 @@ public class CommandList extends ListenerAdapter {
                         "                -------------------- **BEFEHLSLISTE** -------------------- \n  " +
                         "\n" + " Prefix:  `?`" + " \n" + " \n" +
                         "`?help`: Nachricht mit Befehlsliste \n  " +
-                        "`?ping`: pong - wenn Bot online ist" + " \n" +
                         "`?hcb`: Code Block Highlight" + " \n" +
                         "`?top`: Liste der Top 3 User mit den meisten Nachrichten" + "\n" +
                         "`?topb`: Liste der Top 3 Server-Bumper " + "\n" +
@@ -33,9 +32,9 @@ public class CommandList extends ListenerAdapter {
                         "`?topc`: Liste der 3 aktivisten Channels" + "\n" +
                         "`?tope`: Liste der 3 am häufigsten benutzten Emojis auf GQ" + "\n" +
                         "`?srole`: Liste aller Rollen auf GQ" + "\n" +
-                        "`?clear - [zahl]`: löscht Nachrichten" + " \n" +
-                        "`?kick [@username]`: kickt den User" + "\n" +
-                        "`?ban [@username]`: bannt den User" + "\n" +
+                        "`?clear - <zahl>`: löscht Nachrichten" + " \n" +
+                        "`?kick <@username> [Grund]`: kickt den User" + "\n" +
+                        "`?ban <@username> [Grund]`: bannt den User" + "\n" +
                         "(`?clear`, `?kick`, `?ban` *nur für Staff*)");
 
                 event.getChannel().sendMessage(embedBuilder.build()).queue();
