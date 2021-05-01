@@ -4,7 +4,7 @@
     <root id="archive" name="DiscordBot.jar">
       <element id="module-output" name="DiscordBot" />
       <element id="extracted-dir" path="$USER_HOME$/mysql-connector-java-8.0.22/mysql-connector-java-8.0.22.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$USER_HOME$/Downloads/JDA-4.2.0_229-withDependencies.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/JDA-4.2.0_247-withDependencies.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

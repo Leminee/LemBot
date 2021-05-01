@@ -9,7 +9,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import java.util.List;
 
-public class Delation extends ListenerAdapter {
+public class MessageDelation extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {

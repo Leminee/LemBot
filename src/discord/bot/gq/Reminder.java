@@ -53,10 +53,10 @@ public class Reminder extends ListenerAdapter {
 
     public static boolean isSuccessBump(List<MessageEmbed> messages, User embedAuthor) {
 
-        long disBoardID = 302050872383242240L;
+        long disBoardId = 302050872383242240L;
         String successBumpImageUrl = "https://disboard.org/images/bot-command-image-bump.png";
 
-        if (embedAuthor.getIdLong() != disBoardID) {
+        if (embedAuthor.getIdLong() != disBoardId) {
             return false;
         }
 

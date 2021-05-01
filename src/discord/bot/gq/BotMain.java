@@ -1,7 +1,7 @@
 package discord.bot.gq;
 
 import discord.bot.gq.db.*;
-import discord.bot.gq.moderation.Delation;
+import discord.bot.gq.moderation.MessageDelation;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -14,7 +14,7 @@ public class BotMain {
 
     public static JDA jda;
     public static final String PREFIX = "?";
-    public static final String TOKEN = "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.XKdW2PNaC067MYtkMD3855JhfMM";
+    public static final String TOKEN = "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.FWO1eFIJVG9rjKFQvfvh1O4OuLc";
 
     public static void main(String[] args) {
 
@@ -31,7 +31,7 @@ public class BotMain {
         jda.getPresence().setActivity(Activity.playing("?help"));
 
         jda.addEventListener(new StorageMemberLeave());
-        jda.addEventListener(new Delation());
+        jda.addEventListener(new MessageDelation());
         jda.addEventListener(new AutoAnswering());
         jda.addEventListener(new Reminder());
         jda.addEventListener(new MemberJoin());
@@ -42,6 +42,7 @@ public class BotMain {
         jda.addEventListener(new TopBumper());
         jda.addEventListener(new TopFlooder());
         jda.addEventListener(new CommandList());
+        jda.addEventListener(new DiscordListBumper());
 
     }
 }

@@ -45,6 +45,7 @@ public class UserMessageCounter extends ListenerAdapter {
                     updatePStatement.setString(1, userId);
                     updatePStatement.executeUpdate();
 
+
                 } else {
                     userData.executeUpdate();
 
