@@ -1,6 +1,6 @@
 package discord.bot.gq;
 
-import discord.bot.gq.db.config.ConfigSelection;
+import discord.bot.gq.database.config.ConfigSelection;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -33,7 +33,7 @@ public class DiscordListBumper extends ListenerAdapter {
 
             final Runnable ping = () -> Objects.requireNonNull(event.getJDA().getTextChannelById(configSelection.getChannelId())).sendMessage(bumpCommand).queue();
 
-            scheduler.schedule(ping, 8, TimeUnit.HOURS);
+            scheduler.schedule(ping, 9, TimeUnit.HOURS);
 
         }
 
