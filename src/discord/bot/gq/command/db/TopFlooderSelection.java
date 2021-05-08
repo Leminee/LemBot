@@ -1,6 +1,6 @@
 package discord.bot.gq.command.db;
 
-import discord.bot.gq.Helper;
+import discord.bot.gq.lib.Helper;
 import discord.bot.gq.database.ConnectionToDB;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;

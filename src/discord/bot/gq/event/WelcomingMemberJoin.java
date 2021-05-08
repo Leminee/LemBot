@@ -1,4 +1,4 @@
-package discord.bot.gq;
+package discord.bot.gq.event;
 
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;

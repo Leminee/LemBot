@@ -1,4 +1,4 @@
-package discord.bot.gq;
+package discord.bot.gq.lib;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;

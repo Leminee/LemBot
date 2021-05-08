@@ -1,5 +1,6 @@
-package discord.bot.gq;
+package discord.bot.gq.lib;
 
+import discord.bot.gq.BotMain;
 import discord.bot.gq.database.ConnectionToDB;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;

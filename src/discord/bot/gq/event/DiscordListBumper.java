@@ -1,4 +1,4 @@
-package discord.bot.gq;
+package discord.bot.gq.event;
 
 import discord.bot.gq.config.db.ConfigSelection;
 import net.dv8tion.jda.api.entities.MessageEmbed;

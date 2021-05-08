@@ -1,6 +1,6 @@
 package discord.bot.gq.database;
 
-import discord.bot.gq.Helper;
+import discord.bot.gq.lib.Helper;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
