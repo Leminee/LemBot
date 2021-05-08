@@ -1,6 +1,6 @@
 package discord.bot.gq;
 
-import discord.bot.gq.database.config.ConfigSelection;
+import discord.bot.gq.config.db.ConfigSelection;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;

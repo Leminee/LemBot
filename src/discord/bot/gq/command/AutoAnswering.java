@@ -27,7 +27,7 @@ public class AutoAnswering extends ListenerAdapter {
                 userMessage.equalsIgnoreCase(BotMain.PREFIX + "time")) {
             if (!event.getMember().getUser().isBot()) {
                 event.getChannel().sendTyping().queue();
-                event.getChannel().sendMessage("CurrentTime: " + date.toString().substring(11, 16)).queue();
+                event.getChannel().sendMessage("Uhrzeit: " + date.toString().substring(11, 16)).queue();
             }
         }
 
@@ -40,10 +40,11 @@ public class AutoAnswering extends ListenerAdapter {
 
         }
 
-        if ((userMessage.startsWith("kann sich wer") || (userMessage.contains("ann sich wer") || userMessage.startsWith("kennt sich jemand") || userMessage.startsWith("Kennt sich jemand") ||
-                userMessage.startsWith("kennt sich wer aus mit") || userMessage.contains("kann jemand helfen bei")) && userMessage.length() < 40)) {
+        if ((userMessage.startsWith("kennt sich wer") || (userMessage.contains("kennt sich wer") || userMessage.startsWith("kennt sich jemand") || userMessage.startsWith("Kennt sich jemand") ||
+                userMessage.startsWith("kennt sich wer aus mit") || userMessage.contains("kann mir jemand helfen")) || userMessage.contains("Kennt sich wer mit") ||
+                userMessage.contains("wer kennt sich aus") && userMessage.length() < 45)) {
             if (!event.getMember().getUser().isBot()) {
-                event.getChannel().sendMessage("Stelle einfach deine Frage! " + userName).queue();
+                event.getChannel().sendMessage("Stelle einfach deine Frage - möglichst detailliert! " + userName).queue();
 
             }
         }

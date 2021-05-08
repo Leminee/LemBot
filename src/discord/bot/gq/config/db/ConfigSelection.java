@@ -1,4 +1,4 @@
-package discord.bot.gq.database.config;
+package discord.bot.gq.config.db;
 
 import discord.bot.gq.database.ConnectionToDB;
 

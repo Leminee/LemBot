@@ -1,8 +1,8 @@
-package discord.bot.gq.command;
+package discord.bot.gq.config.command;
 
 import discord.bot.gq.BotMain;
-import discord.bot.gq.database.config.ConfigSelection;
-import discord.bot.gq.database.config.ConfigUpdating;
+import discord.bot.gq.config.db.ConfigSelection;
+import discord.bot.gq.config.db.ConfigUpdating;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
@@ -12,14 +12,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class UpdatingRole extends ListenerAdapter {
-
+public class UpdatingChannel extends ListenerAdapter {
 
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
 
         String[] userMessage = event.getMessage().getContentRaw().split("\\s+");
         Member authorCommand = event.getMessage().getMember();
-        String setConfigCommand = "setrid";
+        String setConfigCommand = "setcid";
 
         if ((userMessage[0].equalsIgnoreCase(BotMain.PREFIX + setConfigCommand))) {
 
@@ -30,19 +29,18 @@ public class UpdatingRole extends ListenerAdapter {
             if (!Objects.requireNonNull(authorCommand).hasPermission(Permission.ADMINISTRATOR)) {
                 return;
             }
+
             ConfigSelection configSelection = new ConfigSelection();
+            configSelection.setChannelId((userMessage[1]));
+
             ConfigUpdating configUpdating = new ConfigUpdating();
+            configUpdating.updateChannelId();
 
-            configSelection.setRoleId(userMessage[1]);
-            configUpdating.updateRoleId();
-
-
-            EmbedBuilder successUpdatedRoleId = new EmbedBuilder();
-            successUpdatedRoleId.setColor(0x00ff60);
-            successUpdatedRoleId.setTitle("Confirmation");
-            successUpdatedRoleId.setDescription("ID der zu pingenden Rolle wurde erfolgreich bearbeitet " + authorCommand.getAsMention() + "!");
-            event.getChannel().sendMessage(successUpdatedRoleId.build()).queue();
-
+            EmbedBuilder successUpdatedChannelId = new EmbedBuilder();
+            successUpdatedChannelId.setColor(0x00ff60);
+            successUpdatedChannelId.setTitle("Confirmation");
+            successUpdatedChannelId.setDescription("ID Channel wurde erfolgreich bearbeitet " + authorCommand.getAsMention() + "!");
+            event.getChannel().sendMessage(successUpdatedChannelId.build()).queue();
 
         }
     }

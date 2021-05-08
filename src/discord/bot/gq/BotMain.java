@@ -4,6 +4,8 @@ import discord.bot.gq.command.*;
 import discord.bot.gq.command.db.TopBumperSelection;
 import discord.bot.gq.command.db.TopFlooderSelection;
 import discord.bot.gq.command.moderation.MessageDelation;
+import discord.bot.gq.config.command.UpdatingChannel;
+import discord.bot.gq.config.command.UpdatingRole;
 import discord.bot.gq.database.*;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -17,7 +19,7 @@ public class BotMain {
 
     public static JDA jda;
     public static final String PREFIX = "?";
-    public static final String TOKEN = "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.zhK8JnhiG_nQLP7FY9jEvho3zkw";
+    public static final String TOKEN = "";
 
     public static void main(String[] args) {
 
@@ -39,7 +41,7 @@ public class BotMain {
         jda.addEventListener(new MessageDelation());
         jda.addEventListener(new AutoAnswering());
         jda.addEventListener(new Reminder());
-        jda.addEventListener(new MemberJoin());
+        jda.addEventListener(new WelcomingMemberJoin());
         jda.addEventListener(new StorageMemberJoin());
         jda.addEventListener(new UserMessageCounter());
         jda.addEventListener(new BumpCounter());
