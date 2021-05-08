@@ -26,7 +26,7 @@ public class ConfigSelection {
 
             }
         } catch (SQLException e) {
-            e.getMessage();
+            System.out.println(e.getMessage());
 
         }
 
@@ -48,7 +48,7 @@ public class ConfigSelection {
             }
 
         } catch (SQLException e) {
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
 
     }

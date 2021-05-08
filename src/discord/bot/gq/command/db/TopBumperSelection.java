@@ -16,9 +16,9 @@ public class TopBumperSelection extends ListenerAdapter {
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 
         String userMessage = event.getMessage().getContentRaw();
-        String getTopBumper = "topb";
+        String getTopBumperCommand = "topb";
 
-        if (Helper.isValidCommand(userMessage, getTopBumper)) {
+        if (Helper.isValidCommand(userMessage, getTopBumperCommand)) {
 
             try {
 

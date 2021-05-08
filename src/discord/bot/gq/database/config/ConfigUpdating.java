@@ -22,7 +22,7 @@ public class ConfigUpdating {
 
 
         } catch (SQLException e) {
-            e.getMessage();
+            System.out.println(e.getMessage());
 
         }
     }
@@ -42,7 +42,7 @@ public class ConfigUpdating {
 
 
         } catch (SQLException e) {
-            e.getMessage();
+            System.out.println(e.getMessage());
 
         }
     }

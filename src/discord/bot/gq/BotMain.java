@@ -17,7 +17,7 @@ public class BotMain {
 
     public static JDA jda;
     public static final String PREFIX = "?";
-    public static final String TOKEN = "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.nKi2DCRXm7WFkh13p_Rfpl0bflQ";
+    public static final String TOKEN = "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.zhK8JnhiG_nQLP7FY9jEvho3zkw";
 
     public static void main(String[] args) {
 
@@ -50,13 +50,13 @@ public class BotMain {
         jda.addEventListener(new DiscordListBumper());
         jda.addEventListener(new InviteLinkDelation());
         jda.addEventListener(new PasswordCheck());
-        jda.addEventListener(new ChannelUpdating());
+        jda.addEventListener(new UpdatingChannel());
         jda.addEventListener(new StorageUpdatedMessage());
         jda.addEventListener(new StorageDeletedMessage());
-        jda.addEventListener(new RoleUpdating());
+        jda.addEventListener(new UpdatingRole());
 
 
-        /*ReactionManager firstManager = new ReactionManager(jda);
+        ReactionManager firstManager = new ReactionManager(jda);
 
         firstManager.registerReaction(channelId, "821186181903024179", "821167071181275146", "784773593942327297").
                 registerReaction(channelId, "821186181903024179", "821144439647895602", "811741950092116038");
@@ -71,6 +71,6 @@ public class BotMain {
                 registerReaction(channelId, messageId, "821169196523192380", "808768626844893184").
                 registerReaction(channelId, messageId, "821171704133845073", "808767910696189975").
                 registerReaction(channelId, messageId, "821168328961163266", "808779520286654554").
-                registerReaction(channelId, messageId, "821144354445328384", "815922232106156033");*/
+                registerReaction(channelId, messageId, "821144354445328384", "815922232106156033");
     }
 }

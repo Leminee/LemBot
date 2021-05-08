@@ -41,12 +41,12 @@ public class BumpCounter extends ListenerAdapter {
                     ConnectionToDB db = new ConnectionToDB();
                     db.initialize();
 
-                    String insertUserData = "INSERT INTO user_bump (id_discord, username, number_bumps) VALUES (?,?,?);";
+                    String insertBumpData = "INSERT INTO user_bump (id_discord, username, number_bumps) VALUES (?,?,?);";
 
-                    PreparedStatement userDataInput = db.getConnection().prepareStatement(insertUserData);
-                    userDataInput.setString(1, idPingedUser);
-                    userDataInput.setString(2, pingedUserName);
-                    userDataInput.setInt(3, bump);
+                    PreparedStatement pS = db.getConnection().prepareStatement(insertBumpData);
+                    pS.setString(1, idPingedUser);
+                    pS.setString(2, pingedUserName);
+                    pS.setInt(3, bump);
 
                     String verifyIfUserAlreadyExists = "SELECT id_discord FROM user_bump WHERE id_discord = ? ";
                     PreparedStatement usernameInput = db.getConnection().prepareStatement(verifyIfUserAlreadyExists);
@@ -66,7 +66,7 @@ public class BumpCounter extends ListenerAdapter {
                         insert.executeUpdate();
 
                     } else {
-                        userDataInput.executeUpdate();
+                        pS.executeUpdate();
                     }
 
                 } catch (SQLException e) {

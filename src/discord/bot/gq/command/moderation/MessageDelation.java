@@ -55,11 +55,11 @@ public class MessageDelation extends ListenerAdapter {
 
                         event.getChannel().deleteMessages(messages).queue();
 
-                        EmbedBuilder successDeleted = new EmbedBuilder();
-                        successDeleted.setColor(0x00ff60);
-                        successDeleted.setTitle("Information");
-                        successDeleted.setDescription("Es wurden " + clearCommand[2] + " Nachrichten durch " + authorCommand.getAsMention() + " erfolgreich gelöscht!");
-                        event.getChannel().sendMessage(successDeleted.build()).queue();
+                        EmbedBuilder deletedSuccess = new EmbedBuilder();
+                        deletedSuccess.setColor(0x00ff60);
+                        deletedSuccess.setTitle("Information");
+                        deletedSuccess.setDescription("Es wurden " + clearCommand[2] + " Nachrichten durch " + authorCommand.getAsMention() + " erfolgreich gelöscht!");
+                        event.getChannel().sendMessage(deletedSuccess.build()).queue();
                     }
 
                 } catch (IllegalArgumentException e) {
