@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionToDB {
-    public Connection connection;
+    private Connection connection;
 
     public void initialize() {
         try {
@@ -13,10 +13,16 @@ public class ConnectionToDB {
             String dbUrl = "jdbc:mysql://localhost:3306/discordbot?autoReconnect=true&serverTimezone=UTC";
             String dbUsername = "mel";
             String dbPassword = "36177436";
-            connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
+            this.connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
 
         } catch (SQLException sqlEx) {
             System.out.println(sqlEx.getMessage());
         }
+
     }
+
+    public Connection getConnection() {
+        return connection;
+    }
+
 }

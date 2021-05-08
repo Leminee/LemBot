@@ -1,11 +1,12 @@
 package discord.bot.gq.database;
 
-import discord.bot.gq.Reminder;
+import discord.bot.gq.Helper;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,7 +25,7 @@ public class BumpCounter extends ListenerAdapter {
         Message message = event.getMessage();
         String pingedUser = "<@(\\d+)>";
 
-        if (Reminder.isSuccessBump(disBoardEmbed, embedAuthor)) {
+        if (Helper.isSuccessBump(disBoardEmbed, embedAuthor)) {
 
             String embedContent = message.getEmbeds().get(0).getDescription();
             Pattern p = Pattern.compile(pingedUser);
@@ -42,25 +43,25 @@ public class BumpCounter extends ListenerAdapter {
 
                     String insertUserData = "INSERT INTO user_bump (id_discord, username, number_bumps) VALUES (?,?,?);";
 
-                    PreparedStatement userDataInput = db.connection.prepareStatement(insertUserData);
+                    PreparedStatement userDataInput = db.getConnection().prepareStatement(insertUserData);
                     userDataInput.setString(1, idPingedUser);
                     userDataInput.setString(2, pingedUserName);
                     userDataInput.setInt(3, bump);
 
                     String verifyIfUserAlreadyExists = "SELECT id_discord FROM user_bump WHERE id_discord = ? ";
-                    PreparedStatement usernameInput = db.connection.prepareStatement(verifyIfUserAlreadyExists);
+                    PreparedStatement usernameInput = db.getConnection().prepareStatement(verifyIfUserAlreadyExists);
                     usernameInput.setString(1, idPingedUser);
                     ResultSet rS = usernameInput.executeQuery();
 
                     if (rS.next()) {
 
                         String updateBumps = "UPDATE user_bump SET number_bumps = (number_bumps +1) WHERE id_discord = ?";
-                        PreparedStatement update = db.connection.prepareStatement(updateBumps);
+                        PreparedStatement update = db.getConnection().prepareStatement(updateBumps);
                         update.setString(1, idPingedUser);
                         update.executeUpdate();
 
                         String insertBumpTime = "INSERT INTO user_bump_time (id_user_bump_time, id_discord) VALUES (NULL,?)";
-                        PreparedStatement insert = db.connection.prepareStatement(insertBumpTime);
+                        PreparedStatement insert = db.getConnection().prepareStatement(insertBumpTime);
                         insert.setString(1, idPingedUser);
                         insert.executeUpdate();
 

@@ -1,5 +1,6 @@
-package discord.bot.gq;
+package discord.bot.gq.command;
 
+import discord.bot.gq.BotMain;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;

@@ -1,4 +1,4 @@
-package discord.bot.gq.moderation;
+package discord.bot.gq.command.moderation;
 
 import discord.bot.gq.BotMain;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -15,7 +15,7 @@ public class MessageDelation extends ListenerAdapter {
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 
         String[] clearCommand = event.getMessage().getContentRaw().split("\\s+");
-        Member author = event.getMessage().getMember();
+        Member authorCommand = event.getMessage().getMember();
 
 
         if (clearCommand[0].equalsIgnoreCase(BotMain.PREFIX + "clear") && clearCommand[1].equalsIgnoreCase("-")) {
@@ -30,8 +30,8 @@ public class MessageDelation extends ListenerAdapter {
 
             }
 
-            assert author != null;
-            if (!author.hasPermission(Permission.MESSAGE_MANAGE)) {
+            assert authorCommand != null;
+            if (!authorCommand.hasPermission(Permission.MESSAGE_MANAGE)) {
 
                 EmbedBuilder error = new EmbedBuilder();
                 error.setColor(0xff0000);
@@ -58,7 +58,7 @@ public class MessageDelation extends ListenerAdapter {
                         EmbedBuilder successDeleted = new EmbedBuilder();
                         successDeleted.setColor(0x00ff60);
                         successDeleted.setTitle("Information");
-                        successDeleted.setDescription("Es wurden " + clearCommand[2] + " Nachrichten durch " + author.getAsMention() + " erfolgreich gelöscht!");
+                        successDeleted.setDescription("Es wurden " + clearCommand[2] + " Nachrichten durch " + authorCommand.getAsMention() + " erfolgreich gelöscht!");
                         event.getChannel().sendMessage(successDeleted.build()).queue();
                     }
 

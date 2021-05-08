@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -39,7 +40,7 @@ public class Reminder extends ListenerAdapter {
         User embedAuthor = event.getAuthor();
 
 
-        if (isSuccessBump(disBoardEmbed, embedAuthor)) {
+        if (Helper.isSuccessBump(disBoardEmbed, embedAuthor)) {
 
             final Runnable ping = () -> {
                 int randomNumber = random.nextInt(pingContent.length);
@@ -50,24 +51,4 @@ public class Reminder extends ListenerAdapter {
 
         }
     }
-
-    public static boolean isSuccessBump(List<MessageEmbed> messages, User embedAuthor) {
-
-        long disBoardId = 302050872383242240L;
-        String successBumpImageUrl = "https://disboard.org/images/bot-command-image-bump.png";
-
-        if (embedAuthor.getIdLong() != disBoardId) {
-            return false;
-        }
-
-        if (messages.get(0).getDescription() == null) {
-            return false;
-        }
-
-        if (messages.get(0).getImage() == null) {
-            return false;
-        }
-        return Objects.equals(Objects.requireNonNull(messages.get(0).getImage()).getUrl(), successBumpImageUrl);
-    }
-
 }

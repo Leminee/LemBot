@@ -29,7 +29,7 @@ public class DiscordListBumper extends ListenerAdapter {
         List<MessageEmbed> discordListBot = event.getMessage().getEmbeds();
         User embedAuthor = event.getAuthor();
 
-        if (isDiscordListBotMessage(discordListBot, embedAuthor)) {
+        if (isSuccessBumpDiscordList(discordListBot, embedAuthor)) {
 
             final Runnable ping = () -> Objects.requireNonNull(event.getJDA().getTextChannelById(configSelection.getChannelId())).sendMessage(bumpCommand).queue();
 
@@ -39,7 +39,8 @@ public class DiscordListBumper extends ListenerAdapter {
 
     }
 
-    private boolean isDiscordListBotMessage(List<MessageEmbed> embedContent, User embedAuthor) {
+
+    private boolean isSuccessBumpDiscordList(List<MessageEmbed> embedContent, User embedAuthor) {
 
         long discordListBot = 212681528730189824L;
 

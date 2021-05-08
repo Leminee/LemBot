@@ -1,5 +1,6 @@
-package discord.bot.gq;
+package discord.bot.gq.command;
 
+import discord.bot.gq.BotMain;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import java.util.Date;
@@ -9,6 +10,7 @@ public class AutoAnswering extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
+
         String userMessage = event.getMessage().getContentRaw();
         String userName = Objects.requireNonNull(event.getMember()).getAsMention();
         Date date = new Date();

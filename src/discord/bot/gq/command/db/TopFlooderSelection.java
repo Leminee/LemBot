@@ -1,34 +1,37 @@
-package discord.bot.gq.database;
+package discord.bot.gq.command.db;
 
+import discord.bot.gq.Helper;
+import discord.bot.gq.database.ConnectionToDB;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+
 import java.awt.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class TopFlooder extends ListenerAdapter {
+public class TopFlooderSelection extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 
         String userMessage = event.getMessage().getContentRaw();
-        String commandTopUser = "top";
+        String getTopFlooder = "top";
 
-        if (TopBumper.isValidCommand(userMessage, commandTopUser)) {
+        if (Helper.isValidCommand(userMessage, getTopFlooder)) {
 
             try {
 
                 ConnectionToDB db = new ConnectionToDB();
                 db.initialize();
 
-                String selectTopUser = "SELECT username, number_message FROM user_message ORDER BY number_message DESC LIMIT 3;";
-                Statement statement = db.connection.createStatement();
-                ResultSet rS = statement.executeQuery(selectTopUser);
+                String selectTopFlooder = "SELECT username, number_message FROM user_message ORDER BY number_message DESC LIMIT 5;";
+                Statement statement = db.getConnection().createStatement();
+                ResultSet rS = statement.executeQuery(selectTopFlooder);
 
                 EmbedBuilder embedBuilder = new EmbedBuilder();
-                embedBuilder.setTitle("Liste der TOP 3 User");
+                embedBuilder.setTitle("Liste der TOP 5 User");
                 embedBuilder.setDescription("");
                 embedBuilder.setColor(Color.white);
 
@@ -37,7 +40,6 @@ public class TopFlooder extends ListenerAdapter {
                 while (rS.next()) {
 
                     embedBuilder.addField("TOP " + top, rS.getString(1).toUpperCase(), false);
-                    embedBuilder.addField("Anzahl Nachrichten", rS.getString(2), false);
                     top++;
 
                 }

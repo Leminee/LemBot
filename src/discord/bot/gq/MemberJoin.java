@@ -13,21 +13,20 @@ public class MemberJoin extends ListenerAdapter {
     @Override
     public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
 
-        String welcomeChannelID = "779107500381175808";
+        String welcomeChannelId = "779107500381175808";
 
-        if (welcomeChannelID == null) {
+        if (welcomeChannelId == null) {
             return;
         }
 
         String[] messages = {"""
 Hallo [member], Willkommen auf **GoodQuestion (GQ)**!
 
-Stelle Dich bitte hier kurz vor, damit ein Moderator Dir die entsprechenden Rollen zuweist!
-(Beispiel: Welche Programmiersprachen lernst Du? Welche kannst Du?.) \n
+Stelle Dich bitte hier kurz vor, damit ein Moderator Dir die entsprechenden Rollen zuweist! \n
 Alternativ kannst Du Dir in dem folgenden Kanal Deine Rollen selbst zuweisen: <#779107472622223400>
 """};
 
-        TextChannel channel = event.getGuild().getTextChannelById(welcomeChannelID);
+        TextChannel channel = event.getGuild().getTextChannelById(welcomeChannelId);
         String avatarUrl = event.getUser().getEffectiveAvatarUrl();
 
         if (!event.getUser().isBot()) {

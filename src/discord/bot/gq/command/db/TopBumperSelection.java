@@ -1,22 +1,24 @@
-package discord.bot.gq.database;
+package discord.bot.gq.command.db;
 
-import discord.bot.gq.BotMain;
+import discord.bot.gq.Helper;
+import discord.bot.gq.database.ConnectionToDB;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class TopBumper extends ListenerAdapter {
+public class TopBumperSelection extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 
         String userMessage = event.getMessage().getContentRaw();
-        String commandTopBumper = "topb";
+        String getTopBumper = "topb";
 
-        if (isValidCommand(userMessage, commandTopBumper)) {
+        if (Helper.isValidCommand(userMessage, getTopBumper)) {
 
             try {
 
@@ -24,7 +26,7 @@ public class TopBumper extends ListenerAdapter {
                 db.initialize();
 
                 String selectTopBumper = "SELECT username, number_bumps FROM user_bump ORDER BY number_bumps DESC, username LIMIT 3;";
-                Statement statement = db.connection.createStatement();
+                Statement statement = db.getConnection().createStatement();
                 ResultSet rS = statement.executeQuery(selectTopBumper);
 
                 EmbedBuilder embedBuilder = new EmbedBuilder();
@@ -53,10 +55,4 @@ public class TopBumper extends ListenerAdapter {
             }
         }
     }
-
-    public static boolean isValidCommand(String userMessage, String command) {
-
-        return userMessage.equalsIgnoreCase(BotMain.PREFIX + command);
-    }
-
 }

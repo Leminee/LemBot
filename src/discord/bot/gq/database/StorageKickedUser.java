@@ -1,4 +1,8 @@
 package discord.bot.gq.database;
 
-public class StorageKickedUser {
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
+
+public class StorageKickedUser extends ListenerAdapter {
+
+
 }

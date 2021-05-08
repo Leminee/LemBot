@@ -1,12 +1,13 @@
-package discord.bot.gq;
+package discord.bot.gq.command;
 
+import discord.bot.gq.Helper;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.util.Objects;
 
-public class CommandList extends ListenerAdapter {
+public class HelpList extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
@@ -14,7 +15,7 @@ public class CommandList extends ListenerAdapter {
         String userMessage = event.getMessage().getContentRaw();
         String helpCommand = "help";
 
-        if (userMessage.equalsIgnoreCase(BotMain.PREFIX + helpCommand) || userMessage.equalsIgnoreCase(BotMain.PREFIX + "hilfe")) {
+        if (Helper.isValidCommand(userMessage,helpCommand) || Helper.isValidCommand(userMessage,"hilfe")) {
             if (!Objects.requireNonNull(event.getMember()).getUser().isBot()) {
 
                 EmbedBuilder embedBuilder = new EmbedBuilder();
@@ -25,17 +26,16 @@ public class CommandList extends ListenerAdapter {
                         "                -------------------- **BEFEHLSLISTE** -------------------- \n  " +
                         "\n" + " Prefix:  `?`" + " \n" + " \n" +
                         "`?help`: Nachricht mit Befehlsliste \n  " +
-                        "`?hcb`: Code Block Highlight" + " \n" +
-                        "`?top`: Liste der Top 3 User mit den meisten Nachrichten" + "\n" +
-                        "`?topb`: Liste der Top 3 Server-Bumper " + "\n" +
+                        "`?check <password>`: gibt zurück, ob Passwort unsicher ist" + " \n" +
+                        "`?hcb`: Zeigt, wie Quellcode gefärbt wird" + " \n" +
+                        "`?top`: Liste der Top 3 Flooder" + "\n" +
+                        "`?topb`: Liste der Top 3 Server-Bumper" + "\n" +
                         "`?topu`: Liste der 3 am häufigsten gepingten User" + "\n" +
                         "`?topc`: Liste der 3 aktivisten Channels" + "\n" +
-                        "`?tope`: Liste der 3 am häufigsten benutzten Emojis auf GQ" + "\n" +
                         "`?srole`: Liste aller Rollen auf GQ" + "\n" +
                         "`?clear - <zahl>`: löscht Nachrichten" + " \n" +
                         "`?kick <@username> [Grund]`: kickt den User" + "\n" +
-                        "`?ban <@username> [Grund]`: bannt den User" + "\n" +
-                        "(`?clear`, `?kick`, `?ban` *nur für Staff*)");
+                        "(`?clear`, `?kick` *nur für Staff*)");
 
                 event.getChannel().sendMessage(embedBuilder.build()).queue();
             }

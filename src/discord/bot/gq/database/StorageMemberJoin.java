@@ -1,8 +1,9 @@
 package discord.bot.gq.database;
 
+import discord.bot.gq.Helper;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import java.sql.Blob;
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -19,20 +20,17 @@ public class StorageMemberJoin extends ListenerAdapter {
         ConnectionToDB db = new ConnectionToDB();
         db.initialize();
 
-        String insertDataQuery = "INSERT INTO user_join (id_user_join, id_discord, username,avatar_url) VALUES (NULL,?,?,?);";
+        String insertUserJoinData = "INSERT INTO user_join (id_user_join, id_discord, username,avatar_url) VALUES (NULL,?,?,?);";
 
         try {
 
-            PreparedStatement userDataInputPStatement = db.connection.prepareStatement(insertDataQuery);
+            PreparedStatement pS = db.getConnection().prepareStatement(insertUserJoinData);
 
-            userDataInputPStatement.setLong(1, userId);
-            byte[] byteA = userName.getBytes();
-            Blob blob = userDataInputPStatement.getConnection().createBlob();
-            blob.setBytes(1, byteA);
-            userDataInputPStatement.setBlob(2, blob);
-            userDataInputPStatement.setString(3, avatarUrl);
+            pS.setLong(1, userId);
+            pS.setBlob(2, Helper.setTransformedString(pS,userName));
+            pS.setString(3, avatarUrl);
 
-            userDataInputPStatement.executeUpdate();
+            pS.executeUpdate();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
