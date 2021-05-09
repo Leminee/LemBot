@@ -44,7 +44,7 @@ public final class Helper {
         return Objects.equals(Objects.requireNonNull(messages.get(0).getImage()).getUrl(), successBumpImageUrl);
     }
 
-    public static Blob setTransformedString(PreparedStatement userDataInput, String userName) throws SQLException {
+    public static Blob changeCharacterEncoding(PreparedStatement userDataInput, String userName) throws SQLException {
         byte[] byteA = userName.getBytes();
         Blob blob = userDataInput.getConnection().createBlob();
         blob.setBytes(1, byteA);
@@ -64,7 +64,7 @@ public final class Helper {
 
             while ((line = bR.readLine()) != null) {
 
-                preparedStatement.setBlob(1, setTransformedString(preparedStatement, line));
+                preparedStatement.setBlob(1, changeCharacterEncoding(preparedStatement, line));
                 preparedStatement.executeUpdate();
             }
 

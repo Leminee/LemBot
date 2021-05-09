@@ -39,7 +39,6 @@ public class DiscordListBumper extends ListenerAdapter {
 
     }
 
-
     private boolean isSuccessBumpDiscordList(List<MessageEmbed> embedContent, User embedAuthor) {
 
         long discordListBot = 212681528730189824L;

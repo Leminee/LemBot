@@ -30,8 +30,8 @@ public class StorageUpdatedMessage extends ListenerAdapter {
 
             pS.setLong(1,idUpdatedMessage);
             pS.setLong(2, authorId);
-            pS.setBlob(3, Helper.setTransformedString(pS,authorUpdatedMessage));
-            pS.setBlob(4, Helper.setTransformedString(pS,updatedMessageContent));
+            pS.setBlob(3, Helper.changeCharacterEncoding(pS,authorUpdatedMessage));
+            pS.setBlob(4, Helper.changeCharacterEncoding(pS,updatedMessageContent));
 
             pS.executeUpdate();
 

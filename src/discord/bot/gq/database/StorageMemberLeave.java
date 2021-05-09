@@ -28,7 +28,7 @@ public class StorageMemberLeave extends ListenerAdapter {
             PreparedStatement pS = db.getConnection().prepareStatement(insertUserLeaveData);
 
             pS.setLong(1, userId);
-            pS.setBlob(2, Helper.setTransformedString(pS,userName));
+            pS.setBlob(2, Helper.changeCharacterEncoding(pS,userName));
             pS.setString(3, avatarUrl);
             pS.setString(4, userTag);
             pS.executeUpdate();

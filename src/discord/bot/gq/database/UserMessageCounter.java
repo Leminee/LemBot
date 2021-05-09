@@ -69,7 +69,7 @@ public class UserMessageCounter extends ListenerAdapter {
         PreparedStatement insertPStatement = db.getConnection().prepareStatement(insertQuery);
         insertPStatement.setString(1, messageId);
         insertPStatement.setString(2, userId);
-        insertPStatement.setBlob(3, Helper.setTransformedString(insertPStatement,userMessage));
+        insertPStatement.setBlob(3, Helper.changeCharacterEncoding(insertPStatement,userMessage));
         insertPStatement.executeUpdate();
 
     }
