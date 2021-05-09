@@ -1,6 +1,9 @@
 # Default ignored files
 /shelf/
 /.idea/workspace.xml
+/.idea/artifacts
 .DS_Store
 META-INF
 *.class
+note.txt
+*.jar
