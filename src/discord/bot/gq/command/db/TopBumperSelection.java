@@ -25,7 +25,7 @@ public class TopBumperSelection extends ListenerAdapter {
                 ConnectionToDB db = new ConnectionToDB();
                 db.initialize();
 
-                String selectTopBumper = "SELECT username, number_bumps FROM user_bump ORDER BY number_bumps DESC, username LIMIT 3;";
+                String selectTopBumper = "SELECT username FROM user_bump ORDER BY number_bumps DESC, username LIMIT 3;";
                 Statement statement = db.getConnection().createStatement();
                 ResultSet rS = statement.executeQuery(selectTopBumper);
 

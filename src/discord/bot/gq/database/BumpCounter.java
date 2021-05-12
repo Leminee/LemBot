@@ -38,15 +38,9 @@ public class BumpCounter extends ListenerAdapter {
                 String pingedUserName = event.getJDA().retrieveUserById(idPingedUser).complete().getName();
 
                 try {
+
                     ConnectionToDB db = new ConnectionToDB();
                     db.initialize();
-
-                    String insertBumpData = "INSERT INTO user_bump (id_discord, username, number_bumps) VALUES (?,?,?);";
-
-                    PreparedStatement pS = db.getConnection().prepareStatement(insertBumpData);
-                    pS.setString(1, idPingedUser);
-                    pS.setString(2, pingedUserName);
-                    pS.setInt(3, bump);
 
                     String verifyIfUserAlreadyExists = "SELECT id_discord FROM user_bump WHERE id_discord = ? ";
                     PreparedStatement usernameInput = db.getConnection().prepareStatement(verifyIfUserAlreadyExists);
@@ -66,6 +60,13 @@ public class BumpCounter extends ListenerAdapter {
                         insert.executeUpdate();
 
                     } else {
+
+                        String insertBumpData = "INSERT INTO user_bump (id_discord, username, number_bumps) VALUES (?,?,?);";
+
+                        PreparedStatement pS = db.getConnection().prepareStatement(insertBumpData);
+                        pS.setString(1, idPingedUser);
+                        pS.setString(2, pingedUserName);
+                        pS.setInt(3, bump);
                         pS.executeUpdate();
                     }
 
