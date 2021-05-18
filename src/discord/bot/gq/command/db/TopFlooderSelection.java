@@ -39,7 +39,7 @@ public class TopFlooderSelection extends ListenerAdapter {
 
                 while (rS.next()) {
 
-                    embedBuilder.addField("TOP " + top, rS.getString(1).toUpperCase(), false);
+                    embedBuilder.addField("TOP " + top, rS.getString(1), false);
                     top++;
 
                 }

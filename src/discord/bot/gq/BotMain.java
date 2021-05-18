@@ -26,13 +26,7 @@ public class BotMain {
 
     public static JDA jda;
     public static final String PREFIX = "?";
-    public static final String TOKEN = "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.ZTF8KeZSVPuLNUWybaI_HP5aol8";
-
-    public static String getT() {
-        return t;
-    }
-
-    private static final String t = "test";
+    public static final String TOKEN = "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.XvnplKYFh8Re6VaD5mtN7ARQSdI";
 
     public static void main(String[] args) {
 
@@ -71,7 +65,7 @@ public class BotMain {
         jda.addEventListener(new UpdatingRole());
 
 
-     /* ReactionManager firstManager = new ReactionManager(jda);
+        /*ReactionManager firstManager = new ReactionManager(jda);
 
 
         firstManager.registerReaction(channelId, "821186181903024179", "821167071181275146", "784773593942327297").
@@ -79,7 +73,6 @@ public class BotMain {
 
 
         ReactionManager secondManager = new ReactionManager(jda);
-
 
 
         secondManager.registerReaction(channelId, messageId, "821144409633849354", "808779281211719680").

@@ -15,7 +15,7 @@ public class HelpList extends ListenerAdapter {
         String userMessage = event.getMessage().getContentRaw();
         String helpCommand = "help";
 
-        if (Helper.isValidCommand(userMessage,helpCommand) || Helper.isValidCommand(userMessage,"hilfe")) {
+        if (Helper.isValidCommand(userMessage, helpCommand) || Helper.isValidCommand(userMessage, "hilfe")) {
             if (!Objects.requireNonNull(event.getMember()).getUser().isBot()) {
 
                 EmbedBuilder embedBuilder = new EmbedBuilder();

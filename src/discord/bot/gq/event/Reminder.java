@@ -41,7 +41,7 @@ public class Reminder extends ListenerAdapter {
         User embedAuthor = event.getAuthor();
 
 
-        if (Helper.isSuccessBump(disBoardEmbed, embedAuthor)) {
+        if (Helper.isSuccessfulBump(disBoardEmbed, embedAuthor)) {
 
             final Runnable ping = () -> {
                 int randomNumber = random.nextInt(pingContent.length);

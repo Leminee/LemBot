@@ -28,10 +28,10 @@ public class StorageUpdatedMessage extends ListenerAdapter {
 
             PreparedStatement pS = db.getConnection().prepareStatement(insertUpdatedMessageData);
 
-            pS.setLong(1,idUpdatedMessage);
+            pS.setLong(1, idUpdatedMessage);
             pS.setLong(2, authorId);
-            pS.setBlob(3, Helper.changeCharacterEncoding(pS,authorUpdatedMessage));
-            pS.setBlob(4, Helper.changeCharacterEncoding(pS,updatedMessageContent));
+            pS.setBlob(3, Helper.changeCharacterEncoding(pS, authorUpdatedMessage));
+            pS.setBlob(4, Helper.changeCharacterEncoding(pS, updatedMessageContent));
 
             pS.executeUpdate();
 

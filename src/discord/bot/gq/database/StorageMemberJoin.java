@@ -27,10 +27,14 @@ public class StorageMemberJoin extends ListenerAdapter {
             PreparedStatement pS = db.getConnection().prepareStatement(insertUserJoinData);
 
             pS.setLong(1, userId);
-            pS.setBlob(2, Helper.changeCharacterEncoding(pS,userName));
+            pS.setBlob(2, Helper.changeCharacterEncoding(pS, userName));
             pS.setString(3, avatarUrl);
 
             pS.executeUpdate();
+
+            Helper.numberMember++;
+            Helper.insertCurrentNumberMember();
+
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();

@@ -16,19 +16,19 @@ import java.util.List;
 import java.util.Objects;
 
 public final class Helper {
+    public static int numberMember = 301;
 
     private Helper() {
     }
 
     public static boolean isValidCommand(String userMessage, String command) {
-
         return userMessage.equalsIgnoreCase(BotMain.PREFIX + command);
     }
 
-    public static boolean isSuccessBump(List<MessageEmbed> messages, User embedAuthor) {
+    public static boolean isSuccessfulBump(List<MessageEmbed> messages, User embedAuthor) {
 
         long disBoardId = 302050872383242240L;
-        String successBumpImageUrl = "https://disboard.org/images/bot-command-image-bump.png";
+        String successfulBumpImageUrl = "https://disboard.org/images/bot-command-image-bump.png";
 
         if (embedAuthor.getIdLong() != disBoardId) {
             return false;
@@ -41,7 +41,7 @@ public final class Helper {
         if (messages.get(0).getImage() == null) {
             return false;
         }
-        return Objects.equals(Objects.requireNonNull(messages.get(0).getImage()).getUrl(), successBumpImageUrl);
+        return Objects.equals(Objects.requireNonNull(messages.get(0).getImage()).getUrl(), successfulBumpImageUrl);
     }
 
     public static Blob changeCharacterEncoding(PreparedStatement userDataInput, String userName) throws SQLException {
@@ -73,5 +73,24 @@ public final class Helper {
         }
 
     }
+
+    public static void insertCurrentNumberMember() {
+        ConnectionToDB db = new ConnectionToDB();
+        db.initialize();
+
+        String insertUserJoinData = "INSERT INTO number_member (total_member) VALUES (?);";
+
+        try {
+            PreparedStatement pS = db.getConnection().prepareStatement(insertUserJoinData);
+
+            pS.setInt(1, numberMember);
+
+            pS.executeUpdate();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
 
 }

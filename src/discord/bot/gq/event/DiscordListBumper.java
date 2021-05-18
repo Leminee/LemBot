@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Executors;
@@ -29,7 +30,7 @@ public class DiscordListBumper extends ListenerAdapter {
         List<MessageEmbed> discordListBot = event.getMessage().getEmbeds();
         User embedAuthor = event.getAuthor();
 
-        if (isSuccessBumpDiscordList(discordListBot, embedAuthor)) {
+        if (isSuccessfulBumpDiscordList(discordListBot, embedAuthor)) {
 
             final Runnable ping = () -> Objects.requireNonNull(event.getJDA().getTextChannelById(configSelection.getChannelId())).sendMessage(bumpCommand).queue();
 
@@ -39,7 +40,7 @@ public class DiscordListBumper extends ListenerAdapter {
 
     }
 
-    private boolean isSuccessBumpDiscordList(List<MessageEmbed> embedContent, User embedAuthor) {
+    private boolean isSuccessfulBumpDiscordList(List<MessageEmbed> embedContent, User embedAuthor) {
 
         long discordListBot = 212681528730189824L;
 

@@ -17,7 +17,7 @@ public class InviteLinkDelation extends ListenerAdapter {
             return;
         }
 
-        if(authorId == ownerId) {
+        if (authorId == ownerId) {
             return;
         }
 

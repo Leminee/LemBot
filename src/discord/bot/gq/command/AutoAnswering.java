@@ -3,6 +3,7 @@ package discord.bot.gq.command;
 import discord.bot.gq.BotMain;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+
 import java.util.Date;
 import java.util.Objects;
 
@@ -49,7 +50,7 @@ public class AutoAnswering extends ListenerAdapter {
             }
         }
 
-        if ((userMessage.equalsIgnoreCase(BotMain.PREFIX + "hcb"))){
+        if ((userMessage.equalsIgnoreCase(BotMain.PREFIX + "hcb"))) {
             if (!event.getMember().getUser().isBot()) {
                 event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/819694809765380146/832676790875062272/farbiger_code.png").queue();
 

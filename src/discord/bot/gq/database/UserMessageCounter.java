@@ -51,7 +51,7 @@ public class UserMessageCounter extends ListenerAdapter {
                     pS.executeUpdate();
 
                 }
-                insertData(userMessage, userId,messageId);
+                insertData(userMessage, userId, messageId);
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -60,6 +60,7 @@ public class UserMessageCounter extends ListenerAdapter {
         }
 
     }
+
     public void insertData(String userMessage, String userId, String messageId) throws SQLException {
 
         ConnectionToDB db = new ConnectionToDB();
@@ -69,7 +70,7 @@ public class UserMessageCounter extends ListenerAdapter {
         PreparedStatement insertPStatement = db.getConnection().prepareStatement(insertQuery);
         insertPStatement.setString(1, messageId);
         insertPStatement.setString(2, userId);
-        insertPStatement.setBlob(3, Helper.changeCharacterEncoding(insertPStatement,userMessage));
+        insertPStatement.setBlob(3, Helper.changeCharacterEncoding(insertPStatement, userMessage));
         insertPStatement.executeUpdate();
 
     }
