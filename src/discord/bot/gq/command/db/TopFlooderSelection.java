@@ -17,21 +17,21 @@ public class TopFlooderSelection extends ListenerAdapter {
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 
         String userMessage = event.getMessage().getContentRaw();
-        String getTopFlooderCommand = "top";
+        String topFlooderCommand = "top";
 
-        if (Helper.isValidCommand(userMessage, getTopFlooderCommand)) {
+        if (Helper.isValidCommand(userMessage, topFlooderCommand)) {
 
             try {
 
                 ConnectionToDB db = new ConnectionToDB();
                 db.initialize();
 
-                String selectTopFlooder = "SELECT username FROM user_message ORDER BY number_message DESC LIMIT 5;";
+                String topFlooder = "SELECT username FROM user_message ORDER BY number_message DESC LIMIT 5;";
                 Statement statement = db.getConnection().createStatement();
-                ResultSet rS = statement.executeQuery(selectTopFlooder);
+                ResultSet rS = statement.executeQuery(topFlooder);
 
                 EmbedBuilder embedBuilder = new EmbedBuilder();
-                embedBuilder.setTitle("Liste der TOP 5 User");
+                embedBuilder.setTitle("User mit den meisten Nachrichten");
                 embedBuilder.setDescription("");
                 embedBuilder.setColor(Color.white);
 

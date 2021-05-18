@@ -34,15 +34,15 @@ public class UserMessageCounter extends ListenerAdapter {
                 pS.setString(2, userName);
                 pS.setInt(3, numberMessage);
 
-                String verifQuery = "SELECT id_discord FROM user_message WHERE id_discord = ? ";
-                PreparedStatement pSTwo = db.getConnection().prepareStatement(verifQuery);
+                String isUserInDB = "SELECT id_discord FROM user_message WHERE id_discord = ? ";
+                PreparedStatement pSTwo = db.getConnection().prepareStatement(isUserInDB);
                 pSTwo.setString(1, userId);
                 ResultSet rS = pSTwo.executeQuery();
 
                 if (rS.next()) {
 
-                    String updateQuery = "UPDATE user_message SET number_message = (number_message +1) WHERE id_discord = ?";
-                    PreparedStatement updatePStatement = db.getConnection().prepareStatement(updateQuery);
+                    String currentNumberMessage = "UPDATE user_message SET number_message = (number_message +1) WHERE id_discord = ?";
+                    PreparedStatement updatePStatement = db.getConnection().prepareStatement(currentNumberMessage);
                     updatePStatement.setString(1, userId);
                     updatePStatement.executeUpdate();
 
@@ -66,8 +66,8 @@ public class UserMessageCounter extends ListenerAdapter {
         ConnectionToDB db = new ConnectionToDB();
         db.initialize();
 
-        String insertQuery = "INSERT INTO user_message_content (id_message, id_discord, content) VALUES (?,?,?)";
-        PreparedStatement insertPStatement = db.getConnection().prepareStatement(insertQuery);
+        String userMessageData = "INSERT INTO user_message_content (id_message, id_discord, content) VALUES (?,?,?)";
+        PreparedStatement insertPStatement = db.getConnection().prepareStatement(userMessageData);
         insertPStatement.setString(1, messageId);
         insertPStatement.setString(2, userId);
         insertPStatement.setBlob(3, Helper.changeCharacterEncoding(insertPStatement, userMessage));

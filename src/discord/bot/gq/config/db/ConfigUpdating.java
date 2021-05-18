@@ -14,8 +14,8 @@ public class ConfigUpdating {
             ConnectionToDB db = new ConnectionToDB();
             db.initialize();
             ConfigSelection configSelection = new ConfigSelection();
-            String updateQuery = "UPDATE config SET config_value = ? WHERE config_name = 'id_ping_role'";
-            PreparedStatement updatePStatement = db.getConnection().prepareStatement(updateQuery);
+            String roleId = "UPDATE config SET config_value = ? WHERE config_name = 'id_ping_role'";
+            PreparedStatement updatePStatement = db.getConnection().prepareStatement(roleId);
             updatePStatement.setString(1, configSelection.getRoleId());
 
             updatePStatement.executeUpdate();
@@ -34,8 +34,8 @@ public class ConfigUpdating {
             ConnectionToDB db = new ConnectionToDB();
             db.initialize();
             ConfigSelection configSelection = new ConfigSelection();
-            String updateQuery = "UPDATE config SET config_value = ? WHERE config_name = 'id_ping_channel'";
-            PreparedStatement updatePStatement = db.getConnection().prepareStatement(updateQuery);
+            String channelId = "UPDATE config SET config_value = ? WHERE config_name = 'id_ping_channel'";
+            PreparedStatement updatePStatement = db.getConnection().prepareStatement(channelId);
             updatePStatement.setString(1, configSelection.getChannelId());
 
             updatePStatement.executeUpdate();

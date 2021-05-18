@@ -18,11 +18,11 @@ public class StorageDeletedMessage extends ListenerAdapter {
         ConnectionToDB db = new ConnectionToDB();
         db.initialize();
 
-        String insertIdDeletedMessage = "INSERT INTO deleted_message (id_deleted_message) VALUES (?);";
+        String deletedMessage = "INSERT INTO deleted_message (id_deleted_message) VALUES (?);";
 
         try {
 
-            PreparedStatement pS = db.getConnection().prepareStatement(insertIdDeletedMessage);
+            PreparedStatement pS = db.getConnection().prepareStatement(deletedMessage);
 
             pS.setLong(1, idDeletedMessage);
 

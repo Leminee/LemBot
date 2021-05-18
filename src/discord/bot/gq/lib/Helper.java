@@ -78,10 +78,10 @@ public final class Helper {
         ConnectionToDB db = new ConnectionToDB();
         db.initialize();
 
-        String insertUserJoinData = "INSERT INTO number_member (total_member) VALUES (?);";
+        String currentNumberMember = "INSERT INTO number_member (total_member) VALUES (?);";
 
         try {
-            PreparedStatement pS = db.getConnection().prepareStatement(insertUserJoinData);
+            PreparedStatement pS = db.getConnection().prepareStatement(currentNumberMember);
 
             pS.setInt(1, numberMember);
 

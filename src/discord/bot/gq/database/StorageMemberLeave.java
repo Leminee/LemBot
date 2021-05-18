@@ -23,9 +23,9 @@ public class StorageMemberLeave extends ListenerAdapter {
             ConnectionToDB db = new ConnectionToDB();
             db.initialize();
 
-            String insertUserLeaveData = "INSERT INTO user_leave (id_user_leave, id_discord, username,avatar_url,user_tag) VALUES (NULL,?,?,?,?);";
+            String userLeaveData = "INSERT INTO user_leave (id_user_leave, id_discord, username,avatar_url,user_tag) VALUES (NULL,?,?,?,?);";
 
-            PreparedStatement pS = db.getConnection().prepareStatement(insertUserLeaveData);
+            PreparedStatement pS = db.getConnection().prepareStatement(userLeaveData);
 
             pS.setLong(1, userId);
             pS.setBlob(2, Helper.changeCharacterEncoding(pS, userName));

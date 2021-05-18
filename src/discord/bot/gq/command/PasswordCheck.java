@@ -17,9 +17,9 @@ public class PasswordCheck extends ListenerAdapter {
 
         String[] userMessage = event.getMessage().getContentRaw().split("\\s+");
         String authorCommand = event.getAuthor().getAsMention();
-        String checkCommand = "check";
+        String passwordCheckCommand = "check";
 
-        if ((userMessage[0].equalsIgnoreCase(BotMain.PREFIX + checkCommand))) {
+        if ((userMessage[0].equalsIgnoreCase(BotMain.PREFIX + passwordCheckCommand))) {
 
             if (userMessage.length != 2) {
                 return;
@@ -30,9 +30,9 @@ public class PasswordCheck extends ListenerAdapter {
 
             try {
 
-                String selectPasswords = "SELECT pass FROM leaked_password WHERE pass = ?";
+                String passwordCheck = "SELECT pass FROM leaked_password WHERE pass = ?";
 
-                PreparedStatement pS = db.getConnection().prepareStatement(selectPasswords);
+                PreparedStatement pS = db.getConnection().prepareStatement(passwordCheck);
                 String userPassword = userMessage[1];
 
                 event.getMessage().delete().queue();

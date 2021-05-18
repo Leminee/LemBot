@@ -22,11 +22,11 @@ public class StorageUpdatedMessage extends ListenerAdapter {
         ConnectionToDB db = new ConnectionToDB();
         db.initialize();
 
-        String insertUpdatedMessageData = "INSERT INTO updated_message (id_updated_message, id_message, id_discord, username,content) VALUES (NULL,?,?,?,?);";
+        String updatedMessageData = "INSERT INTO updated_message (id_updated_message, id_message, id_discord, username,content) VALUES (NULL,?,?,?,?);";
 
         try {
 
-            PreparedStatement pS = db.getConnection().prepareStatement(insertUpdatedMessageData);
+            PreparedStatement pS = db.getConnection().prepareStatement(updatedMessageData);
 
             pS.setLong(1, idUpdatedMessage);
             pS.setLong(2, authorId);

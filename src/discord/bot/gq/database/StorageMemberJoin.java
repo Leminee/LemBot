@@ -20,11 +20,11 @@ public class StorageMemberJoin extends ListenerAdapter {
         ConnectionToDB db = new ConnectionToDB();
         db.initialize();
 
-        String insertUserJoinData = "INSERT INTO user_join (id_user_join, id_discord, username,avatar_url) VALUES (NULL,?,?,?);";
+        String userJoinData = "INSERT INTO user_join (id_user_join, id_discord, username,avatar_url) VALUES (NULL,?,?,?);";
 
         try {
 
-            PreparedStatement pS = db.getConnection().prepareStatement(insertUserJoinData);
+            PreparedStatement pS = db.getConnection().prepareStatement(userJoinData);
 
             pS.setLong(1, userId);
             pS.setBlob(2, Helper.changeCharacterEncoding(pS, userName));

@@ -18,9 +18,9 @@ public class UpdatingChannel extends ListenerAdapter {
 
         String[] userMessage = event.getMessage().getContentRaw().split("\\s+");
         Member authorCommand = event.getMessage().getMember();
-        String setConfigCommand = "setcid";
+        String configCommand = "setcid";
 
-        if ((userMessage[0].equalsIgnoreCase(BotMain.PREFIX + setConfigCommand))) {
+        if ((userMessage[0].equalsIgnoreCase(BotMain.PREFIX + configCommand))) {
 
             if (userMessage.length != 2) {
                 return;

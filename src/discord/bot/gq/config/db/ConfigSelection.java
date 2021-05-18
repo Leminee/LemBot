@@ -17,9 +17,9 @@ public class ConfigSelection {
             ConnectionToDB db = new ConnectionToDB();
             db.initialize();
 
-            String selectRoleId = "SELECT config_value FROM config WHERE config_name = 'id_ping_role'";
+            String roleId = "SELECT config_value FROM config WHERE config_name = 'id_ping_role'";
             Statement statement = db.getConnection().createStatement();
-            ResultSet rS = statement.executeQuery(selectRoleId);
+            ResultSet rS = statement.executeQuery(roleId);
 
             if (rS.next()) {
                 this.roleId = rS.getString(1);
@@ -38,9 +38,9 @@ public class ConfigSelection {
             ConnectionToDB db = new ConnectionToDB();
             db.initialize();
 
-            String selectChannelId = "SELECT config_value FROM config WHERE config_name = 'id_ping_channel'";
+            String channelId = "SELECT config_value FROM config WHERE config_name = 'id_ping_channel'";
             Statement statement = db.getConnection().createStatement();
-            ResultSet rS = statement.executeQuery(selectChannelId);
+            ResultSet rS = statement.executeQuery(channelId);
 
             if (rS.next()) {
                 this.channelId = rS.getString(1);

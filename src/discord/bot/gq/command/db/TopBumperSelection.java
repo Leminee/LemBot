@@ -16,18 +16,18 @@ public class TopBumperSelection extends ListenerAdapter {
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 
         String userMessage = event.getMessage().getContentRaw();
-        String getTopBumperCommand = "topb";
+        String topBumperCommand = "topb";
 
-        if (Helper.isValidCommand(userMessage, getTopBumperCommand)) {
+        if (Helper.isValidCommand(userMessage, topBumperCommand)) {
 
             try {
 
                 ConnectionToDB db = new ConnectionToDB();
                 db.initialize();
 
-                String selectTopBumper = "SELECT username FROM user_bump ORDER BY number_bumps DESC, username LIMIT 3;";
+                String topBumper = "SELECT username FROM user_bump ORDER BY number_bumps DESC, username LIMIT 3;";
                 Statement statement = db.getConnection().createStatement();
-                ResultSet rS = statement.executeQuery(selectTopBumper);
+                ResultSet rS = statement.executeQuery(topBumper);
 
                 EmbedBuilder embedBuilder = new EmbedBuilder();
                 embedBuilder.setTitle("User mit den meisten Bumps");

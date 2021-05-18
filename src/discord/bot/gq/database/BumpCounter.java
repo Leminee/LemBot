@@ -42,28 +42,28 @@ public class BumpCounter extends ListenerAdapter {
                     ConnectionToDB db = new ConnectionToDB();
                     db.initialize();
 
-                    String verifyIfUserAlreadyExists = "SELECT id_discord FROM user_bump WHERE id_discord = ? ";
-                    PreparedStatement usernameInput = db.getConnection().prepareStatement(verifyIfUserAlreadyExists);
+                    String isUserExists = "SELECT id_discord FROM user_bump WHERE id_discord = ? ";
+                    PreparedStatement usernameInput = db.getConnection().prepareStatement(isUserExists);
                     usernameInput.setString(1, idPingedUser);
                     ResultSet rS = usernameInput.executeQuery();
 
                     if (rS.next()) {
 
-                        String updateBumps = "UPDATE user_bump SET number_bumps = (number_bumps +1) WHERE id_discord = ?";
-                        PreparedStatement update = db.getConnection().prepareStatement(updateBumps);
+                        String currentNumberBump = "UPDATE user_bump SET number_bumps = (number_bumps +1) WHERE id_discord = ?";
+                        PreparedStatement update = db.getConnection().prepareStatement(currentNumberBump);
                         update.setString(1, idPingedUser);
                         update.executeUpdate();
 
-                        String insertBumpTime = "INSERT INTO user_bump_time (id_user_bump_time, id_discord) VALUES (NULL,?)";
-                        PreparedStatement insert = db.getConnection().prepareStatement(insertBumpTime);
+                        String bumpTime = "INSERT INTO user_bump_time (id_user_bump_time, id_discord) VALUES (NULL,?)";
+                        PreparedStatement insert = db.getConnection().prepareStatement(bumpTime);
                         insert.setString(1, idPingedUser);
                         insert.executeUpdate();
 
                     } else {
 
-                        String insertBumpData = "INSERT INTO user_bump (id_discord, username, number_bumps) VALUES (?,?,?);";
+                        String bumpData = "INSERT INTO user_bump (id_discord, username, number_bumps) VALUES (?,?,?);";
 
-                        PreparedStatement pS = db.getConnection().prepareStatement(insertBumpData);
+                        PreparedStatement pS = db.getConnection().prepareStatement(bumpData);
                         pS.setString(1, idPingedUser);
                         pS.setString(2, pingedUserName);
                         pS.setInt(3, bump);
