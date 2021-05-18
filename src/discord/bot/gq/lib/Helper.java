@@ -2,16 +2,12 @@ package discord.bot.gq.lib;
 
 import discord.bot.gq.BotMain;
 import discord.bot.gq.database.ConnectionToDB;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.sql.Blob;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.awt.*;
+import java.sql.*;
 import java.util.List;
 import java.util.Objects;
 
@@ -52,28 +48,6 @@ public final class Helper {
         return blob;
     }
 
-    public static void storeDataIntoDb(FileReader file, String insertQuery) throws IOException {
-        ConnectionToDB db = new ConnectionToDB();
-        db.initialize();
-
-        try (BufferedReader bR = new BufferedReader(file)) {
-
-            String line;
-
-            PreparedStatement preparedStatement = db.getConnection().prepareStatement(insertQuery);
-
-            while ((line = bR.readLine()) != null) {
-
-                preparedStatement.setBlob(1, changeCharacterEncoding(preparedStatement, line));
-                preparedStatement.executeUpdate();
-            }
-
-        } catch (FileNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
-
     public static void insertCurrentNumberMember() {
         ConnectionToDB db = new ConnectionToDB();
         db.initialize();
@@ -86,6 +60,36 @@ public final class Helper {
             pS.setInt(1, numberMember);
 
             pS.executeUpdate();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public static void selectTop(String topQuery, String embedTitle, String embedColor, String embedThumbnail) {
+
+        try {
+
+            ConnectionToDB db = new ConnectionToDB();
+            db.initialize();
+
+            Statement statement = db.getConnection().createStatement();
+            ResultSet rS = statement.executeQuery(topQuery);
+
+            EmbedBuilder embedBuilder = new EmbedBuilder();
+            embedBuilder.setTitle(embedTitle);
+            embedBuilder.setDescription("");
+            embedBuilder.setColor(Color.decode(embedColor));
+            embedBuilder.setThumbnail(embedThumbnail);
+
+            int top = 1;
+
+            while (rS.next()) {
+
+                embedBuilder.addField("TOP " + top, rS.getString(1), false);
+                top++;
+
+            }
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();

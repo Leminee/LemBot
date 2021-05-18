@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Erstellungszeit: 08. Mai 2021 um 06:33
+-- Erstellungszeit: 18. Mai 2021 um 19:23
 -- Server-Version: 10.3.27-MariaDB-0+deb10u1
 -- PHP-Version: 7.4.16
 
@@ -31,6 +31,17 @@ CREATE TABLE `config` (
   `config_name` varchar(50) NOT NULL,
   `config_value` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Daten für Tabelle `config`
+--
+
+INSERT INTO `config` (`config_name`, `config_value`) VALUES
+('id_owner', NULL),
+('id_partnership_channel', NULL),
+('id_ping_channel', NULL),
+('id_ping_role', NULL),
+('id_welcome_channel', NULL);
 
 -- --------------------------------------------------------
 
@@ -70,13 +81,12 @@ CREATE TABLE `leaked_password` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `server_member`
+-- Tabellenstruktur für Tabelle `number_member`
 --
 
-CREATE TABLE `server_member` (
-  `id_server_member` int(11) NOT NULL,
-  `id_discord` int(11) NOT NULL,
-  `total_member` int(11) NOT NULL
+CREATE TABLE `number_member` (
+  `total_member` int(11) NOT NULL,
+  `time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -102,7 +112,7 @@ CREATE TABLE `updated_message` (
 
 CREATE TABLE `user_bump` (
   `id_discord` bigint(20) NOT NULL,
-  `username` varchar(50) NOT NULL,
+  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `number_bumps` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -195,17 +205,16 @@ ALTER TABLE `kicked_user`
   ADD PRIMARY KEY (`id_discord`);
 
 --
--- Indizes für die Tabelle `server_member`
+-- Indizes für die Tabelle `leaked_password`
 --
-ALTER TABLE `server_member`
-  ADD PRIMARY KEY (`id_server_member`);
+ALTER TABLE `leaked_password`
+  ADD KEY `pass` (`pass`);
 
 --
 -- Indizes für die Tabelle `updated_message`
 --
 ALTER TABLE `updated_message`
   ADD PRIMARY KEY (`id_updated_message`),
-  ADD UNIQUE KEY `id_discord` (`id_discord`),
   ADD KEY `id_message` (`id_message`);
 
 --
@@ -251,12 +260,6 @@ ALTER TABLE `user_message_content`
 --
 
 --
--- AUTO_INCREMENT für Tabelle `server_member`
---
-ALTER TABLE `server_member`
-  MODIFY `id_server_member` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT für Tabelle `updated_message`
 --
 ALTER TABLE `updated_message`
@@ -291,10 +294,15 @@ ALTER TABLE `deleted_message`
   ADD CONSTRAINT `deleted_message_ibfk_2` FOREIGN KEY (`id_deleted_message`) REFERENCES `user_message_content` (`id_message`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints der Tabelle `kicked_user`
+--
+ALTER TABLE `kicked_user`
+  ADD CONSTRAINT `kicked_user_ibfk_1` FOREIGN KEY (`id_discord`) REFERENCES `user_message` (`id_discord`);
+
+--
 -- Constraints der Tabelle `updated_message`
 --
 ALTER TABLE `updated_message`
-  ADD CONSTRAINT `updated_message_ibfk_1` FOREIGN KEY (`id_discord`) REFERENCES `user_message` (`id_discord`),
   ADD CONSTRAINT `updated_message_ibfk_2` FOREIGN KEY (`id_message`) REFERENCES `user_message_content` (`id_message`);
 
 --

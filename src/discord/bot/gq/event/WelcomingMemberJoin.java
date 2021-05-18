@@ -15,25 +15,26 @@ public class WelcomingMemberJoin extends ListenerAdapter {
 
         String welcomeChannelId = "779107500381175808";
 
+
         if (welcomeChannelId == null) {
             return;
         }
 
-        String[] messages = {"""
+        String[] welcomeMessage = {"""
 Hallo [member], Willkommen auf **GoodQuestion (GQ)**!
 
 Stelle Dich bitte hier kurz vor, damit ein Moderator Dir die entsprechenden Rollen zuweist! \n
 Alternativ kannst Du Dir in dem folgenden Kanal Deine Rollen selbst zuweisen: <#779107472622223400>
 """};
-
-        TextChannel channel = event.getGuild().getTextChannelById(welcomeChannelId);
+        TextChannel welcomeChannel = event.getGuild().getTextChannelById(welcomeChannelId);
         String avatarUrl = event.getUser().getEffectiveAvatarUrl();
+        String newMember = event.getMember().getAsMention();
 
         if (!event.getUser().isBot()) {
 
-            String output = messages[0].replace("[member]", event.getMember().getAsMention());
+            String output = welcomeMessage[0].replace("[member]", newMember);
 
-            Objects.requireNonNull(channel).sendMessage(output + "\n" + avatarUrl).queue();
+            Objects.requireNonNull(welcomeChannel).sendMessage(output + "\n" + avatarUrl).queue();
 
         }
 
