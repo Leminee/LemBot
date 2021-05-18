@@ -34,6 +34,7 @@ public class TopFlooderSelection extends ListenerAdapter {
                 embedBuilder.setTitle("User mit den meisten Nachrichten");
                 embedBuilder.setDescription("");
                 embedBuilder.setColor(Color.white);
+                embedBuilder.setThumbnail("https://cdn.discordapp.com/attachments/819694809765380146/844312789531230208/typing.png");
 
                 int top = 1;
 

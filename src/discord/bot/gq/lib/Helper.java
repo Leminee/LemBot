@@ -1,6 +1,5 @@
 package discord.bot.gq.lib;
 
-import discord.bot.gq.BotMain;
 import discord.bot.gq.database.ConnectionToDB;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -13,12 +12,14 @@ import java.util.Objects;
 
 public final class Helper {
     public static int numberMember = 301;
+    public static final String PREFIX = "?";
+    public static final String TOKEN = "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.qeNOp8qDcDfwnO-kEVZBh-thETE";
 
     private Helper() {
     }
 
     public static boolean isValidCommand(String userMessage, String command) {
-        return userMessage.equalsIgnoreCase(BotMain.PREFIX + command);
+        return userMessage.equalsIgnoreCase(PREFIX + command);
     }
 
     public static boolean isSuccessfulBump(List<MessageEmbed> messages, User embedAuthor) {

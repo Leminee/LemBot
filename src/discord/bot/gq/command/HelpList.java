@@ -27,7 +27,8 @@ public class HelpList extends ListenerAdapter {
                         "\n" + " Prefix:  `?`" + " \n" + " \n" +
                         "`?help`: Nachricht mit Befehlsliste \n  " +
                         "`?check <password>`: gibt zurück, ob Passwort unsicher ist" + " \n" +
-                        "`?top`: Liste der Top 5 Flooder" + "\n" +
+                        "`?hmm`: Anzahl deiner geschickten Nachrichten auf GQ" + " \n" +
+                        "`?top`: Liste der Top 5 User mit den meisten Nachrichten" + "\n" +
                         "`?topb`: Liste der Top 3 Server-Bumper" + "\n" +
                         "`?topu`: Liste der 3 am häufigsten gepingten User" + "\n" +
                         "`?topc`: Liste der 3 aktivisten Channels" + "\n" +

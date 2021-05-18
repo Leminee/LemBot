@@ -1,6 +1,7 @@
 package discord.bot.gq.command;
 
 import discord.bot.gq.BotMain;
+import discord.bot.gq.lib.Helper;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -19,7 +20,7 @@ public class RoleSystem extends ListenerAdapter {
         List<Role> serverRoleList = Objects.requireNonNull(BotMain.jda.getRoles());
         EmbedBuilder showRoles = new EmbedBuilder();
 
-        if (userMessage.equalsIgnoreCase(BotMain.PREFIX + "role")) {
+        if (userMessage.equalsIgnoreCase(Helper.PREFIX + "role")) {
             if (!event.getMember().getUser().isBot()) {
                 showRoles.setTitle("Rollen");
                 showRoles.setColor(0x002d47);
@@ -33,7 +34,7 @@ public class RoleSystem extends ListenerAdapter {
                 event.getChannel().sendMessage(showRoles.build()).queue();
             }
         }
-        if (userMessage.equalsIgnoreCase(BotMain.PREFIX + "srole")) {
+        if (userMessage.equalsIgnoreCase(Helper.PREFIX + "srole")) {
             if (!event.getMember().getUser().isBot()) {
                 showRoles.setTitle("Liste aller Rollen auf GQ");
                 showRoles.setColor(0x002d47);

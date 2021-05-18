@@ -1,9 +1,6 @@
 package discord.bot.gq;
 
-import discord.bot.gq.command.AutoAnswering;
-import discord.bot.gq.command.HelpList;
-import discord.bot.gq.command.PasswordCheck;
-import discord.bot.gq.command.RoleSystem;
+import discord.bot.gq.command.*;
 import discord.bot.gq.command.db.TopBumperSelection;
 import discord.bot.gq.command.db.TopFlooderSelection;
 import discord.bot.gq.command.moderation.MessageDelation;
@@ -14,6 +11,8 @@ import discord.bot.gq.event.DiscordListBumper;
 import discord.bot.gq.event.InviteLinkDelation;
 import discord.bot.gq.event.Reminder;
 import discord.bot.gq.event.WelcomingMemberJoin;
+import discord.bot.gq.lib.Helper;
+import discord.bot.gq.lib.ReactionManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -25,8 +24,6 @@ import javax.security.auth.login.LoginException;
 public class BotMain {
 
     public static JDA jda;
-    public static final String PREFIX = "?";
-    public static final String TOKEN = "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.XvnplKYFh8Re6VaD5mtN7ARQSdI";
 
     public static void main(String[] args) {
 
@@ -35,7 +32,7 @@ public class BotMain {
 
         try {
 
-            jda = JDABuilder.createDefault(TOKEN).enableIntents(GatewayIntent.GUILD_MEMBERS).enableIntents(GatewayIntent.GUILD_PRESENCES).build();
+            jda = JDABuilder.createDefault(Helper.TOKEN).enableIntents(GatewayIntent.GUILD_MEMBERS).enableIntents(GatewayIntent.GUILD_PRESENCES).build();
 
         } catch (LoginException e) {
             e.printStackTrace();
@@ -63,9 +60,10 @@ public class BotMain {
         jda.addEventListener(new StorageUpdatedMessage());
         jda.addEventListener(new StorageDeletedMessage());
         jda.addEventListener(new UpdatingRole());
+        jda.addEventListener(new NumberMessageCheck());
 
 
-        /*ReactionManager firstManager = new ReactionManager(jda);
+        ReactionManager firstManager = new ReactionManager(jda);
 
 
         firstManager.registerReaction(channelId, "821186181903024179", "821167071181275146", "784773593942327297").
@@ -80,6 +78,6 @@ public class BotMain {
                 registerReaction(channelId, messageId, "821169196523192380", "808768626844893184").
                 registerReaction(channelId, messageId, "821171704133845073", "808767910696189975").
                 registerReaction(channelId, messageId, "821168328961163266", "808779520286654554").
-                registerReaction(channelId, messageId, "821144354445328384", "815922232106156033");*/
+                registerReaction(channelId, messageId, "821144354445328384", "815922232106156033");
     }
 }

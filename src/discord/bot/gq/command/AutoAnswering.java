@@ -1,6 +1,6 @@
 package discord.bot.gq.command;
 
-import discord.bot.gq.BotMain;
+import discord.bot.gq.lib.Helper;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
@@ -16,7 +16,7 @@ public class AutoAnswering extends ListenerAdapter {
         String userName = Objects.requireNonNull(event.getMember()).getAsMention();
         Date date = new Date();
 
-        if (userMessage.equalsIgnoreCase(BotMain.PREFIX + "hallo")) {
+        if (userMessage.equalsIgnoreCase(Helper.PREFIX + "hallo")) {
             if (!event.getMember().getUser().isBot()) {
                 event.getChannel().sendTyping().queue();
                 event.getChannel().sendMessage("Hi, Wie geht's dir? " + userName + " Was hast du heute schon gemacht? und was wirst du heute noch tun?").queue();
@@ -25,14 +25,14 @@ public class AutoAnswering extends ListenerAdapter {
 
         if (userMessage.equalsIgnoreCase("Wie spät ist es?") || userMessage.equalsIgnoreCase("Wie spät?") ||
                 userMessage.equalsIgnoreCase("Uhrzeit?") || userMessage.equalsIgnoreCase("Welche Uhrzeit?") ||
-                userMessage.equalsIgnoreCase(BotMain.PREFIX + "time")) {
+                userMessage.equalsIgnoreCase(Helper.PREFIX + "time")) {
             if (!event.getMember().getUser().isBot()) {
                 event.getChannel().sendTyping().queue();
                 event.getChannel().sendMessage("Uhrzeit: " + date.toString().substring(11, 16)).queue();
             }
         }
 
-        if (userMessage.equalsIgnoreCase(BotMain.PREFIX + "ping")) {
+        if (userMessage.equalsIgnoreCase(Helper.PREFIX + "ping")) {
             if (!event.getMember().getUser().isBot()) {
                 event.getChannel().sendTyping().queue();
                 event.getChannel().sendMessage("pong").queue();
@@ -50,7 +50,7 @@ public class AutoAnswering extends ListenerAdapter {
             }
         }
 
-        if ((userMessage.equalsIgnoreCase(BotMain.PREFIX + "hcb"))) {
+        if ((userMessage.equalsIgnoreCase(Helper.PREFIX + "hcb"))) {
             if (!event.getMember().getUser().isBot()) {
                 event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/819694809765380146/832676790875062272/farbiger_code.png").queue();
 

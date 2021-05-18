@@ -1,6 +1,6 @@
 package discord.bot.gq.command.moderation;
 
-import discord.bot.gq.BotMain;
+import discord.bot.gq.lib.Helper;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
@@ -19,14 +19,14 @@ public class MessageDelation extends ListenerAdapter {
         Member authorCommand = event.getMessage().getMember();
 
 
-        if (clearCommand[0].equalsIgnoreCase(BotMain.PREFIX + "clear") && clearCommand[1].equalsIgnoreCase("-")) {
+        if (clearCommand[0].equalsIgnoreCase(Helper.PREFIX + "clear") && clearCommand[1].equalsIgnoreCase("-")) {
 
             if (clearCommand.length < 3) {
 
                 EmbedBuilder howToUse = new EmbedBuilder();
                 howToUse.setColor(0x00ffff);
                 howToUse.setTitle("Hilfe");
-                howToUse.setDescription("Richtige Command " + "-> " + BotMain.PREFIX + "clear - [Anzahl der zu löschenden Nachrichten als Zahl]");
+                howToUse.setDescription("Richtige Command " + "-> " + Helper.PREFIX + "clear - [Anzahl der zu löschenden Nachrichten als Zahl]");
                 event.getChannel().sendMessage(howToUse.build()).queue();
 
             }

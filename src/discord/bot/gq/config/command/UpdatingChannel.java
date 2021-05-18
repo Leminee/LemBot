@@ -1,8 +1,8 @@
 package discord.bot.gq.config.command;
 
-import discord.bot.gq.BotMain;
 import discord.bot.gq.config.db.ConfigSelection;
 import discord.bot.gq.config.db.ConfigUpdating;
+import discord.bot.gq.lib.Helper;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
@@ -20,7 +20,7 @@ public class UpdatingChannel extends ListenerAdapter {
         Member authorCommand = event.getMessage().getMember();
         String configCommand = "setcid";
 
-        if ((userMessage[0].equalsIgnoreCase(BotMain.PREFIX + configCommand))) {
+        if ((userMessage[0].equalsIgnoreCase(Helper.PREFIX + configCommand))) {
 
             if (userMessage.length != 2) {
                 return;

@@ -1,7 +1,7 @@
 package discord.bot.gq.command;
 
-import discord.bot.gq.BotMain;
 import discord.bot.gq.database.ConnectionToDB;
+import discord.bot.gq.lib.Helper;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
@@ -19,7 +19,7 @@ public class PasswordCheck extends ListenerAdapter {
         String authorCommand = event.getAuthor().getAsMention();
         String passwordCheckCommand = "check";
 
-        if ((userMessage[0].equalsIgnoreCase(BotMain.PREFIX + passwordCheckCommand))) {
+        if ((userMessage[0].equalsIgnoreCase(Helper.PREFIX + passwordCheckCommand))) {
 
             if (userMessage.length != 2) {
                 return;
