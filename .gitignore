@@ -7,3 +7,4 @@ META-INF
 *.class
 note.txt
 *.jar
+!JDA-4.2.0_247-withDependencies.jar
