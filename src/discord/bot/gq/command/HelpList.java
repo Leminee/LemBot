@@ -27,12 +27,12 @@ public class HelpList extends ListenerAdapter {
                         "\n" + " Prefix:  `?`" + " \n" + " \n" +
                         "`?help`: Nachricht mit Befehlsliste \n  " +
                         "`?check <password>`: gibt zurück, ob Passwort unsicher ist" + " \n" +
-                        "`?hcb`: Zeigt, wie Quellcode gefärbt wird" + " \n" +
-                        "`?top`: Liste der Top 3 Flooder" + "\n" +
+                        "`?top`: Liste der Top 5 Flooder" + "\n" +
                         "`?topb`: Liste der Top 3 Server-Bumper" + "\n" +
                         "`?topu`: Liste der 3 am häufigsten gepingten User" + "\n" +
                         "`?topc`: Liste der 3 aktivisten Channels" + "\n" +
                         "`?srole`: Liste aller Rollen auf GQ" + "\n" +
+                        "`?hcb`: Zeigt, wie Quellcode eingefärbt wird" + " \n" +
                         "`?clear - <zahl>`: löscht Nachrichten" + " \n" +
                         "`?kick <@username> [Grund]`: kickt den User" + "\n" +
                         "(`?clear`, `?kick` *nur für Staff*)");
