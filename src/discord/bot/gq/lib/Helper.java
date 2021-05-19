@@ -13,7 +13,7 @@ import java.util.Objects;
 public final class Helper {
     public static int numberMember = 301;
     public static final String PREFIX = "?";
-    public static final String TOKEN = "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.qeNOp8qDcDfwnO-kEVZBh-thETE";
+    public static final String TOKEN = "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.QKS_z7bQyOoqdpBzzXgAQuTSkzc";
 
     private Helper() {
     }

@@ -28,10 +28,10 @@ public class HelpList extends ListenerAdapter {
                         "`?help`: Nachricht mit Befehlsliste \n  " +
                         "`?check <password>`: gibt zurück, ob Passwort unsicher ist" + " \n" +
                         "`?hmm`: Anzahl deiner geschickten Nachrichten auf GQ" + " \n" +
-                        "`?top`: Liste der Top 5 User mit den meisten Nachrichten" + "\n" +
-                        "`?topb`: Liste der Top 3 Server-Bumper" + "\n" +
-                        "`?topu`: Liste der 3 am häufigsten gepingten User" + "\n" +
-                        "`?topc`: Liste der 3 aktivisten Channels" + "\n" +
+                        "`?top`: Liste der **Top 3** User mit den meisten Nachrichten" + "\n" +
+                        "`?topb`: Liste der **Top 3** Server-Bumper" + "\n" +
+                        "`?topu`: Liste der **3** am häufigsten gepingten User" + "\n" +
+                        "`?topc`: Liste der **3** aktivisten Channels" + "\n" +
                         "`?srole`: Liste aller Rollen auf GQ" + "\n" +
                         "`?hcb`: Zeigt, wie Quellcode eingefärbt wird" + " \n" +
                         "`?clear - <zahl>`: löscht Nachrichten" + " \n" +

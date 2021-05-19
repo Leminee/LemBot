@@ -2,6 +2,7 @@ package discord.bot.gq.command;
 
 import discord.bot.gq.database.ConnectionToDB;
 import discord.bot.gq.lib.Helper;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
@@ -30,20 +31,35 @@ public class NumberMessageCheck extends ListenerAdapter {
                 try {
 
                     String numberMessageCheck = "SELECT number_message FROM user_message WHERE id_discord = ?";
-
                     PreparedStatement pS = db.getConnection().prepareStatement(numberMessageCheck);
-
                     pS.setLong(1, userId);
-
                     ResultSet rS = pS.executeQuery();
 
+
                     if (rS.next()) {
+
                         int numberMessage = rS.getInt(1);
 
-                        event.getChannel().sendMessage(" Anzahl deiner Nachrichten: " + numberMessage + " " + authorCommand).queue();
+                        String nextUser = "SELECT id_discord, number_message FROM user_message WHERE number_message > ? ORDER BY number_message, username LIMIT 1";
+                        PreparedStatement pSTwo = db.getConnection().prepareStatement(nextUser);
+                        pSTwo.setLong(1, numberMessage);
+                        ResultSet rSTwo = pSTwo.executeQuery();
 
-                    } else {
-                        event.getChannel().sendMessage(" :red_circle: Ein unerwarteter Fehler ist aufgetreten! <@739143338975952959>").queue();
+                        if (rSTwo.next()) {
+
+                            long nextUserId = rSTwo.getLong(1);
+                            String mentionedUser = event.getJDA().retrieveUserById(nextUserId).complete().getAsMention();
+                            int nextUserNumberMessage = rSTwo.getInt(2);
+
+                            EmbedBuilder numberMessageInfo = new EmbedBuilder();
+                            numberMessageInfo.setColor(0x0E0E42);
+                            numberMessageInfo.setTitle("Information");
+                            numberMessageInfo.setDescription("Anzahl deiner Nachrichten: " + "**" +numberMessage + "**" +  " " + authorCommand + "\n" + "Du bist hinter dem User " + mentionedUser + " (**" + nextUserNumberMessage + " Nachrichten)**");
+                            event.getChannel().sendMessage(numberMessageInfo.build()).queue();
+                        }
+                        else {
+                            event.getChannel().sendMessage(" :first_place: Du bist **TOP 1** mit " + numberMessage + " Nachrichten " + authorCommand).queue();
+                        }
 
                     }
                     pS.close();

@@ -12,7 +12,6 @@ import discord.bot.gq.event.InviteLinkDelation;
 import discord.bot.gq.event.Reminder;
 import discord.bot.gq.event.WelcomingMemberJoin;
 import discord.bot.gq.lib.Helper;
-import discord.bot.gq.lib.ReactionManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -63,7 +62,7 @@ public class BotMain {
         jda.addEventListener(new NumberMessageCheck());
 
 
-        ReactionManager firstManager = new ReactionManager(jda);
+        /*ReactionManager firstManager = new ReactionManager(jda);
 
 
         firstManager.registerReaction(channelId, "821186181903024179", "821167071181275146", "784773593942327297").
@@ -78,6 +77,6 @@ public class BotMain {
                 registerReaction(channelId, messageId, "821169196523192380", "808768626844893184").
                 registerReaction(channelId, messageId, "821171704133845073", "808767910696189975").
                 registerReaction(channelId, messageId, "821168328961163266", "808779520286654554").
-                registerReaction(channelId, messageId, "821144354445328384", "815922232106156033");
+                registerReaction(channelId, messageId, "821144354445328384", "815922232106156033");*/
     }
 }

@@ -26,7 +26,7 @@ public class TopFlooderSelection extends ListenerAdapter {
                 ConnectionToDB db = new ConnectionToDB();
                 db.initialize();
 
-                String topFlooder = "SELECT username FROM user_message ORDER BY number_message DESC LIMIT 5;";
+                String topFlooder = "SELECT username FROM user_message ORDER BY number_message DESC LIMIT 3;";
                 Statement statement = db.getConnection().createStatement();
                 ResultSet rS = statement.executeQuery(topFlooder);
 
