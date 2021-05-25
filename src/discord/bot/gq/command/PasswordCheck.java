@@ -44,6 +44,8 @@ public class PasswordCheck extends ListenerAdapter {
                 if (rS.next()) {
 
                     event.getChannel().sendMessage(" :red_circle:  Pwned - Passwort wurde gefunden! " + authorCommand).queue();
+                    long lastMessageId = event.getChannel().getLatestMessageIdLong();
+                    event.getChannel().deleteMessageById(lastMessageId);
 
                 } else {
                     event.getChannel().sendMessage(" :green_circle:  Nicht gefunden! " + authorCommand).queue();

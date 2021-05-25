@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.Objects;
 
 public final class Helper {
-    public static int numberMember = 301;
+    public static int numberMember = 323;
     public static final String PREFIX = "?";
-    public static final String TOKEN = "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.QKS_z7bQyOoqdpBzzXgAQuTSkzc";
+    public static final String TOKEN = "";
 
     private Helper() {
     }
@@ -98,4 +98,28 @@ public final class Helper {
     }
 
 
+    public static boolean isResultSetTrue(String query, String nextUser, long authorId, EmbedBuilder embedBuilder) throws SQLException {
+
+        ConnectionToDB db = new ConnectionToDB();
+        db.initialize();
+
+
+        PreparedStatement pS = db.getConnection().prepareStatement(query);
+        pS.setLong(1, authorId);
+        ResultSet rS = pS.executeQuery();
+
+        if (rS.next()) {
+
+            int numberMessages = rS.getInt(1);
+
+            PreparedStatement pSTwo = db.getConnection().prepareStatement(nextUser);
+            pSTwo.setLong(1, numberMessages);
+            ResultSet rSTwo = pSTwo.executeQuery();
+
+            if (rSTwo.next()) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

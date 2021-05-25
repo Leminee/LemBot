@@ -42,7 +42,7 @@ public class TopFlooderSelection extends ListenerAdapter {
 
                     embedBuilder.addField("TOP " + top, rS.getString(1), false);
                     top++;
-
+                    
                 }
 
                 event.getChannel().sendMessage(embedBuilder.build()).queue();
