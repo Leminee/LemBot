@@ -24,19 +24,18 @@ public class HelpList extends ListenerAdapter {
                 embedBuilder.setThumbnail("https://cotelangues.com/wp-content/uploads/2019/06/Fragezeichen-Tafel-868x524.jpg");
                 embedBuilder.setDescription("Hallo, ich heiße **GQ** und bin ein Bot für GoodQuestion:) \n" + "\n" +
                         "                -------------------- **BEFEHLSLISTE** -------------------- \n  " +
-                        "\n" + " Prefix:  `?`" + " \n" + " \n" +
-                        "`?help`: Nachricht mit Befehlsliste \n  " +
+                        "\n" + " Prefix: **?**" + " \n" + " \n" +
                         "`?check <password>`: gibt zurück, ob Passwort unsicher ist" + " \n" +
                         "`?hmm`: Anzahl deiner geschickten Nachrichten auf GQ" + " \n" +
                         "`?hmb`: Anzahl deiner Bumps auf GQ" + " \n" +
-                        "`?top`: Liste der **Top 3** User mit den meisten Nachrichten" + "\n" +
-                        "`?topb`: Liste der **Top 3** Server-Bumper" + "\n" +
-                        "`?topu`: Liste der **3** am häufigsten gepingten User" + "\n" +
-                        "`?topc`: Liste der **3** aktivisten Channels" + "\n" +
+                        "`?top`: Liste der Top 3 User mit den meisten Nachrichten" + "\n" +
+                        "`?topb`: Liste der Top 3 Server-Bumper" + "\n" +
+                        "`?topu`: Liste der 3 am häufigsten gepingten User" + "\n" +
+                        "`?topc`: Liste der 3 aktivisten Channels" + "\n" +
                         "`?srole`: Liste aller Rollen auf GQ" + "\n" +
                         "`?hcb`: Zeigt, wie Quellcode eingefärbt wird" + " \n" +
                         "`?clear - <zahl>`: löscht Nachrichten" + " \n" +
-                        "`?kick <@username> [Grund]`: kickt den User" + "\n" +
+                        "`?kick <@username> [Grund]`: kickt User" + "\n" +
                         "(`?clear`, `?kick` *nur für Staff*)");
 
                 event.getChannel().sendMessage(embedBuilder.build()).queue();

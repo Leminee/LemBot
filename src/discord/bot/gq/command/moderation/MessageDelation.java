@@ -58,7 +58,7 @@ public class MessageDelation extends ListenerAdapter {
 
                         EmbedBuilder deletedSuccess = new EmbedBuilder();
                         deletedSuccess.setColor(0x00ff60);
-                        deletedSuccess.setTitle("Information");
+                        deletedSuccess.setTitle("Bestätigung");
                         deletedSuccess.setDescription("Es wurden " + clearCommand[2] + " Nachrichten durch " + authorCommand.getAsMention() + " erfolgreich gelöscht!");
                         event.getChannel().sendMessage(deletedSuccess.build()).queue();
                     }
