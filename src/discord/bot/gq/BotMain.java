@@ -76,10 +76,11 @@ public class BotMain {
 
         secondManager.registerReaction(channelId, messageId, "821144409633849354", "808779281211719680").
                 registerReaction(channelId, messageId, "821144363953553418", "809152859492974692").
-                registerReaction(channelId, messageId, "846816752867868742", "846812921375359027").
                 registerReaction(channelId, messageId, "821169196523192380", "808768626844893184").
                 registerReaction(channelId, messageId, "821171704133845073", "808767910696189975").
                 registerReaction(channelId, messageId, "821168328961163266", "808779520286654554").
-                registerReaction(channelId, messageId, "821144354445328384", "815922232106156033");
+                registerReaction(channelId, messageId, "821144354445328384", "815922232106156033").
+                registerReaction(channelId, messageId, "846816752867868742", "846812921375359027").
+                registerReaction(channelId, messageId, "846854659104833566", "846856698979418152");
     }
 }
