@@ -9,6 +9,7 @@ import discord.bot.gq.config.command.UpdatingRole;
 import discord.bot.gq.database.*;
 import discord.bot.gq.event.*;
 import discord.bot.gq.lib.Helper;
+import discord.bot.gq.lib.ReactionManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -58,10 +59,10 @@ public class BotMain {
         jda.addEventListener(new UpdatingRole());
         jda.addEventListener(new NumberMessagesCheck());
         jda.addEventListener(new NumberBumpsCheck());
-        jda.addEventListener(new CheckingTop());
+        jda.addEventListener(new TopListReminder());
 
 
-       /*ReactionManager firstManager = new ReactionManager(jda);
+       ReactionManager firstManager = new ReactionManager(jda);
 
 
         firstManager.registerReaction(channelId, "821186181903024179", "821167071181275146", "784773593942327297").
@@ -77,6 +78,6 @@ public class BotMain {
                 registerReaction(channelId, messageId, "821171704133845073", "808767910696189975").
                 registerReaction(channelId, messageId, "821168328961163266", "808779520286654554").
                 registerReaction(channelId, messageId, "846816752867868742", "846812921375359027").
-                registerReaction(channelId, messageId, "846854659104833566", "846856698979418152");*/
+                registerReaction(channelId, messageId, "846854659104833566", "846856698979418152");
     }
 }

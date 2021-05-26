@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 public final class Helper {
     public static int numberMember = 323;
     public static final String PREFIX = "?";
-    public static final String TOKEN = "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.TXYxBzMkGjpdBkEhP0J_i4aDfeA";
+    public static final String TOKEN = "";
 
     private Helper() {
     }

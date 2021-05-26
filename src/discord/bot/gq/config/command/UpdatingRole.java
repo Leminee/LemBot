@@ -1,6 +1,5 @@
 package discord.bot.gq.config.command;
 
-import discord.bot.gq.config.db.ConfigSelection;
 import discord.bot.gq.config.db.ConfigUpdating;
 import discord.bot.gq.lib.Helper;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -13,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public class UpdatingRole extends ListenerAdapter {
-
+    public static String roleId;
 
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
 
@@ -30,10 +29,10 @@ public class UpdatingRole extends ListenerAdapter {
             if (!Objects.requireNonNull(authorCommand).hasPermission(Permission.ADMINISTRATOR)) {
                 return;
             }
-            ConfigSelection configSelection = new ConfigSelection();
-            ConfigUpdating configUpdating = new ConfigUpdating();
 
-            configSelection.setRoleId(userMessage[1]);
+
+            roleId = userMessage[1];
+            ConfigUpdating configUpdating = new ConfigUpdating();
             configUpdating.updateRoleId();
 
 

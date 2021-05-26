@@ -43,7 +43,6 @@ public class TopBumperSelection extends ListenerAdapter {
                     top++;
 
                 }
-
                 event.getChannel().sendMessage(embedBuilder.build()).queue();
 
                 rS.close();

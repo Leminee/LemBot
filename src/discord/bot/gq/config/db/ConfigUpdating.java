@@ -1,5 +1,7 @@
 package discord.bot.gq.config.db;
 
+import discord.bot.gq.config.command.UpdatingChannel;
+import discord.bot.gq.config.command.UpdatingRole;
 import discord.bot.gq.database.ConnectionToDB;
 
 import java.sql.PreparedStatement;
@@ -13,10 +15,10 @@ public class ConfigUpdating {
 
             ConnectionToDB db = new ConnectionToDB();
             db.initialize();
-            ConfigSelection configSelection = new ConfigSelection();
+
             String roleId = "UPDATE config SET config_value = ? WHERE config_name = 'id_ping_role'";
             PreparedStatement updatePStatement = db.getConnection().prepareStatement(roleId);
-            updatePStatement.setString(1, configSelection.getRoleId());
+            updatePStatement.setString(1, UpdatingRole.roleId);
 
             updatePStatement.executeUpdate();
 
@@ -34,11 +36,10 @@ public class ConfigUpdating {
             ConnectionToDB db = new ConnectionToDB();
             db.initialize();
 
-            ConfigSelection configSelection = new ConfigSelection();
             String channelId = "UPDATE config SET config_value = ? WHERE config_name = 'id_ping_channel'";
             PreparedStatement updatePStatement = db.getConnection().prepareStatement(channelId);
 
-            updatePStatement.setString(1, configSelection.getChannelId());
+            updatePStatement.setString(1, UpdatingChannel.channelId);
             updatePStatement.executeUpdate();
 
         } catch (SQLException e) {
