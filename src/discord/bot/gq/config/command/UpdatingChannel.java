@@ -38,7 +38,7 @@ public class UpdatingChannel extends ListenerAdapter {
 
             EmbedBuilder successUpdatedChannelId = new EmbedBuilder();
             successUpdatedChannelId.setColor(0x00ff60);
-            successUpdatedChannelId.setTitle("Confirmation");
+            successUpdatedChannelId.setTitle("Bestätigung");
             successUpdatedChannelId.setDescription("ID Channel wurde erfolgreich bearbeitet " + authorCommand.getAsMention() + "!");
             event.getChannel().sendMessage(successUpdatedChannelId.build()).queue();
 

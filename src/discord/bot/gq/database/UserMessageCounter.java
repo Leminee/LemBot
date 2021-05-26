@@ -59,6 +59,7 @@ public class UserMessageCounter extends ListenerAdapter {
 
         }
 
+
     }
 
     public void insertData(String userMessage, String userId, String messageId) throws SQLException {

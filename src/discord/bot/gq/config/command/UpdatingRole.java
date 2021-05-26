@@ -39,7 +39,7 @@ public class UpdatingRole extends ListenerAdapter {
 
             EmbedBuilder successUpdatedRoleId = new EmbedBuilder();
             successUpdatedRoleId.setColor(0x00ff60);
-            successUpdatedRoleId.setTitle("Confirmation");
+            successUpdatedRoleId.setTitle("Bestätigung");
             successUpdatedRoleId.setDescription("ID der zu pingenden Rolle wurde erfolgreich bearbeitet " + authorCommand.getAsMention() + "!");
             event.getChannel().sendMessage(successUpdatedRoleId.build()).queue();
 

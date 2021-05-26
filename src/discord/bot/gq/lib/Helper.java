@@ -1,19 +1,24 @@
 package discord.bot.gq.lib;
 
+import discord.bot.gq.config.db.ConfigSelection;
 import discord.bot.gq.database.ConnectionToDB;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.awt.*;
 import java.sql.*;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public final class Helper {
     public static int numberMember = 324;
     public static final String PREFIX = "?";
-    public static final String TOKEN = "";
+    public static final String TOKEN = "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.DJebgT3gkp9wvK5J48neC1V6qkk";
 
     private Helper() {
     }
@@ -97,29 +102,71 @@ public final class Helper {
         }
     }
 
-
-    public static boolean isResultSetTrue(String query, String nextUser, long authorId, EmbedBuilder embedBuilder) throws SQLException {
-
-        ConnectionToDB db = new ConnectionToDB();
-        db.initialize();
+    public static void sendAmount(String query, String nextUser,String command, GuildMessageReceivedEvent event, String embedColor, String string) throws SQLException {
 
 
-        PreparedStatement pS = db.getConnection().prepareStatement(query);
-        pS.setLong(1, authorId);
-        ResultSet rS = pS.executeQuery();
+        String userMessage = event.getMessage().getContentRaw();
+        String authorCommand = event.getAuthor().getAsMention();
+        long authorId = event.getAuthor().getIdLong();
 
-        if (rS.next()) {
+        if (Helper.isValidCommand(userMessage, command)) {
+            if (!Objects.requireNonNull(event.getMember()).getUser().isBot()) {
 
-            int numberMessages = rS.getInt(1);
+                ConnectionToDB db = new ConnectionToDB();
+                db.initialize();
 
-            PreparedStatement pSTwo = db.getConnection().prepareStatement(nextUser);
-            pSTwo.setLong(1, numberMessages);
-            ResultSet rSTwo = pSTwo.executeQuery();
+                try {
 
-            if (rSTwo.next()) {
-                return true;
+                    PreparedStatement pS = db.getConnection().prepareStatement(query);
+                    pS.setLong(1, authorId);
+                    ResultSet rS = pS.executeQuery();
+
+
+                    if (rS.next()) {
+
+                        int number = rS.getInt(1);
+
+                        PreparedStatement pSTwo = db.getConnection().prepareStatement(nextUser);
+                        pSTwo.setLong(1, number);
+                        ResultSet rSTwo = pSTwo.executeQuery();
+
+                        if (rSTwo.next()) {
+
+                            long nextTopUserId = rSTwo.getLong(1);
+                            String mentionedUser = event.getJDA().retrieveUserById(nextTopUserId).complete().getAsMention();
+                            int nextTopUser= rSTwo.getInt(2);
+
+                            EmbedBuilder numberInfo = new EmbedBuilder();
+                            numberInfo.setColor(Color.decode(embedColor));
+                            numberInfo.setTitle("Information");
+                            numberInfo.setDescription("Anzahl deiner " +  string  + " **" + number + "**" + " " + authorCommand + "\n" + "Du bist hinter dem User " + mentionedUser + " **(" + nextTopUser + " " +  string + ")**");
+                            event.getChannel().sendMessage(numberInfo.build()).queue();
+                        } else {
+                            event.getChannel().sendMessage(" :first_place: Du bist **TOP 1** mit " + number + " " +  string + " " + authorCommand).queue();
+                        }
+
+                    }
+                    pS.close();
+                    rS.close();
+
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
             }
         }
-        return false;
+    }
+
+    public static void sendCommand(String command, GuildMessageReceivedEvent event, int delay, int period, TimeUnit timeUnit){
+
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
+        ConfigSelection configSelection = new ConfigSelection();
+
+        final Runnable ping = () -> Objects.requireNonNull(event.getJDA().getTextChannelById(configSelection.getChannelId()).sendMessage(Helper.PREFIX + command)).queue();
+        event.getMessage().delete();
+
+        scheduler.scheduleAtFixedRate(ping, delay, period, timeUnit);
+
+
     }
 }
