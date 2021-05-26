@@ -16,9 +16,9 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public final class Helper {
-    public static int numberMember = 324;
+    public static int numberMember = 323;
     public static final String PREFIX = "?";
-    public static final String TOKEN = "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.DJebgT3gkp9wvK5J48neC1V6qkk";
+    public static final String TOKEN = "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.TXYxBzMkGjpdBkEhP0J_i4aDfeA";
 
     private Helper() {
     }
@@ -72,6 +72,8 @@ public final class Helper {
         }
     }
 
+
+    //TODO
     public static void selectTop(String topQuery, String embedTitle, String embedColor, String embedThumbnail) {
 
         try {
@@ -102,7 +104,7 @@ public final class Helper {
         }
     }
 
-    public static void sendAmount(String query, String nextUser,String command, GuildMessageReceivedEvent event, String embedColor, String string) throws SQLException {
+    public static void sendAmount(String query, String nextUser,String command, GuildMessageReceivedEvent event, String embedColor, String string) {
 
 
         String userMessage = event.getMessage().getContentRaw();
@@ -158,15 +160,14 @@ public final class Helper {
 
     public static void sendCommand(String command, GuildMessageReceivedEvent event, int delay, int period, TimeUnit timeUnit){
 
-        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-        ConfigSelection configSelection = new ConfigSelection();
+            ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-        final Runnable ping = () -> Objects.requireNonNull(event.getJDA().getTextChannelById(configSelection.getChannelId()).sendMessage(Helper.PREFIX + command)).queue();
-        event.getMessage().delete();
+            ConfigSelection configSelection = new ConfigSelection();
+            configSelection.selectChannelId();
 
-        scheduler.scheduleAtFixedRate(ping, delay, period, timeUnit);
-
+            final Runnable ping = () -> Objects.requireNonNull(Objects.requireNonNull(event.getJDA().getTextChannelById(configSelection.getChannelId())).sendMessage(Helper.PREFIX + command)).queue();
+            scheduler.scheduleAtFixedRate(ping, delay, period, timeUnit);
 
     }
 }

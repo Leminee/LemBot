@@ -31,7 +31,7 @@ public class UpdatingChannel extends ListenerAdapter {
             }
 
             ConfigSelection configSelection = new ConfigSelection();
-            configSelection.setChannelId((userMessage[1]));
+            configSelection.setChannelId(userMessage[1]);
 
             ConfigUpdating configUpdating = new ConfigUpdating();
             configUpdating.updateChannelId();

@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class ConfigSelection {
-    private String roleId = null;
-    private String channelId = null;
+    private static String roleId = null;
+    private static String channelId = null;
 
 
     public void selectRoleId() {
@@ -22,16 +22,14 @@ public class ConfigSelection {
             ResultSet rS = statement.executeQuery(roleId);
 
             if (rS.next()) {
-                this.roleId = rS.getString(1);
+                ConfigSelection.roleId = rS.getString(1);
 
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
 
         }
-
     }
-
     public void selectChannelId() {
         try {
 
@@ -43,8 +41,7 @@ public class ConfigSelection {
             ResultSet rS = statement.executeQuery(channelId);
 
             if (rS.next()) {
-                this.channelId = rS.getString(1);
-
+                ConfigSelection.channelId = rS.getString(1);
             }
 
         } catch (SQLException e) {
@@ -62,11 +59,11 @@ public class ConfigSelection {
     }
 
     public void setRoleId(String roleId) {
-        this.roleId = roleId;
+        ConfigSelection.roleId = roleId;
     }
 
     public void setChannelId(String channelId) {
-        this.channelId = channelId;
+        ConfigSelection.channelId = channelId;
     }
 
 }
