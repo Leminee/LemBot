@@ -11,8 +11,8 @@ public class ConnectionToDB {
         try {
 
             String dbUrl = "jdbc:mysql://localhost:3306/discordbot?autoReconnect=true&serverTimezone=UTC";
-            String dbUsername = "mel";
-            String dbPassword = "36177436";
+            String dbUsername = "";
+            String dbPassword = "";
             this.connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
 
         } catch (SQLException sqlEx) {
