@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Erstellungszeit: 18. Mai 2021 um 19:23
+-- Erstellungszeit: 27. Mai 2021 um 08:09
 -- Server-Version: 10.3.27-MariaDB-0+deb10u1
 -- PHP-Version: 7.4.16
 
@@ -24,6 +24,18 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Tabellenstruktur für Tabelle `active_user`
+--
+
+CREATE TABLE `active_user` (
+  `id_active_user` int(11) NOT NULL,
+  `active_member` int(11) NOT NULL,
+  `time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `config`
 --
 
@@ -37,11 +49,11 @@ CREATE TABLE `config` (
 --
 
 INSERT INTO `config` (`config_name`, `config_value`) VALUES
-('id_owner', NULL),
-('id_partnership_channel', NULL),
-('id_ping_channel', NULL),
-('id_ping_role', NULL),
-('id_welcome_channel', NULL);
+('id_owner', '739143338975952959'),
+('id_partnership_channel', '809152008082292836'),
+('id_ping_channel', '838453508311220234'),
+('id_ping_role', '<@&815922232106156033>'),
+('id_welcome_channel', '779107500381175808');
 
 -- --------------------------------------------------------
 
@@ -182,9 +194,29 @@ CREATE TABLE `user_message_content` (
   `posted_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `user_status`
+--
+
+CREATE TABLE `user_status` (
+  `id_user_status` int(11) NOT NULL,
+  `id_discord` bigint(20) NOT NULL,
+  `user_tag` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `status` varchar(50) NOT NULL,
+  `changed_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Indizes der exportierten Tabellen
 --
+
+--
+-- Indizes für die Tabelle `active_user`
+--
+ALTER TABLE `active_user`
+  ADD PRIMARY KEY (`id_active_user`);
 
 --
 -- Indizes für die Tabelle `config`
@@ -256,8 +288,20 @@ ALTER TABLE `user_message_content`
   ADD KEY `id_discord` (`id_discord`);
 
 --
+-- Indizes für die Tabelle `user_status`
+--
+ALTER TABLE `user_status`
+  ADD PRIMARY KEY (`id_user_status`);
+
+--
 -- AUTO_INCREMENT für exportierte Tabellen
 --
+
+--
+-- AUTO_INCREMENT für Tabelle `active_user`
+--
+ALTER TABLE `active_user`
+  MODIFY `id_active_user` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT für Tabelle `updated_message`
@@ -282,6 +326,12 @@ ALTER TABLE `user_join`
 --
 ALTER TABLE `user_leave`
   MODIFY `id_user_leave` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `user_status`
+--
+ALTER TABLE `user_status`
+  MODIFY `id_user_status` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints der exportierten Tabellen

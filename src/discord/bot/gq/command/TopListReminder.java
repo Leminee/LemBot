@@ -24,9 +24,9 @@ public class TopListReminder extends ListenerAdapter {
 
         if (Helper.isValidCommand(userMessage,command)) {
 
-            Helper.sendCommand("top", event, 36, 36, TimeUnit.HOURS);
+            Helper.sendCommand("top", event, 1, 36, TimeUnit.HOURS);
 
-            Helper.sendCommand("topb", event, 48, 48, TimeUnit.HOURS);
+            Helper.sendCommand("topb", event, 1, 48, TimeUnit.HOURS);
         }
     }
 }

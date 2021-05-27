@@ -34,8 +34,8 @@ public class StorageMemberLeave extends ListenerAdapter {
 
             pS.executeUpdate();
 
-            Helper.numberMember--;
-            Helper.insertCurrentNumberMember();
+            int currentNumberMember = event.getGuild().getMemberCount();
+            Helper.insertCurrentNumberMember(currentNumberMember);
 
 
         } catch (SQLException throwables) {

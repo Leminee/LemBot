@@ -7,7 +7,10 @@ import discord.bot.gq.command.moderation.MessageDelation;
 import discord.bot.gq.config.command.UpdatingChannel;
 import discord.bot.gq.config.command.UpdatingRole;
 import discord.bot.gq.database.*;
-import discord.bot.gq.event.*;
+import discord.bot.gq.event.DiscordListBumper;
+import discord.bot.gq.event.InviteLinkDelation;
+import discord.bot.gq.event.Reminder;
+import discord.bot.gq.event.WelcomingMemberJoin;
 import discord.bot.gq.lib.Helper;
 import discord.bot.gq.lib.ReactionManager;
 import net.dv8tion.jda.api.JDA;
@@ -60,6 +63,7 @@ public class BotMain {
         jda.addEventListener(new NumberMessagesCheck());
         jda.addEventListener(new NumberBumpsCheck());
         jda.addEventListener(new TopListReminder());
+        jda.addEventListener(new ActiveUsers());
 
 
        ReactionManager firstManager = new ReactionManager(jda);
