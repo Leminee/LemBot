@@ -18,16 +18,15 @@ public class TopBumperSelection extends ListenerAdapter {
         String userMessage = event.getMessage().getContentRaw();
         String topBumperCommand = "topb";
 
+
+
         if (Helper.isValidCommand(userMessage, topBumperCommand)) {
 
-            try {
+            ConnectionToDB db = new ConnectionToDB();
+            db.initialize();
+            String topBumper = "SELECT username FROM user_bump ORDER BY number_bumps DESC, username LIMIT 3;";
 
-                ConnectionToDB db = new ConnectionToDB();
-                db.initialize();
-
-                String topBumper = "SELECT username FROM user_bump ORDER BY number_bumps DESC, username LIMIT 3;";
-                Statement statement = db.getConnection().createStatement();
-                ResultSet rS = statement.executeQuery(topBumper);
+            try(Statement statement = db.getConnection().createStatement();ResultSet rS = statement.executeQuery(topBumper)) {
 
                 EmbedBuilder embedBuilder = new EmbedBuilder();
                 embedBuilder.setTitle("User mit den meisten Bumps");
@@ -44,9 +43,6 @@ public class TopBumperSelection extends ListenerAdapter {
 
                 }
                 event.getChannel().sendMessage(embedBuilder.build()).queue();
-
-                rS.close();
-                statement.close();
 
 
             } catch (SQLException throwables) {

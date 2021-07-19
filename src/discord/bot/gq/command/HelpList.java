@@ -22,7 +22,7 @@ public class HelpList extends ListenerAdapter {
                 embedBuilder.setTitle("HILFE \n");
                 embedBuilder.setColor(0x002d47);
                 embedBuilder.setThumbnail("https://cotelangues.com/wp-content/uploads/2019/06/Fragezeichen-Tafel-868x524.jpg");
-                embedBuilder.setDescription("Hallo, ich heiße **GQ** und bin ein Bot für GoodQuestion:) \n" + "\n" +
+                embedBuilder.setDescription("Hallo, ich heiße **LemBot** und bin ein Bot für GoodQuestion:) \n" + "\n" +
                         "                -------------------- **BEFEHLSLISTE** -------------------- \n  " +
                         "\n" + " Prefix: **?**" + " \n" + " \n" +
                         "`?check <password>`: gibt zurück, ob Passwort unsicher ist" + " \n" +

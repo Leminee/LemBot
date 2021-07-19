@@ -1,6 +1,8 @@
 package discord.bot.gq;
 
 import discord.bot.gq.command.*;
+import discord.bot.gq.command.db.NumberBumpsCheck;
+import discord.bot.gq.command.db.NumberMessagesCheck;
 import discord.bot.gq.command.db.TopBumperSelection;
 import discord.bot.gq.command.db.TopFlooderSelection;
 import discord.bot.gq.command.moderation.MessageDelation;
