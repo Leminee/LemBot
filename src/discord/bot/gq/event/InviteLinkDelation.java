@@ -1,5 +1,7 @@
 package discord.bot.gq.event;
 
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
@@ -12,12 +14,19 @@ public class InviteLinkDelation extends ListenerAdapter {
         long ownerId = 739143338975952959L;
         long channelId = event.getChannel().getIdLong();
         long partnerShipChannelId = 809152008082292836L;
+        Member author = event.getMember();
+
 
         if (channelId == partnerShipChannelId) {
             return;
         }
 
         if (authorId == ownerId) {
+            return;
+        }
+
+        assert author != null;
+        if (author.hasPermission(Permission.BAN_MEMBERS)) {
             return;
         }
 
