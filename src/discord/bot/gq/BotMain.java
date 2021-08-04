@@ -1,10 +1,7 @@
 package discord.bot.gq;
 
 import discord.bot.gq.command.*;
-import discord.bot.gq.command.db.NumberBumpsCheck;
-import discord.bot.gq.command.db.NumberMessagesCheck;
-import discord.bot.gq.command.db.TopBumperSelection;
-import discord.bot.gq.command.db.TopFlooderSelection;
+import discord.bot.gq.command.db.*;
 import discord.bot.gq.command.moderation.MessageDelation;
 import discord.bot.gq.config.command.UpdatingChannel;
 import discord.bot.gq.config.command.UpdatingRole;
@@ -66,6 +63,7 @@ public class BotMain {
         jda.addEventListener(new NumberBumpsCheck());
         jda.addEventListener(new TopListReminder());
         jda.addEventListener(new ActiveUsers());
+        jda.addEventListener(new ActiveUserRecord());
 
 
        ReactionManager firstManager = new ReactionManager(jda);

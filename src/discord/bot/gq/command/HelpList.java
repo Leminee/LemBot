@@ -32,11 +32,14 @@ public class HelpList extends ListenerAdapter {
                         "`?topb`: Liste der Top 3 Server-Bumper" + "\n" +
                         "`?topu`: Liste der 3 am häufigsten gepingten User" + "\n" +
                         "`?topc`: Liste der 3 aktivisten Channels" + "\n" +
+                        "`?tope`: Liste der 3 am häufigsten benutzten Emojis" + "\n" +
                         "`?srole`: Liste aller Rollen auf GQ" + "\n" +
+                        "`?aur`: Record der maximalen, aktiven User" + "\n" +
                         "`?hcb`: Zeigt, wie Quellcode eingefärbt wird" + " \n" +
                         "`?clear - <zahl>`: löscht Nachrichten" + " \n" +
                         "`?kick <@username> [Grund]`: kickt User" + "\n" +
-                        "(`?clear`, `?kick` *nur für Staff*)");
+                        "`?ban <@username> [Grund]`: bant User" + "\n " +
+                        " (`?clear`, `?kick` und `?ban` *nur für Staff*)");
 
                 event.getChannel().sendMessage(embedBuilder.build()).queue();
             }

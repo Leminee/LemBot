@@ -131,7 +131,7 @@ public final class Helper {
                         PreparedStatement pSTwo = db.getConnection().prepareStatement(nextUser);
                         pSTwo.setLong(1, number);
                         ResultSet rSTwo = pSTwo.executeQuery();
-
+                       
                         if (rSTwo.next()) {
 
                             long nextTopUserId = rSTwo.getLong(1);
@@ -143,7 +143,10 @@ public final class Helper {
                             numberInfo.setTitle("Information");
                             numberInfo.setDescription("Anzahl deiner " +  string  + " **" + number + "**" + " " + authorCommand + "\n" + "Du bist hinter dem User " + mentionedUser + " **(" + nextTopUser + " " +  string + ")**");
                             event.getChannel().sendMessage(numberInfo.build()).queue();
-                        } else {
+                        }
+
+
+                        else {
                             event.getChannel().sendMessage(" :first_place: Du bist **TOP 1** mit " + number + " " +  string + " " + authorCommand).queue();
                         }
 

@@ -1,6 +1,5 @@
 package discord.bot.gq.command;
 
-import discord.bot.gq.BotMain;
 import discord.bot.gq.lib.Helper;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Role;
@@ -17,14 +16,13 @@ public class RoleSystem extends ListenerAdapter {
 
         String userMessage = event.getMessage().getContentRaw();
         List<Role> userRoleList = Objects.requireNonNull(event.getMember()).getRoles();
-        List<Role> serverRoleList = Objects.requireNonNull(BotMain.jda.getRoles());
+        List<Role> serverRoleList = Objects.requireNonNull(event.getGuild().getRoles());
         EmbedBuilder showRoles = new EmbedBuilder();
 
         if (userMessage.equalsIgnoreCase(Helper.PREFIX + "role")) {
             if (!event.getMember().getUser().isBot()) {
                 showRoles.setTitle("Rollen");
                 showRoles.setColor(0x002d47);
-                showRoles.setThumbnail("https://cotelangues.com/wp-content/uploads/2019/06/Fragezeichen-Tafel-868x524.jpg");
                 StringBuilder sb = new StringBuilder();
                 for (Role role : userRoleList) {
                     sb.append(role.getAsMention()).append("\n");
@@ -38,7 +36,6 @@ public class RoleSystem extends ListenerAdapter {
             if (!event.getMember().getUser().isBot()) {
                 showRoles.setTitle("Liste aller Rollen auf GQ");
                 showRoles.setColor(0x002d47);
-                showRoles.setThumbnail("https://cotelangues.com/wp-content/uploads/2019/06/Fragezeichen-Tafel-868x524.jpg");
                 StringBuilder sb = new StringBuilder();
                 for (Role role : serverRoleList) {
                     sb.append(role.getAsMention()).append("\n");

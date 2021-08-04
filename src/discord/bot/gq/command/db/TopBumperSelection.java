@@ -32,7 +32,7 @@ public class TopBumperSelection extends ListenerAdapter {
                 embedBuilder.setTitle("User mit den meisten Bumps");
                 embedBuilder.setDescription("");
                 embedBuilder.setColor(0x26b7b8);
-                embedBuilder.setThumbnail("https://plane-dein-training.de/assets/media/dis.png");
+                embedBuilder.setThumbnail("https://cdn.discordapp.com/attachments/819694809765380146/869248076446052402/Bildschirmfoto_2021-07-26_um_17.48.08.png");
 
                 int top = 1;
 
