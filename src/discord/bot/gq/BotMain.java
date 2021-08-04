@@ -64,6 +64,7 @@ public class BotMain {
         jda.addEventListener(new TopListReminder());
         jda.addEventListener(new ActiveUsers());
         jda.addEventListener(new ActiveUserRecord());
+        jda.addEventListener(new TopPingedUser());
 
 
        ReactionManager firstManager = new ReactionManager(jda);

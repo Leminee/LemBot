@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 import java.sql.*;
@@ -74,7 +75,7 @@ public final class Helper {
 
 
     //TODO
-    public static void selectTop(String topQuery, String embedTitle, String embedColor, String embedThumbnail) {
+    public static void selectTop(String topQuery, @NotNull GuildMessageReceivedEvent embedTitle, String embedColor, String embedThumbnail) {
 
         try {
 

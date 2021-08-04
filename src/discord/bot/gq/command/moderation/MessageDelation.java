@@ -49,7 +49,7 @@ public class MessageDelation extends ListenerAdapter {
 
                         EmbedBuilder error = new EmbedBuilder();
                         error.setColor(0xff0000);
-                        error.setTitle("Lösche bitte nicht mehr als 50 Nachrichten!");
+                        error.setTitle("Lösche bitte nicht mehr als 50 Nachrichten auf einmal!");
                         event.getChannel().sendMessage(error.build()).queue();
 
                     } else {
