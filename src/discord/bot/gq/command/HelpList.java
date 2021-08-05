@@ -37,9 +37,8 @@ public class HelpList extends ListenerAdapter {
                         "`?aur`: Record der maximalen, aktiven User" + "\n" +
                         "`?hcb`: Zeigt, wie Quellcode eingefärbt wird" + " \n" +
                         "`?clear - <zahl>`: löscht Nachrichten" + " \n" +
-                        "`?kick <@username> [Grund]`: kickt User" + "\n" +
-                        "`?ban <@username> [Grund]`: bant User" + "\n " +
-                        " (`?clear`, `?kick` und `?ban` *nur für Staff*)");
+                        "`?kick <User ID> [Grund]`: kickt User" + "\n" +
+                        " (`?clear` und `?kick` *nur für Staff*)");
 
                 event.getChannel().sendMessage(embedBuilder.build()).queue();
             }

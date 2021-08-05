@@ -3,6 +3,7 @@ package discord.bot.gq;
 import discord.bot.gq.command.*;
 import discord.bot.gq.command.db.*;
 import discord.bot.gq.command.moderation.MessageDelation;
+import discord.bot.gq.command.moderation.UserBanishment;
 import discord.bot.gq.config.command.UpdatingChannel;
 import discord.bot.gq.config.command.UpdatingRole;
 import discord.bot.gq.database.*;
@@ -65,6 +66,10 @@ public class BotMain {
         jda.addEventListener(new ActiveUsers());
         jda.addEventListener(new ActiveUserRecord());
         jda.addEventListener(new TopPingedUser());
+        jda.addEventListener(new TopUsedEmojis());
+        jda.addEventListener(new ChannelMessageCounter());
+        jda.addEventListener(new TopActiveChannel());
+        jda.addEventListener(new UserBanishment());
 
 
        ReactionManager firstManager = new ReactionManager(jda);

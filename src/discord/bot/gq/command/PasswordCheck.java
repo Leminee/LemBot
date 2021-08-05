@@ -50,6 +50,7 @@ public class PasswordCheck extends ListenerAdapter {
                     event.getChannel().sendMessage(" :green_circle:  Nicht gefunden! " + authorCommand).queue();
 
                 }
+
                 pS.close();
                 rS.close();
 

@@ -28,18 +28,21 @@ public class RoleSystem extends ListenerAdapter {
                     sb.append(role.getAsMention()).append("\n");
                 }
                 showRoles.setDescription("Du hast folgende Rollen: \n" + "\n" +
-                        "-------------------- **Deine Rollen** -------------------- \n" + "\n" + sb);
+                        "---------------- **Deine Rollen** ---------------- \n" + "\n" + sb);
                 event.getChannel().sendMessage(showRoles.build()).queue();
             }
         }
+        
         if (userMessage.equalsIgnoreCase(Helper.PREFIX + "srole")) {
             if (!event.getMember().getUser().isBot()) {
                 showRoles.setTitle("Liste aller Rollen auf GQ");
                 showRoles.setColor(0x002d47);
                 StringBuilder sb = new StringBuilder();
-                for (Role role : serverRoleList) {
-                    sb.append(role.getAsMention()).append("\n");
+
+                for (int i = 0; i < serverRoleList.size() - 8; i++) {
+                    sb.append(serverRoleList.get(i).getAsMention()).append("\n");
                 }
+
                 showRoles.setDescription("Der Server vergibt folgende Rollen: \n " + "\n" +
                         "-------------------- **Rollen** -------------------- \n" + "\n" + sb);
                 event.getChannel().sendMessage(showRoles.build()).queue();

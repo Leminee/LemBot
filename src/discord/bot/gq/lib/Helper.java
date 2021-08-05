@@ -7,7 +7,6 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 import java.sql.*;
@@ -75,7 +74,7 @@ public final class Helper {
 
 
     //TODO
-    public static void selectTop(String topQuery, @NotNull GuildMessageReceivedEvent embedTitle, String embedColor, String embedThumbnail) {
+   /* public static void selectTop(String topQuery, @NotNull GuildMessageReceivedEvent embedTitle, String embedColor, String embedThumbnail) {
 
         try {
 
@@ -86,7 +85,7 @@ public final class Helper {
             ResultSet rS = statement.executeQuery(topQuery);
 
             EmbedBuilder embedBuilder = new EmbedBuilder();
-            embedBuilder.setTitle(embedTitle);
+            embedBuilder.setTitle(String.valueOf(embedTitle));
             embedBuilder.setDescription("");
             embedBuilder.setColor(Color.decode(embedColor));
             embedBuilder.setThumbnail(embedThumbnail);
@@ -102,6 +101,57 @@ public final class Helper {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        }
+    }*/
+
+    public static void selectTop(String command,GuildMessageReceivedEvent event, String topQuery, String embedTitle, Color embedColor, String thumbnail) {
+
+        String userMessage = event.getMessage().getContentRaw();
+
+        if (Helper.isValidCommand(userMessage, command)) {
+            ConnectionToDB db = new ConnectionToDB();
+            db.initialize();
+
+            try(Statement statement = db.getConnection().createStatement(); ResultSet rS = statement.executeQuery(topQuery)) {
+
+                EmbedBuilder embedBuilder = new EmbedBuilder();
+                embedBuilder.setTitle(embedTitle);
+                embedBuilder.setDescription("");
+                embedBuilder.setColor(embedColor);
+                embedBuilder.setThumbnail(thumbnail);
+                String top1 , top2, top3, n1, n2, n3;
+
+                if(command.equals("top") || command.equals("topb")){
+                    top1 = ":first_place:";
+                    top2 = ":second_place:";
+                    top3 = ":third_place:";
+                    n1 = ""; n2 = ""; n3 = "";
+                } else {
+                    top1 = ""; top2 = ""; top3 = "";
+                    n1 = "TOP 1";
+                    n2 = "TOP 2";
+                    n3 = "TOP 3";
+                }
+
+                int top = 1;
+
+                while (rS.next()) {
+                    if(top == 1){
+                        embedBuilder.addField(n1, top1 + rS.getString(1) , false);
+                    }
+                    if(top == 2){
+                        embedBuilder.addField(n2, top2 +rS.getString(1), false);
+                    }
+                    if(top == 3){
+                        embedBuilder.addField(n3, top3 + rS.getString(1), false);
+                    }
+                    top++;
+                }
+                event.getChannel().sendMessage(embedBuilder.build()).queue();
+
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
     }
 

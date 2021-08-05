@@ -34,9 +34,9 @@ public class ActiveUserRecord extends ListenerAdapter {
 
                         if (!event.getMember().getUser().isBot()) {
                             maxUser = rS.getInt(1);
-                            System.out.println(maxUser);
+
                             event.getChannel().sendTyping().queue();
-                            event.getChannel().sendMessage("Maximale Anzahl aktiven User " + maxUser + " " +  userName).queue();
+                            event.getChannel().sendMessage("Maximale Anzahl aktiven User " + "**" +maxUser + "**" + " " +  userName).queue();
                         }
                     }
 
