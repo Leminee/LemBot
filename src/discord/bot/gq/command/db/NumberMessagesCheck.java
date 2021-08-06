@@ -15,7 +15,7 @@ public class NumberMessagesCheck extends ListenerAdapter {
                 "SELECT id_discord, number_message FROM user_message WHERE number_message > ? ORDER BY number_message, username LIMIT 1",
                 "hmm",
                 event,
-                "0x26b7b8",
+                "0xffffff",
                 "Nachrichten");
 
     }
