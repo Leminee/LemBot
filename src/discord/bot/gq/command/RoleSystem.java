@@ -32,7 +32,7 @@ public class RoleSystem extends ListenerAdapter {
                 event.getChannel().sendMessage(showRoles.build()).queue();
             }
         }
-        
+
         if (userMessage.equalsIgnoreCase(Helper.PREFIX + "srole")) {
             if (!event.getMember().getUser().isBot()) {
                 showRoles.setTitle("Liste aller Rollen auf GQ");

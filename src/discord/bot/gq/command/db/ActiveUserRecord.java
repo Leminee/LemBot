@@ -13,36 +13,35 @@ import java.util.Objects;
 
 public class ActiveUserRecord extends ListenerAdapter {
 
-        @Override
-        public void onGuildMessageReceived (@NotNull GuildMessageReceivedEvent event){
+    @Override
+    public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
 
-            String userMessage = event.getMessage().getContentRaw();
-            String userName = Objects.requireNonNull(event.getMember()).getAsMention();
-            int maxUser;
+        String userMessage = event.getMessage().getContentRaw();
+        String userName = Objects.requireNonNull(event.getMember()).getAsMention();
+        int maxUser;
 
 
-            if (userMessage.equalsIgnoreCase(Helper.PREFIX + "aur")) {
+        if (userMessage.equalsIgnoreCase(Helper.PREFIX + "aur")) {
 
-                ConnectionToDB db = new ConnectionToDB();
-                db.initialize();
+            ConnectionToDB db = new ConnectionToDB();
+            db.initialize();
 
-                String activeRecord = "SELECT MAX(active_member) FROM `active_user`";
+            String activeRecord = "SELECT MAX(active_member) FROM active_user;";
 
-                try(Statement statement = db.getConnection().createStatement(); ResultSet rS = statement.executeQuery(activeRecord)) {
+            try (Statement statement = db.getConnection().createStatement(); ResultSet rS = statement.executeQuery(activeRecord)) {
 
-                    if (rS.next()) {
+                if (rS.next()) {
 
-                        if (!event.getMember().getUser().isBot()) {
-                            maxUser = rS.getInt(1);
+                    if (!event.getMember().getUser().isBot()) {
+                        maxUser = rS.getInt(1);
 
-                            event.getChannel().sendTyping().queue();
-                            event.getChannel().sendMessage("Maximale Anzahl aktiven User " + "**" +maxUser + "**" + " " +  userName).queue();
-                        }
+                        event.getChannel().sendMessage("Maximale Anzahl der aktiven User auf dem Server" + "**" + maxUser + "**" + " " + userName).queue();
                     }
-
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
                 }
+
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
         }
+    }
 }

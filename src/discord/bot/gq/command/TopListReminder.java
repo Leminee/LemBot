@@ -22,7 +22,7 @@ public class TopListReminder extends ListenerAdapter {
             return;
         }
 
-        if (Helper.isValidCommand(userMessage,command)) {
+        if (Helper.isValidCommand(userMessage, command)) {
 
             Helper.sendCommand("top", event, 1, 36, TimeUnit.HOURS);
 

@@ -18,9 +18,10 @@ import java.util.concurrent.TimeUnit;
 
 public final class Helper {
     public static final String PREFIX = "?";
-    public static final String TOKEN = "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.4xPHQI7HBDXLzFDebyF0AY7AvWU";
+    public static final String TOKEN = "";
 
     private Helper() {
+
     }
 
     public static boolean isValidCommand(String userMessage, String command) {
@@ -73,38 +74,7 @@ public final class Helper {
     }
 
 
-    //TODO
-   /* public static void selectTop(String topQuery, @NotNull GuildMessageReceivedEvent embedTitle, String embedColor, String embedThumbnail) {
-
-        try {
-
-            ConnectionToDB db = new ConnectionToDB();
-            db.initialize();
-
-            Statement statement = db.getConnection().createStatement();
-            ResultSet rS = statement.executeQuery(topQuery);
-
-            EmbedBuilder embedBuilder = new EmbedBuilder();
-            embedBuilder.setTitle(String.valueOf(embedTitle));
-            embedBuilder.setDescription("");
-            embedBuilder.setColor(Color.decode(embedColor));
-            embedBuilder.setThumbnail(embedThumbnail);
-
-            int top = 1;
-
-            while (rS.next()) {
-
-                embedBuilder.addField("TOP " + top, rS.getString(1), false);
-                top++;
-
-            }
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }*/
-
-    public static void selectTop(String command,GuildMessageReceivedEvent event, String topQuery, String embedTitle, Color embedColor, String thumbnail) {
+    public static void selectTop(String command, GuildMessageReceivedEvent event, String topQuery, String embedTitle, Color embedColor, String thumbnail) {
 
         String userMessage = event.getMessage().getContentRaw();
 
@@ -112,22 +82,26 @@ public final class Helper {
             ConnectionToDB db = new ConnectionToDB();
             db.initialize();
 
-            try(Statement statement = db.getConnection().createStatement(); ResultSet rS = statement.executeQuery(topQuery)) {
+            try (Statement statement = db.getConnection().createStatement(); ResultSet rS = statement.executeQuery(topQuery)) {
 
                 EmbedBuilder embedBuilder = new EmbedBuilder();
                 embedBuilder.setTitle(embedTitle);
                 embedBuilder.setDescription("");
                 embedBuilder.setColor(embedColor);
                 embedBuilder.setThumbnail(thumbnail);
-                String top1 , top2, top3, n1, n2, n3;
+                String top1, top2, top3, n1, n2, n3;
 
-                if(command.equals("top") || command.equals("topb")){
+                if (command.equals("top") || command.equals("topb")) {
                     top1 = ":first_place:";
                     top2 = ":second_place:";
                     top3 = ":third_place:";
-                    n1 = ""; n2 = ""; n3 = "";
+                    n1 = "";
+                    n2 = "";
+                    n3 = "";
                 } else {
-                    top1 = ""; top2 = ""; top3 = "";
+                    top1 = "";
+                    top2 = "";
+                    top3 = "";
                     n1 = "TOP 1";
                     n2 = "TOP 2";
                     n3 = "TOP 3";
@@ -136,13 +110,13 @@ public final class Helper {
                 int top = 1;
 
                 while (rS.next()) {
-                    if(top == 1){
-                        embedBuilder.addField(n1, top1 + rS.getString(1) , false);
+                    if (top == 1) {
+                        embedBuilder.addField(n1, top1 + rS.getString(1), false);
                     }
-                    if(top == 2){
-                        embedBuilder.addField(n2, top2 +rS.getString(1), false);
+                    if (top == 2) {
+                        embedBuilder.addField(n2, top2 + rS.getString(1), false);
                     }
-                    if(top == 3){
+                    if (top == 3) {
                         embedBuilder.addField(n3, top3 + rS.getString(1), false);
                     }
                     top++;
@@ -155,7 +129,7 @@ public final class Helper {
         }
     }
 
-    public static void sendAmount(String query, String nextUser,String command, GuildMessageReceivedEvent event, String embedColor, String string) {
+    public static void sendAmount(String query, String nextUser, String command, GuildMessageReceivedEvent event, String embedColor, String string) {
 
 
         String userMessage = event.getMessage().getContentRaw();
@@ -182,23 +156,20 @@ public final class Helper {
                         PreparedStatement pSTwo = db.getConnection().prepareStatement(nextUser);
                         pSTwo.setLong(1, number);
                         ResultSet rSTwo = pSTwo.executeQuery();
-                       
+
                         if (rSTwo.next()) {
 
                             long nextTopUserId = rSTwo.getLong(1);
                             String mentionedUser = event.getJDA().retrieveUserById(nextTopUserId).complete().getAsMention();
-                            int nextTopUser= rSTwo.getInt(2);
+                            int nextTopUser = rSTwo.getInt(2);
 
                             EmbedBuilder numberInfo = new EmbedBuilder();
                             numberInfo.setColor(Color.decode(embedColor));
                             numberInfo.setTitle("Information");
-                            numberInfo.setDescription("Anzahl deiner " +  string  + " **" + number + "**" + " " + authorCommand + "\n" + "Du bist hinter dem User " + mentionedUser + " **(" + nextTopUser + " " +  string + ")**");
+                            numberInfo.setDescription("Anzahl deiner " + string + " **" + number + "**" + " " + authorCommand + "\n" + "Du bist hinter dem User " + mentionedUser + " **(" + nextTopUser + " " + string + ")**");
                             event.getChannel().sendMessage(numberInfo.build()).queue();
-                        }
-
-
-                        else {
-                            event.getChannel().sendMessage(" :first_place: Du bist **TOP 1** mit " + number + " " +  string + " " + authorCommand).queue();
+                        } else {
+                            event.getChannel().sendMessage(" :first_place: Du bist **TOP 1** mit " + number + " " + string + " " + authorCommand).queue();
                         }
 
                     }
@@ -212,20 +183,20 @@ public final class Helper {
         }
     }
 
-    public static void sendCommand(String command, GuildMessageReceivedEvent event, int delay, int period, TimeUnit timeUnit){
+    public static void sendCommand(String command, GuildMessageReceivedEvent event, int delay, int period, TimeUnit timeUnit) {
 
 
-            ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-            ConfigSelection configSelection = new ConfigSelection();
-            configSelection.selectChannelId();
+        ConfigSelection configSelection = new ConfigSelection();
+        configSelection.selectChannelId();
 
-            final Runnable ping = () -> Objects.requireNonNull(Objects.requireNonNull(event.getJDA().getTextChannelById(configSelection.getChannelId())).sendMessage(Helper.PREFIX + command)).queue();
-            scheduler.scheduleAtFixedRate(ping, delay, period, timeUnit);
+        final Runnable ping = () -> Objects.requireNonNull(Objects.requireNonNull(event.getJDA().getTextChannelById(configSelection.getChannelId())).sendMessage(Helper.PREFIX + command)).queue();
+        scheduler.scheduleAtFixedRate(ping, delay, period, timeUnit);
 
     }
 
-    public static void insertStatus(long userId, String userTag,OnlineStatus newStatus) {
+    public static void insertStatus(long userId, String userTag, OnlineStatus newStatus) {
         ConnectionToDB db = new ConnectionToDB();
         db.initialize();
 
@@ -235,8 +206,8 @@ public final class Helper {
             PreparedStatement pS = db.getConnection().prepareStatement(currentStatus);
 
             pS.setLong(1, userId);
-            pS.setBlob(2,changeCharacterEncoding(pS,userTag));
-            pS.setString(3,String.valueOf(newStatus));
+            pS.setBlob(2, changeCharacterEncoding(pS, userTag));
+            pS.setString(3, String.valueOf(newStatus));
 
             pS.executeUpdate();
 

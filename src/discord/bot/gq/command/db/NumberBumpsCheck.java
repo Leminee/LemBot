@@ -10,7 +10,6 @@ public class NumberBumpsCheck extends ListenerAdapter {
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
 
-        //Parameter in Variablen?
 
         Helper.sendAmount("SELECT number_bumps FROM user_bump WHERE id_discord = ?",
                 "SELECT id_discord, number_bumps FROM user_bump WHERE number_bumps > ? ORDER BY number_bumps, username LIMIT 1",

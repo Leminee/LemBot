@@ -15,7 +15,7 @@ import java.util.List;
 public class UserBanishment extends ListenerAdapter {
 
     @Override
-    public void onGuildMessageReceived (@NotNull GuildMessageReceivedEvent event) {
+    public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
 
         String[] kickCommand = event.getMessage().getContentRaw().split("\\s+");
         Member authorCommand = event.getMessage().getMember();
@@ -29,7 +29,7 @@ public class UserBanishment extends ListenerAdapter {
             try {
                 assert authorCommand != null;
                 if (!authorCommand.hasPermission(Permission.MESSAGE_MANAGE)) {
-                    //event.getChannel().sendMessage(getErrorEmbed("Permission Denied")).complete();
+
                     throw new Exception("Permission Denied");
                 }
 
@@ -47,63 +47,49 @@ public class UserBanishment extends ListenerAdapter {
 
                 if (member == null) {
                     throw new Exception("User ist nicht auf dem Server");
-                    //event.getChannel().sendMessage(getErrorEmbed("Error", "User ist nicht auf dem Server")).complete();
-                    //return;
+
                 }
 
                 String kickedUser = member.getAsMention();
 
                 member.kick(kickCommand[2]).complete();
 
-                event.getChannel().sendMessage(getConfirmationEmbed("BestÃ¤tigung", "User " + "*" + kickedUser + "* " + " wurde durch " + authorCommand.getAsMention() + " gekickt." + "\n Angegebener Grund: " + kickCommand[2])).complete();
-                return;
+                event.getChannel().sendMessage(getConfirmationEmbed("Bestätigung", "User " + "*" + kickedUser + "* " + " wurde durch " + authorCommand.getAsMention() + " gekickt." + "\n Angegebener Grund: " + kickCommand[2])).complete();
             } catch (Exception e) {
-                e.getStackTrace(); //oder so
-                event.getChannel().sendMessage(getErrorEmbed("Error", e.getMessage())).complete();   //ersetz getMessage, hab kein IntelliJ grad
+                e.getStackTrace();
+                event.getChannel().sendMessage(getErrorEmbed("Error", e.getMessage())).complete();
             }
         }
     }
 
+    public MessageEmbed getHelpEmbed(String title, String description) {
+        EmbedBuilder howToUse = new EmbedBuilder();
+        howToUse.setColor(0x00ffff);
+        howToUse.setTitle(title);
+        if (description != null && !description.equals(""))
+            howToUse.setDescription(description);
 
-        //In andere Datei! Utils/Embeds.java oder so
-        public MessageEmbed getHelpEmbed (String title, String description){
-            EmbedBuilder howToUse = new EmbedBuilder();
-            howToUse.setColor(0x00ffff);
-            howToUse.setTitle(title); //"Hilfe"
-            if (description != null && description != "")
-                howToUse.setDescription(description); //"Richtige Command " + "-> " + Helper.PREFIX + "kick [User ID] [Grund des Kicks] "
+        return howToUse.build();
+    }
 
-            return howToUse.build();
-        }
+    public MessageEmbed getErrorEmbed(String title, String description) {
+        EmbedBuilder error = new EmbedBuilder();
+        error.setColor(0xff0000);
+        error.setTitle(title);
+        if (description != null && !description.equals(""))
+            error.setDescription(description);
 
-        public MessageEmbed getErrorEmbed (String title, String description){
-            EmbedBuilder error = new EmbedBuilder();
-            error.setColor(0xff0000);
-            error.setTitle(title);
-            if (description != null && description != "")
-                error.setDescription(description);
+        return error.build();
+    }
 
-            return error.build();
-        }
+    public MessageEmbed getConfirmationEmbed(String title, String description) {
+        EmbedBuilder confirmation = new EmbedBuilder();
+        confirmation.setColor(0x00ff60);
+        confirmation.setTitle(title);
+        if (description != null && !description.equals(""))
+            confirmation.setDescription(description);
 
-        public MessageEmbed getConfirmationEmbed(String title, String description){
-            EmbedBuilder confirmation = new EmbedBuilder();
-            confirmation.setColor(0x00ff60);
-            confirmation.setTitle(title);
-            if (description != null && description != "")
-                confirmation.setDescription(description);
-
-            return confirmation.build();
-        }
-
-        /*catch (Exception e) {
-        System.out.println(e.getStackTrace()); //oder so
-        String errorMsg = e.getMessage();
-
-        if(e instanceof NullPointerException) {
-            errorMsg = "Dies ist eine custom Null Pointer Exception!";
-        }
-        event.getChannel().sendMessage(getErrorEmbed("Error", errorMsg)).complete();
-    }*/
+        return confirmation.build();
+    }
 
 }
