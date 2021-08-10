@@ -25,7 +25,7 @@ public final class Helper {
     }
 
     public static boolean isValidCommand(String userMessage, String command) {
-        return userMessage.equalsIgnoreCase(PREFIX + command);
+        return userMessage.toLowerCase().startsWith(PREFIX + command);
     }
 
     public static boolean isSuccessfulBump(List<MessageEmbed> messages, User embedAuthor) {
@@ -232,5 +232,18 @@ public final class Helper {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
+    }
+
+    public static EmbedBuilder createEmbed(EmbedBuilder embedBuilder,String title, String description, String color, String thumbnail) {
+
+       embedBuilder.setTitle(title);
+       embedBuilder.setDescription(description);
+       embedBuilder.setColor(Color.decode(color));
+       embedBuilder.setThumbnail(thumbnail);
+
+
+       return embedBuilder;
+
     }
 }

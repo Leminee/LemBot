@@ -23,7 +23,7 @@ public class AutoAnswering extends ListenerAdapter {
             }
         }
 
-        if (userMessage.equalsIgnoreCase("Wie spät ist es?") || userMessage.equalsIgnoreCase("Wie spät?") ||
+        if (userMessage.contains("Wie spät ist es?") || userMessage.contains("Wie spät?") ||
                 userMessage.equalsIgnoreCase("Uhrzeit?") || userMessage.equalsIgnoreCase("Welche Uhrzeit?") ||
                 userMessage.equalsIgnoreCase(Helper.PREFIX + "time")) {
             if (!event.getMember().getUser().isBot()) {
@@ -50,7 +50,7 @@ public class AutoAnswering extends ListenerAdapter {
             }
         }
 
-        if ((userMessage.equalsIgnoreCase(Helper.PREFIX + "hcb"))) {
+        if ((userMessage.startsWith(Helper.PREFIX + "hcb"))) {
             if (!event.getMember().getUser().isBot()) {
                 event.getChannel().sendMessage("https://cdn.discordapp.com/attachments/819694809765380146/832676790875062272/farbiger_code.png").queue();
 

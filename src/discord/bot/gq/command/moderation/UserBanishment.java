@@ -47,24 +47,28 @@ public class UserBanishment extends ListenerAdapter {
 
                 if (member == null) {
                     throw new Exception("User ist nicht auf dem Server");
+                }
 
+                if(member.hasPermission(Permission.ADMINISTRATOR)) {
+
+                    throw new Exception("Permission Denied");
                 }
 
                 String kickedUser = member.getAsMention();
 
                 member.kick(kickCommand[2]).complete();
 
-                event.getChannel().sendMessage(getConfirmationEmbed("Bestätigung", "User " + "*" + kickedUser + "* " + " wurde durch " + authorCommand.getAsMention() + " gekickt." + "\n Angegebener Grund: " + kickCommand[2])).complete();
+                event.getChannel().sendMessage(getConfirmationEmbed("Bestätigung", "User " + "*" + kickedUser + "* " + " wurde durch " + authorCommand.getAsMention() + " gekickt." + "\n Angegebener Grund: " + "*" +kickCommand[2]) + "*").complete();
             } catch (Exception e) {
                 e.getStackTrace();
-                event.getChannel().sendMessage(getErrorEmbed("Error", e.getMessage())).complete();
+                event.getChannel().sendMessage(getErrorEmbed("Fehler", "User ist nicht auf dem Server")).complete();
             }
         }
     }
 
     public MessageEmbed getHelpEmbed(String title, String description) {
         EmbedBuilder howToUse = new EmbedBuilder();
-        howToUse.setColor(0x00ffff);
+        howToUse.setColor(0x8EE5EE);
         howToUse.setTitle(title);
         if (description != null && !description.equals(""))
             howToUse.setDescription(description);

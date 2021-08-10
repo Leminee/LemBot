@@ -24,7 +24,7 @@ public class MessageDelation extends ListenerAdapter {
             if (clearCommand.length < 3) {
 
                 EmbedBuilder howToUse = new EmbedBuilder();
-                howToUse.setColor(0x00ffff);
+                howToUse.setColor(0x8EE5EE);
                 howToUse.setTitle("Hilfe");
                 howToUse.setDescription("Richtige Command " + "-> " + Helper.PREFIX + "clear - [Anzahl der zu löschenden Nachrichten als Zahl]");
                 event.getChannel().sendMessage(howToUse.build()).queue();

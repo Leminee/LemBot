@@ -16,6 +16,7 @@ public class TopListReminder extends ListenerAdapter {
 
         String userMessage = event.getMessage().getContentRaw();
         boolean hasPermission = Objects.requireNonNull(event.getMessage().getMember()).hasPermission(Permission.ADMINISTRATOR);
+        String author = event.getAuthor().getAsMention();
         String command = "sendTopCommands";
 
         if (!hasPermission) {
@@ -27,6 +28,8 @@ public class TopListReminder extends ListenerAdapter {
             Helper.sendCommand("top", event, 1, 36, TimeUnit.HOURS);
 
             Helper.sendCommand("topb", event, 1, 48, TimeUnit.HOURS);
+
+            event.getChannel().sendMessage("Done " + author + "!").queue();
         }
     }
 }

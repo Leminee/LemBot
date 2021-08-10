@@ -26,7 +26,7 @@ public class InviteLinkDelation extends ListenerAdapter {
         }
 
         assert author != null;
-        if (author.hasPermission(Permission.BAN_MEMBERS)) {
+        if (author.hasPermission(Permission.MESSAGE_MANAGE)) {
             return;
         }
 
