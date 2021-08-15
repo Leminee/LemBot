@@ -32,9 +32,9 @@ public class HelpList extends ListenerAdapter {
                         `?check <password>`: gibt zurück, ob Passwort unsicher ist\s
                         `?hmm`: Anzahl deiner geschickten Nachrichten auf GQ\s
                         `?hmb`: Anzahl deiner Bumps auf GQ\s
-                        `?top`: Liste der Top 3 User mit den meisten Nachrichten
+                        `?topu`: Liste der Top 3 User mit den meisten Nachrichten
                         `?topb`: Liste der Top 3 Server-Bumper
-                        `?topu`: Liste der 3 am häufigsten gepingten User
+                        `?topp`: Liste der 3 am häufigsten gepingten User
                         `?topc`: Liste der 3 aktivisten Channels
                         `?tope`: Liste der 3 am häufigsten benutzten Emojis
                         `?srole`: Liste aller Rollen auf GQ

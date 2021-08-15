@@ -45,11 +45,11 @@ public class MessageDelation extends ListenerAdapter {
 
                     List<Message> messages = event.getChannel().getHistory().retrievePast(Integer.parseInt(clearCommand[2])).complete();
 
-                    if (Integer.parseInt(clearCommand[2]) >= 51) {
+                    if (Integer.parseInt(clearCommand[2]) >= 31) {
 
                         EmbedBuilder error = new EmbedBuilder();
                         error.setColor(0xff0000);
-                        error.setTitle("Lösche bitte nicht mehr als 50 Nachrichten auf einmal!");
+                        error.setTitle("Lösche bitte nicht mehr als 30 Nachrichten auf einmal!");
                         event.getChannel().sendMessage(error.build()).queue();
 
                     } else {

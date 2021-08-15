@@ -268,13 +268,13 @@ public final class Helper {
 
     }
 
-    public static void insertKickedUserData(long userId, String userTag, String userName,String kickAuthor, String reason, String voiceChannelName) {
+    public static void insertKickedUserData(long userId, String userTag, String userName,String kickAuthor, String reason, String channelName) {
         ConnectionToDB db = new ConnectionToDB();
         db.initialize();
 
         try {
 
-            String insertQuery = "INSERT INTO kicked_user (id_discord,user_tag, username, kick_author, reason, voice_channel_name,kicked_on) VALUES (?,?,?,?,?,?)";
+            String insertQuery = "INSERT INTO kicked_user (id_kicked_user,id_discord,user_tag, username, kick_author, reason, channel_name) VALUES (NULL,?,?,?,?,?,?)";
 
             PreparedStatement pS = db.getConnection().prepareStatement(insertQuery);
 
@@ -283,7 +283,7 @@ public final class Helper {
             pS.setString(3, userName);
             pS.setString(4, kickAuthor);
             pS.setString(5, reason);
-            pS.setString(6, voiceChannelName);
+            pS.setString(6, channelName);
 
             pS.executeUpdate();
 

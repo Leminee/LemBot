@@ -17,7 +17,7 @@ public class TopFlooderSelection extends ListenerAdapter {
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 
         String userMessage = event.getMessage().getContentRaw();
-        String topFlooderCommand = "top";
+        String topFlooderCommand = "topu";
 
         if (Helper.isValidCommand(userMessage, topFlooderCommand)) {
 

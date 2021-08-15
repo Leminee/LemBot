@@ -22,17 +22,22 @@ public class UserBanishment extends ListenerAdapter {
 
         if (kickCommand[0].equalsIgnoreCase(Helper.PREFIX + "kick") && !kickCommand[1].isEmpty()) {
 
+            assert authorCommand != null;
+            if (!authorCommand.hasPermission(Permission.MESSAGE_MANAGE)) {
+
+                try {
+                    throw new Exception("Permission Denied");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
             if (kickCommand.length < 3) {
                 event.getChannel().sendMessage(getHelpEmbed("Hilfe", "Richtige Command " + "-> " + Helper.PREFIX + "kick [User ID] [Grund des Kicks] ")).complete();
                 return;
             }
+
             try {
-                assert authorCommand != null;
-                if (!authorCommand.hasPermission(Permission.MESSAGE_MANAGE)) {
-
-                    throw new Exception("Permission Denied");
-                }
-
 
                 List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
                 Member member = mentionedMembers.size() > 0 ? mentionedMembers.get(0) : null;
@@ -60,16 +65,22 @@ public class UserBanishment extends ListenerAdapter {
 
                 member.kick(kickCommand[2]).complete();
 
-                event.getChannel().sendMessage(getConfirmationEmbed("Bestätigung", "User " + "*" + kickedUser + "* " + " wurde durch " + authorCommand.getAsMention() + " gekickt." + "\n Angegebener Grund: " + "*" +kickCommand[2]) + "*").complete();
+                EmbedBuilder confirmation = new EmbedBuilder();
+                confirmation.setColor(0x00ff60);
+                confirmation.setTitle("Bestätigung");
+                confirmation.setDescription("User " + "*" + kickedUser + "*" + " wurde durch " + authorCommand.getAsMention() + " gekickt." + "\n Angegebener Grund: " + "*" + kickCommand[2] + "*");
+                event.getChannel().sendMessage(confirmation.build()).queue();
 
                 Helper.insertKickedUserData(member.getIdLong(),kickUserTag,kickUserName,authorCommand.getUser().getAsTag(), kickCommand[2],event.getChannel().getName());
 
             } catch (Exception e) {
                 e.getStackTrace();
-                event.getChannel().sendMessage(getErrorEmbed("Fehler", "User ist nicht auf dem Server")).complete();
+
+                event.getChannel().sendMessage(getErrorEmbed("Fehler", "Ein unerwarteter Fehler ist aufgetreten!")).complete();
             }
         }
     }
+
 
     public MessageEmbed getHelpEmbed(String title, String description) {
         EmbedBuilder howToUse = new EmbedBuilder();
@@ -89,16 +100,6 @@ public class UserBanishment extends ListenerAdapter {
             error.setDescription(description);
 
         return error.build();
-    }
-
-    public MessageEmbed getConfirmationEmbed(String title, String description) {
-        EmbedBuilder confirmation = new EmbedBuilder();
-        confirmation.setColor(0x00ff60);
-        confirmation.setTitle(title);
-        if (description != null && !description.equals(""))
-            confirmation.setDescription(description);
-
-        return confirmation.build();
     }
 
 }

@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Erstellungszeit: 27. Mai 2021 um 08:09
--- Server-Version: 10.3.27-MariaDB-0+deb10u1
--- PHP-Version: 7.4.16
+-- Erstellungszeit: 15. Aug 2021 um 18:20
+-- Server-Version: 10.3.29-MariaDB-0+deb10u1
+-- PHP-Version: 7.4.20
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,10 +28,22 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `active_user` (
-  `id_active_user` int(11) NOT NULL,
   `active_member` int(11) NOT NULL,
   `time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `channel`
+--
+
+CREATE TABLE `channel` (
+  `id_message` bigint(20) NOT NULL,
+  `id_channel` bigint(20) NOT NULL,
+  `channel_name` varchar(50) NOT NULL,
+  `sent_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -73,10 +85,13 @@ CREATE TABLE `deleted_message` (
 --
 
 CREATE TABLE `kicked_user` (
+  `id_kicked_user` int(11) NOT NULL,
   `id_discord` bigint(20) NOT NULL,
+  `user_tag` varchar(50) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `author` varchar(50) NOT NULL,
-  `reason` varchar(500) NOT NULL,
+  `kick_author` varchar(50) NOT NULL,
+  `reason` varchar(50) NOT NULL,
+  `voice_channel_name` varchar(50) NOT NULL,
   `kicked_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -149,6 +164,7 @@ CREATE TABLE `user_bump_time` (
 CREATE TABLE `user_join` (
   `id_user_join` int(11) NOT NULL,
   `id_discord` bigint(20) NOT NULL,
+  `user_tag` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `avatar_url` varchar(500) DEFAULT NULL,
   `joined_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -163,9 +179,9 @@ CREATE TABLE `user_join` (
 CREATE TABLE `user_leave` (
   `id_user_leave` int(11) NOT NULL,
   `id_discord` bigint(20) NOT NULL,
+  `user_tag` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `avatar_url` varchar(500) DEFAULT NULL,
-  `user_tag` varchar(50) NOT NULL,
   `left_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -208,6 +224,34 @@ CREATE TABLE `user_status` (
   `changed_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `voice_join`
+--
+
+CREATE TABLE `voice_join` (
+  `id_discord` bigint(20) NOT NULL,
+  `user_tag` varchar(50) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `voice_channel_name` varchar(50) NOT NULL,
+  `joined_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `voice_leave`
+--
+
+CREATE TABLE `voice_leave` (
+  `id_discord` bigint(20) NOT NULL,
+  `user_tag` varchar(50) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `voice_channel_name` varchar(50) NOT NULL,
+  `leaved_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 --
 -- Indizes der exportierten Tabellen
 --
@@ -216,7 +260,13 @@ CREATE TABLE `user_status` (
 -- Indizes für die Tabelle `active_user`
 --
 ALTER TABLE `active_user`
-  ADD PRIMARY KEY (`id_active_user`);
+  ADD KEY `active_member` (`active_member`);
+
+--
+-- Indizes für die Tabelle `channel`
+--
+ALTER TABLE `channel`
+  ADD PRIMARY KEY (`id_message`);
 
 --
 -- Indizes für die Tabelle `config`
@@ -234,13 +284,19 @@ ALTER TABLE `deleted_message`
 -- Indizes für die Tabelle `kicked_user`
 --
 ALTER TABLE `kicked_user`
-  ADD PRIMARY KEY (`id_discord`);
+  ADD PRIMARY KEY (`id_kicked_user`);
 
 --
 -- Indizes für die Tabelle `leaked_password`
 --
 ALTER TABLE `leaked_password`
   ADD KEY `pass` (`pass`);
+
+--
+-- Indizes für die Tabelle `number_member`
+--
+ALTER TABLE `number_member`
+  ADD KEY `total_member` (`total_member`);
 
 --
 -- Indizes für die Tabelle `updated_message`
@@ -298,10 +354,10 @@ ALTER TABLE `user_status`
 --
 
 --
--- AUTO_INCREMENT für Tabelle `active_user`
+-- AUTO_INCREMENT für Tabelle `kicked_user`
 --
-ALTER TABLE `active_user`
-  MODIFY `id_active_user` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `kicked_user`
+  MODIFY `id_kicked_user` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT für Tabelle `updated_message`
@@ -342,12 +398,6 @@ ALTER TABLE `user_status`
 --
 ALTER TABLE `deleted_message`
   ADD CONSTRAINT `deleted_message_ibfk_2` FOREIGN KEY (`id_deleted_message`) REFERENCES `user_message_content` (`id_message`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints der Tabelle `kicked_user`
---
-ALTER TABLE `kicked_user`
-  ADD CONSTRAINT `kicked_user_ibfk_1` FOREIGN KEY (`id_discord`) REFERENCES `user_message` (`id_discord`);
 
 --
 -- Constraints der Tabelle `updated_message`
