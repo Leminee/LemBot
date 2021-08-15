@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class StorageUpdatedMessage extends ListenerAdapter {
+public class UpdatedMessageStorage extends ListenerAdapter {
     @Override
     public void onGuildMessageUpdate(@Nonnull GuildMessageUpdateEvent event) {
 

@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public class UpdatingRole extends ListenerAdapter {
+
     public static String roleId;
 
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {

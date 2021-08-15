@@ -56,5 +56,12 @@ public class AutoAnswering extends ListenerAdapter {
 
             }
         }
+
+        if ((userMessage.startsWith(Helper.PREFIX + "mq"))) {
+            if (!event.getMember().getUser().isBot()) {
+                event.getChannel().sendMessage("Stelle bitte keine Metagfrage, stelle einfach deine Frage - möglichst detailliert!").queue();
+
+            }
+        }
     }
 }

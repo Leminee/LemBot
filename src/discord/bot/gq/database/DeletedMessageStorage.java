@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class StorageDeletedMessage extends ListenerAdapter {
+public class DeletedMessageStorage extends ListenerAdapter {
 
     @Override
     public void onGuildMessageDelete(@Nonnull GuildMessageDeleteEvent event) {

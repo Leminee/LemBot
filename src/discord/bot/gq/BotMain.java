@@ -41,12 +41,12 @@ public class BotMain {
         jda.getPresence().setStatus(OnlineStatus.ONLINE);
         jda.getPresence().setActivity(Activity.playing("?help"));
 
-        jda.addEventListener(new StorageMemberLeave());
+        jda.addEventListener(new MemberLeaveStorage());
         jda.addEventListener(new MessageDelation());
         jda.addEventListener(new AutoAnswering());
         jda.addEventListener(new Reminder());
         jda.addEventListener(new WelcomingMemberJoin());
-        jda.addEventListener(new StorageMemberJoin());
+        jda.addEventListener(new MemberJoinStorage());
         jda.addEventListener(new UserMessageCounter());
         jda.addEventListener(new BumpCounter());
         jda.addEventListener(new RoleSystem());
@@ -57,8 +57,8 @@ public class BotMain {
         jda.addEventListener(new InviteLinkDelation());
         jda.addEventListener(new PasswordCheck());
         jda.addEventListener(new UpdatingChannel());
-        jda.addEventListener(new StorageUpdatedMessage());
-        jda.addEventListener(new StorageDeletedMessage());
+        jda.addEventListener(new UpdatedMessageStorage());
+        jda.addEventListener(new DeletedMessageStorage());
         jda.addEventListener(new UpdatingRole());
         jda.addEventListener(new NumberMessagesCheck());
         jda.addEventListener(new NumberBumpsCheck());
@@ -70,6 +70,8 @@ public class BotMain {
         jda.addEventListener(new ChannelMessageCounter());
         jda.addEventListener(new TopActiveChannel());
         jda.addEventListener(new UserBanishment());
+        jda.addEventListener(new VoiceJoinedStorage());
+        jda.addEventListener(new VoiceLeavedStorage());
 
 
       ReactionManager firstManager = new ReactionManager(jda);

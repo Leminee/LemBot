@@ -55,10 +55,15 @@ public class UserBanishment extends ListenerAdapter {
                 }
 
                 String kickedUser = member.getAsMention();
+                String kickUserTag = member.getUser().getAsTag();
+                String kickUserName = member.getUser().getName();
 
                 member.kick(kickCommand[2]).complete();
 
                 event.getChannel().sendMessage(getConfirmationEmbed("Bestätigung", "User " + "*" + kickedUser + "* " + " wurde durch " + authorCommand.getAsMention() + " gekickt." + "\n Angegebener Grund: " + "*" +kickCommand[2]) + "*").complete();
+
+                Helper.insertKickedUserData(member.getIdLong(),kickUserTag,kickUserName,authorCommand.getUser().getAsTag(), kickCommand[2],event.getChannel().getName());
+
             } catch (Exception e) {
                 e.getStackTrace();
                 event.getChannel().sendMessage(getErrorEmbed("Fehler", "User ist nicht auf dem Server")).complete();

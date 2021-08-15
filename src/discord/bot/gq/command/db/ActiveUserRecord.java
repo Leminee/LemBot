@@ -18,17 +18,18 @@ public class ActiveUserRecord extends ListenerAdapter {
 
         String userMessage = event.getMessage().getContentRaw();
         String userName = Objects.requireNonNull(event.getMember()).getAsMention();
+        String recordCommand = "aur";
         int maxUser;
 
 
-        if (userMessage.equalsIgnoreCase(Helper.PREFIX + "aur")) {
+        if (Helper.isValidCommand(userMessage, recordCommand)) {
 
             ConnectionToDB db = new ConnectionToDB();
             db.initialize();
 
-            String activeRecord = "SELECT MAX(active_member) FROM active_user;";
+            String activeUserRecord = "SELECT MAX(active_member) FROM active_user;";
 
-            try (Statement statement = db.getConnection().createStatement(); ResultSet rS = statement.executeQuery(activeRecord)) {
+            try (Statement statement = db.getConnection().createStatement(); ResultSet rS = statement.executeQuery(activeUserRecord)) {
 
                 if (rS.next()) {
 
@@ -39,8 +40,8 @@ public class ActiveUserRecord extends ListenerAdapter {
                     }
                 }
 
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (SQLException sqlException) {
+                System.out.println(sqlException.getMessage());
             }
         }
     }

@@ -7,7 +7,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class StorageMemberJoin extends ListenerAdapter {
+public class MemberJoinStorage extends ListenerAdapter {
 
     @Override
     public void onGuildMemberJoin(GuildMemberJoinEvent event) {
@@ -15,20 +15,22 @@ public class StorageMemberJoin extends ListenerAdapter {
         long userId = event.getUser().getIdLong();
         String userName = event.getUser().getName();
         String avatarUrl = event.getUser().getEffectiveAvatarUrl();
+        String userTag = event.getUser().getAsTag();
 
 
         ConnectionToDB db = new ConnectionToDB();
         db.initialize();
 
-        String userJoinData = "INSERT INTO user_join (id_user_join, id_discord, username,avatar_url) VALUES (NULL,?,?,?);";
+        String userJoinData = "INSERT INTO user_join (id_user_join,id_discord,user_tag,username,avatar_url) VALUES (NULL,?,?,?,?);";
 
         try {
 
             PreparedStatement pS = db.getConnection().prepareStatement(userJoinData);
 
             pS.setLong(1, userId);
-            pS.setBlob(2, Helper.changeCharacterEncoding(pS, userName));
-            pS.setString(3, avatarUrl);
+            pS.setBlob(2, Helper.changeCharacterEncoding(pS, userTag));
+            pS.setBlob(3, Helper.changeCharacterEncoding(pS, userName));
+            pS.setString(4, avatarUrl);
 
             pS.executeUpdate();
 

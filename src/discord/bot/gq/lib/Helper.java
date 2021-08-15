@@ -68,11 +68,10 @@ public final class Helper {
 
             pS.executeUpdate();
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
         }
     }
-
 
     public static void selectTop(String command, GuildMessageReceivedEvent event, String topQuery, String embedTitle, Color embedColor, String thumbnail) {
 
@@ -123,8 +122,8 @@ public final class Helper {
                 }
                 event.getChannel().sendMessage(embedBuilder.build()).queue();
 
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (SQLException sqlException) {
+                System.out.println(sqlException.getMessage());
             }
         }
     }
@@ -167,6 +166,7 @@ public final class Helper {
                             numberInfo.setColor(Color.decode(embedColor));
                             numberInfo.setTitle("Information");
                             numberInfo.setDescription("Anzahl deiner " + string + " **" + number + "**" + " " + authorCommand + "\n" + "Du bist hinter dem User " + mentionedUser + " **(" + nextTopUser + " " + string + ")**");
+
                             event.getChannel().sendMessage(numberInfo.build()).queue();
                         } else {
                             event.getChannel().sendMessage(" :first_place: Du bist **TOP 1** mit " + number + " " + string + " " + authorCommand).queue();
@@ -176,8 +176,8 @@ public final class Helper {
                     pS.close();
                     rS.close();
 
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+                } catch (SQLException sqlException) {
+                    System.out.println(sqlException.getMessage());
                 }
             }
         }
@@ -211,8 +211,8 @@ public final class Helper {
 
             pS.executeUpdate();
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
         }
     }
 
@@ -229,8 +229,8 @@ public final class Helper {
 
             pS.executeUpdate();
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
         }
 
     }
@@ -246,4 +246,51 @@ public final class Helper {
        return embedBuilder;
 
     }
+
+    public static void insertVoiceChannelData(String insertQuery, long userId, String userTag, String userName, String voiceChannelName) {
+        ConnectionToDB db = new ConnectionToDB();
+        db.initialize();
+
+        try {
+
+            PreparedStatement pS = db.getConnection().prepareStatement(insertQuery);
+
+            pS.setLong(1, userId);
+            pS.setString(2, userTag);
+            pS.setString(3, userName);
+            pS.setString(4, voiceChannelName);
+
+            pS.executeUpdate();
+
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
+        }
+
+    }
+
+    public static void insertKickedUserData(long userId, String userTag, String userName,String kickAuthor, String reason, String voiceChannelName) {
+        ConnectionToDB db = new ConnectionToDB();
+        db.initialize();
+
+        try {
+
+            String insertQuery = "INSERT INTO kicked_user (id_discord,user_tag, username, kick_author, reason, voice_channel_name,kicked_on) VALUES (?,?,?,?,?,?)";
+
+            PreparedStatement pS = db.getConnection().prepareStatement(insertQuery);
+
+            pS.setLong(1, userId);
+            pS.setString(2, userTag);
+            pS.setString(3, userName);
+            pS.setString(4, kickAuthor);
+            pS.setString(5, reason);
+            pS.setString(6, voiceChannelName);
+
+            pS.executeUpdate();
+
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
+        }
+
+    }
+
 }
