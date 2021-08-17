@@ -50,7 +50,6 @@ public class BotMain {
         jda.addEventListener(new TopBumperSelection());
         jda.addEventListener(new TopFlooderSelection());
         jda.addEventListener(new HelpList());
-        jda.addEventListener(new DiscordListBumper());
         jda.addEventListener(new InviteLinkDelation());
         jda.addEventListener(new PasswordCheck());
         jda.addEventListener(new UpdatingChannel());

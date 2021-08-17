@@ -43,7 +43,7 @@ public class MessageDelation extends ListenerAdapter {
 
                 try {
 
-                    List<Message> messages = event.getChannel().getHistory().retrievePast(Integer.parseInt(clearCommand[2])).complete();
+                    List<Message> messages = event.getChannel().getHistory().retrievePast(Integer.parseInt(clearCommand[2] +1)).complete();
 
                     if (Integer.parseInt(clearCommand[2]) >= 31) {
 

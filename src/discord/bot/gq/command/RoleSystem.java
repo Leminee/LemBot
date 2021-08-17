@@ -27,7 +27,7 @@ public class RoleSystem extends ListenerAdapter {
                 for (Role role : userRoleList) {
                     sb.append(role.getAsMention()).append("\n");
                 }
-                showRoles.setDescription("Du hast folgende Rollen: \n" + "\n" +
+                showRoles.setDescription("Du hast folgende Rolle(n): \n" + "\n" +
                         "---------------- **Deine Rollen** ---------------- \n" + "\n" + sb);
                 event.getChannel().sendMessage(showRoles.build()).queue();
             }
@@ -39,7 +39,7 @@ public class RoleSystem extends ListenerAdapter {
                 showRoles.setColor(0x002d47);
                 StringBuilder sb = new StringBuilder();
 
-                for (int i = 0; i < serverRoleList.size() - 8; i++) {
+                for (int i = 0; i < serverRoleList.size() - 4; i++) {
                     sb.append(serverRoleList.get(i).getAsMention()).append("\n");
                 }
 

@@ -23,7 +23,7 @@ public class MemberLeaveStorage extends ListenerAdapter {
             ConnectionToDB db = new ConnectionToDB();
             db.initialize();
 
-            String userLeaveData = "INSERT INTO user_leave (id_user_leave,id_discord,username,avatar_url,user_tag) VALUES (NULL,?,?,?,?);";
+            String userLeaveData = "INSERT INTO user_leave (id_user_leave,id_discord,user_tag,username,avatar_url) VALUES (NULL,?,?,?,?);";
 
             PreparedStatement pS = db.getConnection().prepareStatement(userLeaveData);
 

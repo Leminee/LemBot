@@ -63,7 +63,7 @@ public class UserBanishment extends ListenerAdapter {
                 String kickUserTag = member.getUser().getAsTag();
                 String kickUserName = member.getUser().getName();
 
-                member.kick(kickCommand[2]).complete();
+                /*member.kick(kickCommand[2]).complete();
 
                 EmbedBuilder confirmation = new EmbedBuilder();
                 confirmation.setColor(0x00ff60);
@@ -72,6 +72,9 @@ public class UserBanishment extends ListenerAdapter {
                 event.getChannel().sendMessage(confirmation.build()).queue();
 
                 Helper.insertKickedUserData(member.getIdLong(),kickUserTag,kickUserName,authorCommand.getUser().getAsTag(), kickCommand[2],event.getChannel().getName());
+                */
+
+                event.getChannel().sendMessage("Command funktioniert nicht! " + authorCommand).queue();
 
             } catch (Exception e) {
                 e.getStackTrace();
