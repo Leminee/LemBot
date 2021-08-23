@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 public final class Helper {
     public static final String PREFIX = "?";
-    public static final String TOKEN = "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.5D6EwwGtjzOkn5e00WEHbZAh9E4";
+    public static final String TOKEN = "";
 
     private Helper() {
 
@@ -268,20 +268,18 @@ public final class Helper {
 
     }
 
-    public static void insertKickedUserData(long userId, String userTag, String userName,String kickAuthor, String reason, String channelName) {
+    public static void insertSanctionedUserData(String insertQuery, long userId, String userTag, String userName,String sanctionAuthor, String reason, String channelName) {
         ConnectionToDB db = new ConnectionToDB();
         db.initialize();
 
         try {
-
-            String insertQuery = "INSERT INTO kicked_user (id_kicked_user,id_discord,user_tag, username, kick_author, reason, channel_name) VALUES (NULL,?,?,?,?,?,?)";
 
             PreparedStatement pS = db.getConnection().prepareStatement(insertQuery);
 
             pS.setLong(1, userId);
             pS.setString(2, userTag);
             pS.setString(3, userName);
-            pS.setString(4, kickAuthor);
+            pS.setString(4, sanctionAuthor);
             pS.setString(5, reason);
             pS.setString(6, channelName);
 
