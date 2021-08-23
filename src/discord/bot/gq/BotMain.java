@@ -70,6 +70,7 @@ public class BotMain {
         jda.addEventListener(new VoiceLeavedStorage());
         jda.addEventListener(new LinkDelation());
         jda.addEventListener(new VoiceMoved());
+        jda.addEventListener(new UserAuthorization());
 
 
       ReactionManager firstManager = new ReactionManager(jda);

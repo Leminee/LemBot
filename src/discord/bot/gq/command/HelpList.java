@@ -40,10 +40,11 @@ public class HelpList extends ListenerAdapter {
                         `?srole`: Liste aller Rollen auf GQ
                         `?aur`: Record der maximalen, aktiven User
                         `?hcb`: Zeigt, wie Quellcode eingefärbt wird\s
-                        `?clear - <zahl>`: löscht Nachrichten\s
-                        `?kick <User ID> [Grund]`: kickt User\s 
+                        `?clear - <zahl>`: löscht Nachrichten\s 
+                        `?mute <User ID> [Grund]`: weist dem User eine Muted-Rolle zu\s 
+                        `?kick <User ID> [Grund]`: kickt User\s  
                         `?ban <User ID> [Grund]`: bant User
-                         (`?clear`,`?kick` und `?ban` *nur für Staff*)""");
+                         (`?clear`, `?warn`, `?kick` und `?ban` *nur für Staff*)""");
 
                 event.getChannel().sendMessage(embedBuilder.build()).queue();
             }

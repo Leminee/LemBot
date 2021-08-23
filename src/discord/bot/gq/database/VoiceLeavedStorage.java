@@ -29,7 +29,7 @@ public class VoiceLeavedStorage extends ListenerAdapter {
 
         String embedDescription = userMentioned + " hat " + "**" +voiceChannelName + "**" + " um " + date.toString().substring(11, 16) + " Uhr verlassen.";
 
-        Helper.createEmbed(embed,"Voice Leaved ",embedDescription, Color.MAGENTA,"https://cdn.discordapp.com/attachments/819694809765380146/879198267152400425/Bildschirmfoto_2021-08-23_um_04.59.38.png");
+        Helper.createEmbed(embed,"Voice Left ",embedDescription, Color.MAGENTA,"https://cdn.discordapp.com/attachments/819694809765380146/879198267152400425/Bildschirmfoto_2021-08-23_um_04.59.38.png");
         Objects.requireNonNull(event.getJDA().getTextChannelById(voiceChatId)).sendMessage(embed.build()).queue();
 
         Helper.insertVoiceChannelData(insertQuery,userId,userTag, userName, voiceChannelName);
