@@ -24,12 +24,12 @@ public class LinkDelation extends ListenerAdapter {
             return;
         }
 
-        if (!userMessage.contains("https://www.")) {
+        if (!userMessage.contains("https://")) {
             return;
         }
 
         event.getMessage().delete().queue();
-        event.getChannel().sendMessage("Nachricht wurde gelöscht, da sie einen Link enthält, der nicht verifiziert werden konnte! " + event.getAuthor().getAsMention() + "!").queue();
+        event.getChannel().sendMessage("Nachricht wurde gelöscht, da sie einen Link enthält, der nicht verifiziert werden konnte " + event.getAuthor().getAsMention() + "!").queue();
 
     }
 

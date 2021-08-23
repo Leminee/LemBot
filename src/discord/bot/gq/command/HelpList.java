@@ -41,8 +41,9 @@ public class HelpList extends ListenerAdapter {
                         `?aur`: Record der maximalen, aktiven User
                         `?hcb`: Zeigt, wie Quellcode eingefärbt wird\s
                         `?clear - <zahl>`: löscht Nachrichten\s
-                        `?kick <User ID> [Grund]`: kickt User
-                         (`?clear` und `?kick` *nur für Staff*)""");
+                        `?kick <User ID> [Grund]`: kickt User\s 
+                        `?ban <User ID> [Grund]`: bant User
+                         (`?clear`,`?kick` und `?ban` *nur für Staff*)""");
 
                 event.getChannel().sendMessage(embedBuilder.build()).queue();
             }

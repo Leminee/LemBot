@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 public final class Helper {
     public static final String PREFIX = "?";
-    public static final String TOKEN = "";
+    public static final String TOKEN = "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.5D6EwwGtjzOkn5e00WEHbZAh9E4";
 
     private Helper() {
 
@@ -235,11 +235,11 @@ public final class Helper {
 
     }
 
-    public static EmbedBuilder createEmbed(EmbedBuilder embedBuilder,String title, String description, String color, String thumbnail) {
+    public static EmbedBuilder createEmbed(EmbedBuilder embedBuilder,String title, String description, Color color, String thumbnail) {
 
        embedBuilder.setTitle(title);
        embedBuilder.setDescription(description);
-       embedBuilder.setColor(Color.decode(color));
+       embedBuilder.setColor(color);
        embedBuilder.setThumbnail(thumbnail);
 
 

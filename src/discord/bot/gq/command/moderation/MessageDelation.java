@@ -43,9 +43,11 @@ public class MessageDelation extends ListenerAdapter {
 
                 try {
 
-                    List<Message> messages = event.getChannel().getHistory().retrievePast(Integer.parseInt(clearCommand[2] +1)).complete();
+                    int messagesToDelete = Integer.parseInt(clearCommand[2]) + 1;
 
-                    if (Integer.parseInt(clearCommand[2]) >= 31) {
+                    List<Message> messages = event.getChannel().getHistory().retrievePast(messagesToDelete).complete();
+
+                    if (messagesToDelete >= 31) {
 
                         EmbedBuilder error = new EmbedBuilder();
                         error.setColor(0xff0000);
