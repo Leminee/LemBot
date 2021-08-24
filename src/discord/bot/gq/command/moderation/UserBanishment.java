@@ -31,7 +31,7 @@ public class UserBanishment extends ListenerAdapter {
 
                 EmbedBuilder embedError = new EmbedBuilder();
                 String embedDescription = "Permission Denied";
-                Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED, "https://cdn.discordapp.com/attachments/819694809765380146/879230207763038228/Bildschirmfoto_2021-08-23_um_07.06.46.png");
+                Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED, "https://cdn.discordap819694809765380146/879230207763038228/Bildschirmfoto_2021-08-23_um_07.06.46.png");
                 event.getChannel().sendMessage(embedError.build()).queue();
                 return;
             }
@@ -50,7 +50,7 @@ public class UserBanishment extends ListenerAdapter {
 
                 EmbedBuilder embedError = new EmbedBuilder();
                 String embedDescription = "Bitte gebe einen Grund an!";
-                Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED, "https://cdn.discordapp.com/attachments/819694809765380146/879230207763038228/Bildschirmfoto_2021-08-23_um_07.06.46.png");
+                Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED, "https://cdn.discordapp.com/attacents/819694809765380146/879230207763038228/Bildschirmfoto_2021-08-23_um_07.06.46.png");
                 event.getChannel().sendMessage(embedError.build()).queue();
                 return;
             }
@@ -73,7 +73,7 @@ public class UserBanishment extends ListenerAdapter {
 
                     EmbedBuilder embedError = new EmbedBuilder();
                     String embedDescription = "User ist nicht auf dem Server!";
-                    Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED, "https://cdn.discordapp.com/attachments/819694809765380146/879230207763038228/Bildschirmfoto_2021-08-23_um_07.06.46.png");
+                    Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED, "https://cdn.discorda.com/attachments/819694809765380146/87Bildschirmfoto_2021-08-23_um_07.06.46.png");
                     event.getChannel().sendMessage(embedError.build()).queue();
                     return;
 
@@ -85,7 +85,7 @@ public class UserBanishment extends ListenerAdapter {
 
                 EmbedBuilder embedError = new EmbedBuilder();
                 String embedDescription = "Admins/Moderatoren können nicht gekickt oder gebannt werden!";
-                Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED, "https://cdn.discordapp.com/attachments/819694809765380146/879230207763038228/Bildschirmfoto_2021-08-23_um_07.06.46.png");
+                Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED, "https://cdn.discoapp.com/attachments/819694809765380146/879230207763038228/Bildschirmfoto_2021-086.png");
                 event.getChannel().sendMessage(embedError.build()).queue();
                 return;
             }

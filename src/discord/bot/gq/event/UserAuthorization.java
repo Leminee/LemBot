@@ -41,6 +41,7 @@ public class UserAuthorization extends ListenerAdapter {
 
                 if (number == 1) {
 
+                    assert mutedRole != null;
                     event.getGuild().addRoleToMember(userId, mutedRole).queue();
 
                 }
@@ -56,13 +57,15 @@ public class UserAuthorization extends ListenerAdapter {
     @Override
     public void onGuildMemberRoleRemove(@NotNull GuildMemberRoleRemoveEvent event) {
 
+
         ConnectionToDB db = new ConnectionToDB();
         db.initialize();
 
-        System.out.println("test1");
+
         long removedRoleId = event.getRoles().get(0).getIdLong();
         long userId = event.getMember().getIdLong();
         String enableUser = "0";
+
 
         if (removedRoleId != 879329567947489352L) {
             return;
@@ -84,14 +87,12 @@ public class UserAuthorization extends ListenerAdapter {
 
                 String userUnmute = "UPDATE muted_user SET activ = ? WHERE id_discord = ? ORDER BY muted_on DESC LIMIT 1;";
 
-
                 PreparedStatement pSTwo = db.getConnection().prepareStatement(userUnmute);
 
-                pSTwo.setLong(1, userId);
-                pSTwo.setString(2, enableUser);
+                pSTwo.setString(1, enableUser);
+                pSTwo.setLong(2, userId);
 
-
-                pS.executeUpdate();
+                pSTwo.executeUpdate();
 
             }
 

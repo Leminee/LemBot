@@ -4,6 +4,7 @@ import discord.bot.gq.command.*;
 import discord.bot.gq.command.db.*;
 import discord.bot.gq.command.moderation.MessageDelation;
 import discord.bot.gq.command.moderation.UserBanishment;
+import discord.bot.gq.command.moderation.UserUnlock;
 import discord.bot.gq.config.command.UpdatingChannel;
 import discord.bot.gq.config.command.UpdatingRole;
 import discord.bot.gq.database.*;
@@ -71,6 +72,7 @@ public class BotMain {
         jda.addEventListener(new LinkDelation());
         jda.addEventListener(new VoiceMoved());
         jda.addEventListener(new UserAuthorization());
+        jda.addEventListener(new UserUnlock());
 
 
       ReactionManager firstManager = new ReactionManager(jda);

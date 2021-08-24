@@ -1,0 +1,134 @@
+package discord.bot.gq.command.moderation;
+
+import discord.bot.gq.database.ConnectionToDB;
+import discord.bot.gq.lib.Helper;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.exceptions.ErrorResponseException;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.jetbrains.annotations.NotNull;
+
+import java.awt.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+public class UserUnlock extends ListenerAdapter {
+
+    @Override
+    public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
+
+
+        String[] unlockCommand = event.getMessage().getContentRaw().split("\\s+");
+        Member commandAuthor = event.getMessage().getMember();
+
+        if (unlockCommand[0].equalsIgnoreCase(Helper.PREFIX + "unmute")) {
+
+
+            assert commandAuthor != null;
+            if (!commandAuthor.hasPermission(Permission.MESSAGE_MANAGE)) {
+
+                EmbedBuilder embedError = new EmbedBuilder();
+                String embedDescription = "Permission Denied";
+                Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED, "https://cdn.discopp.com/attachments/819694809765380146/879230207763038228/Bildschirmfoto_2021-08-23_um_07.06.46.png");
+                event.getChannel().sendMessage(embedError.build()).queue();
+                return;
+            }
+
+            if (unlockCommand.length <2) {
+                return;
+            }
+
+            if (unlockCommand[0].equalsIgnoreCase(Helper.PREFIX + "unmute") && !unlockCommand[1].isEmpty()) {
+
+                assert commandAuthor != null;
+                if (!commandAuthor.hasPermission(Permission.MESSAGE_MANAGE)) {
+                    return;
+                }
+
+
+                List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
+                Member member = mentionedMembers.size() > 0 ? mentionedMembers.get(0) : null;
+
+                if (member == null) {
+
+                    try {
+
+                        User mentionedUser = event.getJDA().retrieveUserById(unlockCommand[1], true).complete();
+
+                        if (mentionedUser != null) {
+                            member = event.getGuild().retrieveMember(mentionedUser).complete();
+                        }
+
+                    } catch (ErrorResponseException errorResponseException) {
+
+                        EmbedBuilder embedError = new EmbedBuilder();
+                        String embedDescription = "User ist nicht auf dem Server!";
+                        Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED, "https://cdn.discp.com/attachments/819694809765380146/879230207763038228/Bildschirmfoto_2021-08-23_um_07.06.46.png");
+                        event.getChannel().sendMessage(embedError.build()).queue();
+                        return;
+                    }
+                }
+
+
+                assert member != null;
+
+                String unmutedUserAsMention = member.getAsMention();
+                long unmutedUserId = member.getIdLong();
+                Role mutedRole = event.getGuild().getRoleById(879329567947489352L);
+
+                assert mutedRole != null;
+                member.getGuild().removeRoleFromMember(unmutedUserId, mutedRole).queue();
+
+                EmbedBuilder confirmation = new EmbedBuilder();
+                confirmation.setColor(0x00ff60);
+                confirmation.setTitle("Bestätigung");
+                confirmation.setDescription("User " + unmutedUserAsMention + " wurde durch " + commandAuthor.getAsMention() + " erfolgreich **" + " ungemutet." + "**");
+                event.getChannel().sendMessage(confirmation.build()).queue();
+
+
+                ConnectionToDB db = new ConnectionToDB();
+                db.initialize();
+
+
+                long userId = member.getIdLong();
+                String enableUser = "0";
+
+                String userVerificationCheck = "SELECT activ FROM muted_user WHERE id_discord = ?;";
+
+                try {
+
+
+                    PreparedStatement pS = db.getConnection().prepareStatement(userVerificationCheck);
+
+                    pS.setLong(1, userId);
+
+                    ResultSet rS = pS.executeQuery();
+
+                    if (rS.next()) {
+
+
+                        String userUnmute = "UPDATE muted_user SET activ = ? WHERE id_discord = ? ORDER BY muted_on DESC LIMIT 1;";
+
+                        PreparedStatement pSTwo = db.getConnection().prepareStatement(userUnmute);
+
+                        pSTwo.setString(1, enableUser);
+                        pSTwo.setLong(2, userId);
+
+                        pSTwo.executeUpdate();
+
+                    }
+
+                } catch (SQLException sqlException) {
+                    sqlException.printStackTrace();
+                }
+
+            }
+        }
+    }
+}
