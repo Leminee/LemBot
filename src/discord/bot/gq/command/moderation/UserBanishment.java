@@ -94,11 +94,11 @@ public class UserBanishment extends ListenerAdapter {
             String sanctionedUserAsTag = member.getUser().getAsTag();
             String sanctionedUserName = member.getUser().getName();
 
-            String sanctionReason = "";
+            StringBuilder sanctionReason = new StringBuilder();
 
             for (int i = 2; i < sanctionCommand.length; i++) {
 
-                sanctionReason =  sanctionReason + sanctionCommand[i] + " ";
+                sanctionReason.append(sanctionCommand[i]).append(" ");
             }
 
 
@@ -116,7 +116,7 @@ public class UserBanishment extends ListenerAdapter {
                     event.getGuild().removeRoleFromMember(sanctionedUserId, role).queue();
                 }
 
-                event.getGuild().addRoleToMember(sanctionedUserId, mutedRole).queue();
+                event.getGuild().addRoleToMember(sanctionedUserId, Objects.requireNonNull(mutedRole)).queue();
 
                 EmbedBuilder confirmation = new EmbedBuilder();
                 confirmation.setColor(0x00ff60);
@@ -124,14 +124,14 @@ public class UserBanishment extends ListenerAdapter {
                 confirmation.setDescription("User " + sanctionedUserAsMention + " wurde durch " + commandAuthor.getAsMention() + "**" + " gemutet." + "**" + "\n Angegebener Grund: " + sanctionReason);
                 event.getChannel().sendMessage(confirmation.build()).queue();
 
-                Helper.insertSanctionedUserData("INSERT INTO muted_user (id_muted_user,id_discord,user_tag, username, mute_author, mute_reason, channel_name) VALUES (NULL,?,?,?,?,?,?)",member.getIdLong(), sanctionedUserAsTag, sanctionedUserName, commandAuthor.getUser().getAsTag(), sanctionReason, event.getChannel().getName());
+                Helper.insertSanctionedUserData("INSERT INTO muted_user (id_muted_user,id_discord,user_tag, username, mute_author, mute_reason, channel_name) VALUES (NULL,?,?,?,?,?,?)",member.getIdLong(), sanctionedUserAsTag, sanctionedUserName, commandAuthor.getUser().getAsTag(), sanctionReason.toString(), event.getChannel().getName());
                 return;
             }
 
             if (sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "kick")) {
 
 
-                member.kick(sanctionReason).complete();
+                member.kick(sanctionReason.toString()).complete();
 
                 EmbedBuilder confirmation = new EmbedBuilder();
                 confirmation.setColor(0x00ff60);
@@ -139,14 +139,14 @@ public class UserBanishment extends ListenerAdapter {
                 confirmation.setDescription("User " + sanctionedUserAsMention + " wurde durch " + commandAuthor.getAsMention() + "**" + " gekickt." + "**" + "\n Angegebener Grund: " + sanctionReason );
                 event.getChannel().sendMessage(confirmation.build()).queue();
 
-                Helper.insertSanctionedUserData("INSERT INTO kicked_user (id_kicked_user,id_discord,user_tag, username, kick_author, kick_reason, channel_name) VALUES (NULL,?,?,?,?,?,?)",member.getIdLong(), sanctionedUserAsTag, sanctionedUserName, commandAuthor.getUser().getAsTag(), sanctionReason, event.getChannel().getName());
+                Helper.insertSanctionedUserData("INSERT INTO kicked_user (id_kicked_user,id_discord,user_tag, username, kick_author, kick_reason, channel_name) VALUES (NULL,?,?,?,?,?,?)",member.getIdLong(), sanctionedUserAsTag, sanctionedUserName, commandAuthor.getUser().getAsTag(), sanctionReason.toString(), event.getChannel().getName());
                 return;
             }
 
 
             if (sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "ban")) {
 
-                member.ban(7, sanctionReason).complete();
+                member.ban(7, sanctionReason.toString()).complete();
 
                 EmbedBuilder confirmation = new EmbedBuilder();
                 confirmation.setColor(0x00ff60);
@@ -154,7 +154,7 @@ public class UserBanishment extends ListenerAdapter {
                 confirmation.setDescription("User " + sanctionedUserAsMention + " wurde durch " + commandAuthor.getAsMention() + "**" + " gebannt." + "**" + "\n Angegebener Grund: " + sanctionReason);
                 event.getChannel().sendMessage(confirmation.build()).queue();
 
-                Helper.insertSanctionedUserData("INSERT INTO banned_user (id_banned_user,id_discord,user_tag, username, ban_author, ban_reason, channel_name) VALUES (NULL,?,?,?,?,?,?)",member.getIdLong(), sanctionedUserAsTag, sanctionedUserName, commandAuthor.getUser().getAsTag(), sanctionReason, event.getChannel().getName());
+                Helper.insertSanctionedUserData("INSERT INTO banned_user (id_banned_user,id_discord,user_tag, username, ban_author, ban_reason, channel_name) VALUES (NULL,?,?,?,?,?,?)",member.getIdLong(), sanctionedUserAsTag, sanctionedUserName, commandAuthor.getUser().getAsTag(), sanctionReason.toString(), event.getChannel().getName());
 
             }
         }

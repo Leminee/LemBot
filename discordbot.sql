@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Erstellungszeit: 15. Aug 2021 um 18:20
+-- Erstellungszeit: 23. Aug 2021 um 21:04
 -- Server-Version: 10.3.29-MariaDB-0+deb10u1
 -- PHP-Version: 7.4.20
 
@@ -31,6 +31,23 @@ CREATE TABLE `active_user` (
   `active_member` int(11) NOT NULL,
   `time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `banned_user`
+--
+
+CREATE TABLE `banned_user` (
+  `id_banned_user` int(20) NOT NULL,
+  `id_discord` bigint(20) NOT NULL,
+  `user_tag` varchar(50) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `ban_author` varchar(50) NOT NULL,
+  `ban_reason` varchar(50) NOT NULL,
+  `channel_name` varchar(50) NOT NULL,
+  `banned_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -90,8 +107,8 @@ CREATE TABLE `kicked_user` (
   `user_tag` varchar(50) NOT NULL,
   `username` varchar(50) NOT NULL,
   `kick_author` varchar(50) NOT NULL,
-  `reason` varchar(50) NOT NULL,
-  `voice_channel_name` varchar(50) NOT NULL,
+  `kick_reason` varchar(50) NOT NULL,
+  `channel_name` varchar(50) NOT NULL,
   `kicked_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -103,6 +120,23 @@ CREATE TABLE `kicked_user` (
 
 CREATE TABLE `leaked_password` (
   `pass` varchar(500) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `muted_user`
+--
+
+CREATE TABLE `muted_user` (
+  `id_muted_user` int(11) NOT NULL,
+  `id_discord` bigint(20) NOT NULL,
+  `user_tag` varchar(50) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `mute_author` varchar(50) NOT NULL,
+  `mute_reason` varchar(50) NOT NULL,
+  `channel_name` varchar(50) NOT NULL,
+  `muted_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -249,7 +283,7 @@ CREATE TABLE `voice_leave` (
   `user_tag` varchar(50) NOT NULL,
   `username` varchar(50) NOT NULL,
   `voice_channel_name` varchar(50) NOT NULL,
-  `leaved_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `left_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -261,6 +295,12 @@ CREATE TABLE `voice_leave` (
 --
 ALTER TABLE `active_user`
   ADD KEY `active_member` (`active_member`);
+
+--
+-- Indizes für die Tabelle `banned_user`
+--
+ALTER TABLE `banned_user`
+  ADD PRIMARY KEY (`id_banned_user`);
 
 --
 -- Indizes für die Tabelle `channel`
@@ -291,6 +331,12 @@ ALTER TABLE `kicked_user`
 --
 ALTER TABLE `leaked_password`
   ADD KEY `pass` (`pass`);
+
+--
+-- Indizes für die Tabelle `muted_user`
+--
+ALTER TABLE `muted_user`
+  ADD PRIMARY KEY (`id_muted_user`);
 
 --
 -- Indizes für die Tabelle `number_member`
@@ -354,10 +400,22 @@ ALTER TABLE `user_status`
 --
 
 --
+-- AUTO_INCREMENT für Tabelle `banned_user`
+--
+ALTER TABLE `banned_user`
+  MODIFY `id_banned_user` int(20) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT für Tabelle `kicked_user`
 --
 ALTER TABLE `kicked_user`
   MODIFY `id_kicked_user` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `muted_user`
+--
+ALTER TABLE `muted_user`
+  MODIFY `id_muted_user` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT für Tabelle `updated_message`

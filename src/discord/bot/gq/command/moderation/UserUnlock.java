@@ -46,10 +46,6 @@ public class UserUnlock extends ListenerAdapter {
 
             if (unlockCommand[0].equalsIgnoreCase(Helper.PREFIX + "unmute") && !unlockCommand[1].isEmpty()) {
 
-                assert commandAuthor != null;
-                if (!commandAuthor.hasPermission(Permission.MESSAGE_MANAGE)) {
-                    return;
-                }
 
 
                 List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
@@ -99,12 +95,12 @@ public class UserUnlock extends ListenerAdapter {
                 long userId = member.getIdLong();
                 String enableUser = "0";
 
-                String userVerificationCheck = "SELECT activ FROM muted_user WHERE id_discord = ?;";
+                String userVerifCheck = "SELECT activ FROM muted_user WHERE id_discord = ?;";
 
                 try {
 
 
-                    PreparedStatement pS = db.getConnection().prepareStatement(userVerificationCheck);
+                    PreparedStatement pS = db.getConnection().prepareStatement(userVerifCheck);
 
                     pS.setLong(1, userId);
 
