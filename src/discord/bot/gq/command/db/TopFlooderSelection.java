@@ -16,43 +16,36 @@ public class TopFlooderSelection extends ListenerAdapter {
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 
-        String userMessage = event.getMessage().getContentRaw();
-        String topFlooderCommand = "topu";
+        String userMessageContent = event.getMessage().getContentRaw();
+        String topFlooderCheckCommand = "topu";
 
-        if (Helper.isValidCommand(userMessage, topFlooderCommand)) {
+        if (Helper.isValidCommand(userMessageContent, topFlooderCheckCommand)) {
 
-            try {
+            ConnectionToDB connectionToDB = new ConnectionToDB();
+            connectionToDB.initialize();
 
-                ConnectionToDB db = new ConnectionToDB();
-                db.initialize();
+            String topFlooder = "SELECT username FROM user_message ORDER BY number_message DESC LIMIT 3;";
 
-                String topFlooder = "SELECT username FROM user_message ORDER BY number_message DESC LIMIT 3;";
-                Statement statement = db.getConnection().createStatement();
-                ResultSet rS = statement.executeQuery(topFlooder);
+            try (Statement statement = connectionToDB.getConnection().createStatement(); ResultSet resultSet = statement.executeQuery(topFlooder)) {
 
                 EmbedBuilder embedBuilder = new EmbedBuilder();
-                embedBuilder.setTitle("User mit den meisten Nachrichten");
-                embedBuilder.setDescription("");
-                embedBuilder.setColor(Color.white);
-                embedBuilder.setThumbnail("https://cdn.discordapp.com/attachments/819694809765380146/844312789531230208/typing.png");
+
+                Helper.createEmbed(embedBuilder, "User mit den meisten Nachrichten", "", Color.white, "https://cdn.discordapp.com/attachments/819694809765380146/844312789531230208/typing.png");
 
                 int top = 1;
 
-                while (rS.next()) {
+                while (resultSet.next()) {
 
-                    embedBuilder.addField("TOP " + top, rS.getString(1), false);
+                    embedBuilder.addField("TOP " + top, resultSet.getString(1), false);
                     top++;
 
                 }
 
                 event.getChannel().sendMessage(embedBuilder.build()).queue();
 
-                rS.close();
-                statement.close();
 
-
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (SQLException sqlException) {
+                System.out.println(sqlException.getMessage());
             }
         }
     }

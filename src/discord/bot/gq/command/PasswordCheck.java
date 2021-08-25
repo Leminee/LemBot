@@ -15,33 +15,32 @@ public class PasswordCheck extends ListenerAdapter {
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
 
-        String[] userMessage = event.getMessage().getContentRaw().split("\\s+");
+        String[] userMessageContent = event.getMessage().getContentRaw().split("\\s+");
         String authorCommand = event.getAuthor().getAsMention();
         String passwordCheckCommand = "check";
 
-        if ((userMessage[0].equalsIgnoreCase(Helper.PREFIX + passwordCheckCommand))) {
+        if ((userMessageContent[0].equalsIgnoreCase(Helper.PREFIX + passwordCheckCommand))) {
 
-            if (userMessage.length != 2) {
+            if (userMessageContent.length != 2) {
                 return;
             }
 
-            ConnectionToDB db = new ConnectionToDB();
-            db.initialize();
+            ConnectionToDB connectionToDB = new ConnectionToDB();
+            connectionToDB.initialize();
 
-            try {
+            String passwordCheck = "SELECT pass FROM leaked_password WHERE pass = ?";
 
-                String passwordCheck = "SELECT pass FROM leaked_password WHERE pass = ?";
+            try (PreparedStatement preparedStatement = connectionToDB.getConnection().prepareStatement(passwordCheck); ResultSet resultSet = preparedStatement.executeQuery()) {
 
-                PreparedStatement pS = db.getConnection().prepareStatement(passwordCheck);
-                String userPassword = userMessage[1];
+
+                String userPassword = userMessageContent[1];
 
                 event.getMessage().delete().queue();
 
-                pS.setString(1, userPassword);
+                preparedStatement.setString(1, userPassword);
 
-                ResultSet rS = pS.executeQuery();
 
-                if (rS.next()) {
+                if (resultSet.next()) {
 
                     event.getChannel().sendMessage(" :red_circle:  Pwned - Passwort wurde gefunden! " + authorCommand).queue();
 
@@ -51,11 +50,9 @@ public class PasswordCheck extends ListenerAdapter {
 
                 }
 
-                pS.close();
-                rS.close();
 
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (SQLException sqlException) {
+                System.out.println(sqlException.getMessage());
             }
         }
     }

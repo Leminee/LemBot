@@ -14,11 +14,11 @@ public class ConfigSelection {
     public void selectRoleId() {
 
         try {
-            ConnectionToDB db = new ConnectionToDB();
-            db.initialize();
+            ConnectionToDB connectionToDB = new ConnectionToDB();
+            connectionToDB.initialize();
 
             String roleId = "SELECT config_value FROM config WHERE config_name = 'id_ping_role'";
-            Statement statement = db.getConnection().createStatement();
+            Statement statement = connectionToDB.getConnection().createStatement();
             ResultSet rS = statement.executeQuery(roleId);
 
             if (rS.next()) {

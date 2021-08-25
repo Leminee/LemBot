@@ -22,12 +22,13 @@ public class UserBanishment extends ListenerAdapter {
 
         String[] sanctionCommand = event.getMessage().getContentRaw().split("\\s+");
         Member commandAuthor = event.getMessage().getMember();
+        assert commandAuthor != null;
+        boolean hasPermission = commandAuthor.hasPermission(Permission.MESSAGE_MANAGE);
 
-        if (sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "mute") ||sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "kick") || sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "ban")) {
+        if (sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "mute") || sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "kick") || sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "ban")) {
 
 
-            assert commandAuthor != null;
-            if (!commandAuthor.hasPermission(Permission.MESSAGE_MANAGE)) {
+            if (!hasPermission) {
 
                 EmbedBuilder embedError = new EmbedBuilder();
                 String embedDescription = "Permission Denied";
@@ -38,11 +39,9 @@ public class UserBanishment extends ListenerAdapter {
 
         }
 
+        if (sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "mute") || sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "kick") || sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "ban") && !sanctionCommand[1].isEmpty()) {
 
-        if (sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "mute") ||sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "kick") || sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "ban") && !sanctionCommand[1].isEmpty()) {
-
-            assert commandAuthor != null;
-            if (!commandAuthor.hasPermission(Permission.MESSAGE_MANAGE)) {
+            if (!hasPermission) {
                 return;
             }
 
@@ -124,7 +123,7 @@ public class UserBanishment extends ListenerAdapter {
                 confirmation.setDescription("User " + sanctionedUserAsMention + " wurde durch " + commandAuthor.getAsMention() + "**" + " gemutet." + "**" + "\n Angegebener Grund: " + sanctionReason);
                 event.getChannel().sendMessage(confirmation.build()).queue();
 
-                Helper.insertSanctionedUserData("INSERT INTO muted_user (id_muted_user,id_discord,user_tag, username, mute_author, mute_reason, channel_name) VALUES (NULL,?,?,?,?,?,?)",member.getIdLong(), sanctionedUserAsTag, sanctionedUserName, commandAuthor.getUser().getAsTag(), sanctionReason.toString(), event.getChannel().getName());
+                Helper.insertSanctionedUserData("INSERT INTO muted_user (id_muted_user,id_discord,user_tag, username, mute_author, mute_reason, channel_name) VALUES (NULL,?,?,?,?,?,?)", member.getIdLong(), sanctionedUserAsTag, sanctionedUserName, commandAuthor.getUser().getAsTag(), sanctionReason.toString(), event.getChannel().getName());
                 return;
             }
 
@@ -136,10 +135,10 @@ public class UserBanishment extends ListenerAdapter {
                 EmbedBuilder confirmation = new EmbedBuilder();
                 confirmation.setColor(0x00ff60);
                 confirmation.setTitle("Bestätigung");
-                confirmation.setDescription("User " + sanctionedUserAsMention + " wurde durch " + commandAuthor.getAsMention() + "**" + " gekickt." + "**" + "\n Angegebener Grund: " + sanctionReason );
+                confirmation.setDescription("User " + sanctionedUserAsMention + " wurde durch " + commandAuthor.getAsMention() + "**" + " gekickt." + "**" + "\n Angegebener Grund: " + sanctionReason);
                 event.getChannel().sendMessage(confirmation.build()).queue();
 
-                Helper.insertSanctionedUserData("INSERT INTO kicked_user (id_kicked_user,id_discord,user_tag, username, kick_author, kick_reason, channel_name) VALUES (NULL,?,?,?,?,?,?)",member.getIdLong(), sanctionedUserAsTag, sanctionedUserName, commandAuthor.getUser().getAsTag(), sanctionReason.toString(), event.getChannel().getName());
+                Helper.insertSanctionedUserData("INSERT INTO kicked_user (id_kicked_user,id_discord,user_tag, username, kick_author, kick_reason, channel_name) VALUES (NULL,?,?,?,?,?,?)", member.getIdLong(), sanctionedUserAsTag, sanctionedUserName, commandAuthor.getUser().getAsTag(), sanctionReason.toString(), event.getChannel().getName());
                 return;
             }
 
@@ -154,7 +153,7 @@ public class UserBanishment extends ListenerAdapter {
                 confirmation.setDescription("User " + sanctionedUserAsMention + " wurde durch " + commandAuthor.getAsMention() + "**" + " gebannt." + "**" + "\n Angegebener Grund: " + sanctionReason);
                 event.getChannel().sendMessage(confirmation.build()).queue();
 
-                Helper.insertSanctionedUserData("INSERT INTO banned_user (id_banned_user,id_discord,user_tag, username, ban_author, ban_reason, channel_name) VALUES (NULL,?,?,?,?,?,?)",member.getIdLong(), sanctionedUserAsTag, sanctionedUserName, commandAuthor.getUser().getAsTag(), sanctionReason.toString(), event.getChannel().getName());
+                Helper.insertSanctionedUserData("INSERT INTO banned_user (id_banned_user,id_discord,user_tag, username, ban_author, ban_reason, channel_name) VALUES (NULL,?,?,?,?,?,?)", member.getIdLong(), sanctionedUserAsTag, sanctionedUserName, commandAuthor.getUser().getAsTag(), sanctionReason.toString(), event.getChannel().getName());
 
             }
         }

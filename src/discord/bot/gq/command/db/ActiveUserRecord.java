@@ -16,27 +16,27 @@ public class ActiveUserRecord extends ListenerAdapter {
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
 
-        String userMessage = event.getMessage().getContentRaw();
-        String userName = Objects.requireNonNull(event.getMember()).getAsMention();
-        String recordCommand = "aur";
-        int maxUser;
+        String userMessageContent = event.getMessage().getContentRaw();
+        String userNameAsMention = Objects.requireNonNull(event.getMember()).getAsMention();
+        String recordCheckCommand = "aur";
+        int currentRecord;
 
 
-        if (Helper.isValidCommand(userMessage, recordCommand)) {
+        if (Helper.isValidCommand(userMessageContent, recordCheckCommand)) {
 
-            ConnectionToDB db = new ConnectionToDB();
-            db.initialize();
+            ConnectionToDB connectionToDB = new ConnectionToDB();
+            connectionToDB.initialize();
 
             String activeUserRecord = "SELECT MAX(active_member) FROM active_user;";
 
-            try (Statement statement = db.getConnection().createStatement(); ResultSet rS = statement.executeQuery(activeUserRecord)) {
+            try (Statement statement = connectionToDB.getConnection().createStatement(); ResultSet resultSet = statement.executeQuery(activeUserRecord)) {
 
-                if (rS.next()) {
+                if (resultSet.next()) {
 
                     if (!event.getMember().getUser().isBot()) {
-                        maxUser = rS.getInt(1);
+                        currentRecord = resultSet.getInt(1);
 
-                        event.getChannel().sendMessage("Maximale Anzahl der gleichzeitig aktiven User auf dem Server: " + "**" + maxUser + "**" + " " + userName).queue();
+                        event.getChannel().sendMessage("Maximale Anzahl der gleichzeitig aktiven User auf dem Server: " + "**" + currentRecord + "**" + " " + userNameAsMention).queue();
                     }
                 }
 

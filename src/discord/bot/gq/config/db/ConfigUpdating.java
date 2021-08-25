@@ -13,11 +13,11 @@ public class ConfigUpdating {
 
         try {
 
-            ConnectionToDB db = new ConnectionToDB();
-            db.initialize();
+            ConnectionToDB connectionToDB = new ConnectionToDB();
+            connectionToDB.initialize();
 
             String roleId = "UPDATE config SET config_value = ? WHERE config_name = 'id_ping_role'";
-            PreparedStatement updatePStatement = db.getConnection().prepareStatement(roleId);
+            PreparedStatement updatePStatement = connectionToDB.getConnection().prepareStatement(roleId);
             updatePStatement.setString(1, UpdatingRole.roleId);
 
             updatePStatement.executeUpdate();

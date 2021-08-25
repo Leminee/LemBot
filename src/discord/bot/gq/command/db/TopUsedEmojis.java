@@ -11,6 +11,7 @@ public class TopUsedEmojis extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
+
         Helper.selectTop(
                 "tope", event,
                 """

@@ -14,12 +14,12 @@ public class RoleSystem extends ListenerAdapter {
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 
-        String userMessage = event.getMessage().getContentRaw();
+        String userMessageContent = event.getMessage().getContentRaw();
         List<Role> userRoleList = Objects.requireNonNull(event.getMember()).getRoles();
         List<Role> serverRoleList = Objects.requireNonNull(event.getGuild().getRoles());
         EmbedBuilder showRoles = new EmbedBuilder();
 
-        if (userMessage.equalsIgnoreCase(Helper.PREFIX + "role")) {
+        if (userMessageContent.equalsIgnoreCase(Helper.PREFIX + "role")) {
             if (!event.getMember().getUser().isBot()) {
                 showRoles.setTitle("Rollen");
                 showRoles.setColor(0x002d47);
@@ -33,7 +33,8 @@ public class RoleSystem extends ListenerAdapter {
             }
         }
 
-        if (userMessage.equalsIgnoreCase(Helper.PREFIX + "srole")) {
+        if (userMessageContent.equalsIgnoreCase(Helper.PREFIX + "srole")) {
+
             if (!event.getMember().getUser().isBot()) {
                 showRoles.setTitle("Liste aller Rollen auf GQ");
                 showRoles.setColor(0x002d47);

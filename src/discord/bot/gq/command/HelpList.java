@@ -12,10 +12,10 @@ public class HelpList extends ListenerAdapter {
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 
-        String userMessage = event.getMessage().getContentRaw();
+        String userMessageContent = event.getMessage().getContentRaw();
         String helpCommand = "help";
 
-        if (Helper.isValidCommand(userMessage, helpCommand) || Helper.isValidCommand(userMessage, "hilfe")) {
+        if (Helper.isValidCommand(userMessageContent, helpCommand) || Helper.isValidCommand(userMessageContent, "hilfe")) {
             if (!Objects.requireNonNull(event.getMember()).getUser().isBot()) {
 
                 EmbedBuilder embedBuilder = new EmbedBuilder();
@@ -40,9 +40,9 @@ public class HelpList extends ListenerAdapter {
                         `?srole`: Liste aller Rollen auf GQ
                         `?aur`: Record der maximalen, aktiven User
                         `?hcb`: Zeigt, wie Quellcode eingefärbt wird\s
-                        `?clear - <zahl>`: löscht Nachrichten\s 
-                        `?mute <User ID> [Grund]`: weist dem User @Muted zu\s 
-                        `?kick <User ID> [Grund]`: kickt User\s  
+                        `?clear - <zahl>`: löscht Nachrichten\s\040
+                        `?mute <User ID> [Grund]`: weist dem User @Muted zu\s\040
+                        `?kick <User ID> [Grund]`: kickt User\s\040\040
                         `?ban <User ID> [Grund]`: bant User
                          (`?clear`, `?mute`, `?kick` und `?ban` *nur für Staff*)""");
 

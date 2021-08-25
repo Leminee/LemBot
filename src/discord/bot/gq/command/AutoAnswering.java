@@ -14,7 +14,7 @@ public class AutoAnswering extends ListenerAdapter {
 
         String userMessage = event.getMessage().getContentRaw();
         String userName = Objects.requireNonNull(event.getMember()).getAsMention();
-        Date date = new Date();
+        Date currentDate = new Date();
 
         if (userMessage.equalsIgnoreCase(Helper.PREFIX + "hallo")) {
             if (!event.getMember().getUser().isBot()) {
@@ -28,7 +28,7 @@ public class AutoAnswering extends ListenerAdapter {
                 userMessage.equalsIgnoreCase(Helper.PREFIX + "time")) {
             if (!event.getMember().getUser().isBot()) {
                 event.getChannel().sendTyping().queue();
-                event.getChannel().sendMessage("Uhrzeit: " + date.toString().substring(11, 16)).queue();
+                event.getChannel().sendMessage("Uhrzeit: " + currentDate.toString().substring(11, 16)).queue();
             }
         }
 

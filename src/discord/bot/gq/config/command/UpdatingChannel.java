@@ -17,13 +17,13 @@ public class UpdatingChannel extends ListenerAdapter {
 
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
 
-        String[] userMessage = event.getMessage().getContentRaw().split("\\s+");
+        String[] userMessageContent = event.getMessage().getContentRaw().split("\\s+");
         Member authorCommand = event.getMessage().getMember();
         String configCommand = "setcid";
 
-        if ((userMessage[0].equalsIgnoreCase(Helper.PREFIX + configCommand))) {
+        if ((userMessageContent[0].equalsIgnoreCase(Helper.PREFIX + configCommand))) {
 
-            if (userMessage.length != 2) {
+            if (userMessageContent.length != 2) {
                 return;
             }
 
@@ -31,7 +31,7 @@ public class UpdatingChannel extends ListenerAdapter {
                 return;
             }
 
-            channelId = userMessage[1];
+            channelId = userMessageContent[1];
 
             ConfigUpdating configUpdating = new ConfigUpdating();
             configUpdating.updateChannelId();

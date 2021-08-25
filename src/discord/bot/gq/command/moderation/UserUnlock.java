@@ -40,12 +40,11 @@ public class UserUnlock extends ListenerAdapter {
                 return;
             }
 
-            if (unlockCommand.length <2) {
+            if (unlockCommand.length < 2) {
                 return;
             }
 
             if (unlockCommand[0].equalsIgnoreCase(Helper.PREFIX + "unmute") && !unlockCommand[1].isEmpty()) {
-
 
 
                 List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
@@ -88,40 +87,40 @@ public class UserUnlock extends ListenerAdapter {
                 event.getChannel().sendMessage(confirmation.build()).queue();
 
 
-                ConnectionToDB db = new ConnectionToDB();
-                db.initialize();
+                ConnectionToDB connectionToDB = new ConnectionToDB();
+                connectionToDB.initialize();
 
 
                 long userId = member.getIdLong();
                 String enableUser = "0";
 
-                String userVerifCheck = "SELECT activ FROM muted_user WHERE id_discord = ?;";
+                String userMuted = "SELECT activ FROM muted_user WHERE id_discord = ?;";
 
                 try {
 
 
-                    PreparedStatement pS = db.getConnection().prepareStatement(userVerifCheck);
+                    PreparedStatement preparedStatement = connectionToDB.getConnection().prepareStatement(userMuted);
 
-                    pS.setLong(1, userId);
+                    preparedStatement.setLong(1, userId);
 
-                    ResultSet rS = pS.executeQuery();
+                    ResultSet resultSet = preparedStatement.executeQuery();
 
-                    if (rS.next()) {
+                    if (resultSet.next()) {
 
 
                         String userUnmute = "UPDATE muted_user SET activ = ? WHERE id_discord = ? ORDER BY muted_on DESC LIMIT 1;";
 
-                        PreparedStatement pSTwo = db.getConnection().prepareStatement(userUnmute);
+                        PreparedStatement preparedStatementOne = connectionToDB.getConnection().prepareStatement(userUnmute);
 
-                        pSTwo.setString(1, enableUser);
-                        pSTwo.setLong(2, userId);
+                        preparedStatementOne.setString(1, enableUser);
+                        preparedStatementOne.setLong(2, userId);
 
-                        pSTwo.executeUpdate();
+                        preparedStatementOne.executeUpdate();
 
                     }
 
                 } catch (SQLException sqlException) {
-                    sqlException.printStackTrace();
+                    System.out.println(sqlException.getMessage());
                 }
 
             }

@@ -14,18 +14,18 @@ public class TopListReminder extends ListenerAdapter {
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 
-        String userMessage = event.getMessage().getContentRaw();
-        boolean hasPermission = Objects.requireNonNull(event.getMessage().getMember()).hasPermission(Permission.ADMINISTRATOR);
+        String userMessageContent = event.getMessage().getContentRaw();
+        boolean isAdmin = Objects.requireNonNull(event.getMessage().getMember()).hasPermission(Permission.ADMINISTRATOR);
         String author = event.getAuthor().getAsMention();
-        String command = "stc";
+        String remindTopListCommand = "stc";
 
-        if (!hasPermission) {
+        if (!isAdmin) {
             return;
         }
 
-        if (Helper.isValidCommand(userMessage, command)) {
+        if (Helper.isValidCommand(userMessageContent, remindTopListCommand)) {
 
-            event.getChannel().sendMessage("Done " + author + "!").queue();
+            event.getChannel().sendMessage("TopListReminder erfolgreich aktiviert " + author + "!").queue();
 
             Helper.sendCommand("topu", event, 1, 36, TimeUnit.HOURS);
 
