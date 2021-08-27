@@ -10,7 +10,7 @@ import java.awt.*;
 import java.util.Date;
 import java.util.Objects;
 
-public class VoiceLeavedStorage extends ListenerAdapter {
+public class VoiceLeftStorage extends ListenerAdapter {
 
     @Override
     public void onGuildVoiceLeave(@NotNull GuildVoiceLeaveEvent event) {

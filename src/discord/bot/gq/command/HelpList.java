@@ -44,7 +44,7 @@ public class HelpList extends ListenerAdapter {
                         `?mute <User ID> [Grund]`: weist dem User @Muted zu\s\040
                         `?kick <User ID> [Grund]`: kickt User\s\040\040
                         `?ban <User ID> [Grund]`: bant User
-                         (`?clear`, `?mute`, `?kick` und `?ban` *nur für Staff*)""");
+                         (`?clear`, `?mute`, `?kick` und `?ban` *nur für Staff/Mods*)""");
 
                 event.getChannel().sendMessage(embedBuilder.build()).queue();
             }

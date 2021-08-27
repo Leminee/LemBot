@@ -45,6 +45,15 @@ public class UserBanishment extends ListenerAdapter {
                 return;
             }
 
+            if (sanctionCommand.length < 2) {
+
+                EmbedBuilder embedError = new EmbedBuilder();
+                String embedDescription = "Bitte gebe die ID des zu kickenden Users und den Grund für die Bestrafung an!";
+                Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED, "https://cdn.discordapp.com/attacents/819694809765380146/879230207763038228/Bildschirmfoto_2021-08-23_um_07.06.46.png");
+                event.getChannel().sendMessage(embedError.build()).queue();
+                return;
+            }
+
             if (sanctionCommand.length < 3) {
 
                 EmbedBuilder embedError = new EmbedBuilder();
@@ -129,6 +138,14 @@ public class UserBanishment extends ListenerAdapter {
 
             if (sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "kick")) {
 
+                if (!commandAuthor.hasPermission(Permission.KICK_MEMBERS)) {
+                    EmbedBuilder embedError = new EmbedBuilder();
+                    String embedDescription = "Permission Denied";
+                    Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED, "https://cdn.discordap819694809765380146/879230207763038228/Bildschirmfoto_2021-08-23_um_07.06.46.png");
+                    event.getChannel().sendMessage(embedError.build()).queue();
+                    return;
+                }
+
 
                 member.kick(sanctionReason.toString()).complete();
 
@@ -144,6 +161,14 @@ public class UserBanishment extends ListenerAdapter {
 
 
             if (sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "ban")) {
+
+                if (!commandAuthor.hasPermission(Permission.BAN_MEMBERS)) {
+                    EmbedBuilder embedError = new EmbedBuilder();
+                    String embedDescription = "Permission Denied";
+                    Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED, "https://cdn.discordap819694809765380146/879230207763038228/Bildschirmfoto_2021-08-23_um_07.06.46.png");
+                    event.getChannel().sendMessage(embedError.build()).queue();
+                    return;
+                }
 
                 member.ban(7, sanctionReason.toString()).complete();
 

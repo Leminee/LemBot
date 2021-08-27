@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class MemberLeaveStorage extends ListenerAdapter {
+public class MemberLeftStorage extends ListenerAdapter {
 
     @Override
     public void onGuildMemberRemove(@NotNull GuildMemberRemoveEvent event) {
@@ -39,8 +39,8 @@ public class MemberLeaveStorage extends ListenerAdapter {
             Helper.insertCurrentNumberMember(currentNumberMember);
 
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
         }
 
     }

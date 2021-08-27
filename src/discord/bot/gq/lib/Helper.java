@@ -291,4 +291,13 @@ public final class Helper {
 
     }
 
+    public void sendDM(User sanctionedUser, String content, String typeSanction, String reason) {
+
+        content = "Dein Account wurde aus folgendem Grund  " + typeSanction + ": " + reason;
+        String finalContent = content;
+        sanctionedUser.openPrivateChannel()
+                .flatMap(channel -> channel.sendMessage(finalContent))
+                .queue();
+    }
+
 }

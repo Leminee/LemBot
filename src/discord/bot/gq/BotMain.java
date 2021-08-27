@@ -33,14 +33,14 @@ public class BotMain {
 
             jda = JDABuilder.createDefault(Helper.TOKEN).enableIntents(GatewayIntent.GUILD_MEMBERS).enableIntents(GatewayIntent.GUILD_PRESENCES).build();
 
-        } catch (LoginException e) {
-            e.printStackTrace();
+        } catch (LoginException loginException) {
+            loginException.printStackTrace();
         }
 
         jda.getPresence().setStatus(OnlineStatus.ONLINE);
         jda.getPresence().setActivity(Activity.playing("?help"));
 
-        jda.addEventListener(new MemberLeaveStorage());
+        jda.addEventListener(new MemberLeftStorage());
         jda.addEventListener(new MessageDelation());
         jda.addEventListener(new AutoAnswering());
         jda.addEventListener(new Reminder());
@@ -69,7 +69,7 @@ public class BotMain {
         jda.addEventListener(new TopActiveChannel());
         jda.addEventListener(new UserBanishment());
         jda.addEventListener(new VoiceJoinedStorage());
-        jda.addEventListener(new VoiceLeavedStorage());
+        jda.addEventListener(new VoiceLeftStorage());
         jda.addEventListener(new LinkDelation());
         jda.addEventListener(new VoiceMoved());
         jda.addEventListener(new UserAuthorization());
