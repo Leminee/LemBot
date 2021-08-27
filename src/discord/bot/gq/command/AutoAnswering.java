@@ -1,9 +1,11 @@
 package discord.bot.gq.command;
 
 import discord.bot.gq.lib.Helper;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
+import java.awt.*;
 import java.util.Date;
 import java.util.Objects;
 
@@ -61,6 +63,18 @@ public class AutoAnswering extends ListenerAdapter {
             if (!event.getMember().getUser().isBot()) {
                 event.getChannel().sendMessage("Stelle bitte keine Metagfrage, stelle einfach deine Frage - möglichst detailliert!").queue();
 
+            }
+        }
+
+        if (userMessage.startsWith(Helper.PREFIX + "source")) {
+            if (!event.getMember().getUser().isBot()) {
+                EmbedBuilder botInfoEmbed = new EmbedBuilder()
+                        .setTitle("LemBot Informationen")
+                        .setColor(-9862987)
+                        .setThumbnail("https://cdn.discordapp.com/avatars/815894805896888362/e8ac27a6bda7b0846bf5135d39e14943.webp?size=128")
+                        .addField("Sprache", "Java", false)
+                        .addField("Source Code", "https://github.com/Leminee/LemBot", false);
+                event.getChannel().sendMessage(botInfoEmbed.build()).queue();
             }
         }
     }
