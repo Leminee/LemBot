@@ -38,10 +38,12 @@ public class HelpList extends ListenerAdapter {
                         `?topc`: Liste der 3 aktivisten Channels
                         `?tope`: Liste der 3 am häufigsten benutzten Emojis
                         `?srole`: Liste aller Rollen auf GQ
+                        `?source`: Informationen zum Code des Bots
                         `?aur`: Record der maximalen, aktiven User
                         `?hcb`: Zeigt, wie Quellcode eingefärbt wird\s
                         `?clear - <zahl>`: löscht Nachrichten\s\040
-                        `?mute <User ID> [Grund]`: weist dem User @Muted zu\s\040
+                        `?mute <User ID> [Grund]`: weist dem User <@&879329567947489352> zu\s\040
+                        `?unmute <User ID>`: entfernt dem User <@&879329567947489352>
                         `?kick <User ID> [Grund]`: kickt User\s\040\040
                         `?ban <User ID> [Grund]`: bant User
                          (`?clear`, `?mute`, `?kick` und `?ban` *nur für Staff*)""");
