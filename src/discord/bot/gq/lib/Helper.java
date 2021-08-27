@@ -18,14 +18,14 @@ import java.util.concurrent.TimeUnit;
 
 public final class Helper {
     public static final String PREFIX = "?";
-    public static final String TOKEN = "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.ERXAF8JjcvR2dFX4pFWKVvcyDdg";
+    public static final String TOKEN = "";
 
     private Helper() {
 
     }
 
-    public static boolean isValidCommand(String userMessage, String command) {
-        return userMessage.toLowerCase().startsWith(PREFIX + command);
+    public static boolean isValidCommand(String userMessageContent, String command) {
+        return userMessageContent.toLowerCase().startsWith(PREFIX + command);
     }
 
     public static boolean isSuccessfulBump(List<MessageEmbed> messages, User embedAuthor) {

@@ -25,8 +25,9 @@ public class BotMain {
 
     public static void main(String[] args) {
 
-        String channelId = "779107472622223400";
-        String messageId = "832669953038614628";
+        String selfRolesChannelId = "779107472622223400";
+        String organisationMessageId = "821186181903024179";
+        String rolesMessageId = "832669953038614628";
 
         try {
 
@@ -75,22 +76,25 @@ public class BotMain {
         jda.addEventListener(new UserUnlock());
 
 
+
+
       ReactionManager firstManager = new ReactionManager(jda);
 
 
-        firstManager.registerReaction(channelId, "821186181903024179", "821167071181275146", "784773593942327297").
-                registerReaction(channelId, "821186181903024179", "821144439647895602", "811741950092116038");
+        firstManager.registerReaction(selfRolesChannelId, organisationMessageId, "821167071181275146", "784773593942327297").
+                registerReaction(selfRolesChannelId, organisationMessageId, "821144439647895602", "811741950092116038");
 
 
         ReactionManager secondManager = new ReactionManager(jda);
 
 
-        secondManager.registerReaction(channelId, messageId, "821144409633849354", "808779281211719680").
-                registerReaction(channelId, messageId, "821144363953553418", "809152859492974692").
-                registerReaction(channelId, messageId, "821169196523192380", "808768626844893184").
-                registerReaction(channelId, messageId, "821171704133845073", "808767910696189975").
-                registerReaction(channelId, messageId, "821168328961163266", "808779520286654554").
-                registerReaction(channelId, messageId, "846816752867868742", "846812921375359027").
-                registerReaction(channelId, messageId, "846854659104833566", "846856698979418152");
+        secondManager.registerReaction(selfRolesChannelId, rolesMessageId, "821144409633849354", "808779281211719680").
+                registerReaction(selfRolesChannelId, rolesMessageId, "821144363953553418", "809152859492974692").
+                registerReaction(selfRolesChannelId, rolesMessageId, "821169196523192380", "808768626844893184").
+                registerReaction(selfRolesChannelId, rolesMessageId, "821171704133845073", "808767910696189975").
+                registerReaction(selfRolesChannelId, rolesMessageId, "821168328961163266", "808779520286654554").
+                registerReaction(selfRolesChannelId, rolesMessageId, "846816752867868742", "846812921375359027").
+                registerReaction(selfRolesChannelId, rolesMessageId, "846854659104833566", "846856698979418152");
+
     }
 }

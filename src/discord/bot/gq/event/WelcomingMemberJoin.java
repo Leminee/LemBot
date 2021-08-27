@@ -23,9 +23,8 @@ public class WelcomingMemberJoin extends ListenerAdapter {
         String[] welcomeMessage = {"""
 Hallo [member], Willkommen auf **GoodQuestion (GQ)**!
 
-Stelle Dich bitte hier kurz vor, damit ein Moderator Dir die entsprechenden Rollen zuweist! 
+Du kannst Dich hier kurz vorstellen und Dir im Kanal <#779107472622223400> Rollen zuweisen! 
 
-Alternativ kannst Du Dir in dem folgenden Kanal Deine Rollen selbst zuweisen: <#779107472622223400>
 """};
         TextChannel welcomeChannel = event.getGuild().getTextChannelById(welcomeChannelId);
         String avatarUrl = event.getUser().getEffectiveAvatarUrl();
