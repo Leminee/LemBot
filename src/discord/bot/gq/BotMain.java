@@ -74,6 +74,7 @@ public class BotMain {
         jda.addEventListener(new VoiceMoved());
         jda.addEventListener(new UserAuthorization());
         jda.addEventListener(new UserUnlock());
+        jda.addEventListener(new StaffHelpList());
 
 
 

@@ -14,6 +14,7 @@ public class HelpList extends ListenerAdapter {
 
         String userMessageContent = event.getMessage().getContentRaw();
         String helpCommand = "help";
+        String staffHelpCommand = "shelp";
 
         if (Helper.isValidCommand(userMessageContent, helpCommand) || Helper.isValidCommand(userMessageContent, "hilfe")) {
             if (!Objects.requireNonNull(event.getMember()).getUser().isBot()) {
@@ -33,23 +34,22 @@ public class HelpList extends ListenerAdapter {
                         `?hmm`: Anzahl deiner geschickten Nachrichten auf GQ\s
                         `?hmb`: Anzahl deiner Bumps auf GQ\s
                         `?topu`: Liste der Top 3 User mit den meisten Nachrichten
-                        `?topb`: Liste der Top 3 Server-Bumper
+                        `?topb`: Liste der Top 3 Server-Bumper 
+                        `?tope`: Liste der 3 am häufigsten benutzten Emojis  
                         `?topp`: Liste der 3 am häufigsten gepingten User
                         `?topc`: Liste der 3 aktivisten Channels
-                        `?tope`: Liste der 3 am häufigsten benutzten Emojis
-                        `?srole`: Liste aller Rollen auf GQ
-                        `?source`: Informationen zum Code des Bots
                         `?aur`: Record der maximalen, aktiven User
-                        `?hcb`: Zeigt, wie Quellcode eingefärbt wird\s
-                        `?clear - <zahl>`: löscht Nachrichten\s\040
-                        `?mute <User ID> [Grund]`: weist dem User <@&879329567947489352> zu\s\040
-                        `?unmute <User ID>`: entfernt dem User <@&879329567947489352>
-                        `?kick <User ID> [Grund]`: kickt User\s\040\040
-                        `?ban <User ID> [Grund]`: bant User
-                         (`?clear`, `?mute`, `?kick` und `?ban` *nur für Staff/Mods*)""");
+                        `?srole`: Liste aller Rollen auf GQ 
+                        `?shelp`: Zeigt die Staff-Befehliste
+                        `?source`: Informationen zum Code vom Lembot
+                        `?hcb`: Zeigt, wie Quellcode eingefärbt wird\s""");
 
                 event.getChannel().sendMessage(embedBuilder.build()).queue();
+
             }
+
         }
+
     }
+
 }

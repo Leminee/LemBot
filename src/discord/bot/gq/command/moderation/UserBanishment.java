@@ -25,7 +25,7 @@ public class UserBanishment extends ListenerAdapter {
         assert commandAuthor != null;
         boolean hasPermission = commandAuthor.hasPermission(Permission.MESSAGE_MANAGE);
 
-        if (sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "mute") || sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "kick") || sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "ban")) {
+        if (sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "warn") ||sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "mute") || sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "kick") || sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "ban")) {
 
 
             if (!hasPermission) {
@@ -39,7 +39,7 @@ public class UserBanishment extends ListenerAdapter {
 
         }
 
-        if (sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "mute") || sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "kick") || sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "ban") && !sanctionCommand[1].isEmpty()) {
+        if (sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "warn") ||sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "mute") || sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "kick") || sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "ban") && !sanctionCommand[1].isEmpty()) {
 
             if (!hasPermission) {
                 return;
@@ -109,12 +109,31 @@ public class UserBanishment extends ListenerAdapter {
                 sanctionReason.append(sanctionCommand[i]).append(" ");
             }
 
+            if (sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "warn")) {
+
+                String sanctionedUserId = member.getId();
+
+                Role warnRole = event.getGuild().getRoleById(879448018372395048L);
+
+                assert warnRole != null;
+                member.getGuild().addRoleToMember(sanctionedUserId, warnRole).queue();
+
+                EmbedBuilder confirmation = new EmbedBuilder();
+                confirmation.setColor(0x00ff60);
+                confirmation.setTitle("Bestätigung");
+                confirmation.setDescription("User " + sanctionedUserAsMention + " wurde durch " + commandAuthor.getAsMention() + "**" + " verwarnt." + "**" + "\n Angegebener Grund: " + sanctionReason);
+                event.getChannel().sendMessage(confirmation.build()).queue();
+
+                Helper.insertSanctionedUserData("INSERT INTO warned_user (id_warned_user,id_discord,user_tag, username, warn_author, warn_reason, channel_name) VALUES (NULL,?,?,?,?,?,?)", member.getIdLong(), sanctionedUserAsTag, sanctionedUserName, commandAuthor.getUser().getAsTag(), sanctionReason.toString(), event.getChannel().getName());
+                return;
+            }
+
 
             if (sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "mute")) {
 
                 String sanctionedUserId = member.getId();
 
-                Role mutedRole = event.getGuild().getRoleById(879329567947489352L);
+                Role muteRole = event.getGuild().getRoleById(879329567947489352L);
 
                 List<Role> userRoleList = Objects.requireNonNull(member).getRoles();
 
@@ -124,7 +143,7 @@ public class UserBanishment extends ListenerAdapter {
                     event.getGuild().removeRoleFromMember(sanctionedUserId, role).queue();
                 }
 
-                event.getGuild().addRoleToMember(sanctionedUserId, Objects.requireNonNull(mutedRole)).queue();
+                event.getGuild().addRoleToMember(sanctionedUserId, Objects.requireNonNull(muteRole)).queue();
 
                 EmbedBuilder confirmation = new EmbedBuilder();
                 confirmation.setColor(0x00ff60);
