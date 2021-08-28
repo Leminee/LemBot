@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 public final class Helper {
     public static final String PREFIX = "?";
-    public static final String TOKEN = "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.8U3nXACCVBHAErZgGjhW6W7T66g";
+    public static final String TOKEN = "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.TD0NCEORevKlNcde9KG1fS5MoNg";
 
     private Helper() {
 
@@ -291,9 +291,9 @@ public final class Helper {
 
     }
 
-    public void sendDM(User sanctionedUser, String content, String typeSanction, String reason) {
+    public static void sendDM(User sanctionedUser, String typeSanction, StringBuilder reason, String mentionedUser) {
 
-        content = "Dein Account wurde aus folgendem Grund  " + typeSanction + ": " + reason;
+        String content = "Du wurdest aus dem folgenden Grund auf GoodQuestion  " + typeSanction + ": " + reason + " " + mentionedUser;
         String finalContent = content;
         sanctionedUser.openPrivateChannel()
                 .flatMap(channel -> channel.sendMessage(finalContent))

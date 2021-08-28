@@ -118,11 +118,15 @@ public class UserBanishment extends ListenerAdapter {
                 assert warnRole != null;
                 member.getGuild().addRoleToMember(sanctionedUserId, warnRole).queue();
 
+                Helper.sendDM(member.getUser(),"verwarnt",sanctionReason,sanctionedUserAsMention);
+
                 EmbedBuilder confirmation = new EmbedBuilder();
                 confirmation.setColor(0x00ff60);
                 confirmation.setTitle("Bestätigung");
                 confirmation.setDescription("User " + sanctionedUserAsMention + " wurde durch " + commandAuthor.getAsMention() + "**" + " verwarnt." + "**" + "\n Angegebener Grund: " + sanctionReason);
                 event.getChannel().sendMessage(confirmation.build()).queue();
+
+
 
                 Helper.insertSanctionedUserData("INSERT INTO warned_user (id_warned_user,id_discord,user_tag, username, warn_author, warn_reason, channel_name) VALUES (NULL,?,?,?,?,?,?)", member.getIdLong(), sanctionedUserAsTag, sanctionedUserName, commandAuthor.getUser().getAsTag(), sanctionReason.toString(), event.getChannel().getName());
                 return;
@@ -143,7 +147,10 @@ public class UserBanishment extends ListenerAdapter {
                     event.getGuild().removeRoleFromMember(sanctionedUserId, role).queue();
                 }
 
+
                 event.getGuild().addRoleToMember(sanctionedUserId, Objects.requireNonNull(muteRole)).queue();
+
+                Helper.sendDM(member.getUser(),"gemutet",sanctionReason,sanctionedUserAsMention);
 
                 EmbedBuilder confirmation = new EmbedBuilder();
                 confirmation.setColor(0x00ff60);
@@ -165,8 +172,11 @@ public class UserBanishment extends ListenerAdapter {
                     return;
                 }
 
+                Helper.sendDM(member.getUser(),"gekickt",sanctionReason,sanctionedUserAsMention);
 
                 member.kick(sanctionReason.toString()).complete();
+
+
 
                 EmbedBuilder confirmation = new EmbedBuilder();
                 confirmation.setColor(0x00ff60);
@@ -188,8 +198,11 @@ public class UserBanishment extends ListenerAdapter {
                     event.getChannel().sendMessage(embedError.build()).queue();
                     return;
                 }
+                Helper.sendDM(member.getUser(),"gebannt",sanctionReason,sanctionedUserAsMention);
 
                 member.ban(7, sanctionReason.toString()).complete();
+
+
 
                 EmbedBuilder confirmation = new EmbedBuilder();
                 confirmation.setColor(0x00ff60);

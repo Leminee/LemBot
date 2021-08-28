@@ -14,7 +14,6 @@ public class HelpList extends ListenerAdapter {
 
         String userMessageContent = event.getMessage().getContentRaw();
         String helpCommand = "help";
-        String staffHelpCommand = "shelp";
 
         if (Helper.isValidCommand(userMessageContent, helpCommand) || Helper.isValidCommand(userMessageContent, "hilfe")) {
             if (!Objects.requireNonNull(event.getMember()).getUser().isBot()) {
@@ -40,8 +39,8 @@ public class HelpList extends ListenerAdapter {
                         `?topc`: Liste der 3 aktivisten Channels
                         `?aur`: Record der maximalen, aktiven User
                         `?srole`: Liste aller Rollen auf GQ 
-                        `?shelp`: Zeigt die Staff-Befehliste
-                        `?source`: Informationen zum Code vom Lembot
+                        `?shelp`: Zeigt die Staff-Befehlsliste
+                        `?source`: Informationen zum Code von Lembot
                         `?hcb`: Zeigt, wie Quellcode eingefärbt wird\s""");
 
                 event.getChannel().sendMessage(embedBuilder.build()).queue();

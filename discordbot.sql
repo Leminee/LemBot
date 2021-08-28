@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Erstellungszeit: 23. Aug 2021 um 21:04
+-- Erstellungszeit: 28. Aug 2021 um 04:24
 -- Server-Version: 10.3.29-MariaDB-0+deb10u1
 -- PHP-Version: 7.4.20
 
@@ -44,7 +44,7 @@ CREATE TABLE `banned_user` (
   `user_tag` varchar(50) NOT NULL,
   `username` varchar(50) NOT NULL,
   `ban_author` varchar(50) NOT NULL,
-  `ban_reason` varchar(50) NOT NULL,
+  `ban_reason` text NOT NULL,
   `channel_name` varchar(50) NOT NULL,
   `banned_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -134,8 +134,9 @@ CREATE TABLE `muted_user` (
   `user_tag` varchar(50) NOT NULL,
   `username` varchar(50) NOT NULL,
   `mute_author` varchar(50) NOT NULL,
-  `mute_reason` varchar(50) NOT NULL,
+  `mute_reason` text NOT NULL,
   `channel_name` varchar(50) NOT NULL,
+  `activ` tinyint(4) NOT NULL DEFAULT 1,
   `muted_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -286,6 +287,23 @@ CREATE TABLE `voice_leave` (
   `left_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `warned_user`
+--
+
+CREATE TABLE `warned_user` (
+  `id_warned_user` int(11) NOT NULL,
+  `id_discord` bigint(20) NOT NULL,
+  `user_tag` varchar(50) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `warn_author` varchar(50) NOT NULL,
+  `warn_reason` text NOT NULL,
+  `channel_name` varchar(50) NOT NULL,
+  `warned_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 --
 -- Indizes der exportierten Tabellen
 --
@@ -355,7 +373,8 @@ ALTER TABLE `updated_message`
 -- Indizes für die Tabelle `user_bump`
 --
 ALTER TABLE `user_bump`
-  ADD PRIMARY KEY (`id_discord`);
+  ADD PRIMARY KEY (`id_discord`),
+  ADD KEY `number_bumps` (`number_bumps`);
 
 --
 -- Indizes für die Tabelle `user_bump_time`
@@ -380,7 +399,8 @@ ALTER TABLE `user_leave`
 -- Indizes für die Tabelle `user_message`
 --
 ALTER TABLE `user_message`
-  ADD PRIMARY KEY (`id_discord`);
+  ADD PRIMARY KEY (`id_discord`),
+  ADD KEY `number_message` (`number_message`);
 
 --
 -- Indizes für die Tabelle `user_message_content`
@@ -394,6 +414,12 @@ ALTER TABLE `user_message_content`
 --
 ALTER TABLE `user_status`
   ADD PRIMARY KEY (`id_user_status`);
+
+--
+-- Indizes für die Tabelle `warned_user`
+--
+ALTER TABLE `warned_user`
+  ADD PRIMARY KEY (`id_warned_user`);
 
 --
 -- AUTO_INCREMENT für exportierte Tabellen
@@ -446,6 +472,12 @@ ALTER TABLE `user_leave`
 --
 ALTER TABLE `user_status`
   MODIFY `id_user_status` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `warned_user`
+--
+ALTER TABLE `warned_user`
+  MODIFY `id_warned_user` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints der exportierten Tabellen
