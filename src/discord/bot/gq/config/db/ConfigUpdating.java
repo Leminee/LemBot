@@ -16,11 +16,11 @@ public class ConfigUpdating {
 
         String roleId = "UPDATE config SET config_value = ? WHERE config_name = 'id_ping_role'";
 
-        try(PreparedStatement updatePStatement = connectionToDB.getConnection().prepareStatement(roleId)) {
+        try (PreparedStatement preparedStatement = connectionToDB.getConnection().prepareStatement(roleId)) {
 
-            updatePStatement.setString(1, UpdatingRole.roleId);
+            preparedStatement.setString(1, UpdatingRole.roleId);
 
-            updatePStatement.executeUpdate();
+            preparedStatement.executeUpdate();
 
 
         } catch (SQLException sqlException) {
@@ -36,11 +36,11 @@ public class ConfigUpdating {
 
         String channelId = "UPDATE config SET config_value = ? WHERE config_name = 'id_ping_channel'";
 
-        try (PreparedStatement updatePStatement = connectionToDB.getConnection().prepareStatement(channelId)){
+        try (PreparedStatement preparedStatement = connectionToDB.getConnection().prepareStatement(channelId)){
 
 
-            updatePStatement.setString(1, UpdatingChannel.channelId);
-            updatePStatement.executeUpdate();
+            preparedStatement.setString(1, UpdatingChannel.channelId);
+            preparedStatement.executeUpdate();
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());

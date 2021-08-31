@@ -36,9 +36,9 @@ public class UserMessageCounter extends ListenerAdapter {
                 preparedStatement.setInt(3, numberMessage);
 
                 String isUserInDB = "SELECT id_discord FROM user_message WHERE id_discord = ? ";
-                PreparedStatement pSTwo = connectionToDB.getConnection().prepareStatement(isUserInDB);
-                pSTwo.setString(1, userId);
-                ResultSet resultSet = pSTwo.executeQuery();
+                PreparedStatement prepareStatementOne = connectionToDB.getConnection().prepareStatement(isUserInDB);
+                prepareStatementOne.setString(1, userId);
+                ResultSet resultSet = prepareStatementOne.executeQuery();
 
                 if (resultSet.next()) {
 

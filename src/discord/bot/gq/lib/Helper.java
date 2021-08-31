@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 public final class Helper {
 
     public static final String PREFIX = "?";
-    public static final String TOKEN = "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.JDE8txPE5cvXqYq9q5sc_5fkltc";
+    public static final String TOKEN = "";
 
     private Helper() {
 

@@ -42,7 +42,8 @@ public class HelpList extends ListenerAdapter {
                         `?shelp`: Zeigt die Staff-Befehlsliste
                         `?source`: Informationen zum Code von Lembot
                         `?hcb`: Zeigt, wie Quellcode eingefärbt wird\s 
-                        `?+bumper`: weist dem User <@&815922232106156033> zu\s 
+                        `?+bumper`: weist dem User <@&815922232106156033> zu 
+                        `?-bumper`: entfernt dem User <@&815922232106156033>\s 
                         """);
 
                 event.getChannel().sendMessage(embedBuilder.build()).queue();

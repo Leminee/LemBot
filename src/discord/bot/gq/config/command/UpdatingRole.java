@@ -44,7 +44,6 @@ public class UpdatingRole extends ListenerAdapter {
             successUpdatedRoleId.setDescription("ID der zu pingenden Rolle wurde erfolgreich bearbeitet " + authorCommand.getAsMention() + "!");
             event.getChannel().sendMessage(successUpdatedRoleId.build()).queue();
 
-
         }
     }
 }
