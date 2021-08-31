@@ -24,7 +24,7 @@ public class NumberBumpsCheck extends ListenerAdapter {
 
             Helper.getAmount(userData, amountBumps, nextHigherUserAmountBumps, event);
 
-            Helper.sendAmount(userData, event, embedColor, "Nachrichten");
+            Helper.sendAmount(userData, event, embedColor, "Bumps");
         }
     }
 }
