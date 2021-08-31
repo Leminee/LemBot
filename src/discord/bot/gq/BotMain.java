@@ -75,6 +75,7 @@ public class BotMain {
         jda.addEventListener(new UserAuthorization());
         jda.addEventListener(new UserUnlock());
         jda.addEventListener(new StaffHelpList());
+        jda.addEventListener(new BumpRole());
 
 
 

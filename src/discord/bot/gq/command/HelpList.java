@@ -41,7 +41,9 @@ public class HelpList extends ListenerAdapter {
                         `?srole`: Liste aller Rollen auf GQ\040
                         `?shelp`: Zeigt die Staff-Befehlsliste
                         `?source`: Informationen zum Code von Lembot
-                        `?hcb`: Zeigt, wie Quellcode eingefärbt wird\s""");
+                        `?hcb`: Zeigt, wie Quellcode eingefärbt wird\s 
+                        `?+bumper`: weist dem User <@&815922232106156033> zu\s 
+                        """);
 
                 event.getChannel().sendMessage(embedBuilder.build()).queue();
 

@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 public final class Helper {
 
     public static final String PREFIX = "?";
-    public static final String TOKEN = "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.ShmaUjLMh0oBcn-KUQEBjOwbDkA";
+    public static final String TOKEN = "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.JDE8txPE5cvXqYq9q5sc_5fkltc";
 
     private Helper() {
 
@@ -68,11 +68,11 @@ public final class Helper {
         String currentNumberMember = "INSERT INTO number_member (total_member) VALUES (?);";
 
         try {
-            PreparedStatement pS = connectionToDB.getConnection().prepareStatement(currentNumberMember);
+            PreparedStatement preparedStatement = connectionToDB.getConnection().prepareStatement(currentNumberMember);
 
-            pS.setInt(1, currentNumber);
+            preparedStatement.setInt(1, currentNumber);
 
-            pS.executeUpdate();
+            preparedStatement.executeUpdate();
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
@@ -84,10 +84,10 @@ public final class Helper {
         String userMessage = event.getMessage().getContentRaw();
 
         if (Helper.isValidCommand(userMessage, command)) {
-            ConnectionToDB db = new ConnectionToDB();
-            db.initialize();
+            ConnectionToDB connectionToDB = new ConnectionToDB();
+            connectionToDB.initialize();
 
-            try (Statement statement = db.getConnection().createStatement(); ResultSet rS = statement.executeQuery(topQuery)) {
+            try (Statement statement = connectionToDB.getConnection().createStatement(); ResultSet resultSet = statement.executeQuery(topQuery)) {
 
                 EmbedBuilder embedBuilder = new EmbedBuilder();
                 embedBuilder.setTitle(embedTitle);
@@ -114,15 +114,15 @@ public final class Helper {
 
                 int top = 1;
 
-                while (rS.next()) {
+                while (resultSet.next()) {
                     if (top == 1) {
-                        embedBuilder.addField(n1, top1 + rS.getString(1), false);
+                        embedBuilder.addField(n1, top1 + resultSet.getString(1), false);
                     }
                     if (top == 2) {
-                        embedBuilder.addField(n2, top2 + rS.getString(1), false);
+                        embedBuilder.addField(n2, top2 + resultSet.getString(1), false);
                     }
                     if (top == 3) {
-                        embedBuilder.addField(n3, top3 + rS.getString(1), false);
+                        embedBuilder.addField(n3, top3 + resultSet.getString(1), false);
                     }
                     top++;
                 }
@@ -281,14 +281,14 @@ public final class Helper {
         ConnectionToDB connectionToDB = new ConnectionToDB();
         connectionToDB.initialize();
 
-        try (PreparedStatement pS = connectionToDB.getConnection().prepareStatement(insertQuery)) {
+        try (PreparedStatement preparedStatement = connectionToDB.getConnection().prepareStatement(insertQuery)) {
 
 
-            pS.setLong(1, voiceChannel.userId);
-            pS.setString(2, voiceChannel.userTag);
-            pS.setString(3, voiceChannel.userName);
-            pS.setString(4, voiceChannel.name);
-            pS.executeUpdate();
+            preparedStatement.setLong(1, voiceChannel.userId);
+            preparedStatement.setString(2, voiceChannel.userTag);
+            preparedStatement.setString(3, voiceChannel.userName);
+            preparedStatement.setString(4, voiceChannel.name);
+            preparedStatement.executeUpdate();
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
