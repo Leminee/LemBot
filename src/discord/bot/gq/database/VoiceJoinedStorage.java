@@ -1,6 +1,7 @@
 package discord.bot.gq.database;
 
 import discord.bot.gq.lib.Helper;
+import discord.bot.gq.entities.VoiceChannel;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -17,22 +18,25 @@ public class VoiceJoinedStorage extends ListenerAdapter {
 
         String insertQuery = "INSERT INTO voice_join (id_discord, user_tag, username, voice_channel_name) VALUES (?,?,?,?);";
 
-        long userId = event.getMember().getIdLong();
-        String userTag = event.getMember().getUser().getAsTag();
-        String userName = event.getMember().getUser().getName();
+        VoiceChannel voiceChannel = new VoiceChannel();
+
+        voiceChannel.userId = event.getMember().getIdLong();
+        voiceChannel.userTag = event.getMember().getUser().getAsTag();
+        voiceChannel.userName = event.getMember().getUser().getName();
+        voiceChannel.name = event.getChannelJoined().getName();
+
         String userMentioned = event.getMember().getAsMention();
-        String voiceChannelName = event.getChannelJoined().getName();
         long voiceChatId = 834521617668374569L;
         Date date = new Date();
 
         EmbedBuilder embed = new EmbedBuilder();
 
-        String embedDescription = userMentioned + " ist " + "**" +voiceChannelName + "**" + " um " + date.toString().substring(11, 16) + " Uhr **gejoint**.";
+        String embedDescription = userMentioned + " ist " + "**" +voiceChannel.name + "**" + " um " + date.toString().substring(11, 16) + " Uhr **gejoint**.";
 
         Helper.createEmbed(embed,"Voice **Joined** ",embedDescription, Color.ORANGE,"https://cdn.discordapp.com/attachments/819694809765380146/880646674366754856/Bildschirmfoto_2021-08-27_um_04.55.07.png");
         Objects.requireNonNull(event.getJDA().getTextChannelById(voiceChatId)).sendMessage(embed.build()).queue();
 
-        Helper.insertVoiceChannelData(insertQuery,userId,userTag, userName, voiceChannelName);
+        Helper.insertVoiceChannelData(insertQuery,voiceChannel);
 
 
 

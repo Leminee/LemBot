@@ -2,6 +2,9 @@ package discord.bot.gq.lib;
 
 import discord.bot.gq.config.db.ConfigSelection;
 import discord.bot.gq.database.ConnectionToDB;
+import discord.bot.gq.entities.Sanction;
+import discord.bot.gq.entities.UserData;
+import discord.bot.gq.entities.VoiceChannel;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -18,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 
 public final class Helper {
     public static final String PREFIX = "?";
-    public static final String TOKEN = "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.TD0NCEORevKlNcde9KG1fS5MoNg";
+    public static final String TOKEN = "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.ShmaUjLMh0oBcn-KUQEBjOwbDkA";
 
     private Helper() {
 
@@ -128,60 +131,79 @@ public final class Helper {
         }
     }
 
-    public static void sendAmount(String query, String nextUser, String command, GuildMessageReceivedEvent event, String embedColor, String string) {
+
+    public static UserData getAmount(UserData userData, String query, String nextHigherUser, GuildMessageReceivedEvent event) {
 
 
-        String userMessage = event.getMessage().getContentRaw();
-        String authorCommand = event.getAuthor().getAsMention();
-        long authorId = event.getAuthor().getIdLong();
-
-        if (Helper.isValidCommand(userMessage, command)) {
-            if (!Objects.requireNonNull(event.getMember()).getUser().isBot()) {
-
-                ConnectionToDB db = new ConnectionToDB();
-                db.initialize();
-
-                try {
-
-                    PreparedStatement pS = db.getConnection().prepareStatement(query);
-                    pS.setLong(1, authorId);
-                    ResultSet rS = pS.executeQuery();
+        userData.userId = event.getAuthor().getIdLong();
 
 
-                    if (rS.next()) {
+        if (!Objects.requireNonNull(event.getMember()).getUser().isBot()) {
 
-                        int number = rS.getInt(1);
+            ConnectionToDB connectionToDB = new ConnectionToDB();
+            connectionToDB.initialize();
 
-                        PreparedStatement pSTwo = db.getConnection().prepareStatement(nextUser);
-                        pSTwo.setLong(1, number);
-                        ResultSet rSTwo = pSTwo.executeQuery();
+            try (PreparedStatement preparedStatement = connectionToDB.getConnection().prepareStatement(query)) {
 
-                        if (rSTwo.next()) {
 
-                            long nextTopUserId = rSTwo.getLong(1);
-                            String mentionedUser = event.getJDA().retrieveUserById(nextTopUserId).complete().getAsMention();
-                            int nextTopUser = rSTwo.getInt(2);
+                preparedStatement.setLong(1, userData.userId);
 
-                            EmbedBuilder numberInfo = new EmbedBuilder();
-                            numberInfo.setColor(Color.decode(embedColor));
-                            numberInfo.setTitle("Information");
-                            numberInfo.setDescription("Anzahl deiner " + string + " **" + number + "**" + " " + authorCommand + "\n" + "Du bist hinter dem User " + mentionedUser + " **(" + nextTopUser + " " + string + ")**");
+                ResultSet resultSet = preparedStatement.executeQuery();
 
-                            event.getChannel().sendMessage(numberInfo.build()).queue();
-                        } else {
-                            event.getChannel().sendMessage(" :first_place: Du bist **TOP 1** mit " + number + " " + string + " " + authorCommand).queue();
-                        }
+
+                if (resultSet.next()) {
+
+                    userData.amountOf = resultSet.getInt(1);
+
+                    PreparedStatement pSTwo = connectionToDB.getConnection().prepareStatement(nextHigherUser);
+                    pSTwo.setLong(1, userData.amountOf);
+                    ResultSet rSTwo = pSTwo.executeQuery();
+
+                    if (rSTwo.next()) {
+
+                        userData.nextHigherUserId = rSTwo.getLong(1);
+                        userData.nextHigherUserAmountOf = rSTwo.getInt(2);
 
                     }
-                    pS.close();
-                    rS.close();
-
-                } catch (SQLException sqlException) {
-                    System.out.println(sqlException.getMessage());
                 }
+
+            } catch (SQLException sqlException) {
+                System.out.println(sqlException.getMessage());
             }
+
         }
+
+        return userData;
     }
+
+    public static void sendAmount(UserData userData, GuildMessageReceivedEvent event, String embedColor, String amountOf) {
+
+
+        String authorCommand = event.getAuthor().getAsMention();
+
+
+
+        if (isTopOne(userData)) {
+            event.getChannel().sendMessage(" :first_place: Du bist **TOP 1** mit " + userData.amountOf + " " + amountOf + " " + authorCommand).queue();
+            return;
+        }
+
+        String mentionedUser = event.getJDA().retrieveUserById(userData.nextHigherUserId).complete().getAsMention();
+
+        EmbedBuilder numberInfo = new EmbedBuilder();
+        numberInfo.setColor(Color.decode(embedColor));
+        numberInfo.setTitle("Information");
+        numberInfo.setDescription("Anzahl deiner " + amountOf + " **" + userData.amountOf + "**" + " " + authorCommand + "\n" + "Du bist hinter dem User " + mentionedUser + " **(" + userData.nextHigherUserAmountOf + " " + amountOf + ")**");
+
+        event.getChannel().sendMessage(numberInfo.build()).queue();
+
+
+}
+
+    public static boolean isTopOne(UserData userData) {
+        return userData.nextHigherUserId  == null || userData.nextHigherUserAmountOf == null;
+    }
+
 
     public static void sendCommand(String command, GuildMessageReceivedEvent event, int delay, int period, TimeUnit timeUnit) {
 
@@ -202,14 +224,13 @@ public final class Helper {
 
         String currentStatus = "INSERT INTO user_status (id_discord, user_tag, status) VALUES (?,?,?);";
 
-        try {
-            PreparedStatement pS = db.getConnection().prepareStatement(currentStatus);
+        try (PreparedStatement preparedStatement = db.getConnection().prepareStatement(currentStatus)) {
 
-            pS.setLong(1, userId);
-            pS.setBlob(2, changeCharacterEncoding(pS, userTag));
-            pS.setString(3, String.valueOf(newStatus));
+            preparedStatement.setLong(1, userId);
+            preparedStatement.setBlob(2, changeCharacterEncoding(preparedStatement, userTag));
+            preparedStatement.setString(3, String.valueOf(newStatus));
 
-            pS.executeUpdate();
+            preparedStatement.executeUpdate();
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
@@ -222,11 +243,47 @@ public final class Helper {
 
         String currentPresentMember = "INSERT INTO active_user (active_member) VALUES (?);";
 
-        try {
-            PreparedStatement pS = db.getConnection().prepareStatement(currentPresentMember);
+        try (PreparedStatement preparedStatement = db.getConnection().prepareStatement(currentPresentMember)) {
 
-            pS.setLong(1, numberMember);
 
+            preparedStatement.setLong(1, numberMember);
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
+        }
+
+    }
+
+    public static void createEmbed(EmbedBuilder embedBuilder, String title, String description, Color color, String thumbnail) {
+
+        embedBuilder.setTitle(title);
+        embedBuilder.setDescription(description);
+        embedBuilder.setColor(color);
+        embedBuilder.setThumbnail(thumbnail);
+
+    }
+
+    public static void createEmbed(EmbedBuilder embedBuilder, String title, String description, Color color) {
+
+        embedBuilder.setTitle(title);
+        embedBuilder.setDescription(description);
+        embedBuilder.setColor(color);
+
+    }
+
+    public static void insertVoiceChannelData(String insertQuery, VoiceChannel voiceChannel) {
+        ConnectionToDB db = new ConnectionToDB();
+        db.initialize();
+
+        try (PreparedStatement pS = db.getConnection().prepareStatement(insertQuery)) {
+
+
+            pS.setLong(1, voiceChannel.userId);
+            pS.setString(2, voiceChannel.userTag);
+            pS.setString(3, voiceChannel.userName);
+            pS.setString(4, voiceChannel.name);
             pS.executeUpdate();
 
         } catch (SQLException sqlException) {
@@ -235,55 +292,21 @@ public final class Helper {
 
     }
 
-    public static EmbedBuilder createEmbed(EmbedBuilder embedBuilder,String title, String description, Color color, String thumbnail) {
-
-       embedBuilder.setTitle(title);
-       embedBuilder.setDescription(description);
-       embedBuilder.setColor(color);
-       embedBuilder.setThumbnail(thumbnail);
-
-
-       return embedBuilder;
-
-    }
-
-    public static void insertVoiceChannelData(String insertQuery, long userId, String userTag, String userName, String voiceChannelName) {
+    public static void insertSanctionedUserData(String insertQuery, Sanction sanction) {
         ConnectionToDB db = new ConnectionToDB();
         db.initialize();
 
-        try {
+        try (PreparedStatement preparedStatement = db.getConnection().prepareStatement(insertQuery)) {
 
-            PreparedStatement pS = db.getConnection().prepareStatement(insertQuery);
 
-            pS.setLong(1, userId);
-            pS.setString(2, userTag);
-            pS.setString(3, userName);
-            pS.setString(4, voiceChannelName);
+            preparedStatement.setLong(1, sanction.userId);
+            preparedStatement.setString(2, sanction.userTag);
+            preparedStatement.setString(3, sanction.userName);
+            preparedStatement.setString(4,sanction.author);
+            preparedStatement.setString(5, sanction.reason);
+            preparedStatement.setString(6, sanction.channelName);
 
-            pS.executeUpdate();
-
-        } catch (SQLException sqlException) {
-            System.out.println(sqlException.getMessage());
-        }
-
-    }
-
-    public static void insertSanctionedUserData(String insertQuery, long userId, String userTag, String userName,String sanctionAuthor, String reason, String channelName) {
-        ConnectionToDB db = new ConnectionToDB();
-        db.initialize();
-
-        try {
-
-            PreparedStatement pS = db.getConnection().prepareStatement(insertQuery);
-
-            pS.setLong(1, userId);
-            pS.setString(2, userTag);
-            pS.setString(3, userName);
-            pS.setString(4, sanctionAuthor);
-            pS.setString(5, reason);
-            pS.setString(6, channelName);
-
-            pS.executeUpdate();
+            preparedStatement.executeUpdate();
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
@@ -293,11 +316,31 @@ public final class Helper {
 
     public static void sendDM(User sanctionedUser, String typeSanction, StringBuilder reason, String mentionedUser) {
 
-        String content = "Du wurdest aus dem folgenden Grund auf GoodQuestion  " + typeSanction + ": " + reason + " " + mentionedUser;
-        String finalContent = content;
+        String content = "Du wurdest aus dem folgenden Grund auf GoodQuestion " + "**" + typeSanction + "**" + ": " + reason + mentionedUser;
         sanctionedUser.openPrivateChannel()
-                .flatMap(channel -> channel.sendMessage(finalContent))
+                .flatMap(channel -> channel.sendMessage(content))
                 .queue();
+    }
+
+    public static void addTopToEmbed(GuildMessageReceivedEvent event, ResultSet resultSet, EmbedBuilder embedBuilder, String embedTitle, String embedDescription, String embedThumbnail, Color embedColor) {
+
+        Helper.createEmbed(embedBuilder, embedTitle, embedDescription, embedColor, embedThumbnail);
+
+        int top = 1;
+        try {
+
+            while (resultSet.next()) {
+
+                embedBuilder.addField("TOP " + top, resultSet.getString(1), false);
+                top++;
+
+            }
+
+            event.getChannel().sendMessage(embedBuilder.build()).queue();
+
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
+        }
     }
 
 }

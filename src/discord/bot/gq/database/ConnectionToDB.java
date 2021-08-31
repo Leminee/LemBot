@@ -15,8 +15,8 @@ public class ConnectionToDB {
             String dbPassword = "36177436";
             this.connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
 
-        } catch (SQLException sqlEx) {
-            System.out.println(sqlEx.getMessage());
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
         }
 
     }

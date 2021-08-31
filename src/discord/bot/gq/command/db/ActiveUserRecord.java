@@ -2,10 +2,12 @@ package discord.bot.gq.command.db;
 
 import discord.bot.gq.database.ConnectionToDB;
 import discord.bot.gq.lib.Helper;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -36,7 +38,11 @@ public class ActiveUserRecord extends ListenerAdapter {
                     if (!event.getMember().getUser().isBot()) {
                         currentRecord = resultSet.getInt(1);
 
-                        event.getChannel().sendMessage("Maximale Anzahl der gleichzeitig aktiven User auf dem Server: " + "**" + currentRecord + "**" + " " + userNameAsMention).queue();
+                        EmbedBuilder recordEmbed = new EmbedBuilder();
+
+                        Helper.createEmbed(recordEmbed, "Rekord an gleichzeitig aktiven Usern", "Der aktuelle Record liegt bei " + "**" + currentRecord + "**" + " gleichzeitig aktiven Usern " + userNameAsMention, Color.magenta);
+
+                        event.getChannel().sendMessage(recordEmbed.build()).queue();
                     }
                 }
 

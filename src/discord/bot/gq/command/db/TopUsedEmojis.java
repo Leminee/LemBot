@@ -12,9 +12,12 @@ public class TopUsedEmojis extends ListenerAdapter {
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
 
-        Helper.selectTop(
-                "tope", event,
-                """
+        String topUsedEmojisCheckCommand = "tope";
+        String embedTitle = "Die 3 am häufigsten benutzten Emojis";
+        Color embedColor = Color.yellow;
+        String embedThumbnail = "https://cdn.discordapp.com/attachments/819694809765380146/872659266962587678/Bildschirmfoto_2021-08-05_um_03.56.07.png";
+
+        String topUsedEmojis =     """
                         SELECT '\uD83D\uDC4D', SUM(id_discord) AS c  FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDC4D%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T
                         UNION ALL\s
                         SELECT '\uD83D\uDE05', SUM(id_discord) AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE05%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
@@ -36,7 +39,11 @@ public class TopUsedEmojis extends ListenerAdapter {
                         SELECT '\uD83E\uDD13', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83E\uDD13%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T \s
                         UNION ALL
                         SELECT '\uD83D\uDE04', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE04%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
-                        ORDER BY c DESC LIMIT 3;""",
-                "Die 3 am häufigsten benutzten Emojis", Color.YELLOW, "https://cdn.discordapp.com/attachments/819694809765380146/872659266962587678/Bildschirmfoto_2021-08-05_um_03.56.07.png");
+                        ORDER BY c DESC LIMIT 3;""";
+
+        Helper.selectTop(
+                topUsedEmojisCheckCommand, event, topUsedEmojis
+            ,embedTitle
+                , embedColor, embedThumbnail);
     }
 }

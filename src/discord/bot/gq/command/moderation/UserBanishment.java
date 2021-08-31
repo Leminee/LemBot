@@ -1,6 +1,7 @@
 package discord.bot.gq.command.moderation;
 
 import discord.bot.gq.lib.Helper;
+import discord.bot.gq.entities.Sanction;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
@@ -23,12 +24,14 @@ public class UserBanishment extends ListenerAdapter {
         String[] sanctionCommand = event.getMessage().getContentRaw().split("\\s+");
         Member commandAuthor = event.getMessage().getMember();
         assert commandAuthor != null;
-        boolean hasPermission = commandAuthor.hasPermission(Permission.MESSAGE_MANAGE);
+        boolean hasMessageManagePermission = commandAuthor.hasPermission(Permission.MESSAGE_MANAGE);
+        boolean hasManageRolesPermission = commandAuthor.hasPermission(Permission.MANAGE_ROLES);
+        long channelId = event.getChannel().getIdLong();
+        long reportSanctionChannelId = 871615666959032340L;
 
         if (sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "warn") ||sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "mute") || sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "kick") || sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "ban")) {
 
-
-            if (!hasPermission) {
+            if (!hasMessageManagePermission) {
 
                 EmbedBuilder embedError = new EmbedBuilder();
                 String embedDescription = "Permission Denied";
@@ -41,7 +44,7 @@ public class UserBanishment extends ListenerAdapter {
 
         if (sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "warn") ||sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "mute") || sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "kick") || sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "ban") && !sanctionCommand[1].isEmpty()) {
 
-            if (!hasPermission) {
+            if (!hasMessageManagePermission) {
                 return;
             }
 
@@ -63,6 +66,15 @@ public class UserBanishment extends ListenerAdapter {
                 return;
             }
 
+
+            if(channelId != reportSanctionChannelId) {
+
+                EmbedBuilder embedError = new EmbedBuilder();
+                String embedDescription = "Dieser Befehl kann in diesem Channel nicht ausgeführt werden!";
+                Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED, "https://cdn.discordapp.com/attacents/819694809765380146/879230207763038228/Bildschirmfoto_2021-08-23_um_07.06.46.png");
+                event.getChannel().sendMessage(embedError.build()).queue();
+                return;
+            }
 
             List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
             Member member = mentionedMembers.size() > 0 ? mentionedMembers.get(0) : null;
@@ -99,8 +111,7 @@ public class UserBanishment extends ListenerAdapter {
             }
 
             String sanctionedUserAsMention = member.getAsMention();
-            String sanctionedUserAsTag = member.getUser().getAsTag();
-            String sanctionedUserName = member.getUser().getName();
+
 
             StringBuilder sanctionReason = new StringBuilder();
 
@@ -109,14 +120,23 @@ public class UserBanishment extends ListenerAdapter {
                 sanctionReason.append(sanctionCommand[i]).append(" ");
             }
 
+            Sanction sanction = new Sanction();
+
+            sanction.userId = member.getIdLong();
+            sanction.userTag = member.getUser().getAsTag();
+            sanction.userName = member.getUser().getName();
+            sanction.author = commandAuthor.getUser().getAsTag();
+            sanction.reason = sanctionReason.toString();
+            sanction.channelName = event.getChannel().getName();
+
             if (sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "warn")) {
 
-                String sanctionedUserId = member.getId();
+
 
                 Role warnRole = event.getGuild().getRoleById(879448018372395048L);
 
                 assert warnRole != null;
-                member.getGuild().addRoleToMember(sanctionedUserId, warnRole).queue();
+                member.getGuild().addRoleToMember(sanction.userId, warnRole).queue();
 
                 Helper.sendDM(member.getUser(),"verwarnt",sanctionReason,sanctionedUserAsMention);
 
@@ -126,29 +146,30 @@ public class UserBanishment extends ListenerAdapter {
                 confirmation.setDescription("User " + sanctionedUserAsMention + " wurde durch " + commandAuthor.getAsMention() + "**" + " verwarnt." + "**" + "\n Angegebener Grund: " + sanctionReason);
                 event.getChannel().sendMessage(confirmation.build()).queue();
 
+                String warnedUserData = "INSERT INTO warned_user (id_warned_user,id_discord,user_tag, username, warn_author, warn_reason, channel_name) VALUES (NULL,?,?,?,?,?,?)";
 
 
-                Helper.insertSanctionedUserData("INSERT INTO warned_user (id_warned_user,id_discord,user_tag, username, warn_author, warn_reason, channel_name) VALUES (NULL,?,?,?,?,?,?)", member.getIdLong(), sanctionedUserAsTag, sanctionedUserName, commandAuthor.getUser().getAsTag(), sanctionReason.toString(), event.getChannel().getName());
+                Helper.insertSanctionedUserData(warnedUserData,sanction);
                 return;
             }
 
 
             if (sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "mute")) {
 
-                String sanctionedUserId = member.getId();
+
 
                 Role muteRole = event.getGuild().getRoleById(879329567947489352L);
-
                 List<Role> userRoleList = Objects.requireNonNull(member).getRoles();
+                String mutedUserData = "INSERT INTO muted_user (id_muted_user,id_discord,user_tag, username, mute_author, mute_reason, channel_name) VALUES (NULL,?,?,?,?,?,?)";
 
 
                 for (Role role : userRoleList) {
 
-                    event.getGuild().removeRoleFromMember(sanctionedUserId, role).queue();
+                    event.getGuild().removeRoleFromMember(sanction.userId, role).queue();
                 }
 
 
-                event.getGuild().addRoleToMember(sanctionedUserId, Objects.requireNonNull(muteRole)).queue();
+                event.getGuild().addRoleToMember(sanction.userId, Objects.requireNonNull(muteRole)).queue();
 
                 Helper.sendDM(member.getUser(),"gemutet",sanctionReason,sanctionedUserAsMention);
 
@@ -158,19 +179,21 @@ public class UserBanishment extends ListenerAdapter {
                 confirmation.setDescription("User " + sanctionedUserAsMention + " wurde durch " + commandAuthor.getAsMention() + "**" + " gemutet." + "**" + "\n Angegebener Grund: " + sanctionReason);
                 event.getChannel().sendMessage(confirmation.build()).queue();
 
-                Helper.insertSanctionedUserData("INSERT INTO muted_user (id_muted_user,id_discord,user_tag, username, mute_author, mute_reason, channel_name) VALUES (NULL,?,?,?,?,?,?)", member.getIdLong(), sanctionedUserAsTag, sanctionedUserName, commandAuthor.getUser().getAsTag(), sanctionReason.toString(), event.getChannel().getName());
+                Helper.insertSanctionedUserData(mutedUserData, sanction);
                 return;
             }
 
             if (sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "kick")) {
 
-                if (!commandAuthor.hasPermission(Permission.KICK_MEMBERS)) {
+                if (!hasManageRolesPermission) {
                     EmbedBuilder embedError = new EmbedBuilder();
                     String embedDescription = "Permission Denied";
                     Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED, "https://cdn.discordap819694809765380146/879230207763038228/Bildschirmfoto_2021-08-23_um_07.06.46.png");
                     event.getChannel().sendMessage(embedError.build()).queue();
                     return;
                 }
+
+                String kickedUserDate = "INSERT INTO kicked_user (id_kicked_user,id_discord,user_tag, username, kick_author, kick_reason, channel_name) VALUES (NULL,?,?,?,?,?,?)";
 
                 Helper.sendDM(member.getUser(),"gekickt",sanctionReason,sanctionedUserAsMention);
 
@@ -184,20 +207,23 @@ public class UserBanishment extends ListenerAdapter {
                 confirmation.setDescription("User " + sanctionedUserAsMention + " wurde durch " + commandAuthor.getAsMention() + "**" + " gekickt." + "**" + "\n Angegebener Grund: " + sanctionReason);
                 event.getChannel().sendMessage(confirmation.build()).queue();
 
-                Helper.insertSanctionedUserData("INSERT INTO kicked_user (id_kicked_user,id_discord,user_tag, username, kick_author, kick_reason, channel_name) VALUES (NULL,?,?,?,?,?,?)", member.getIdLong(), sanctionedUserAsTag, sanctionedUserName, commandAuthor.getUser().getAsTag(), sanctionReason.toString(), event.getChannel().getName());
+                Helper.insertSanctionedUserData(kickedUserDate, sanction);
                 return;
             }
 
 
             if (sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "ban")) {
 
-                if (!commandAuthor.hasPermission(Permission.BAN_MEMBERS)) {
+                if (!hasManageRolesPermission) {
                     EmbedBuilder embedError = new EmbedBuilder();
                     String embedDescription = "Permission Denied";
                     Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED, "https://cdn.discordap819694809765380146/879230207763038228/Bildschirmfoto_2021-08-23_um_07.06.46.png");
                     event.getChannel().sendMessage(embedError.build()).queue();
                     return;
                 }
+
+                String bannedUserData = "INSERT INTO banned_user (id_banned_user,id_discord,user_tag, username, ban_author, ban_reason, channel_name) VALUES (NULL,?,?,?,?,?,?)";
+
                 Helper.sendDM(member.getUser(),"gebannt",sanctionReason,sanctionedUserAsMention);
 
                 member.ban(7, sanctionReason.toString()).complete();
@@ -210,7 +236,7 @@ public class UserBanishment extends ListenerAdapter {
                 confirmation.setDescription("User " + sanctionedUserAsMention + " wurde durch " + commandAuthor.getAsMention() + "**" + " gebannt." + "**" + "\n Angegebener Grund: " + sanctionReason);
                 event.getChannel().sendMessage(confirmation.build()).queue();
 
-                Helper.insertSanctionedUserData("INSERT INTO banned_user (id_banned_user,id_discord,user_tag, username, ban_author, ban_reason, channel_name) VALUES (NULL,?,?,?,?,?,?)", member.getIdLong(), sanctionedUserAsTag, sanctionedUserName, commandAuthor.getUser().getAsTag(), sanctionReason.toString(), event.getChannel().getName());
+                Helper.insertSanctionedUserData(bannedUserData, sanction);
 
             }
         }

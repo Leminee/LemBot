@@ -73,17 +73,17 @@ public class UserUnlock extends ListenerAdapter {
 
                 assert member != null;
 
-                String unmutedUserAsMention = member.getAsMention();
-                long unmutedUserId = member.getIdLong();
+                String unmuteUserAsMention = member.getAsMention();
+                long unmuteUserId = member.getIdLong();
                 Role mutedRole = event.getGuild().getRoleById(879329567947489352L);
 
                 assert mutedRole != null;
-                member.getGuild().removeRoleFromMember(unmutedUserId, mutedRole).queue();
+                member.getGuild().removeRoleFromMember(unmuteUserId, mutedRole).queue();
 
                 EmbedBuilder confirmation = new EmbedBuilder();
                 confirmation.setColor(0x00ff60);
                 confirmation.setTitle("Bestätigung");
-                confirmation.setDescription("User " + unmutedUserAsMention + " wurde durch " + commandAuthor.getAsMention() + " erfolgreich **" + " ungemutet." + "**");
+                confirmation.setDescription("User " + unmuteUserAsMention + " wurde durch " + commandAuthor.getAsMention() + " erfolgreich **" + " ungemutet." + "**");
                 event.getChannel().sendMessage(confirmation.build()).queue();
 
 

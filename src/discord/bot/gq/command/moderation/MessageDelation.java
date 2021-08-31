@@ -18,26 +18,27 @@ public class MessageDelation extends ListenerAdapter {
 
         String[] clearCommand = event.getMessage().getContentRaw().split("\\s+");
         Member authorCommand = event.getMessage().getMember();
+        assert authorCommand != null;
+        boolean authorHasMessageManagePermission = authorCommand.hasPermission(Permission.MESSAGE_MANAGE);
 
 
         if (clearCommand[0].equalsIgnoreCase(Helper.PREFIX + "clear") && clearCommand[1].equalsIgnoreCase("-")) {
 
             if (clearCommand.length < 3) {
 
-                EmbedBuilder embedBuilder = new EmbedBuilder();
-                Helper.createEmbed(embedBuilder, "Hilfe", "Richtige Command \" -> " +Helper.PREFIX + "clear - [Anzahl der zu löschenden Nachrichten als Zahl]", Color.lightGray, "https://www.lembot.de");
-                event.getChannel().sendMessage(embedBuilder.build()).queue();
+                EmbedBuilder helpEmbed = new EmbedBuilder();
+                Helper.createEmbed(helpEmbed, "Hilfe", "Richtige Command \" -> " + Helper.PREFIX + "clear - <Anzahl der zu löschenden Nachrichten als Zahl>", Color.lightGray);
+                event.getChannel().sendMessage(helpEmbed.build()).queue();
                 return;
 
             }
 
-            assert authorCommand != null;
-            if (!authorCommand.hasPermission(Permission.MESSAGE_MANAGE)) {
+            if (!authorHasMessageManagePermission) {
 
-                EmbedBuilder embedBuilder = new EmbedBuilder();
+                EmbedBuilder errorPermissionEmbed = new EmbedBuilder();
 
-                Helper.createEmbed(embedBuilder, "Fehler", "Permission Denied", Color.RED, "https://www.plane-dein-training.de");
-                event.getChannel().sendMessage(embedBuilder.build()).queue();
+                Helper.createEmbed(errorPermissionEmbed, "Fehler", "Permission Denied", Color.RED);
+                event.getChannel().sendMessage(errorPermissionEmbed.build()).queue();
 
             } else {
 
@@ -49,35 +50,34 @@ public class MessageDelation extends ListenerAdapter {
 
                     if (amountMessages >= 31) {
 
-                        EmbedBuilder embedBuilder = new EmbedBuilder();
+                        EmbedBuilder errorAmountOfMessagesEmbed = new EmbedBuilder();
 
-                        Helper.createEmbed(embedBuilder, "Fehler", "Lösche bitte nicht mehr als 30 Nachrichten auf einmal!", Color.RED, "https://www.plane-dein-training.de");
-                        event.getChannel().sendMessage(embedBuilder.build()).queue();
+                        Helper.createEmbed(errorAmountOfMessagesEmbed, "Fehler", "Lösche bitte nicht mehr als 30 Nachrichten auf einmal!", Color.RED);
+                        event.getChannel().sendMessage(errorAmountOfMessagesEmbed.build()).queue();
 
                     } else {
 
                         event.getChannel().deleteMessages(messagesToDelete).queue();
 
-                        EmbedBuilder embedBuilder = new EmbedBuilder();
+                        EmbedBuilder confirmationEmbed = new EmbedBuilder();
 
-                        Helper.createEmbed(embedBuilder, "Bestätigung", "Es wurden " +clearCommand[2] + " Nachrichten durch " + authorCommand.getAsMention() + " erfolgreich gelöscht!", Color.GREEN, "https://www.plane-dein-training.de");
-                        event.getChannel().sendMessage(embedBuilder.build()).queue();
+                        Helper.createEmbed(confirmationEmbed, "Bestätigung", "Es wurden " + clearCommand[2] + " Nachrichten durch " + authorCommand.getAsMention() + " erfolgreich gelöscht!", Color.GREEN);
+                        event.getChannel().sendMessage(confirmationEmbed.build()).queue();
                     }
 
                 } catch (IllegalArgumentException illegalArgumentException) {
                     if (illegalArgumentException.toString().startsWith("java.lang.IllegalArgumentException: Message retrieval")) {
 
-                        EmbedBuilder embedBuilder = new EmbedBuilder();
+                        EmbedBuilder errorIAEEmbed = new EmbedBuilder();
 
-                        Helper.createEmbed(embedBuilder, "Fehler", "Mehr als 100 Nachrichten können nicht gelöscht werden!", Color.RED, "https://www.plane-dein-training.de");
-                        event.getChannel().sendMessage(embedBuilder.build()).queue();
+                        Helper.createEmbed(errorIAEEmbed, "Fehler", "Mehr als 100 Nachrichten können nicht gelöscht werden!", Color.RED);
+                        event.getChannel().sendMessage(errorIAEEmbed.build()).queue();
 
 
                     }
                 }
             }
         }
-
     }
 }
 

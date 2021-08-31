@@ -29,20 +29,14 @@ public class TopBumperSelection extends ListenerAdapter {
 
             try (Statement statement = connectionToDB.getConnection().createStatement(); ResultSet resultSet = statement.executeQuery(topBumper)) {
 
-                EmbedBuilder embedBuilder = new EmbedBuilder();
+                EmbedBuilder topBumperEmbed = new EmbedBuilder();
 
-                Helper.createEmbed(embedBuilder,"User mit den meisten Bumps","", Color.cyan,"https://cdn.discordapp.com/attachments/819694809765380146/869248076446052402/Bildschirmfoto_2021-07-26_um_17.48.08.png");
+                String embedTitle = "User mit den meisten Bumps";
+                String embedDescription = "";
+                String embedThumbnail = "https://cdn.discordapp.com/attachments/819694809765380146/869248076446052402/Bildschirmfoto_2021-07-26_um_17.48.08.png";
+                Color embedColor = Color.cyan;
 
-                int top = 1;
-
-                while (resultSet.next()) {
-
-                    embedBuilder.addField("TOP " + top, resultSet.getString(1), false);
-                    top++;
-
-                }
-
-                event.getChannel().sendMessage(embedBuilder.build()).queue();
+                Helper.addTopToEmbed(event, resultSet, topBumperEmbed, embedTitle, embedDescription, embedThumbnail, embedColor);
 
 
             } catch (SQLException sqlException) {

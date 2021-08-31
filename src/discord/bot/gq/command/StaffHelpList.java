@@ -27,15 +27,14 @@ public class StaffHelpList extends ListenerAdapter {
                                             ------------ **STAFF-BEFEHLSLISTE** -------------\s
 
                             `?clear - <zahl>`: \n löscht Nachrichten\s\040 
-                            `?warn <User ID>/<User mention> [Grund|`: \n weist dem User <@&879448018372395048> zu (Verwarnung)\s\040 
-                            `?mute <User ID>/<User mention> [Grund]`: \n weist dem User <@&879329567947489352> zu (Mute)\s\040
-                            `?unmute <User ID>/<User mention>`: \n entfernt dem User <@&879329567947489352>
-                            `?kick <User ID>/<User mention> [Grund]`: \n kickt den User\s\040\040
-                            `?ban <User ID>/<User mention> [Grund]`: \n bannt den User""");
+                            `?warn <User> <Grund>`: \n weist dem User <@&879448018372395048> zu (Verwarnung)\s\040 
+                            `?mute <User> <Grund>`: \n weist dem User <@&879329567947489352> zu (Mute)\s\040
+                            `?unmute <User> <Grund>`: \n entfernt dem User <@&879329567947489352>
+                            `?kick <User> <Grund>`: \n kickt den User\s\040\040
+                            `?ban <User> <Grund>`: \n bannt den User""");
 
                 event.getChannel().sendMessage(embed.build()).queue();
             }
         }
-
     }
 }

@@ -28,20 +28,14 @@ public class TopFlooderSelection extends ListenerAdapter {
 
             try (Statement statement = connectionToDB.getConnection().createStatement(); ResultSet resultSet = statement.executeQuery(topFlooder)) {
 
-                EmbedBuilder embedBuilder = new EmbedBuilder();
+                EmbedBuilder topFlooderEmbed = new EmbedBuilder();
 
-                Helper.createEmbed(embedBuilder, "User mit den meisten Nachrichten", "", Color.white, "https://cdn.discordapp.com/attachments/819694809765380146/844312789531230208/typing.png");
+                String embedTitle = "User mit den meisten Nachrichten";
+                String embedDescription = "";
+                String embedThumbnail = "https://cdn.discordapp.com/attachments/819694809765380146/844312789531230208/typing.png";
+                Color embedColor = Color.white;
 
-                int top = 1;
-
-                while (resultSet.next()) {
-
-                    embedBuilder.addField("TOP " + top, resultSet.getString(1), false);
-                    top++;
-
-                }
-
-                event.getChannel().sendMessage(embedBuilder.build()).queue();
+                Helper.addTopToEmbed(event, resultSet, topFlooderEmbed, embedTitle, embedDescription, embedThumbnail, embedColor);
 
 
             } catch (SQLException sqlException) {

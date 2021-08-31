@@ -29,15 +29,16 @@ public class PasswordCheck extends ListenerAdapter {
             connectionToDB.initialize();
 
             String passwordCheck = "SELECT pass FROM leaked_password WHERE pass = ?";
+            String userPassword = userMessageContent[1];
 
-            try (PreparedStatement preparedStatement = connectionToDB.getConnection().prepareStatement(passwordCheck); ResultSet resultSet = preparedStatement.executeQuery()) {
+            try (PreparedStatement preparedStatement = connectionToDB.getConnection().prepareStatement(passwordCheck)) {
 
-
-                String userPassword = userMessageContent[1];
-
-                event.getMessage().delete().queue();
 
                 preparedStatement.setString(1, userPassword);
+
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                event.getMessage().delete().queue();
 
 
                 if (resultSet.next()) {
