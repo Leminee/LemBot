@@ -20,6 +20,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public final class Helper {
+
     public static final String PREFIX = "?";
     public static final String TOKEN = "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.ShmaUjLMh0oBcn-KUQEBjOwbDkA";
 
@@ -28,6 +29,7 @@ public final class Helper {
     }
 
     public static boolean isValidCommand(String userMessageContent, String command) {
+
         return userMessageContent.toLowerCase().startsWith(PREFIX + command);
     }
 
@@ -59,13 +61,14 @@ public final class Helper {
     }
 
     public static void insertCurrentNumberMember(int currentNumber) {
-        ConnectionToDB db = new ConnectionToDB();
-        db.initialize();
+
+        ConnectionToDB connectionToDB = new ConnectionToDB();
+        connectionToDB.initialize();
 
         String currentNumberMember = "INSERT INTO number_member (total_member) VALUES (?);";
 
         try {
-            PreparedStatement pS = db.getConnection().prepareStatement(currentNumberMember);
+            PreparedStatement pS = connectionToDB.getConnection().prepareStatement(currentNumberMember);
 
             pS.setInt(1, currentNumber);
 
@@ -132,7 +135,7 @@ public final class Helper {
     }
 
 
-    public static UserData getAmount(UserData userData, String query, String nextHigherUser, GuildMessageReceivedEvent event) {
+    public static void getAmount(UserData userData, String query, String nextHigherUser, GuildMessageReceivedEvent event) {
 
 
         userData.userId = event.getAuthor().getIdLong();
@@ -173,14 +176,12 @@ public final class Helper {
 
         }
 
-        return userData;
     }
 
     public static void sendAmount(UserData userData, GuildMessageReceivedEvent event, String embedColor, String amountOf) {
 
 
         String authorCommand = event.getAuthor().getAsMention();
-
 
 
         if (isTopOne(userData)) {
@@ -198,10 +199,10 @@ public final class Helper {
         event.getChannel().sendMessage(numberInfo.build()).queue();
 
 
-}
+    }
 
     public static boolean isTopOne(UserData userData) {
-        return userData.nextHigherUserId  == null || userData.nextHigherUserAmountOf == null;
+        return userData.nextHigherUserId == null || userData.nextHigherUserAmountOf == null;
     }
 
 
@@ -211,20 +212,21 @@ public final class Helper {
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
         ConfigSelection configSelection = new ConfigSelection();
-        configSelection.selectChannelId();
+        configSelection.selectBotCommandsChannelId();
 
-        final Runnable ping = () -> Objects.requireNonNull(Objects.requireNonNull(event.getJDA().getTextChannelById(configSelection.getChannelId())).sendMessage(Helper.PREFIX + command)).queue();
+        final Runnable ping = () -> Objects.requireNonNull(Objects.requireNonNull(event.getJDA().getTextChannelById(configSelection.getBotCommandsChannelId())).sendMessage(Helper.PREFIX + command)).queue();
         scheduler.scheduleAtFixedRate(ping, delay, period, timeUnit);
 
     }
 
     public static void insertStatus(long userId, String userTag, OnlineStatus newStatus) {
-        ConnectionToDB db = new ConnectionToDB();
-        db.initialize();
+
+        ConnectionToDB connectionToDB = new ConnectionToDB();
+        connectionToDB.initialize();
 
         String currentStatus = "INSERT INTO user_status (id_discord, user_tag, status) VALUES (?,?,?);";
 
-        try (PreparedStatement preparedStatement = db.getConnection().prepareStatement(currentStatus)) {
+        try (PreparedStatement preparedStatement = connectionToDB.getConnection().prepareStatement(currentStatus)) {
 
             preparedStatement.setLong(1, userId);
             preparedStatement.setBlob(2, changeCharacterEncoding(preparedStatement, userTag));
@@ -238,12 +240,13 @@ public final class Helper {
     }
 
     public static void insertNumberOnlineMember(int numberMember) {
-        ConnectionToDB db = new ConnectionToDB();
-        db.initialize();
+
+        ConnectionToDB connectionToDB = new ConnectionToDB();
+        connectionToDB.initialize();
 
         String currentPresentMember = "INSERT INTO active_user (active_member) VALUES (?);";
 
-        try (PreparedStatement preparedStatement = db.getConnection().prepareStatement(currentPresentMember)) {
+        try (PreparedStatement preparedStatement = connectionToDB.getConnection().prepareStatement(currentPresentMember)) {
 
 
             preparedStatement.setLong(1, numberMember);
@@ -274,10 +277,11 @@ public final class Helper {
     }
 
     public static void insertVoiceChannelData(String insertQuery, VoiceChannel voiceChannel) {
-        ConnectionToDB db = new ConnectionToDB();
-        db.initialize();
 
-        try (PreparedStatement pS = db.getConnection().prepareStatement(insertQuery)) {
+        ConnectionToDB connectionToDB = new ConnectionToDB();
+        connectionToDB.initialize();
+
+        try (PreparedStatement pS = connectionToDB.getConnection().prepareStatement(insertQuery)) {
 
 
             pS.setLong(1, voiceChannel.userId);
@@ -293,16 +297,17 @@ public final class Helper {
     }
 
     public static void insertSanctionedUserData(String insertQuery, Sanction sanction) {
-        ConnectionToDB db = new ConnectionToDB();
-        db.initialize();
 
-        try (PreparedStatement preparedStatement = db.getConnection().prepareStatement(insertQuery)) {
+        ConnectionToDB connectionToDB = new ConnectionToDB();
+        connectionToDB.initialize();
+
+        try (PreparedStatement preparedStatement = connectionToDB.getConnection().prepareStatement(insertQuery)) {
 
 
             preparedStatement.setLong(1, sanction.userId);
             preparedStatement.setString(2, sanction.userTag);
             preparedStatement.setString(3, sanction.userName);
-            preparedStatement.setString(4,sanction.author);
+            preparedStatement.setString(4, sanction.author);
             preparedStatement.setString(5, sanction.reason);
             preparedStatement.setString(6, sanction.channelName);
 
@@ -342,5 +347,4 @@ public final class Helper {
             System.out.println(sqlException.getMessage());
         }
     }
-
 }

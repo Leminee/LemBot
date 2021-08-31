@@ -36,22 +36,22 @@ public class PasswordCheck extends ListenerAdapter {
 
                 preparedStatement.setString(1, userPassword);
 
-                ResultSet resultSet = preparedStatement.executeQuery();
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
 
-                event.getMessage().delete().queue();
-
-
-                if (resultSet.next()) {
-
-                    event.getChannel().sendMessage(" :red_circle:  Pwned - Passwort wurde gefunden! " + authorCommand).queue();
+                    event.getMessage().delete().queue();
 
 
-                } else {
-                    event.getChannel().sendMessage(" :green_circle:  Nicht gefunden! " + authorCommand).queue();
+                    if (resultSet.next()) {
+
+                        event.getChannel().sendMessage(" :red_circle:  Pwned - Passwort wurde gefunden! " + authorCommand).queue();
+
+
+                    } else {
+                        event.getChannel().sendMessage(" :green_circle:  Nicht gefunden! " + authorCommand).queue();
+
+                    }
 
                 }
-
-
             } catch (SQLException sqlException) {
                 System.out.println(sqlException.getMessage());
             }

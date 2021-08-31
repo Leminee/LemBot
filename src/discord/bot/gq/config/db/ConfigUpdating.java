@@ -11,39 +11,39 @@ public class ConfigUpdating {
 
     public void updateRoleId() {
 
-        try {
+        ConnectionToDB connectionToDB = new ConnectionToDB();
+        connectionToDB.initialize();
 
-            ConnectionToDB connectionToDB = new ConnectionToDB();
-            connectionToDB.initialize();
+        String roleId = "UPDATE config SET config_value = ? WHERE config_name = 'id_ping_role'";
 
-            String roleId = "UPDATE config SET config_value = ? WHERE config_name = 'id_ping_role'";
-            PreparedStatement updatePStatement = connectionToDB.getConnection().prepareStatement(roleId);
+        try(PreparedStatement updatePStatement = connectionToDB.getConnection().prepareStatement(roleId)) {
+
             updatePStatement.setString(1, UpdatingRole.roleId);
 
             updatePStatement.executeUpdate();
 
 
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
 
         }
     }
 
-    public void updateChannelId() {
+    public void updateBotCommandsChannelId() {
 
-        try {
+        ConnectionToDB connectionToDB = new ConnectionToDB();
+        connectionToDB.initialize();
 
-            ConnectionToDB db = new ConnectionToDB();
-            db.initialize();
+        String channelId = "UPDATE config SET config_value = ? WHERE config_name = 'id_ping_channel'";
 
-            String channelId = "UPDATE config SET config_value = ? WHERE config_name = 'id_ping_channel'";
-            PreparedStatement updatePStatement = db.getConnection().prepareStatement(channelId);
+        try (PreparedStatement updatePStatement = connectionToDB.getConnection().prepareStatement(channelId)){
+
 
             updatePStatement.setString(1, UpdatingChannel.channelId);
             updatePStatement.executeUpdate();
 
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
 
         }
     }

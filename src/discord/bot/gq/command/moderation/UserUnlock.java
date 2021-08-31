@@ -96,10 +96,8 @@ public class UserUnlock extends ListenerAdapter {
 
                 String userMuted = "SELECT activ FROM muted_user WHERE id_discord = ?;";
 
-                try {
+                try (PreparedStatement preparedStatement = connectionToDB.getConnection().prepareStatement(userMuted)) {
 
-
-                    PreparedStatement preparedStatement = connectionToDB.getConnection().prepareStatement(userMuted);
 
                     preparedStatement.setLong(1, userId);
 

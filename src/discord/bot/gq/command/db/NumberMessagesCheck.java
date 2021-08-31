@@ -14,8 +14,6 @@ public class NumberMessagesCheck extends ListenerAdapter {
 
         String userMessageContent = event.getMessage().getContentRaw();
 
-
-
         String amountMessages = "SELECT number_message FROM user_message WHERE id_discord = ?";
         String nextHigherUserAmountMessages = "SELECT id_discord, number_message FROM user_message WHERE number_message > ? ORDER BY number_message, username LIMIT 1";
         String amountMessagesCommand = "hmm";
@@ -25,9 +23,9 @@ public class NumberMessagesCheck extends ListenerAdapter {
 
             UserData userData = new UserData();
 
-            Helper.getAmount(userData,amountMessages,nextHigherUserAmountMessages,event);
+            Helper.getAmount(userData, amountMessages, nextHigherUserAmountMessages, event);
 
-            Helper.sendAmount(userData,event,embedColor,"Bumps");
+            Helper.sendAmount(userData, event, embedColor, "Bumps");
 
         }
     }

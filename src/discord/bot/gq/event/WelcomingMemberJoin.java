@@ -1,5 +1,6 @@
 package discord.bot.gq.event;
 
+import discord.bot.gq.config.db.ConfigSelection;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -13,20 +14,16 @@ public class WelcomingMemberJoin extends ListenerAdapter {
     @Override
     public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
 
-        String welcomeChannelId = "779107500381175808";
-
-
-        if (welcomeChannelId == null) {
-            return;
-        }
+        ConfigSelection configSelection = new ConfigSelection();
+        configSelection.selectNewArrivalsChannelId();
 
         String[] welcomeMessage = {"""
 Hallo [member], Willkommen auf **GoodQuestion (GQ)**!
 
-Du kannst Dich hier kurz vorstellen und Dir im Kanal <#779107472622223400> Rollen zuweisen! 
+Du kannst Dich hier kurz vorstellen und Dir im Kanal <#779107472622223400> Rollen zuweisen!\040
 
 """};
-        TextChannel welcomeChannel = event.getGuild().getTextChannelById(welcomeChannelId);
+        TextChannel welcomeChannel = event.getGuild().getTextChannelById(configSelection.getNewArrivalsChannelId());
         String avatarUrl = event.getUser().getEffectiveAvatarUrl();
         String newMember = event.getMember().getAsMention();
 

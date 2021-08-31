@@ -20,6 +20,7 @@ public class UpdatingRole extends ListenerAdapter {
         String[] userMessageContent = event.getMessage().getContentRaw().split("\\s+");
         Member authorCommand = event.getMessage().getMember();
         String configCommand = "setrid";
+        boolean isAdmin = Objects.requireNonNull(authorCommand).hasPermission(Permission.ADMINISTRATOR);
 
         if (userMessageContent[0].equalsIgnoreCase(Helper.PREFIX + configCommand)) {
 
@@ -27,7 +28,7 @@ public class UpdatingRole extends ListenerAdapter {
                 return;
             }
 
-            if (!Objects.requireNonNull(authorCommand).hasPermission(Permission.ADMINISTRATOR)) {
+            if (!isAdmin) {
                 return;
             }
 

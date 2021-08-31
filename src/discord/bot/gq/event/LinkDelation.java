@@ -13,14 +13,15 @@ public class LinkDelation extends ListenerAdapter {
         long channelId = event.getChannel().getIdLong();
         long newArrivalsChannelId = 779107500381175808L;
         Member author = event.getMember();
+        assert author != null;
+        boolean isStaff = author.hasPermission(Permission.MESSAGE_MANAGE);
 
 
         if (channelId != newArrivalsChannelId) {
             return;
         }
 
-        assert author != null;
-        if (author.hasPermission(Permission.MESSAGE_MANAGE)) {
+        if (isStaff) {
             return;
         }
 

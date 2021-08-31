@@ -18,28 +18,27 @@ public class MemberJoinStorage extends ListenerAdapter {
         String userTag = event.getUser().getAsTag();
 
 
-        ConnectionToDB db = new ConnectionToDB();
-        db.initialize();
+        ConnectionToDB connectionToDB = new ConnectionToDB();
+        connectionToDB.initialize();
 
         String userJoinData = "INSERT INTO user_join (id_user_join,id_discord,user_tag,username,avatar_url) VALUES (NULL,?,?,?,?);";
 
-        try {
+        try (PreparedStatement preparedStatement = connectionToDB.getConnection().prepareStatement(userJoinData)) {
 
-            PreparedStatement pS = db.getConnection().prepareStatement(userJoinData);
 
-            pS.setLong(1, userId);
-            pS.setBlob(2, Helper.changeCharacterEncoding(pS, userTag));
-            pS.setBlob(3, Helper.changeCharacterEncoding(pS, userName));
-            pS.setString(4, avatarUrl);
+            preparedStatement.setLong(1, userId);
+            preparedStatement.setBlob(2, Helper.changeCharacterEncoding(preparedStatement, userTag));
+            preparedStatement.setBlob(3, Helper.changeCharacterEncoding(preparedStatement, userName));
+            preparedStatement.setString(4, avatarUrl);
 
-            pS.executeUpdate();
+            preparedStatement.executeUpdate();
 
             int currentNumberMember = event.getGuild().getMemberCount();
             Helper.insertCurrentNumberMember(currentNumberMember);
 
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
         }
 
     }

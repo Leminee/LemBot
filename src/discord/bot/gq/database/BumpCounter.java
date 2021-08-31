@@ -37,25 +37,26 @@ public class BumpCounter extends ListenerAdapter {
                 String idPingedUser = matcher.group(1);
                 String pingedUserName = event.getJDA().retrieveUserById(idPingedUser).complete().getName();
 
-                try {
+                ConnectionToDB connectionToDB = new ConnectionToDB();
+                connectionToDB.initialize();
 
-                    ConnectionToDB db = new ConnectionToDB();
-                    db.initialize();
+                String isUserExists = "SELECT id_discord FROM user_bump WHERE id_discord = ? ";
 
-                    String isUserExists = "SELECT id_discord FROM user_bump WHERE id_discord = ? ";
-                    PreparedStatement usernameInput = db.getConnection().prepareStatement(isUserExists);
-                    usernameInput.setString(1, idPingedUser);
-                    ResultSet rS = usernameInput.executeQuery();
+                try (PreparedStatement preparedStatement = connectionToDB.getConnection().prepareStatement(isUserExists)) {
 
-                    if (rS.next()) {
+
+                    preparedStatement.setString(1, idPingedUser);
+                    ResultSet resultSet = preparedStatement.executeQuery();
+
+                    if (resultSet.next()) {
 
                         String currentNumberBump = "UPDATE user_bump SET number_bumps = (number_bumps +1) WHERE id_discord = ?";
-                        PreparedStatement update = db.getConnection().prepareStatement(currentNumberBump);
-                        update.setString(1, idPingedUser);
-                        update.executeUpdate();
+                        PreparedStatement prepareStatementOne = connectionToDB.getConnection().prepareStatement(currentNumberBump);
+                        prepareStatementOne.setString(1, idPingedUser);
+                        prepareStatementOne.executeUpdate();
 
                         String bumpTime = "INSERT INTO user_bump_time (id_user_bump_time, id_discord) VALUES (NULL,?)";
-                        PreparedStatement insert = db.getConnection().prepareStatement(bumpTime);
+                        PreparedStatement insert = connectionToDB.getConnection().prepareStatement(bumpTime);
                         insert.setString(1, idPingedUser);
                         insert.executeUpdate();
 
@@ -63,15 +64,15 @@ public class BumpCounter extends ListenerAdapter {
 
                         String bumpData = "INSERT INTO user_bump (id_discord, username, number_bumps) VALUES (?,?,?);";
 
-                        PreparedStatement pS = db.getConnection().prepareStatement(bumpData);
-                        pS.setString(1, idPingedUser);
-                        pS.setString(2, pingedUserName);
-                        pS.setInt(3, bump);
-                        pS.executeUpdate();
+                        PreparedStatement prepareStatementThree = connectionToDB.getConnection().prepareStatement(bumpData);
+                        prepareStatementThree.setString(1, idPingedUser);
+                        prepareStatementThree.setString(2, pingedUserName);
+                        prepareStatementThree.setInt(3, bump);
+                        prepareStatementThree.executeUpdate();
                     }
 
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                } catch (SQLException sqlException) {
+                    System.out.println(sqlException.getMessage());
                 }
             }
         }

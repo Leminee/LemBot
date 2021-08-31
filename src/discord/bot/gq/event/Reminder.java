@@ -23,7 +23,7 @@ public class Reminder extends ListenerAdapter {
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         ConfigSelection configSelection = new ConfigSelection();
         configSelection.selectRoleId();
-        configSelection.selectChannelId();
+        configSelection.selectBotCommandsChannelId();
 
         String[] pingContent = {
                 "Jetzt kann wieder gebumpt werden " + configSelection.getRoleId() + " :smile: ",
@@ -31,7 +31,7 @@ public class Reminder extends ListenerAdapter {
                 "Bumpe den Server jetzt! " + configSelection.getRoleId() + " :smile:"};
 
 
-        if (configSelection.getRoleId() == null || configSelection.getChannelId() == null) {
+        if (configSelection.getRoleId() == null || configSelection.getBotCommandsChannelId() == null) {
             return;
         }
 
@@ -45,7 +45,7 @@ public class Reminder extends ListenerAdapter {
 
             final Runnable ping = () -> {
                 int randomNumber = random.nextInt(pingContent.length);
-                Objects.requireNonNull(event.getJDA().getTextChannelById(configSelection.getChannelId())).sendMessage(pingContent[randomNumber]).queue();
+                Objects.requireNonNull(event.getJDA().getTextChannelById(configSelection.getBotCommandsChannelId())).sendMessage(pingContent[randomNumber]).queue();
             };
 
             scheduler.schedule(ping, 2, TimeUnit.HOURS);

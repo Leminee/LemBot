@@ -20,22 +20,21 @@ public class ChannelMessageCounter extends ListenerAdapter {
 
         if (!userMessage.isEmpty()) {
 
-            try {
+            ConnectionToDB connectionToDB = new ConnectionToDB();
+            connectionToDB.initialize();
 
-                ConnectionToDB db = new ConnectionToDB();
-                db.initialize();
+            String insertChannel = "INSERT INTO channel (id_message, id_channel,channel_name) VALUES (?,?,?);";
 
-                String insertChannel = "INSERT INTO channel (id_message, id_channel,channel_name) VALUES (?,?,?);";
+            try(PreparedStatement preparedStatement = connectionToDB.getConnection().prepareStatement(insertChannel)) {
 
-                PreparedStatement pS = db.getConnection().prepareStatement(insertChannel);
-                pS.setString(1, messageId);
-                pS.setString(2, channelId);
-                pS.setString(3, channelName);
+                preparedStatement.setString(1, messageId);
+                preparedStatement.setString(2, channelId);
+                preparedStatement.setString(3, channelName);
 
-                pS.executeUpdate();
+                preparedStatement.executeUpdate();
 
-            } catch (SQLException e) {
-                e.printStackTrace();
+            } catch (SQLException sqlException) {
+                System.out.println(sqlException.getMessage());
             }
         }
     }

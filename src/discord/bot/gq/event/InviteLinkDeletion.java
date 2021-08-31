@@ -5,7 +5,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
-public class InviteLinkDelation extends ListenerAdapter {
+public class InviteLinkDeletion extends ListenerAdapter {
 
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 
@@ -13,14 +13,15 @@ public class InviteLinkDelation extends ListenerAdapter {
         long authorId = event.getAuthor().getIdLong();
         long ownerId = 739143338975952959L;
         Member author = event.getMember();
+        assert author != null;
+        boolean isStaff = author.hasPermission(Permission.MESSAGE_MANAGE);
 
 
         if (authorId == ownerId) {
             return;
         }
 
-        assert author != null;
-        if (author.hasPermission(Permission.MESSAGE_MANAGE)) {
+        if (isStaff) {
             return;
         }
 

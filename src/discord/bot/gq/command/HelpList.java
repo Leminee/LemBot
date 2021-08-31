@@ -33,12 +33,12 @@ public class HelpList extends ListenerAdapter {
                         `?hmm`: Anzahl deiner geschickten Nachrichten auf GQ\s
                         `?hmb`: Anzahl deiner Bumps auf GQ\s
                         `?topu`: Liste der Top 3 User mit den meisten Nachrichten
-                        `?topb`: Liste der Top 3 Server-Bumper 
-                        `?tope`: Liste der 3 am häufigsten benutzten Emojis  
+                        `?topb`: Liste der Top 3 Server-Bumper\040
+                        `?tope`: Liste der 3 am häufigsten benutzten Emojis\040\040
                         `?topp`: Liste der 3 am häufigsten gepingten User
                         `?topc`: Liste der 3 aktivisten Channels
                         `?aur`: Record der maximalen, aktiven User
-                        `?srole`: Liste aller Rollen auf GQ 
+                        `?srole`: Liste aller Rollen auf GQ\040
                         `?shelp`: Zeigt die Staff-Befehlsliste
                         `?source`: Informationen zum Code von Lembot
                         `?hcb`: Zeigt, wie Quellcode eingefärbt wird\s""");

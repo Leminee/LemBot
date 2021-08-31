@@ -8,45 +8,64 @@ import java.sql.Statement;
 
 public class ConfigSelection {
     private String roleId = null;
-    private String channelId = null;
+    private String botCommandsChannelId = null;
+    private String newArrivalsChannelId = null;
 
 
     public void selectRoleId() {
 
-        try {
-            ConnectionToDB connectionToDB = new ConnectionToDB();
-            connectionToDB.initialize();
+        ConnectionToDB connectionToDB = new ConnectionToDB();
+        connectionToDB.initialize();
+        String roleId = "SELECT config_value FROM config WHERE config_name = 'id_ping_role'";
 
-            String roleId = "SELECT config_value FROM config WHERE config_name = 'id_ping_role'";
-            Statement statement = connectionToDB.getConnection().createStatement();
-            ResultSet rS = statement.executeQuery(roleId);
+        try(Statement statement = connectionToDB.getConnection().createStatement(); ResultSet resultSet = statement.executeQuery(roleId);) {
 
-            if (rS.next()) {
-                this.roleId = rS.getString(1);
+            if (resultSet.next()) {
+                this.roleId = resultSet.getString(1);
 
             }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
 
         }
     }
 
-    public void selectChannelId() {
-        try {
+    public void selectBotCommandsChannelId() {
 
-            ConnectionToDB db = new ConnectionToDB();
-            db.initialize();
+        ConnectionToDB connectionToDB = new ConnectionToDB();
+        connectionToDB.initialize();
 
-            String channelId = "SELECT config_value FROM config WHERE config_name = 'id_ping_channel'";
-            Statement statement = db.getConnection().createStatement();
-            ResultSet rS = statement.executeQuery(channelId);
+        String channelId = "SELECT config_value FROM config WHERE config_name = 'id_ping_channel'";
 
-            if (rS.next()) {
-                this.channelId = rS.getString(1);
+        try(Statement statement = connectionToDB.getConnection().createStatement(); ResultSet resultSet = statement.executeQuery(channelId);) {
+
+
+            if (resultSet.next()) {
+                this.botCommandsChannelId = resultSet.getString(1);
             }
 
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
+        }
+
+    }
+
+    public void selectNewArrivalsChannelId() {
+
+        ConnectionToDB connectionToDB = new ConnectionToDB();
+        connectionToDB.initialize();
+
+        String channelId = "SELECT config_value FROM config WHERE config_name = 'id_welcome_channel'";
+
+        try(Statement statement = connectionToDB.getConnection().createStatement(); ResultSet resultSet = statement.executeQuery(channelId);) {
+
+
+            if (resultSet.next()) {
+                this.newArrivalsChannelId = resultSet.getString(1);
+            }
+
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
         }
 
     }
@@ -55,9 +74,11 @@ public class ConfigSelection {
         return roleId;
     }
 
-    public String getChannelId() {
-        return channelId;
+    public String getBotCommandsChannelId() {
+        return botCommandsChannelId;
     }
 
-
+    public String getNewArrivalsChannelId() {
+        return newArrivalsChannelId;
+    }
 }

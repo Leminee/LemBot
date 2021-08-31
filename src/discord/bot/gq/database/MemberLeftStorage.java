@@ -18,22 +18,21 @@ public class MemberLeftStorage extends ListenerAdapter {
         String avatarUrl = event.getUser().getEffectiveAvatarUrl();
         String userTag = event.getUser().getAsTag();
 
-        try {
+        ConnectionToDB connectionToDB = new ConnectionToDB();
+        connectionToDB.initialize();
 
-            ConnectionToDB db = new ConnectionToDB();
-            db.initialize();
+        String userLeaveData = "INSERT INTO user_leave (id_user_leave,id_discord,user_tag,username,avatar_url) VALUES (NULL,?,?,?,?);";
 
-            String userLeaveData = "INSERT INTO user_leave (id_user_leave,id_discord,user_tag,username,avatar_url) VALUES (NULL,?,?,?,?);";
-
-            PreparedStatement pS = db.getConnection().prepareStatement(userLeaveData);
-
-            pS.setLong(1, userId);
-            pS.setBlob(2, Helper.changeCharacterEncoding(pS, userTag));
-            pS.setBlob(3, Helper.changeCharacterEncoding(pS, userName));
-            pS.setString(4, avatarUrl);
+        try (PreparedStatement preparedStatement = connectionToDB.getConnection().prepareStatement(userLeaveData)) {
 
 
-            pS.executeUpdate();
+            preparedStatement.setLong(1, userId);
+            preparedStatement.setBlob(2, Helper.changeCharacterEncoding(preparedStatement, userTag));
+            preparedStatement.setBlob(3, Helper.changeCharacterEncoding(preparedStatement, userName));
+            preparedStatement.setString(4, avatarUrl);
+
+
+            preparedStatement.executeUpdate();
 
             int currentNumberMember = event.getGuild().getMemberCount();
             Helper.insertCurrentNumberMember(currentNumberMember);

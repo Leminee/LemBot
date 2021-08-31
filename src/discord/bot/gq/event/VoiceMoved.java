@@ -22,12 +22,12 @@ public class VoiceMoved extends ListenerAdapter {
         long voiceChatId = 834521617668374569L;
         Date date = new Date();
 
-        EmbedBuilder embed= new EmbedBuilder();
+        EmbedBuilder moveEmbed= new EmbedBuilder();
 
         String embedDescription = userMentioned + " ist von " + "**" + voiceChannelLeft + "**" + " in " + "**" +voiceChannelJoined + "**"+ " um " + date.toString().substring(11, 16) + " Uhr **gemovt**.";
 
-        Helper.createEmbed(embed,"Voice **Moved** ",embedDescription, Color.blue,"https://cdn.discordapp.com/attachments/819694809765380146/880646674366754856/Bildschirmfoto_2021-08-27_um_04.55.07.png");
-        Objects.requireNonNull(event.getJDA().getTextChannelById(voiceChatId)).sendMessage(embed.build()).queue();
+        Helper.createEmbed(moveEmbed,"Voice **Moved** ",embedDescription, Color.blue,"https://cdn.discordapp.com/attachments/819694809765380146/880646674366754856/Bildschirmfoto_2021-08-27_um_04.55.07.png");
+        Objects.requireNonNull(event.getJDA().getTextChannelById(voiceChatId)).sendMessage(moveEmbed.build()).queue();
 
     }
 }

@@ -22,9 +22,9 @@ public class DiscordListBumper extends ListenerAdapter {
         String bumpCommand = "dlm!bump";
 
         ConfigSelection configSelection = new ConfigSelection();
-        configSelection.selectChannelId();
+        configSelection.selectBotCommandsChannelId();
 
-        if (configSelection.getChannelId() == null) {
+        if (configSelection.getBotCommandsChannelId() == null) {
             return;
         }
 
@@ -33,7 +33,7 @@ public class DiscordListBumper extends ListenerAdapter {
 
         if (isSuccessfulBumpDiscordList(discordListBot, embedAuthor)) {
 
-            final Runnable ping = () -> Objects.requireNonNull(event.getJDA().getTextChannelById(configSelection.getChannelId())).sendMessage(bumpCommand).queue();
+            final Runnable ping = () -> Objects.requireNonNull(event.getJDA().getTextChannelById(configSelection.getBotCommandsChannelId())).sendMessage(bumpCommand).queue();
 
             scheduler.schedule(ping, 9, TimeUnit.HOURS);
 

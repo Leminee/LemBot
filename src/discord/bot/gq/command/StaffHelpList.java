@@ -19,21 +19,27 @@ public class StaffHelpList extends ListenerAdapter {
 
             if (!Objects.requireNonNull(event.getMember()).getUser().isBot()) {
 
-                EmbedBuilder embed = new EmbedBuilder();
-                embed.setTitle("HILFE \n");
-                embed.setColor(0x8A2BE2);
-                embed.setThumbnail("https://cotelangues.com/wp-content/uploads/2019/06/Fragezeichen-Tafel-868x524.jpg");
-                embed.setDescription("""
-                                            ------------ **STAFF-BEFEHLSLISTE** -------------\s
+                EmbedBuilder staffHelpListEmbed = new EmbedBuilder();
+                staffHelpListEmbed.setTitle("HILFE \n");
+                staffHelpListEmbed.setColor(0x8A2BE2);
+                staffHelpListEmbed.setThumbnail("https://cotelangues.com/wp-content/uploads/2019/06/Fragezeichen-Tafel-868x524.jpg");
+                staffHelpListEmbed.setDescription("""
+                                        ------------ **STAFF-BEFEHLSLISTE** -------------\s
 
-                            `?clear - <zahl>`: \n löscht Nachrichten\s\040 
-                            `?warn <User> <Grund>`: \n weist dem User <@&879448018372395048> zu (Verwarnung)\s\040 
-                            `?mute <User> <Grund>`: \n weist dem User <@&879329567947489352> zu (Mute)\s\040
-                            `?unmute <User> <Grund>`: \n entfernt dem User <@&879329567947489352>
-                            `?kick <User> <Grund>`: \n kickt den User\s\040\040
-                            `?ban <User> <Grund>`: \n bannt den User""");
+                        `?clear - <zahl>`:\040
+                         löscht Nachrichten\s\040\040
+                        `?warn <User> <Grund>`:\040
+                         weist dem User <@&879448018372395048> zu (Verwarnung)\s\040\040
+                        `?mute <User> <Grund>`:\040
+                         weist dem User <@&879329567947489352> zu (Mute)\s\040
+                        `?unmute <User> <Grund>`:\040
+                         entfernt dem User <@&879329567947489352>
+                        `?kick <User> <Grund>`:\040
+                         kickt den User\s\040\040
+                        `?ban <User> <Grund>`:\040
+                         bannt den User""");
 
-                event.getChannel().sendMessage(embed.build()).queue();
+                event.getChannel().sendMessage(staffHelpListEmbed.build()).queue();
             }
         }
     }

@@ -20,6 +20,7 @@ public class UpdatingChannel extends ListenerAdapter {
         String[] userMessageContent = event.getMessage().getContentRaw().split("\\s+");
         Member authorCommand = event.getMessage().getMember();
         String configCommand = "setcid";
+        boolean isAdmin = Objects.requireNonNull(authorCommand).hasPermission(Permission.ADMINISTRATOR);
 
         if ((userMessageContent[0].equalsIgnoreCase(Helper.PREFIX + configCommand))) {
 
@@ -27,14 +28,14 @@ public class UpdatingChannel extends ListenerAdapter {
                 return;
             }
 
-            if (!Objects.requireNonNull(authorCommand).hasPermission(Permission.ADMINISTRATOR)) {
+            if (!isAdmin) {
                 return;
             }
 
             channelId = userMessageContent[1];
 
             ConfigUpdating configUpdating = new ConfigUpdating();
-            configUpdating.updateChannelId();
+            configUpdating.updateBotCommandsChannelId();
 
             EmbedBuilder successUpdatedChannelId = new EmbedBuilder();
             successUpdatedChannelId.setColor(0x00ff60);

@@ -29,7 +29,7 @@ public class UserBanishment extends ListenerAdapter {
         long channelId = event.getChannel().getIdLong();
         long reportSanctionChannelId = 871615666959032340L;
 
-        if (sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "warn") ||sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "mute") || sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "kick") || sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "ban")) {
+        if (sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "warn") || sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "mute") || sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "kick") || sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "ban")) {
 
             if (!hasMessageManagePermission) {
 
@@ -42,7 +42,7 @@ public class UserBanishment extends ListenerAdapter {
 
         }
 
-        if (sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "warn") ||sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "mute") || sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "kick") || sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "ban") && !sanctionCommand[1].isEmpty()) {
+        if (sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "warn") || sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "mute") || sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "kick") || sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "ban") && !sanctionCommand[1].isEmpty()) {
 
             if (!hasMessageManagePermission) {
                 return;
@@ -67,7 +67,7 @@ public class UserBanishment extends ListenerAdapter {
             }
 
 
-            if(channelId != reportSanctionChannelId) {
+            if (channelId != reportSanctionChannelId) {
 
                 EmbedBuilder embedError = new EmbedBuilder();
                 String embedDescription = "Dieser Befehl kann in diesem Channel nicht ausgeführt werden!";
@@ -132,13 +132,12 @@ public class UserBanishment extends ListenerAdapter {
             if (sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "warn")) {
 
 
-
                 Role warnRole = event.getGuild().getRoleById(879448018372395048L);
 
                 assert warnRole != null;
                 member.getGuild().addRoleToMember(sanction.userId, warnRole).queue();
 
-                Helper.sendDM(member.getUser(),"verwarnt",sanctionReason,sanctionedUserAsMention);
+                Helper.sendDM(member.getUser(), "verwarnt", sanctionReason, sanctionedUserAsMention);
 
                 EmbedBuilder confirmation = new EmbedBuilder();
                 confirmation.setColor(0x00ff60);
@@ -149,13 +148,12 @@ public class UserBanishment extends ListenerAdapter {
                 String warnedUserData = "INSERT INTO warned_user (id_warned_user,id_discord,user_tag, username, warn_author, warn_reason, channel_name) VALUES (NULL,?,?,?,?,?,?)";
 
 
-                Helper.insertSanctionedUserData(warnedUserData,sanction);
+                Helper.insertSanctionedUserData(warnedUserData, sanction);
                 return;
             }
 
 
             if (sanctionCommand[0].equalsIgnoreCase(Helper.PREFIX + "mute")) {
-
 
 
                 Role muteRole = event.getGuild().getRoleById(879329567947489352L);
@@ -171,7 +169,7 @@ public class UserBanishment extends ListenerAdapter {
 
                 event.getGuild().addRoleToMember(sanction.userId, Objects.requireNonNull(muteRole)).queue();
 
-                Helper.sendDM(member.getUser(),"gemutet",sanctionReason,sanctionedUserAsMention);
+                Helper.sendDM(member.getUser(), "gemutet", sanctionReason, sanctionedUserAsMention);
 
                 EmbedBuilder confirmation = new EmbedBuilder();
                 confirmation.setColor(0x00ff60);
@@ -195,10 +193,9 @@ public class UserBanishment extends ListenerAdapter {
 
                 String kickedUserDate = "INSERT INTO kicked_user (id_kicked_user,id_discord,user_tag, username, kick_author, kick_reason, channel_name) VALUES (NULL,?,?,?,?,?,?)";
 
-                Helper.sendDM(member.getUser(),"gekickt",sanctionReason,sanctionedUserAsMention);
+                Helper.sendDM(member.getUser(), "gekickt", sanctionReason, sanctionedUserAsMention);
 
                 member.kick(sanctionReason.toString()).complete();
-
 
 
                 EmbedBuilder confirmation = new EmbedBuilder();
@@ -224,10 +221,9 @@ public class UserBanishment extends ListenerAdapter {
 
                 String bannedUserData = "INSERT INTO banned_user (id_banned_user,id_discord,user_tag, username, ban_author, ban_reason, channel_name) VALUES (NULL,?,?,?,?,?,?)";
 
-                Helper.sendDM(member.getUser(),"gebannt",sanctionReason,sanctionedUserAsMention);
+                Helper.sendDM(member.getUser(), "gebannt", sanctionReason, sanctionedUserAsMention);
 
                 member.ban(7, sanctionReason.toString()).complete();
-
 
 
                 EmbedBuilder confirmation = new EmbedBuilder();

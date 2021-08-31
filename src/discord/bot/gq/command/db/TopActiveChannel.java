@@ -24,5 +24,4 @@ public class TopActiveChannel extends ListenerAdapter {
                 topChannel,
                 embedTitle, embedColor, embedThumbnail);
     }
-
 }

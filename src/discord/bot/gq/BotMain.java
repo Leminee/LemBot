@@ -2,7 +2,7 @@ package discord.bot.gq;
 
 import discord.bot.gq.command.*;
 import discord.bot.gq.command.db.*;
-import discord.bot.gq.command.moderation.MessageDelation;
+import discord.bot.gq.command.moderation.MessageDeletion;
 import discord.bot.gq.command.moderation.UserBanishment;
 import discord.bot.gq.command.moderation.UserUnlock;
 import discord.bot.gq.config.command.UpdatingChannel;
@@ -41,7 +41,7 @@ public class BotMain {
         jda.getPresence().setActivity(Activity.playing("?help"));
 
         jda.addEventListener(new MemberLeftStorage());
-        jda.addEventListener(new MessageDelation());
+        jda.addEventListener(new MessageDeletion());
         jda.addEventListener(new AutoAnswering());
         jda.addEventListener(new Reminder());
         jda.addEventListener(new WelcomingMemberJoin());
@@ -52,7 +52,7 @@ public class BotMain {
         jda.addEventListener(new TopBumperSelection());
         jda.addEventListener(new TopFlooderSelection());
         jda.addEventListener(new HelpList());
-        jda.addEventListener(new InviteLinkDelation());
+        jda.addEventListener(new InviteLinkDeletion());
         jda.addEventListener(new PasswordCheck());
         jda.addEventListener(new UpdatingChannel());
         jda.addEventListener(new UpdatedMessageStorage());

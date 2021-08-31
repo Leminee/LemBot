@@ -14,65 +14,68 @@ public class UserMessageCounter extends ListenerAdapter {
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 
-        String userMessage = event.getMessage().getContentRaw();
+        String userMessageContent = event.getMessage().getContentRaw();
         String userId = Objects.requireNonNull(event.getMember()).getId();
         String userName = event.getMember().getEffectiveName();
         String messageId = event.getMessageId();
 
         int numberMessage = 1;
 
-        if (!userMessage.isEmpty()) {
+        if (!userMessageContent.isEmpty()) {
 
-            try {
-                ConnectionToDB db = new ConnectionToDB();
-                db.initialize();
+            ConnectionToDB connectionToDB = new ConnectionToDB();
+            connectionToDB.initialize();
 
-                String insertMessageData = "INSERT INTO user_message (id_discord, username, number_message) VALUES (?,?,?);";
+            String insertMessageData = "INSERT INTO user_message (id_discord, username, number_message) VALUES (?,?,?);";
 
-                PreparedStatement pS = db.getConnection().prepareStatement(insertMessageData);
-                pS.setString(1, userId);
-                pS.setString(2, userName);
-                pS.setInt(3, numberMessage);
+            try (PreparedStatement preparedStatement = connectionToDB.getConnection().prepareStatement(insertMessageData)) {
+
+
+                preparedStatement.setString(1, userId);
+                preparedStatement.setString(2, userName);
+                preparedStatement.setInt(3, numberMessage);
 
                 String isUserInDB = "SELECT id_discord FROM user_message WHERE id_discord = ? ";
-                PreparedStatement pSTwo = db.getConnection().prepareStatement(isUserInDB);
+                PreparedStatement pSTwo = connectionToDB.getConnection().prepareStatement(isUserInDB);
                 pSTwo.setString(1, userId);
-                ResultSet rS = pSTwo.executeQuery();
+                ResultSet resultSet = pSTwo.executeQuery();
 
-                if (rS.next()) {
+                if (resultSet.next()) {
 
                     String currentNumberMessage = "UPDATE user_message SET number_message = (number_message +1) WHERE id_discord = ?";
-                    PreparedStatement updatePStatement = db.getConnection().prepareStatement(currentNumberMessage);
+                    PreparedStatement updatePStatement = connectionToDB.getConnection().prepareStatement(currentNumberMessage);
                     updatePStatement.setString(1, userId);
                     updatePStatement.executeUpdate();
 
 
                 } else {
-                    pS.executeUpdate();
+                    preparedStatement.executeUpdate();
 
                 }
-                insertData(userMessage, userId, messageId);
 
-            } catch (SQLException e) {
-                e.printStackTrace();
+                insertData(userMessageContent, userId, messageId);
+
+            } catch (SQLException sqlException) {
+                System.out.println(sqlException.getMessage());
             }
 
         }
-
-
     }
 
-    public void insertData(String userMessage, String userId, String messageId) throws SQLException {
+    public void insertData(String userMessage, String userId, String messageId) {
 
-        ConnectionToDB db = new ConnectionToDB();
-        db.initialize();
-
+        ConnectionToDB connectionToDB = new ConnectionToDB();
+        connectionToDB.initialize();
         String userMessageData = "INSERT INTO user_message_content (id_message, id_discord, content) VALUES (?,?,?)";
-        PreparedStatement insertPStatement = db.getConnection().prepareStatement(userMessageData);
-        insertPStatement.setString(1, messageId);
-        insertPStatement.setString(2, userId);
-        insertPStatement.setBlob(3, Helper.changeCharacterEncoding(insertPStatement, userMessage));
-        insertPStatement.executeUpdate();
 
+        try (PreparedStatement insertPStatement = connectionToDB.getConnection().prepareStatement(userMessageData)) {
+
+            insertPStatement.setString(1, messageId);
+            insertPStatement.setString(2, userId);
+            insertPStatement.setBlob(3, Helper.changeCharacterEncoding(insertPStatement, userMessage));
+            insertPStatement.executeUpdate();
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
+        }
     }
 }

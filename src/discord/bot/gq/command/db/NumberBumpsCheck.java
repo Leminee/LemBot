@@ -18,14 +18,13 @@ public class NumberBumpsCheck extends ListenerAdapter {
         String amountBumpsCommand = "hmb";
         String embedColor = "0x26b7b8";
 
-        if (Helper.isValidCommand(userMessageContent,amountBumpsCommand)) {
+        if (Helper.isValidCommand(userMessageContent, amountBumpsCommand)) {
 
             UserData userData = new UserData();
 
-            Helper.getAmount(userData,amountBumps,nextHigherUserAmountBumps,event);
+            Helper.getAmount(userData, amountBumps, nextHigherUserAmountBumps, event);
 
-            Helper.sendAmount(userData,event,embedColor,"Nachrichten");
+            Helper.sendAmount(userData, event, embedColor, "Nachrichten");
         }
-
     }
 }

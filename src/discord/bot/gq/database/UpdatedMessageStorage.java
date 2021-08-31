@@ -19,24 +19,23 @@ public class UpdatedMessageStorage extends ListenerAdapter {
         String updatedMessageContent = event.getMessage().getContentRaw();
 
 
-        ConnectionToDB db = new ConnectionToDB();
-        db.initialize();
+        ConnectionToDB connectionToDB = new ConnectionToDB();
+        connectionToDB.initialize();
 
         String updatedMessageData = "INSERT INTO updated_message (id_updated_message, id_message, id_discord, username,content) VALUES (NULL,?,?,?,?);";
 
-        try {
+        try(PreparedStatement preparedStatement = connectionToDB.getConnection().prepareStatement(updatedMessageData)) {
 
-            PreparedStatement pS = db.getConnection().prepareStatement(updatedMessageData);
 
-            pS.setLong(1, idUpdatedMessage);
-            pS.setLong(2, authorId);
-            pS.setBlob(3, Helper.changeCharacterEncoding(pS, authorUpdatedMessage));
-            pS.setBlob(4, Helper.changeCharacterEncoding(pS, updatedMessageContent));
+            preparedStatement.setLong(1, idUpdatedMessage);
+            preparedStatement.setLong(2, authorId);
+            preparedStatement.setBlob(3, Helper.changeCharacterEncoding(preparedStatement, authorUpdatedMessage));
+            preparedStatement.setBlob(4, Helper.changeCharacterEncoding(preparedStatement, updatedMessageContent));
 
-            pS.executeUpdate();
+            preparedStatement.executeUpdate();
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
         }
 
     }
