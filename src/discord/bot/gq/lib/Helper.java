@@ -2,6 +2,7 @@ package discord.bot.gq.lib;
 
 import discord.bot.gq.config.db.ConfigSelection;
 import discord.bot.gq.database.ConnectionToDB;
+import discord.bot.gq.entities.MemberStatus;
 import discord.bot.gq.entities.Sanction;
 import discord.bot.gq.entities.UserData;
 import discord.bot.gq.entities.VoiceChannel;
@@ -22,7 +23,6 @@ import java.util.concurrent.TimeUnit;
 public final class Helper {
 
     public static final String PREFIX = "?";
-    public static final String TOKEN = "";
 
     private Helper() {
 
@@ -158,14 +158,15 @@ public final class Helper {
 
                     userData.amountOf = resultSet.getInt(1);
 
-                    PreparedStatement pSTwo = connectionToDB.getConnection().prepareStatement(nextHigherUser);
-                    pSTwo.setLong(1, userData.amountOf);
-                    ResultSet rSTwo = pSTwo.executeQuery();
+                    PreparedStatement prepareStatementOne = connectionToDB.getConnection().prepareStatement(nextHigherUser);
+                    prepareStatementOne.setLong(1, userData.amountOf);
 
-                    if (rSTwo.next()) {
+                    ResultSet resultSetOne = prepareStatementOne.executeQuery();
 
-                        userData.nextHigherUserId = rSTwo.getLong(1);
-                        userData.nextHigherUserAmountOf = rSTwo.getInt(2);
+                    if (resultSetOne.next()) {
+
+                        userData.nextHigherUserId = resultSetOne.getLong(1);
+                        userData.nextHigherUserAmountOf = resultSetOne.getInt(2);
 
                     }
                 }
@@ -175,7 +176,6 @@ public final class Helper {
             }
 
         }
-
     }
 
     public static void sendAmount(UserData userData, GuildMessageReceivedEvent event, String embedColor, String amountOf) {
@@ -239,7 +239,7 @@ public final class Helper {
         }
     }
 
-    public static void insertNumberOnlineMember(int numberMember) {
+    public static void insertAmountOnlineMember(int numberMember) {
 
         ConnectionToDB connectionToDB = new ConnectionToDB();
         connectionToDB.initialize();
@@ -294,6 +294,26 @@ public final class Helper {
             System.out.println(sqlException.getMessage());
         }
 
+    }
+
+    public static void insertMemberStatus(String insertQuery, MemberStatus memberStatus) {
+
+        ConnectionToDB connectionToDB = new ConnectionToDB();
+        connectionToDB.initialize();
+
+        try (PreparedStatement preparedStatement = connectionToDB.getConnection().prepareStatement(insertQuery)) {
+
+
+            preparedStatement.setLong(1, memberStatus.userId);
+            preparedStatement.setString(2, memberStatus.userTag);
+            preparedStatement.setString(3, memberStatus.userName);
+            preparedStatement.setString(4, memberStatus.avatarUrl);
+            preparedStatement.executeUpdate();
+
+
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
+        }
     }
 
     public static void insertSanctionedUserData(String insertQuery, Sanction sanction) {

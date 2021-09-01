@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 public class ConnectionToDB {
     private Connection connection;
+    public static final String TOKEN = "";
 
     public void initialize() {
         try {

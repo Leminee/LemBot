@@ -21,7 +21,7 @@ public class ActiveUserRecord extends ListenerAdapter {
         String userMessageContent = event.getMessage().getContentRaw();
         String userNameAsMention = Objects.requireNonNull(event.getMember()).getAsMention();
         String recordCheckCommand = "aur";
-        int currentRecord;
+
 
 
         if (Helper.isValidCommand(userMessageContent, recordCheckCommand)) {
@@ -36,6 +36,8 @@ public class ActiveUserRecord extends ListenerAdapter {
                 if (resultSet.next()) {
 
                     if (!event.getMember().getUser().isBot()) {
+
+                        int currentRecord;
                         currentRecord = resultSet.getInt(1);
 
                         EmbedBuilder recordEmbed = new EmbedBuilder();

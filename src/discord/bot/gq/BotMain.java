@@ -9,7 +9,6 @@ import discord.bot.gq.config.command.UpdatingChannel;
 import discord.bot.gq.config.command.UpdatingRole;
 import discord.bot.gq.database.*;
 import discord.bot.gq.event.*;
-import discord.bot.gq.lib.Helper;
 import discord.bot.gq.lib.ReactionManager;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -31,7 +30,7 @@ public class BotMain {
 
         try {
 
-            jda = JDABuilder.createDefault(Helper.TOKEN).enableIntents(GatewayIntent.GUILD_MEMBERS).enableIntents(GatewayIntent.GUILD_PRESENCES).build();
+            jda = JDABuilder.createDefault(ConnectionToDB.TOKEN).enableIntents(GatewayIntent.GUILD_MEMBERS).enableIntents(GatewayIntent.GUILD_PRESENCES).build();
 
         } catch (LoginException loginException) {
             loginException.printStackTrace();
@@ -77,6 +76,7 @@ public class BotMain {
         jda.addEventListener(new StaffHelpList());
         jda.addEventListener(new BumpRole());
         jda.addEventListener(new AmountMemberStatus());
+        jda.addEventListener(new WorkshopRole());
 
 
 

@@ -19,7 +19,7 @@ public class ActiveUsers extends ListenerAdapter {
 
         int approximatePresentMember = event.getGuild().retrieveMetaData().complete().getApproximatePresences();
 
-        Helper.insertNumberOnlineMember(approximatePresentMember);
+        Helper.insertAmountOnlineMember(approximatePresentMember);
 
 
     }

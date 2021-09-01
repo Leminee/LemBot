@@ -25,6 +25,14 @@ public class PasswordCheck extends ListenerAdapter {
                 return;
             }
 
+            if (userMessageContent[1].length() < 6) {
+
+                event.getMessage().delete().queue();
+
+                event.getChannel().sendMessage(" :red_circle:   Pwned - Passwort wurde gefunden! " + authorCommand).queue();
+                return;
+            }
+
             ConnectionToDB connectionToDB = new ConnectionToDB();
             connectionToDB.initialize();
 
@@ -43,7 +51,7 @@ public class PasswordCheck extends ListenerAdapter {
 
                     if (resultSet.next()) {
 
-                        event.getChannel().sendMessage(" :red_circle:  Pwned - Passwort wurde gefunden! " + authorCommand).queue();
+                        event.getChannel().sendMessage(" :red_circle:   Pwned - Passwort wurde gefunden! " + authorCommand).queue();
 
 
                     } else {

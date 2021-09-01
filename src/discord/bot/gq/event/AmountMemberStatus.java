@@ -13,11 +13,11 @@ public class AmountMemberStatus extends ListenerAdapter {
     public void onGuildMemberJoin(GuildMemberJoinEvent event) {
 
 
-        long memberStatusChannel = 811775664566698054L;
-        VoiceChannel voiceChannel = event.getGuild().getVoiceChannelById(memberStatusChannel);
-        assert voiceChannel != null;
-        voiceChannel.getManager()
-                .setName("Members: " + event.getGuild().getMemberCache().size())
+        long memberStatusChannelId = 811775664566698054L;
+        VoiceChannel memberStatus = event.getGuild().getVoiceChannelById(memberStatusChannelId);
+        assert memberStatus != null;
+        memberStatus.getManager()
+                .setName("Members: " + event.getGuild().getMemberCount())
                 .queue();
     }
 
@@ -25,11 +25,11 @@ public class AmountMemberStatus extends ListenerAdapter {
     @Override
     public void onGuildMemberRemove(@NotNull GuildMemberRemoveEvent event) {
 
-        long memberStatusChannel = 811775664566698054L;
-        VoiceChannel voiceChannel = event.getGuild().getVoiceChannelById(memberStatusChannel);
-        assert voiceChannel != null;
-        voiceChannel.getManager()
-                .setName("Members: " + event.getGuild().getMemberCache().size())
+        long memberStatusChannelId = 811775664566698054L;
+        VoiceChannel memberStatus = event.getGuild().getVoiceChannelById(memberStatusChannelId);
+        assert memberStatus != null;
+        memberStatus.getManager()
+                .setName("Members: " + event.getGuild().getMemberCount())
                 .queue();
     }
 }
