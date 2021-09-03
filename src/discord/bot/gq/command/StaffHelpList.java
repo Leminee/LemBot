@@ -24,7 +24,7 @@ public class StaffHelpList extends ListenerAdapter {
                 staffHelpListEmbed.setColor(0x8A2BE2);
                 staffHelpListEmbed.setThumbnail("https://cotelangues.com/wp-content/uploads/2019/06/Fragezeichen-Tafel-868x524.jpg");
                 staffHelpListEmbed.setDescription("""
-                                        ------------ **STAFF-BEFEHLSLISTE** -------------\s
+                                        ----------- **STAFF-BEFEHLSLISTE** ------------\s
 
                         `?clear - <zahl>`:\040
                          löscht Nachrichten\s\040\040

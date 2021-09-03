@@ -13,7 +13,7 @@ public class TopUsedEmojis extends ListenerAdapter {
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
 
         String topUsedEmojisCheckCommand = "tope";
-        String embedTitle = "Die 3 am häufigsten benutzten Emojis";
+        String embedTitle = "Die am häufigsten benutzten Emojis";
         Color embedColor = Color.yellow;
         String embedThumbnail = "https://cdn.discordapp.com/attachments/819694809765380146/872659266962587678/Bildschirmfoto_2021-08-05_um_03.56.07.png";
 

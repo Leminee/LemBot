@@ -25,11 +25,12 @@ public class HelpList extends ListenerAdapter {
                 embedBuilder.setDescription("""
                         Hallo, ich heiße **LemBot** und bin ein Bot für GoodQuestion:)\s
 
-                                        -------------------- **BEFEHLSLISTE** --------------------\s
+                                        ----------------- **BEFEHLSLISTE** -----------------\s
                          \s
                          Prefix: **?**\s
                         \s
-                        `?check <password>`: gibt zurück, ob Passwort unsicher ist\s
+                        `?check <password>`: überprüft, ob Passwort unsicher ist\s
+                        `?bsource`: Informationen zum Code von Lembot
                         `?hmm`: Anzahl deiner geschickten Nachrichten auf GQ\s
                         `?hmb`: Anzahl deiner Bumps auf GQ\s
                         `?topu`: Liste der Top 3 User mit den meisten Nachrichten
@@ -37,13 +38,10 @@ public class HelpList extends ListenerAdapter {
                         `?tope`: Liste der 3 am häufigsten benutzten Emojis\040\040
                         `?topp`: Liste der 3 am häufigsten gepingten User
                         `?topc`: Liste der 3 aktivisten Channels
-                        `?aur`: Record der maximalen, aktiven User
+                        `?aur`: Record an gleichzeitig aktiven Usern
                         `?srole`: Liste aller Rollen auf GQ\040
-                        `?shelp`: Zeigt die Staff-Befehlsliste
-                        `?source`: Informationen zum Code von Lembot
-                        `?hcb`: Zeigt, wie Quellcode eingefärbt wird\s 
-                        `?+bumper`: weist dem User <@&815922232106156033> zu 
-                        `?-bumper`: entfernt dem User <@&815922232106156033>\s 
+                        `?rhelp`: Rollen-Liste 
+                        `?shelp`:Staff-Befehlsliste
                         """);
 
                 event.getChannel().sendMessage(embedBuilder.build()).queue();

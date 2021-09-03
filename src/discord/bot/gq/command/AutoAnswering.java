@@ -65,13 +65,14 @@ public class AutoAnswering extends ListenerAdapter {
             }
         }
 
-        if (userMessageContent.startsWith(Helper.PREFIX + "source")) {
+        if (userMessageContent.startsWith(Helper.PREFIX + "bsource")) {
             if (!event.getMember().getUser().isBot()) {
                 EmbedBuilder botInfoEmbed = new EmbedBuilder()
                         .setTitle("LemBot Informationen")
                         .setColor(-9862987)
                         .setThumbnail("https://cdn.discordapp.com/avatars/815894805896888362/e8ac27a6bda7b0846bf5135d39e14943.webp?size=128")
                         .addField("Geschrieben in:", "Java (JDA)", false)
+                        .addField("Geschrieben von:", "Lemin(e)#5985", false)
                         .addField("Source Code:", "https://github.com/Leminee/LemBot", false);
                 event.getChannel().sendMessage(botInfoEmbed.build()).queue();
             }

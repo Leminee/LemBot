@@ -77,6 +77,8 @@ public class BotMain {
         jda.addEventListener(new BumpRole());
         jda.addEventListener(new AmountMemberStatus());
         jda.addEventListener(new WorkshopRole());
+        jda.addEventListener(new RoleHelpList());
+        jda.addEventListener(new DjRole());
 
 
 
