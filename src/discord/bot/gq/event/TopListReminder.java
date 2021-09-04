@@ -1,4 +1,4 @@
-package discord.bot.gq.command;
+package discord.bot.gq.event;
 
 
 import discord.bot.gq.lib.Helper;

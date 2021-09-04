@@ -4,7 +4,7 @@ import discord.bot.gq.lib.Helper;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
-import java.util.Objects;
+import java.text.ParseException;
 
 public class NextBumpTime extends ListenerAdapter {
 
@@ -14,24 +14,15 @@ public class NextBumpTime extends ListenerAdapter {
 
         String userMessageContent = event.getMessage().getContentRaw();
         String nextBumpTimeCheckCommand = "nbt";
-        long authorCommandId = event.getAuthor().getIdLong();
+        String authorCommandAsMention = event.getAuthor().getAsMention();
 
         if (Helper.isValidCommand(userMessageContent, nextBumpTimeCheckCommand)) {
 
-            int latestBumpHour = Integer.parseInt(Helper.getLatestBumpTime().substring(0, 2));
 
-            int nextBumpHour = latestBumpHour + 1;
-
-            String nextBumpTime = Helper.getLatestBumpTime().replace(Helper.getLatestBumpTime().substring(0, 2), String.valueOf(nextBumpHour));
-
-            String authorCommandAsMention = Objects.requireNonNull(event.getGuild().getMemberById(authorCommandId)).getAsMention();
-
-            if (Helper.getLatestBumpTime().startsWith("0")) {
-
-                event.getChannel().sendMessage("Nächster Bump um **0" + nextBumpTime + "** " + "Uhr " + authorCommandAsMention).queue();
-            } else {
-
-                event.getChannel().sendMessage("Nächster Bump um **" + nextBumpTime + "** " + "Uhr " + authorCommandAsMention).queue();
+            try {
+                event.getChannel().sendMessage("Nächster Bump um **" + String.valueOf(Helper.getNextBumpAvailabilityTime()).substring(0,5) + "** " + "Uhr " + "(in **" + (Helper.getMinutesBeforePing() + 1) + "** Minuten) " + authorCommandAsMention).queue();
+            } catch (ParseException parseException) {
+                parseException.printStackTrace();
             }
         }
     }

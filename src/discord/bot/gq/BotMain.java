@@ -80,6 +80,7 @@ public class BotMain {
         jda.addEventListener(new RoleHelpList());
         jda.addEventListener(new DjRole());
         jda.addEventListener(new NextBumpTime());
+        jda.addEventListener(new ReminderReactivation());
 
 
 

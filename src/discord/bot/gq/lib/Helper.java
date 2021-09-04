@@ -16,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 import java.sql.*;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -26,6 +27,7 @@ import java.util.concurrent.TimeUnit;
 public final class Helper {
 
     public static final String PREFIX = "?";
+
 
     private Helper() {
 
@@ -372,21 +374,22 @@ public final class Helper {
     }
 
 
-    public static String getLatestBumpTime() {
+    public static Time getNextBumpAvailabilityTime() {
 
         ConnectionToDB connectionToDB = new ConnectionToDB();
         connectionToDB.initialize();
 
-        String lastBumpTimeQuery = "SELECT TIME(bumped_at) FROM `user_bump_time` ORDER BY `bumped_at` DESC LIMIT 1";
+        String lastBumpTimeQuery = "SELECT TIME(TIMESTAMPADD(HOUR,1, bumped_at)) FROM user_bump_time ORDER BY bumped_at DESC LIMIT 1";
 
-        String latestBumpTime = "";
+        Time latestBumpTime = null;
+
         try (PreparedStatement preparedStatement = connectionToDB.getConnection().prepareStatement(lastBumpTimeQuery)) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
 
-                latestBumpTime = String.valueOf(resultSet.getTime(1)).substring(0,5);
+                latestBumpTime = resultSet.getTime(1);
 
             }
 
@@ -398,28 +401,47 @@ public final class Helper {
 
     }
 
-    public static int getMinutesBeforePing() {
 
-        return 0;
+    public static int getMinutesBeforePing() throws ParseException {
+
+        ConnectionToDB connectionToDB = new ConnectionToDB();
+        connectionToDB.initialize();
+
+        String lastBumpTimeQuery = "SELECT TIMESTAMPDIFF(MINUTE,CURRENT_TIMESTAMP, TIMESTAMPADD(HOUR,2, bumped_at)) FROM user_bump_time ORDER BY bumped_at DESC LIMIT 1";
+
+        int minutesBeForBump = 0;
+
+        try (PreparedStatement preparedStatement = connectionToDB.getConnection().prepareStatement(lastBumpTimeQuery)) {
+
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+
+                minutesBeForBump = resultSet.getInt(1);
+
+            }
+
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
+        }
+
+        return minutesBeForBump;
 
     }
 
-    public static void reactivateReminder() {
-
-        GuildMessageReceivedEvent event = null;
-
-        System.out.println(getLatestBumpTime());
+    public static void reactivateReminder(ReadyEvent event) throws ParseException {
 
         ConfigSelection configSelection = new ConfigSelection();
         configSelection.selectRoleId();
         configSelection.selectBotCommandsChannelId();
 
         String[] pingContent = {
+
                 "Jetzt kann wieder gebumpt werden " + configSelection.getRoleId() + " :smile: ",
                 "Es ist wieder Zeit zu bumpen " + configSelection.getRoleId() + " :smile:",
                 "Bumpe den Server jetzt! " + configSelection.getRoleId() + " :smile:"};
 
-        getLatestBumpTime();
 
         Random random = new Random();
 
@@ -431,7 +453,6 @@ public final class Helper {
             Objects.requireNonNull(event.getJDA().getTextChannelById(configSelection.getBotCommandsChannelId())).sendMessage(pingContent[randomNumber]).queue();
         };
 
-        scheduler.schedule(ping, getMinutesBeforePing(), TimeUnit.HOURS);
-
+        scheduler.schedule(ping, getMinutesBeforePing() + 1, TimeUnit.MINUTES);
     }
 }
