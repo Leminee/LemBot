@@ -10,12 +10,15 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 import java.sql.*;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -206,7 +209,7 @@ public final class Helper {
     }
 
 
-    public static void sendCommand(String command, GuildMessageReceivedEvent event, int delay, int period, TimeUnit timeUnit) {
+    public static void sendCommand(String command, @NotNull ReadyEvent event, int delay, int period, TimeUnit timeUnit) {
 
 
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
@@ -366,5 +369,69 @@ public final class Helper {
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
         }
+    }
+
+
+    public static String getLatestBumpTime() {
+
+        ConnectionToDB connectionToDB = new ConnectionToDB();
+        connectionToDB.initialize();
+
+        String lastBumpTimeQuery = "SELECT TIME(bumped_at) FROM `user_bump_time` ORDER BY `bumped_at` DESC LIMIT 1";
+
+        String latestBumpTime = "";
+        try (PreparedStatement preparedStatement = connectionToDB.getConnection().prepareStatement(lastBumpTimeQuery)) {
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+
+                latestBumpTime = String.valueOf(resultSet.getTime(1)).substring(0,5);
+
+            }
+
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
+        }
+
+        return latestBumpTime;
+
+    }
+
+    public static int getMinutesBeforePing() {
+
+        return 0;
+
+    }
+
+    public static void reactivateReminder() {
+
+        GuildMessageReceivedEvent event = null;
+
+        System.out.println(getLatestBumpTime());
+
+        ConfigSelection configSelection = new ConfigSelection();
+        configSelection.selectRoleId();
+        configSelection.selectBotCommandsChannelId();
+
+        String[] pingContent = {
+                "Jetzt kann wieder gebumpt werden " + configSelection.getRoleId() + " :smile: ",
+                "Es ist wieder Zeit zu bumpen " + configSelection.getRoleId() + " :smile:",
+                "Bumpe den Server jetzt! " + configSelection.getRoleId() + " :smile:"};
+
+        getLatestBumpTime();
+
+        Random random = new Random();
+
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
+        final Runnable ping = () -> {
+            int randomNumber = random.nextInt(pingContent.length);
+            assert false;
+            Objects.requireNonNull(event.getJDA().getTextChannelById(configSelection.getBotCommandsChannelId())).sendMessage(pingContent[randomNumber]).queue();
+        };
+
+        scheduler.schedule(ping, getMinutesBeforePing(), TimeUnit.HOURS);
+
     }
 }

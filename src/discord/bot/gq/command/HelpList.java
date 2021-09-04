@@ -40,8 +40,8 @@ public class HelpList extends ListenerAdapter {
                         `?topc`: Liste der 3 aktivisten Channels
                         `?aur`: Record an gleichzeitig aktiven Usern
                         `?srole`: Liste aller Rollen auf GQ\040
-                        `?rhelp`: Rollen-Liste 
-                        `?shelp`:Staff-Befehlsliste
+                        `?rhelp`: Zuweisen anderer Rollen
+                        `?shelp`: Staff-Befehlsliste
                         """);
 
                 event.getChannel().sendMessage(embedBuilder.build()).queue();

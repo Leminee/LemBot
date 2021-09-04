@@ -5,7 +5,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
-public class LinkDelation extends ListenerAdapter {
+public class LinkDeletion extends ListenerAdapter {
 
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 
@@ -33,6 +33,5 @@ public class LinkDelation extends ListenerAdapter {
         event.getChannel().sendMessage("Nachricht wurde gelöscht, da sie einen Link enthält, der nicht verifiziert werden konnte " + event.getAuthor().getAsMention() + "!").queue();
 
     }
-
 
 }

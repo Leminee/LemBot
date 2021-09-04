@@ -18,7 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class UserUnlock extends ListenerAdapter {
+public class UserUnMute extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
@@ -35,7 +35,7 @@ public class UserUnlock extends ListenerAdapter {
 
                 EmbedBuilder embedError = new EmbedBuilder();
                 String embedDescription = "Permission Denied";
-                Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED, "https://cdn.discopp.com/attachments/819694809765380146/879230207763038228/Bildschirmfoto_2021-08-23_um_07.06.46.png");
+                Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED);
                 event.getChannel().sendMessage(embedError.build()).queue();
                 return;
             }
@@ -64,7 +64,7 @@ public class UserUnlock extends ListenerAdapter {
 
                         EmbedBuilder embedError = new EmbedBuilder();
                         String embedDescription = "User ist nicht auf dem Server!";
-                        Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED, "https://cdn.discp.com/attachments/819694809765380146/879230207763038228/Bildschirmfoto_2021-08-23_um_07.06.46.png");
+                        Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED);
                         event.getChannel().sendMessage(embedError.build()).queue();
                         return;
                     }

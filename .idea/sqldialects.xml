@@ -6,7 +6,7 @@
     <file url="file://$PROJECT_DIR$/src/discord/bot/gq/command/db/ActiveUserRecord.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/discord/bot/gq/command/db/TopBumperSelection.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/discord/bot/gq/command/db/TopFlooderSelection.java" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/src/discord/bot/gq/command/moderation/UserUnlock.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/discord/bot/gq/command/moderation/UserUnMute.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/discord/bot/gq/config/db/ConfigSelection.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/discord/bot/gq/config/db/ConfigUpdating.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/discord/bot/gq/database/BumpCounter.java" dialect="GenericSQL" />

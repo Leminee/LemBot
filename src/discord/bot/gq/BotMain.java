@@ -4,7 +4,7 @@ import discord.bot.gq.command.*;
 import discord.bot.gq.command.db.*;
 import discord.bot.gq.command.moderation.MessageDeletion;
 import discord.bot.gq.command.moderation.UserBanishment;
-import discord.bot.gq.command.moderation.UserUnlock;
+import discord.bot.gq.command.moderation.UserUnMute;
 import discord.bot.gq.config.command.UpdatingChannel;
 import discord.bot.gq.config.command.UpdatingRole;
 import discord.bot.gq.database.*;
@@ -69,17 +69,17 @@ public class BotMain {
         jda.addEventListener(new UserBanishment());
         jda.addEventListener(new VoiceJoinedStorage());
         jda.addEventListener(new VoiceLeftStorage());
-        jda.addEventListener(new LinkDelation());
+        jda.addEventListener(new LinkDeletion());
         jda.addEventListener(new VoiceMoved());
         jda.addEventListener(new UserAuthorization());
-        jda.addEventListener(new UserUnlock());
+        jda.addEventListener(new UserUnMute());
         jda.addEventListener(new StaffHelpList());
         jda.addEventListener(new BumpRole());
         jda.addEventListener(new AmountMemberStatus());
         jda.addEventListener(new WorkshopRole());
         jda.addEventListener(new RoleHelpList());
         jda.addEventListener(new DjRole());
-
+        jda.addEventListener(new NextBumpTime());
 
 
 

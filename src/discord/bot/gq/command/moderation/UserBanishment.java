@@ -223,7 +223,7 @@ public class UserBanishment extends ListenerAdapter {
 
                 Helper.sendDM(member.getUser(), "gebannt", sanctionReason, sanctionedUserAsMention);
 
-                member.ban(7, sanctionReason.toString()).complete();
+                member.ban(0, sanctionReason.toString()).complete();
 
 
                 EmbedBuilder confirmation = new EmbedBuilder();
