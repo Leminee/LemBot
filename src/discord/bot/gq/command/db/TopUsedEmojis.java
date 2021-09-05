@@ -11,7 +11,7 @@ public class TopUsedEmojis extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
-
+        
         String topUsedEmojisCheckCommand = "tope";
         String embedTitle = "Die am häufigsten benutzten Emojis";
         Color embedColor = Color.yellow;

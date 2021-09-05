@@ -453,6 +453,6 @@ public final class Helper {
             Objects.requireNonNull(event.getJDA().getTextChannelById(configSelection.getBotCommandsChannelId())).sendMessage(pingContent[randomNumber]).queue();
         };
 
-        scheduler.schedule(ping, getMinutesBeforePing() + 1, TimeUnit.MINUTES);
+        scheduler.schedule(ping, getMinutesBeforePing(), TimeUnit.MINUTES);
     }
 }

@@ -35,7 +35,7 @@ public class UserBanishment extends ListenerAdapter {
 
                 EmbedBuilder embedError = new EmbedBuilder();
                 String embedDescription = "Permission Denied";
-                Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED, "https://cdn.discordap819694809765380146/879230207763038228/Bildschirmfoto_2021-08-23_um_07.06.46.png");
+                Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED);
                 event.getChannel().sendMessage(embedError.build()).queue();
                 return;
             }
@@ -52,7 +52,7 @@ public class UserBanishment extends ListenerAdapter {
 
                 EmbedBuilder embedError = new EmbedBuilder();
                 String embedDescription = "Bitte gebe die ID des zu kickenden Users und den Grund für die Bestrafung an!";
-                Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED, "https://cdn.discordapp.com/attacents/819694809765380146/879230207763038228/Bildschirmfoto_2021-08-23_um_07.06.46.png");
+                Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED);
                 event.getChannel().sendMessage(embedError.build()).queue();
                 return;
             }
@@ -61,7 +61,7 @@ public class UserBanishment extends ListenerAdapter {
 
                 EmbedBuilder embedError = new EmbedBuilder();
                 String embedDescription = "Bitte gebe einen Grund an!";
-                Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED, "https://cdn.discordapp.com/attacents/819694809765380146/879230207763038228/Bildschirmfoto_2021-08-23_um_07.06.46.png");
+                Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED);
                 event.getChannel().sendMessage(embedError.build()).queue();
                 return;
             }
@@ -71,7 +71,7 @@ public class UserBanishment extends ListenerAdapter {
 
                 EmbedBuilder embedError = new EmbedBuilder();
                 String embedDescription = "Dieser Befehl kann in diesem Channel nicht ausgeführt werden!";
-                Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED, "https://cdn.discordapp.com/attacents/819694809765380146/879230207763038228/Bildschirmfoto_2021-08-23_um_07.06.46.png");
+                Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED);
                 event.getChannel().sendMessage(embedError.build()).queue();
                 return;
             }
@@ -91,9 +91,18 @@ public class UserBanishment extends ListenerAdapter {
                     }
                 } catch (ErrorResponseException errorResponseException) {
 
+                    if (!hasManageRolesPermission) {
+
+                        EmbedBuilder embedError = new EmbedBuilder();
+                        String embedDescription = "Permission Denied";
+                        Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED);
+                        event.getChannel().sendMessage(embedError.build()).queue();
+                        return;
+                    }
+
                     EmbedBuilder embedError = new EmbedBuilder();
                     String embedDescription = "User ist nicht auf dem Server!";
-                    Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED, "https://cdn.discorda.com/attachments/819694809765380146/87Bildschirmfoto_2021-08-23_um_07.06.46.png");
+                    Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED);
                     event.getChannel().sendMessage(embedError.build()).queue();
                     return;
 
@@ -142,10 +151,12 @@ public class UserBanishment extends ListenerAdapter {
                 EmbedBuilder confirmation = new EmbedBuilder();
                 confirmation.setColor(0x00ff60);
                 confirmation.setTitle("Bestätigung");
-                confirmation.setDescription("User " + sanctionedUserAsMention + " wurde durch " + commandAuthor.getAsMention() + "**" + " verwarnt." + "**" + "\n Angegebener Grund: " + sanctionReason);
+                confirmation.setDescription("User " + sanctionedUserAsMention + " wurde durch " + commandAuthor.getAsMention() +
+                        "**" + " verwarnt." + "**" + "\n Angegebener Grund: " + sanctionReason);
                 event.getChannel().sendMessage(confirmation.build()).queue();
 
-                String warnedUserData = "INSERT INTO warned_user (id_warned_user,id_discord,user_tag, username, warn_author, warn_reason, channel_name) VALUES (NULL,?,?,?,?,?,?)";
+                String warnedUserData = "INSERT INTO warned_user (id_warned_user,id_discord,user_tag, username, warn_author, warn_reason, channel_name) " +
+                        "VALUES (NULL,?,?,?,?,?,?)";
 
 
                 Helper.insertSanctionedUserData(warnedUserData, sanction);
@@ -158,7 +169,8 @@ public class UserBanishment extends ListenerAdapter {
 
                 Role muteRole = event.getGuild().getRoleById(879329567947489352L);
                 List<Role> userRoleList = Objects.requireNonNull(member).getRoles();
-                String mutedUserData = "INSERT INTO muted_user (id_muted_user,id_discord,user_tag, username, mute_author, mute_reason, channel_name) VALUES (NULL,?,?,?,?,?,?)";
+                String mutedUserData = "INSERT INTO muted_user (id_muted_user,id_discord,user_tag, username, mute_author, mute_reason, channel_name) " +
+                        "VALUES (NULL,?,?,?,?,?,?)";
 
 
                 for (Role role : userRoleList) {
@@ -174,7 +186,8 @@ public class UserBanishment extends ListenerAdapter {
                 EmbedBuilder confirmation = new EmbedBuilder();
                 confirmation.setColor(0x00ff60);
                 confirmation.setTitle("Bestätigung");
-                confirmation.setDescription("User " + sanctionedUserAsMention + " wurde durch " + commandAuthor.getAsMention() + "**" + " gemutet." + "**" + "\n Angegebener Grund: " + sanctionReason);
+                confirmation.setDescription("User " + sanctionedUserAsMention + " wurde durch " + commandAuthor.getAsMention()
+                        + "**" + " gemutet." + "**" + "\n Angegebener Grund: " + sanctionReason);
                 event.getChannel().sendMessage(confirmation.build()).queue();
 
                 Helper.insertSanctionedUserData(mutedUserData, sanction);
@@ -186,12 +199,13 @@ public class UserBanishment extends ListenerAdapter {
                 if (!hasManageRolesPermission) {
                     EmbedBuilder embedError = new EmbedBuilder();
                     String embedDescription = "Permission Denied";
-                    Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED, "https://cdn.discordap819694809765380146/879230207763038228/Bildschirmfoto_2021-08-23_um_07.06.46.png");
+                    Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED);
                     event.getChannel().sendMessage(embedError.build()).queue();
                     return;
                 }
 
-                String kickedUserDate = "INSERT INTO kicked_user (id_kicked_user,id_discord,user_tag, username, kick_author, kick_reason, channel_name) VALUES (NULL,?,?,?,?,?,?)";
+                String kickedUserDate = "INSERT INTO kicked_user (id_kicked_user,id_discord,user_tag, username, kick_author, kick_reason, channel_name) " +
+                        "VALUES (NULL,?,?,?,?,?,?)";
 
                 Helper.sendDM(member.getUser(), "gekickt", sanctionReason, sanctionedUserAsMention);
 
@@ -201,7 +215,8 @@ public class UserBanishment extends ListenerAdapter {
                 EmbedBuilder confirmation = new EmbedBuilder();
                 confirmation.setColor(0x00ff60);
                 confirmation.setTitle("Bestätigung");
-                confirmation.setDescription("User " + sanctionedUserAsMention + " wurde durch " + commandAuthor.getAsMention() + "**" + " gekickt." + "**" + "\n Angegebener Grund: " + sanctionReason);
+                confirmation.setDescription("User " + sanctionedUserAsMention + " wurde durch " + commandAuthor.getAsMention()
+                        + "**" + " gekickt." + "**" + "\n Angegebener Grund: " + sanctionReason);
                 event.getChannel().sendMessage(confirmation.build()).queue();
 
                 Helper.insertSanctionedUserData(kickedUserDate, sanction);
@@ -214,7 +229,7 @@ public class UserBanishment extends ListenerAdapter {
                 if (!hasManageRolesPermission) {
                     EmbedBuilder embedError = new EmbedBuilder();
                     String embedDescription = "Permission Denied";
-                    Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED, "https://cdn.discordap819694809765380146/879230207763038228/Bildschirmfoto_2021-08-23_um_07.06.46.png");
+                    Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED);
                     event.getChannel().sendMessage(embedError.build()).queue();
                     return;
                 }

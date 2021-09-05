@@ -25,7 +25,7 @@ public class NumberMessagesCheck extends ListenerAdapter {
 
             Helper.getAmount(userData, amountMessages, nextHigherUserAmountMessages, event);
 
-            Helper.sendAmount(userData, event, embedColor, "Bumps");
+            Helper.sendAmount(userData, event, embedColor, "Nachrichten");
 
         }
     }
