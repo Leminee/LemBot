@@ -21,6 +21,6 @@ public class ActiveUsers extends ListenerAdapter {
 
         Helper.insertAmountOnlineMember(approximatePresentMember);
 
-
     }
+
 }

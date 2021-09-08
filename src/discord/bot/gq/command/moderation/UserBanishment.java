@@ -35,7 +35,7 @@ public class UserBanishment extends ListenerAdapter {
 
                 EmbedBuilder embedError = new EmbedBuilder();
                 String embedDescription = "Permission Denied";
-                Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED);
+                Helper.createEmbed(embedError, "", embedDescription, Color.RED);
                 event.getChannel().sendMessage(embedError.build()).queue();
                 return;
             }
@@ -95,7 +95,7 @@ public class UserBanishment extends ListenerAdapter {
 
                         EmbedBuilder embedError = new EmbedBuilder();
                         String embedDescription = "Permission Denied";
-                        Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED);
+                        Helper.createEmbed(embedError, "", embedDescription, Color.RED);
                         event.getChannel().sendMessage(embedError.build()).queue();
                         return;
                     }
@@ -199,7 +199,7 @@ public class UserBanishment extends ListenerAdapter {
                 if (!hasManageRolesPermission) {
                     EmbedBuilder embedError = new EmbedBuilder();
                     String embedDescription = "Permission Denied";
-                    Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED);
+                    Helper.createEmbed(embedError, "", embedDescription, Color.RED);
                     event.getChannel().sendMessage(embedError.build()).queue();
                     return;
                 }
@@ -229,7 +229,7 @@ public class UserBanishment extends ListenerAdapter {
                 if (!hasManageRolesPermission) {
                     EmbedBuilder embedError = new EmbedBuilder();
                     String embedDescription = "Permission Denied";
-                    Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED);
+                    Helper.createEmbed(embedError, "", embedDescription, Color.RED);
                     event.getChannel().sendMessage(embedError.build()).queue();
                     return;
                 }

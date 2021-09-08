@@ -13,15 +13,16 @@ public class NumberMessagesCheck extends ListenerAdapter {
     public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event) {
 
         String userMessageContent = event.getMessage().getContentRaw();
-
-        String amountMessages = "SELECT number_message FROM user_message WHERE id_discord = ?";
-        String nextHigherUserAmountMessages = "SELECT id_discord, number_message FROM user_message WHERE number_message > ? ORDER BY number_message, username LIMIT 1";
         String amountMessagesCommand = "hmm";
-        String embedColor = "0xffffff";
+
 
         if (Helper.isValidCommand(userMessageContent, amountMessagesCommand)) {
 
             UserData userData = new UserData();
+
+            String amountMessages = "SELECT number_message FROM user_message WHERE id_discord = ?";
+            String nextHigherUserAmountMessages = "SELECT id_discord, number_message FROM user_message WHERE number_message > ? ORDER BY number_message, username LIMIT 1";
+            String embedColor = "0xffffff";
 
             Helper.getAmount(userData, amountMessages, nextHigherUserAmountMessages, event);
 

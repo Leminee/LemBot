@@ -23,7 +23,6 @@ public class ActiveUserRecord extends ListenerAdapter {
         String recordCheckCommand = "aur";
 
 
-
         if (Helper.isValidCommand(userMessageContent, recordCheckCommand)) {
 
             ConnectionToDB connectionToDB = new ConnectionToDB();
@@ -37,8 +36,7 @@ public class ActiveUserRecord extends ListenerAdapter {
 
                     if (!event.getMember().getUser().isBot()) {
 
-                        int currentRecord;
-                        currentRecord = resultSet.getInt(1);
+                        int currentRecord = resultSet.getInt(1);
 
                         EmbedBuilder recordEmbed = new EmbedBuilder();
 

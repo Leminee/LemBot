@@ -18,7 +18,6 @@ public class TopActiveChannel extends ListenerAdapter {
         Color embedColor = Color.gray;
         String embedThumbnail = "https://cdn.discordapp.com/attachments/819694809765380146/872673996280303616/Bildschirmfoto_2021-08-05_um_04.54.26.png";
 
-
         Helper.selectTop(
                 topChannelCheckCommand, event,
                 topChannel,

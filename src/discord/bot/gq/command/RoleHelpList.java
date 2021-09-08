@@ -24,7 +24,7 @@ public class RoleHelpList extends ListenerAdapter {
                 roleHelpListEmbed.setColor(0xADD8E6);
                 roleHelpListEmbed.setThumbnail("https://cotelangues.com/wp-content/uploads/2019/06/Fragezeichen-Tafel-868x524.jpg");
                 roleHelpListEmbed.setDescription("""
-                                        ------------ **ROLE-BEFEHLSLISTE** -------------\s
+                                        ------------ **ROLLEN-BEFEHLSLISTE** -------------\s
 
                         `?+bumper`: weist dem User <@&815922232106156033> zu 
                         `?-bumper`: entfernt dem User <@&815922232106156033>\s 

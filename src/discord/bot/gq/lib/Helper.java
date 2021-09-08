@@ -189,6 +189,12 @@ public final class Helper {
         String authorCommand = event.getAuthor().getAsMention();
 
 
+        if (!hasBump(userData)) {
+
+            event.getChannel().sendMessage("Du hast leider noch keinen erfolgreichen Bump " + authorCommand).queue();
+            return;
+        }
+
         if (isTopOne(userData)) {
             event.getChannel().sendMessage(" :first_place: Du bist **TOP 1** mit " + userData.amountOf + " " + amountOf + " " + authorCommand).queue();
             return;
@@ -210,6 +216,11 @@ public final class Helper {
         return userData.nextHigherUserId == null || userData.nextHigherUserAmountOf == null;
     }
 
+
+    public static boolean hasBump(UserData userData) {
+        return userData.amountOf != null;
+
+    }
 
     public static void sendCommand(String command, @NotNull ReadyEvent event, int delay, int period, TimeUnit timeUnit) {
 

@@ -19,7 +19,6 @@ public class TopBumperSelection extends ListenerAdapter {
         String userMessageContent = event.getMessage().getContentRaw();
         String topBumperCheckCommand = "topb";
 
-
         if (Helper.isValidCommand(userMessageContent, topBumperCheckCommand)) {
 
             ConnectionToDB connectionToDB = new ConnectionToDB();
@@ -37,7 +36,6 @@ public class TopBumperSelection extends ListenerAdapter {
                 Color embedColor = Color.cyan;
 
                 Helper.addTopToEmbed(event, resultSet, topBumperEmbed, embedTitle, embedDescription, embedThumbnail, embedColor);
-
 
             } catch (SQLException sqlException) {
                 System.out.println(sqlException.getMessage());

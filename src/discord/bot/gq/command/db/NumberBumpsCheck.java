@@ -13,14 +13,15 @@ public class NumberBumpsCheck extends ListenerAdapter {
 
 
         String userMessageContent = event.getMessage().getContentRaw();
-        String amountBumps = "SELECT number_bumps FROM user_bump WHERE id_discord = ?";
-        String nextHigherUserAmountBumps = "SELECT id_discord, number_bumps FROM user_bump WHERE number_bumps > ? ORDER BY number_bumps, username LIMIT 1";
         String amountBumpsCommand = "hmb";
-        String embedColor = "0x26b7b8";
 
         if (Helper.isValidCommand(userMessageContent, amountBumpsCommand)) {
 
             UserData userData = new UserData();
+
+            String amountBumps = "SELECT number_bumps FROM user_bump WHERE id_discord = ?";
+            String nextHigherUserAmountBumps = "SELECT id_discord, number_bumps FROM user_bump WHERE number_bumps > ? ORDER BY number_bumps, username LIMIT 1";
+            String embedColor = "0x26b7b8";
 
             Helper.getAmount(userData, amountBumps, nextHigherUserAmountBumps, event);
 

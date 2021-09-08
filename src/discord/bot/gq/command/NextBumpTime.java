@@ -20,7 +20,8 @@ public class NextBumpTime extends ListenerAdapter {
 
 
             try {
-                event.getChannel().sendMessage("Nächster Bump um **" + String.valueOf(Helper.getNextBumpAvailabilityTime()).substring(0,5) + "** " + "Uhr " + "(in **" + (Helper.getMinutesBeforePing() + 1) + "** Minuten) " + authorCommandAsMention).queue();
+                event.getChannel().sendMessage("Nächster Bump um **" + String.valueOf(Helper.getNextBumpAvailabilityTime()).substring(0,5)
+                        + "** " + "Uhr " + "(in **" + (Helper.getMinutesBeforePing() + 1) + "** Minuten) " + authorCommandAsMention).queue();
             } catch (ParseException parseException) {
                 parseException.printStackTrace();
             }
