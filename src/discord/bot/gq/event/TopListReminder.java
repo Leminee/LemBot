@@ -14,9 +14,9 @@ public class TopListReminder extends ListenerAdapter {
     public void onReady(@NotNull ReadyEvent event) {
 
 
-        Helper.sendCommand("topu", event, 1, 48, TimeUnit.HOURS);
+        Helper.sendCommand("topu", event, 168, 168, TimeUnit.HOURS);
 
-        Helper.sendCommand("topb", event, 1, 60, TimeUnit.HOURS);
+        Helper.sendCommand("topb", event, 168, 168, TimeUnit.HOURS);
 
     }
 }

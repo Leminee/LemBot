@@ -40,7 +40,7 @@ public class RoleSystem extends ListenerAdapter {
                 showRoles.setColor(0x002d47);
                 StringBuilder sb = new StringBuilder();
 
-                for (int i = 0; i < serverRoleList.size() - 3; i++) {
+                for (int i = 0; i < serverRoleList.size() - 2; i++) {
                     sb.append(serverRoleList.get(i).getAsMention()).append("\n");
                 }
 

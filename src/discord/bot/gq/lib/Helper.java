@@ -390,17 +390,17 @@ public final class Helper {
         ConnectionToDB connectionToDB = new ConnectionToDB();
         connectionToDB.initialize();
 
-        String lastBumpTimeQuery = "SELECT TIME(TIMESTAMPADD(HOUR,1, bumped_at)) FROM user_bump_time ORDER BY bumped_at DESC LIMIT 1";
+        String nextBumpTimeQuery = "SELECT TIME(TIMESTAMPADD(HOUR,1, bumped_at)) FROM user_bump_time ORDER BY bumped_at DESC LIMIT 1";
 
-        Time latestBumpTime = null;
+        Time nextBumpTime = null;
 
-        try (PreparedStatement preparedStatement = connectionToDB.getConnection().prepareStatement(lastBumpTimeQuery)) {
+        try (PreparedStatement preparedStatement = connectionToDB.getConnection().prepareStatement(nextBumpTimeQuery)) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
 
-                latestBumpTime = resultSet.getTime(1);
+                nextBumpTime = resultSet.getTime(1);
 
             }
 
@@ -408,7 +408,7 @@ public final class Helper {
             System.out.println(sqlException.getMessage());
         }
 
-        return latestBumpTime;
+        return nextBumpTime;
 
     }
 
