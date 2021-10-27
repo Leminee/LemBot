@@ -2,12 +2,13 @@
 /shelf/
 /.idea/workspace.xml
 /.idea/artifacts
+/.idea/dataSources/
 .DS_Store
 META-INF
 *.class
 note.txt
 *.jar
-!JDA-4.2.0_247-withDependencies.jar
+./test.config.yml
 
 # Maven Ignore Files
 target/
