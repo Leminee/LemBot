@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 public class ActiveUsers extends ListenerAdapter {
 
     public void onUserUpdateOnlineStatus(@Nonnull UserUpdateOnlineStatusEvent event) {
+
         OnlineStatus newStatus = event.getNewOnlineStatus();
         String userTag = event.getMember().getUser().getAsTag();
         long userId = event.getUser().getIdLong();

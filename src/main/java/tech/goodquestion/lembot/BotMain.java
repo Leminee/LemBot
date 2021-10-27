@@ -35,37 +35,35 @@ public class BotMain {
             loginException.printStackTrace();
         }
 
-        System.out.println("Bot logged in as " + jda.getSelfUser().getName() + "!");
-
         jda.getPresence().setStatus(OnlineStatus.ONLINE);
         jda.getPresence().setActivity(Activity.playing("?help"));
 
-        CommandManager commands = new CommandManager(jda);
-        commands.registerCommand(new HelpList());
-        commands.registerCommand(new ClearCommand());
-        commands.registerCommand(new HelloCommand());
-        commands.registerCommand(new PingCommand());
-        commands.registerCommand(new CodeBlockHelpCommand());
-        commands.registerCommand(new MetaQuestionCommand());
-        commands.registerCommand(new BotSourceCommand());
-        commands.registerCommand(new WarnCommand());
-        commands.registerCommand(new MuteCommand());
-        commands.registerCommand(new KickCommand());
-        commands.registerCommand(new BanCommand());
-        commands.registerCommand(new UnmuteCommand());
-        commands.registerCommand(new NextBumpTimeCommand());
-        commands.registerCommand(new PasswordCheckCommand());
-        commands.registerCommand(new ServerRoleListCommand());
-        commands.registerCommand(new UserRoleListCommand());
+        CommandManager command = new CommandManager(jda);
 
-        commands.registerCommand(new ActiveUserRecordCommand());
-        commands.registerCommand(new BumpCountCommand());
-        commands.registerCommand(new MessageCountCommand());
-        commands.registerCommand(new TopActiveChannelsCommand());
-        commands.registerCommand(new TopBumperCommand());
-        commands.registerCommand(new TopMessageCommand());
-        commands.registerCommand(new TopPingedUserCommand());
-        commands.registerCommand(new TopEmojiCommand());
+        command.registerCommand(new HelpList());
+        command.registerCommand(new ClearCommand());
+        command.registerCommand(new HelloCommand());
+        command.registerCommand(new PingCommand());
+        command.registerCommand(new CodeBlockHelpCommand());
+        command.registerCommand(new MetaQuestionCommand());
+        command.registerCommand(new BotSourceCommand());
+        command.registerCommand(new WarnCommand());
+        command.registerCommand(new MuteCommand());
+        command.registerCommand(new KickCommand());
+        command.registerCommand(new BanCommand());
+        command.registerCommand(new UnmuteCommand());
+        command.registerCommand(new NextBumpTimeCommand());
+        command.registerCommand(new PasswordCheckCommand());
+        command.registerCommand(new ServerRoleListCommand());
+
+        command.registerCommand(new ActiveUserRecordCommand());
+        command.registerCommand(new BumpCountCommand());
+        command.registerCommand(new MessageCountCommand());
+        command.registerCommand(new TopActiveChannelsCommand());
+        command.registerCommand(new TopBumperCommand());
+        command.registerCommand(new TopMessageCommand());
+        command.registerCommand(new TopPingedUserCommand());
+        command.registerCommand(new TopEmojiCommand());
 
         jda.addEventListener(new Reminder());
         jda.addEventListener(new WelcomingMemberJoin());
@@ -90,7 +88,7 @@ public class BotMain {
         jda.addEventListener(new AutoAnswering());
 
         setupReactionRoles();
-        setupRoleCommands(commands);
+        setupRoleCommands(command);
     }
 
     private static void setupRoleCommands(CommandManager commands) {

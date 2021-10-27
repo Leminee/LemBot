@@ -15,7 +15,7 @@ public class BotSourceCommand implements IBotCommand {
                 .setColor(-9862987)
                 .setThumbnail("https://cdn.discordapp.com/avatars/815894805896888362/e8ac27a6bda7b0846bf5135d39e14943.webp?size=128")
                 .addField("Geschrieben in:", "Java (JDA)", false)
-                .addField("Geschrieben von:", "Lemin(e)#5985", false)
+                .addField("Geschrieben von:", "Lemine#5985 und xImAnton_#2013", false)
                 .addField("Source Code:", "https://github.com/Leminee/LemBot", false);
         channel.sendMessage(botInfoEmbed.build()).queue();
     }

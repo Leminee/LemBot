@@ -20,9 +20,10 @@ public class UserAuthorization extends ListenerAdapter {
 
         String userVerificationCheck = "SELECT activ FROM muted_user WHERE id_discord = ? ORDER BY muted_on DESC LIMIT 1;";
 
-        Connection conn = DatabaseConnector.openConnection();
+        Connection connection = DatabaseConnector.openConnection();
 
-        try (PreparedStatement preparedStatement = conn.prepareStatement(userVerificationCheck)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(userVerificationCheck)) {
+
             preparedStatement.setLong(1, joinedUserId);
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -31,10 +32,12 @@ public class UserAuthorization extends ListenerAdapter {
 
             if (resultSet.next()) {
                 int number = resultSet.getInt(1);
+
                 if (number == 1) {
                     event.getGuild().addRoleToMember(userId, Config.getInstance().getRoles().getMuteRole()).queue();
                 }
             }
+
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }

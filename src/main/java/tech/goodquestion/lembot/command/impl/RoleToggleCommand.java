@@ -18,28 +18,28 @@ public class RoleToggleCommand implements IBotCommand {
         cmds.registerCommand(new RoleToggleCommand(roleAbbr, roleId, Mode.REMOVE));
     }
 
-    private final String ROLE_ABBR;
-    private final long ROLE_ID;
-    private final Mode MODE;
+    private final String role_abbr;
+    private final long role_id;
+    private final Mode mode;
 
     public RoleToggleCommand(String roleAbbr, long roleId, Mode mode) {
-        this.ROLE_ABBR = roleAbbr;
-        this.ROLE_ID = roleId;
-        this.MODE = mode;
+        this.role_abbr = roleAbbr;
+        this.role_id = roleId;
+        this.mode = mode;
     }
 
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
-        Role role = message.getGuild().getRoleById(ROLE_ID);
+        Role role = message.getGuild().getRoleById(role_id);
         String embedDescription;
         EmbedBuilder roleAddedEmbed = new EmbedBuilder();
 
-        if (MODE == Mode.ADD) {
+        if (mode == Mode.ADD) {
             message.getGuild().addRoleToMember(message.getMember().getIdLong(), role).complete();
-            embedDescription = "<@&" + ROLE_ID + "> wurde dir erfolgreich zugewiesen " + message.getAuthor().getAsMention();
+            embedDescription = "<@&" + role_id + "> wurde dir erfolgreich zugewiesen " + message.getAuthor().getAsMention();
         } else {
             message.getGuild().removeRoleFromMember(message.getMember().getIdLong(), role).complete();
-            embedDescription = "<@&" + ROLE_ID + "> wurde dir erfolgreich entfernt " + message.getAuthor().getAsMention();
+            embedDescription = "<@&" + role_id + "> wurde dir erfolgreich entfernt " + message.getAuthor().getAsMention();
         }
 
         Helper.createEmbed(roleAddedEmbed, "Bestätigung", embedDescription, Color.GREEN);
@@ -53,15 +53,15 @@ public class RoleToggleCommand implements IBotCommand {
 
     @Override
     public String getName() {
-        return MODE.getSymbol() + ROLE_ABBR;
+        return mode.getSymbol() + role_abbr;
     }
 
     @Override
     public String getDescription() {
-        if (MODE == Mode.ADD) {
-            return "`?" + getName() + "`: Weist dir <@&" + ROLE_ID + "> zu";
+        if (mode == Mode.ADD) {
+            return "`?" + getName() + "`: Weist dir <@&" + role_id + "> zu";
         } else {
-            return "`?" + getName() + "`: Entfernt dir <@&" + ROLE_ID + ">";
+            return "`?" + getName() + "`: Entfernt dir <@&" + role_id + ">";
         }
     }
 

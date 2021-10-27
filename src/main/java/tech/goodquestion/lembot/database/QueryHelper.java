@@ -204,14 +204,14 @@ public class QueryHelper {
 
     public static int getActiveUserRecord() {
         try (Connection connection = DatabaseConnector.openConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(ACTIVE_USER_RECORD)){
-            if (!resultSet.next()) {
-                return 0;
-            }
+
             int currentRecord = resultSet.getInt(1);
+
+            return currentRecord;
+
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
         }
         return 0;
     }
-
 }

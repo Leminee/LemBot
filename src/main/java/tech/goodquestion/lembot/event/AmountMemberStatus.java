@@ -10,6 +10,7 @@ public class AmountMemberStatus extends ListenerAdapter {
 
     @Override
     public void onGuildMemberJoin(GuildMemberJoinEvent event) {
+
         Config.getInstance().getChannels().getMemberCountChannel().getManager()
                 .setName("Members: " + event.getGuild().getMemberCount())
                 .queue();
@@ -17,6 +18,7 @@ public class AmountMemberStatus extends ListenerAdapter {
 
     @Override
     public void onGuildMemberRemove(@NotNull GuildMemberRemoveEvent event) {
+
         Config.getInstance().getChannels().getMemberCountChannel().getManager()
                 .setName("Members: " + event.getGuild().getMemberCount())
                 .queue();

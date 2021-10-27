@@ -14,6 +14,7 @@ public class VoiceLeftStorage extends ListenerAdapter {
 
     @Override
     public void onGuildVoiceLeave(@NotNull GuildVoiceLeaveEvent event) {
+
         String insertQuery = "INSERT INTO voice_leave (id_discord, user_tag, username, voice_channel_name) VALUES (?,?,?,?);";
 
         VoiceChannel voiceChannel = new VoiceChannel();

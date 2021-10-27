@@ -25,7 +25,7 @@ public class CommandManager extends ListenerAdapter {
     }
 
     private final Map<String, IBotCommand> commands = new HashMap<>();
-    private final JDA JDA;
+    private final JDA jda;
     private final Set<String> helpLists = new HashSet<>();
 
     public void registerCommand(IBotCommand command) {
@@ -41,7 +41,7 @@ public class CommandManager extends ListenerAdapter {
     }
 
     public CommandManager(JDA jda) {
-        this.JDA = jda;
+        this.jda = jda;
         INSTANCE = this;
         jda.addEventListener(this);
     }
@@ -88,7 +88,7 @@ public class CommandManager extends ListenerAdapter {
     }
 
     public JDA getJDA() {
-        return JDA;
+        return jda;
     }
 
     public Set<String> getHelpLists() {

@@ -53,14 +53,17 @@ public class UserMessageCounter extends ListenerAdapter {
     }
 
     public void insertData(String userMessage, String userId, String messageId) {
-        Connection conn = DatabaseConnector.openConnection();
+
+        Connection connection = DatabaseConnector.openConnection();
         String userMessageData = "INSERT INTO user_message_content (id_message, id_discord, content) VALUES (?,?,?)";
 
-        try (PreparedStatement insertPStatement = conn.prepareStatement(userMessageData)) {
+        try (PreparedStatement insertPStatement = connection.prepareStatement(userMessageData)) {
+
             insertPStatement.setString(1, messageId);
             insertPStatement.setString(2, userId);
             insertPStatement.setBlob(3, Helper.changeCharacterEncoding(insertPStatement, userMessage));
             insertPStatement.executeUpdate();
+
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
         }

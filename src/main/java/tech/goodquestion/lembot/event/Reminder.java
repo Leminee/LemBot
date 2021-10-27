@@ -31,7 +31,8 @@ public class Reminder extends ListenerAdapter {
         scheduleReminder(2, TimeUnit.HOURS);
     }
 
-    public static void scheduleReminder(int delay, TimeUnit tu) {
+    public static void scheduleReminder(int delay, TimeUnit timeUnit) {
+
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
         String bumperRole = "<@&" + Config.getInstance().getRoles().getBumpRoleId() + ">";
@@ -48,6 +49,6 @@ public class Reminder extends ListenerAdapter {
             Config.getInstance().getChannels().getBumpChannel().sendMessage(pingContent[randomNumber]).queue();
         };
 
-        scheduler.schedule(ping, delay, tu);
+        scheduler.schedule(ping, delay, timeUnit);
     }
 }

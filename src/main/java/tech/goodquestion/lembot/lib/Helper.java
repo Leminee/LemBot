@@ -52,6 +52,7 @@ public final class Helper {
     }
 
     public static void getAmount(UserData userData, String query, String nextHigherUser) {
+
         Connection connection = DatabaseConnector.openConnection();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -137,6 +138,7 @@ public final class Helper {
     }
 
     public static void insertVoiceChannelData(String insertQuery, VoiceChannel voiceChannel) {
+
         Connection connection = DatabaseConnector.openConnection();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
@@ -145,6 +147,7 @@ public final class Helper {
             preparedStatement.setString(3, voiceChannel.userName);
             preparedStatement.setString(4, voiceChannel.name);
             preparedStatement.executeUpdate();
+
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
         }
@@ -162,6 +165,7 @@ public final class Helper {
             }
 
             channel.sendMessage(embedBuilder.build()).queue();
+
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
         }
@@ -169,6 +173,7 @@ public final class Helper {
 
     public static String getCurrentTime(){
         java.util.Date date = new Date();
+
         return date.toString().substring(11, 16);
     }
 }

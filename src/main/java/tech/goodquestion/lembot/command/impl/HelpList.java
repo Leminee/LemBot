@@ -43,9 +43,9 @@ public class HelpList implements IBotCommand {
 
         List<IBotCommand> commandsOnHelpList = new ArrayList<>();
 
-        for (IBotCommand cmd : CommandManager.getInstance().getCommands().values()) {
-            if (!Objects.equals(cmd.getHelpList(), queriedHelpList)) continue;
-            commandsOnHelpList.add(cmd);
+        for (IBotCommand command : CommandManager.getInstance().getCommands().values()) {
+            if (!Objects.equals(command.getHelpList(), queriedHelpList)) continue;
+            commandsOnHelpList.add(command);
         }
 
         commandsOnHelpList.sort(Comparator.comparing(IBotCommand::getName));
@@ -62,7 +62,7 @@ public class HelpList implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?help`: Zeigt diese Hilfe zum LemBot an\n`?help -`: Zeigt alle verfügbaren Command-Listen an\n`?help <list>`: Zeigt alle Commands der angegebenen Liste an";
+        return "`?help`: Zeigt diese Hilfe zum LemBot an\n`?help -`: Zeigt alle verfügbaren Command-Listen an";
     }
 
     @Override

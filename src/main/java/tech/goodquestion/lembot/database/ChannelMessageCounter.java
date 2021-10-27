@@ -24,11 +24,13 @@ public class ChannelMessageCounter extends ListenerAdapter {
         String insertChannel = "INSERT INTO channel (id_message, id_channel,channel_name) VALUES (?,?,?);";
 
         try(PreparedStatement preparedStatement = connection.prepareStatement(insertChannel)) {
+
             preparedStatement.setString(1, messageId);
             preparedStatement.setString(2, channelId);
             preparedStatement.setString(3, channelName);
 
             preparedStatement.executeUpdate();
+
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
         }
