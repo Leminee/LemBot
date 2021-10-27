@@ -27,11 +27,7 @@ public class RoleHelpList extends ListenerAdapter {
                                         ------------ **ROLLEN-BEFEHLSLISTE** -------------\s
 
                         `?+bumper`: weist dem User <@&815922232106156033> zu 
-                        `?-bumper`: entfernt dem User <@&815922232106156033>\s 
-                        `?+dj`: weist dem User <@&869396259029540884> zu 
-                        `?-dj`: entfernt dem User <@&869396259029540884>\s   
-                        `?+ws`: weist dem User <@&882606255192047617> zu 
-                        `?-ws`: entfernt dem User <@&882606255192047617>\s
+                        `?-bumper`: entfernt dem User <@&815922232106156033>\s
                         """);
 
                 event.getChannel().sendMessage(roleHelpListEmbed.build()).queue();

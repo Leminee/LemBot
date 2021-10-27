@@ -25,7 +25,7 @@ public class PasswordCheck extends ListenerAdapter {
                 return;
             }
 
-            if (userMessageContent[1].length() < 6) {
+            if (userMessageContent[1].length() < 8) {
 
                 event.getMessage().delete().queue();
 
