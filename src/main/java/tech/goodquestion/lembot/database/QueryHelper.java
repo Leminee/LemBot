@@ -47,7 +47,7 @@ public class QueryHelper {
             "VALUES (NULL,?,?,?,?,?,?)";
     public static final String USER_WARN_DATA = "INSERT INTO warned_user (id_warned_user,id_discord,user_tag, username, warn_author, warn_reason, channel_name) " +
             "VALUES (NULL,?,?,?,?,?,?)";
-    public static final String LAST_BUMP = "SELECT TIME(TIMESTAMPADD(HOUR,1, bumped_at)) FROM user_bump_time ORDER BY bumped_at DESC LIMIT 1";
+    public static final String NEXT_BUMP_TIME = "SELECT TIME(TIMESTAMPADD(HOUR,1, bumped_at)) FROM user_bump_time ORDER BY bumped_at DESC LIMIT 1";
     public static final String NEXT_BUMP = "SELECT TIMESTAMPDIFF(MINUTE,CURRENT_TIMESTAMP, TIMESTAMPADD(HOUR,2, bumped_at)) FROM user_bump_time ORDER BY bumped_at DESC LIMIT 1";
     public static final String ACTIVE_MEMBER_LOG = "INSERT INTO active_user (active_member) VALUES (?);";
     public static final String ACTIVE_USER_RECORD = "SELECT MAX(active_member) FROM active_user;";
@@ -167,19 +167,19 @@ public class QueryHelper {
     }
 
     public static Time getNextBumpTime() {
-        Time latestBumpTime = null;
+        Time nextBumpTime = null;
 
-        try (Connection conn = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = conn.prepareStatement(LAST_BUMP)) {
+        try (Connection conn = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = conn.prepareStatement(NEXT_BUMP_TIME)) {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                latestBumpTime = resultSet.getTime(1);
+                nextBumpTime = resultSet.getTime(1);
             }
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
         }
 
-        return latestBumpTime;
+        return nextBumpTime;
     }
 
     public static int getMinutesToNextBump() {
