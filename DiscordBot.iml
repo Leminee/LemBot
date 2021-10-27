@@ -10,7 +10,7 @@
       <excludeFolder url="file://$MODULE_DIR$/${project.build.directory}/test-classes" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="openjdk-17" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
       <library>
@@ -48,5 +48,6 @@
     <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.21" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:8.0.26" level="project" />
     <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java:3.11.4" level="project" />
+    <orderEntry type="library" name="mysql-connector-java-8.0.22" level="project" />
   </component>
 </module>
