@@ -62,6 +62,8 @@
                 </configuration>
             </plugin>
         </plugins>
+
+        <finalName>lembotv2</finalName>
     </build>
 
     <repositories>
@@ -97,4 +99,5 @@
             <version>8.0.26</version>
         </dependency>
     </dependencies>
+
 </project>

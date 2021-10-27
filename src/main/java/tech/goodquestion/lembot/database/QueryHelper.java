@@ -32,9 +32,9 @@ public class QueryHelper {
                   UNION ALL
                   SELECT '\uD83D\uDE42', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE43%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
                   UNION ALL
-                  SELECT '🔴' as emoji, SUM(id_discord) AS c FROM (SELECT content, Count(id_discord) AS id_discord FROM   user_message_content WHERE  content LIKE '%🔴%') AS T
+                  SELECT '🔴' as emoji, SUM(id_discord) AS c FROM (SELECT content, Count(id_discord) AS id_discord FROM `user_message_content` WHERE  content LIKE '%🔴%') AS T
                   UNION ALL
-                  SELECT '🟢' as emoji, SUM(id_discord) AS c FROM (SELECT content, Count(id_discord) AS id_discord FROM WHERE  content LIKE '%🟢%') AS T
+                  SELECT '🟢' as emoji, SUM(id_discord) AS c FROM (SELECT content, Count(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%🟢%') AS T
                   UNION ALL
                   SELECT '\uD83E\uDD13', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83E\uDD13%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T \s
                   UNION ALL
@@ -109,11 +109,11 @@ public class QueryHelper {
     }
 
     public static EmbedBuilder getTopEmojis() throws SQLException {
-        return getTop(TOP_EMOJIS, new String[]{"", "", ""}, new String[]{"TOP 1", "TOP 2", "TOP 3"});
+        return getTop(TOP_EMOJIS, new String[]{"**TOP 1**", "**TOP 2**", "**TOP 3**"}, new String[]{"", "", ""});
     }
 
     public static EmbedBuilder getTopActiveChannels() throws SQLException {
-        return getTop(TOP_CHANNELS, new String[]{"", "", ""}, new String[]{"TOP 1", "TOP 2", "TOP 3"});
+        return getTop(TOP_CHANNELS, new String[]{"**TOP 1**", "**TOP 2**", "**TOP 3**"}, new String[]{"", "", ""});
     }
 
     public static EmbedBuilder getTopPingedUser() throws SQLException {
@@ -171,6 +171,7 @@ public class QueryHelper {
     }
 
     public static Time getNextBumpTime() {
+
         Time nextBumpTime = null;
 
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(NEXT_BUMP_TIME)) {
@@ -187,6 +188,7 @@ public class QueryHelper {
     }
 
     public static int getMinutesToNextBump() {
+
         int minutesBeforeBump = 0;
 
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(NEXT_BUMP)) {
@@ -205,9 +207,12 @@ public class QueryHelper {
     public static int getActiveUserRecord() {
         try (Connection connection = DatabaseConnector.openConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(ACTIVE_USER_RECORD)){
 
-            int currentRecord = resultSet.getInt(1);
 
-            return currentRecord;
+            if (resultSet.next()) {
+
+                return resultSet.getInt(1);
+
+            }
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
