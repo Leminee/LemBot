@@ -6,7 +6,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
-import tech.goodquestion.lembot.command.BotCommand;
+import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.database.DatabaseConnector;
@@ -19,7 +19,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class UnmuteCommand implements BotCommand {
+public class UnmuteCommand implements IBotCommand {
 
     @Override
     public void dispatch(Message msg, TextChannel channel, Member sender, String[] args) {

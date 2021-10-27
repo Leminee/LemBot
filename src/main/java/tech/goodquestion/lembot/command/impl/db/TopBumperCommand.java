@@ -4,7 +4,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
-import tech.goodquestion.lembot.command.BotCommand;
+import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.database.DatabaseConnector;
 import tech.goodquestion.lembot.lib.Helper;
 
@@ -14,15 +14,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class TopBumperCommand implements BotCommand {
+public class TopBumperCommand implements IBotCommand {
 
     @Override
-    public void dispatch(Message msg, TextChannel channel, Member sender, String[] args) {
-        Connection conn = DatabaseConnector.openConnection();
+    public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
+
+        Connection connection = DatabaseConnector.openConnection();
 
         String topBumper = "SELECT username FROM user_bump ORDER BY number_bumps DESC, username LIMIT 3;";
 
-        try (Statement statement = conn.createStatement(); ResultSet resultSet = statement.executeQuery(topBumper)) {
+        try (Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(topBumper)) {
 
             EmbedBuilder topBumperEmbed = new EmbedBuilder();
 

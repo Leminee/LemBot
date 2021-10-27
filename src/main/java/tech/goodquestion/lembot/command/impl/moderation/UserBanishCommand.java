@@ -6,7 +6,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
-import tech.goodquestion.lembot.command.BotCommand;
+import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.entities.Sanction;
@@ -14,11 +14,13 @@ import tech.goodquestion.lembot.lib.Helper;
 
 import java.awt.*;
 import java.util.List;
+import java.util.Objects;
 
-public abstract class UserBanishCommand implements BotCommand {
+public abstract class UserBanishCommand implements IBotCommand {
 
     @Override
-    public void dispatch(Message msg, TextChannel channel, Member sender, String[] args) {
+    public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
+
         if (args.length < 1) {
             EmbedBuilder embedError = new EmbedBuilder();
             String embedDescription = "Bitte gebe die ID des zu kickenden Users und den Grund für die Bestrafung an!";
@@ -43,7 +45,7 @@ public abstract class UserBanishCommand implements BotCommand {
             return;
         }
 
-        List<Member> mentionedMembers = msg.getMentionedMembers();
+        List<Member> mentionedMembers = message.getMentionedMembers();
         Member member = null;
 
         if (mentionedMembers.size() > 0) {
@@ -52,7 +54,7 @@ public abstract class UserBanishCommand implements BotCommand {
             User user = CommandManager.getInstance().getJDA().retrieveUserById(args[0], true).complete();
 
             if (user != null) {
-                member = msg.getGuild().retrieveMember(user).complete();
+                member = message.getGuild().retrieveMember(user).complete();
             }
         }
 
@@ -73,6 +75,7 @@ public abstract class UserBanishCommand implements BotCommand {
         }
 
         StringBuilder reason = new StringBuilder();
+
         for (int i = 1; i < args.length; i++) {
             reason.append(args[i]).append(" ");
         }
@@ -82,11 +85,11 @@ public abstract class UserBanishCommand implements BotCommand {
         sanction.userId = member.getIdLong();
         sanction.userTag = member.getUser().getAsTag();
         sanction.userName = member.getUser().getName();
-        sanction.author = msg.getAuthor().getAsTag();
+        sanction.author = message.getAuthor().getAsTag();
         sanction.reason = reason.toString();
         sanction.channelName = channel.getName();
 
-        if (requiresAdmin() && !msg.getMember().hasPermission(Permission.MANAGE_ROLES)) {
+        if (requiresAdmin() && !Objects.requireNonNull(message.getMember()).hasPermission(Permission.MANAGE_ROLES)) {
             EmbedBuilder embedError = new EmbedBuilder();
             String embedDescription = "Permission Denied";
             Helper.createEmbed(embedError, "", embedDescription, Color.RED);
@@ -94,7 +97,7 @@ public abstract class UserBanishCommand implements BotCommand {
             return;
         }
 
-        banishUser(member, sanction, msg);
+        banishUser(member, sanction, message);
     }
 
     public abstract void banishUser(Member toBanish, Sanction sanction, Message originMsg);

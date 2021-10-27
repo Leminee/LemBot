@@ -4,12 +4,12 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
-import tech.goodquestion.lembot.command.BotCommand;
+import tech.goodquestion.lembot.command.IBotCommand;
 
-public class BotSourceCommand implements BotCommand {
+public class BotSourceCommand implements IBotCommand {
 
     @Override
-    public void dispatch(Message msg, TextChannel channel, Member sender, String[] args) {
+    public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
         EmbedBuilder botInfoEmbed = new EmbedBuilder()
                 .setTitle("LemBot Informationen")
                 .setColor(-9862987)

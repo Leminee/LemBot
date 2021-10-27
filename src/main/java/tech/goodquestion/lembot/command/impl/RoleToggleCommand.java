@@ -5,41 +5,41 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
-import tech.goodquestion.lembot.command.BotCommand;
+import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.lib.Helper;
 
 import java.awt.*;
 
-public class RoleToggleCommand implements BotCommand {
+public class RoleToggleCommand implements IBotCommand {
 
     public static void register(CommandManager cmds, String roleAbbr, long roleId) {
         cmds.registerCommand(new RoleToggleCommand(roleAbbr, roleId, Mode.ADD));
         cmds.registerCommand(new RoleToggleCommand(roleAbbr, roleId, Mode.REMOVE));
     }
 
-    private final String roleAbbr;
-    private final long roleId;
-    private final Mode mode;
+    private final String ROLE_ABBR;
+    private final long ROLE_ID;
+    private final Mode MODE;
 
     public RoleToggleCommand(String roleAbbr, long roleId, Mode mode) {
-        this.roleAbbr = roleAbbr;
-        this.roleId = roleId;
-        this.mode = mode;
+        this.ROLE_ABBR = roleAbbr;
+        this.ROLE_ID = roleId;
+        this.MODE = mode;
     }
 
     @Override
-    public void dispatch(Message msg, TextChannel channel, Member sender, String[] args) {
-        Role role = msg.getGuild().getRoleById(roleId);
+    public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
+        Role role = message.getGuild().getRoleById(ROLE_ID);
         String embedDescription;
         EmbedBuilder roleAddedEmbed = new EmbedBuilder();
 
-        if (mode == Mode.ADD) {
-            msg.getGuild().addRoleToMember(msg.getMember().getIdLong(), role).complete();
-            embedDescription = "<@&" + roleId + "> wurde dir erfolgreich zugewiesen " + msg.getAuthor().getAsMention();
+        if (MODE == Mode.ADD) {
+            message.getGuild().addRoleToMember(message.getMember().getIdLong(), role).complete();
+            embedDescription = "<@&" + ROLE_ID + "> wurde dir erfolgreich zugewiesen " + message.getAuthor().getAsMention();
         } else {
-            msg.getGuild().removeRoleFromMember(msg.getMember().getIdLong(), role).complete();
-            embedDescription = "<@&" + roleId + "> wurde dir erfolgreich entfernt " + msg.getAuthor().getAsMention();
+            message.getGuild().removeRoleFromMember(message.getMember().getIdLong(), role).complete();
+            embedDescription = "<@&" + ROLE_ID + "> wurde dir erfolgreich entfernt " + message.getAuthor().getAsMention();
         }
 
         Helper.createEmbed(roleAddedEmbed, "Bestätigung", embedDescription, Color.GREEN);
@@ -53,15 +53,15 @@ public class RoleToggleCommand implements BotCommand {
 
     @Override
     public String getName() {
-        return mode.getSymbol() + roleAbbr;
+        return MODE.getSymbol() + ROLE_ABBR;
     }
 
     @Override
     public String getDescription() {
-        if (mode == Mode.ADD) {
-            return "`?" + getName() + "`: Weist dir <@&" + roleId + "> zu";
+        if (MODE == Mode.ADD) {
+            return "`?" + getName() + "`: Weist dir <@&" + ROLE_ID + "> zu";
         } else {
-            return "`?" + getName() + "`: Entfernt dir <@&" + roleId + ">";
+            return "`?" + getName() + "`: Entfernt dir <@&" + ROLE_ID + ">";
         }
     }
 

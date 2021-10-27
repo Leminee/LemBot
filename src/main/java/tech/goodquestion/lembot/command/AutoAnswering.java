@@ -4,7 +4,6 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import tech.goodquestion.lembot.lib.Helper;
 
-import java.util.Date;
 import java.util.Objects;
 
 public class AutoAnswering extends ListenerAdapter {
@@ -14,7 +13,6 @@ public class AutoAnswering extends ListenerAdapter {
 
         String userMessageContent = event.getMessage().getContentRaw();
         String userName = Objects.requireNonNull(event.getMember()).getAsMention();
-        Date currentDate = new Date();
 
         if (event.getMessage().getAuthor().isBot()) {
             return;
@@ -24,7 +22,7 @@ public class AutoAnswering extends ListenerAdapter {
                 userMessageContent.equalsIgnoreCase("Uhrzeit?") || userMessageContent.equalsIgnoreCase("Welche Uhrzeit?") ||
                 userMessageContent.equalsIgnoreCase(Helper.PREFIX + "time")) {
             event.getChannel().sendTyping().queue();
-            event.getChannel().sendMessage("Uhrzeit: " + currentDate.toString().substring(11, 16)).queue();
+            event.getChannel().sendMessage("Uhrzeit: " + Helper.getCurrentTime()).queue();
         }
 
         if ((userMessageContent.startsWith("kennt sich wer") || (userMessageContent.contains("kennt sich wer") || userMessageContent.startsWith("kennt sich jemand") || userMessageContent.startsWith("Kennt sich jemand") ||

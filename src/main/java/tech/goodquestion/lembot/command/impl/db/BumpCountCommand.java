@@ -3,14 +3,14 @@ package tech.goodquestion.lembot.command.impl.db;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
-import tech.goodquestion.lembot.command.BotCommand;
+import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.entities.UserData;
 import tech.goodquestion.lembot.lib.Helper;
 
-public class BumpCountCommand implements BotCommand {
+public class BumpCountCommand implements IBotCommand {
 
     @Override
-    public void dispatch(Message msg, TextChannel channel, Member sender, String[] args) {
+    public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
         UserData userData = new UserData();
         userData.userId = sender.getIdLong();
 

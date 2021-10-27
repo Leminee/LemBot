@@ -5,17 +5,17 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
-import tech.goodquestion.lembot.command.BotCommand;
+import tech.goodquestion.lembot.command.IBotCommand;
 
 import java.util.List;
 import java.util.Objects;
 
-public class UserRoleListCommand implements BotCommand {
+public class UserRoleListCommand implements IBotCommand {
 
     @Override
-    public void dispatch(Message msg, TextChannel channel, Member sender, String[] args) {
+    public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
         EmbedBuilder showRoles = new EmbedBuilder();
-        List<Role> userRoleList = Objects.requireNonNull(msg.getMember()).getRoles();
+        List<Role> userRoleList = Objects.requireNonNull(message.getMember()).getRoles();
 
         showRoles.setTitle("Rollen");
         showRoles.setColor(0x002d47);

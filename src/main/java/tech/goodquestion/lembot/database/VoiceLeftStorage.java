@@ -9,7 +9,6 @@ import tech.goodquestion.lembot.entities.VoiceChannel;
 import tech.goodquestion.lembot.lib.Helper;
 
 import java.awt.*;
-import java.util.Date;
 
 public class VoiceLeftStorage extends ListenerAdapter {
 
@@ -24,11 +23,9 @@ public class VoiceLeftStorage extends ListenerAdapter {
         voiceChannel.name = event.getChannelLeft().getName();
         String userMentioned = event.getMember().getAsMention();
 
-        Date date = new Date();
-
         EmbedBuilder leftEmbed = new EmbedBuilder();
 
-        String embedDescription = userMentioned + " hat " + "**" + voiceChannel.name + "**" + " um " + date.toString().substring(11, 16) + " Uhr **verlassen**.";
+        String embedDescription = userMentioned + " hat " + "**" + voiceChannel.name + "**" + " um " + Helper.getCurrentTime() + " Uhr **verlassen**.";
 
         Helper.createEmbed(leftEmbed,"Voice **Left** ",embedDescription, Color.MAGENTA,"https://cdn.discordapp.com/attachments/819694809765380146/880646674366754856/Bildschirmfoto_2021-08-27_um_04.55.07.png");
         Config.getInstance().getChannels().getVoiceChatChannel().sendMessage(leftEmbed.build()).queue();

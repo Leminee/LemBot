@@ -14,28 +14,32 @@ public class QueryHelper {
     private static final String INSERT_USER_STATUS = "INSERT INTO user_status (id_discord, user_tag, status) VALUES (?,?,?);";
     private static final String INSERT_MEMBER_AMOUNT = "INSERT INTO number_member (total_member) VALUES (?);";
     public static final String TOP_EMOJIS = """
-                        SELECT '\uD83D\uDC4D', SUM(id_discord) AS c  FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDC4D%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T
-                        UNION ALL\s
-                        SELECT '\uD83D\uDE05', SUM(id_discord) AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE05%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
-                        UNION ALL  \s
-                        SELECT '\uD83D\uDE0A', SUM(id_discord )AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE0A%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
-                        UNION ALL
-                        SELECT '\uD83D\uDC40', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDC40%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
-                        UNION ALL
-                        SELECT '\uD83D\uDE02', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE02%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
-                        UNION ALL
-                        SELECT '\uD83D\uDE09', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE09%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
-                        UNION ALL
-                        SELECT '\uD83D\uDE1B', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE1B%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T \s
-                        UNION ALL
-                        SELECT content, SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE42%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
-                        UNION ALL
-                        SELECT '\uD83D\uDE42', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE43%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
-                        UNION ALL
-                        SELECT '\uD83E\uDD13', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83E\uDD13%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T \s
-                        UNION ALL
-                        SELECT '\uD83D\uDE04', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE04%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
-                        ORDER BY c DESC LIMIT 3;""";
+                  SELECT '\uD83D\uDC4D', SUM(id_discord) AS c  FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDC4D%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T
+                  UNION ALL\s
+                  SELECT '\uD83D\uDE05', SUM(id_discord) AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE05%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
+                  UNION ALL  \s
+                  SELECT '\uD83D\uDE0A', SUM(id_discord )AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE0A%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
+                  UNION ALL
+                  SELECT '\uD83D\uDC40', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDC40%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
+                  UNION ALL
+                  SELECT '\uD83D\uDE02', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE02%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
+                  UNION ALL
+                  SELECT '\uD83D\uDE09', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE09%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
+                  UNION ALL
+                  SELECT '\uD83D\uDE1B', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE1B%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T \s
+                  UNION ALL
+                  SELECT content, SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE42%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
+                  UNION ALL
+                  SELECT '\uD83D\uDE42', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE43%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
+                  UNION ALL
+                  SELECT '🔴' as emoji, SUM(id_discord) AS c FROM (SELECT content, Count(id_discord) AS id_discord FROM   user_message_content WHERE  content LIKE '%🔴%') AS T
+                  UNION ALL
+                  SELECT '🟢' as emoji, SUM(id_discord) AS c FROM (SELECT content, Count(id_discord) AS id_discord FROM WHERE  content LIKE '%🟢%') AS T
+                  UNION ALL
+                  SELECT '\uD83E\uDD13', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83E\uDD13%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T \s
+                  UNION ALL
+                  SELECT '\uD83D\uDE04', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE04%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
+                  ORDER BY c DESC LIMIT 3;""";
     public static final String TOP_CHANNELS = "SELECT channel_name, COUNT(id_channel) FROM `channel` GROUP BY id_channel ORDER BY COUNT(id_channel) DESC LIMIT 3;";
     public static final String TOP_PINGED_USER = "SELECT content, COUNT(id_discord) FROM `user_message_content` WHERE content LIKE '%<@!%' OR '%<@I%' GROUP BY content HAVING COUNT(id_discord) > 1 ORDER BY COUNT(id_discord) DESC LIMIT 3";
     public static final String USER_LEAVE_LOG = "INSERT INTO user_leave (id_user_leave,id_discord,user_tag,username,avatar_url) VALUES (NULL,?,?,?,?);";
@@ -53,7 +57,7 @@ public class QueryHelper {
     public static final String ACTIVE_USER_RECORD = "SELECT MAX(active_member) FROM active_user;";
 
     public static void logMemberStatusChange(long userId, String userTag, OnlineStatus newStatus) {
-        try (Connection conn = DatabaseConnector.openConnection(); PreparedStatement statement = conn.prepareStatement(INSERT_USER_STATUS)) {
+        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement statement = connection.prepareStatement(INSERT_USER_STATUS)) {
             statement.setLong(1, userId);
             statement.setBlob(2, Helper.changeCharacterEncoding(statement, userTag));
             statement.setString(3, String.valueOf(newStatus));
@@ -64,7 +68,7 @@ public class QueryHelper {
     }
 
     public static void logActiveMemberCount(int memberCount) {
-        try (Connection conn = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = conn.prepareStatement(ACTIVE_MEMBER_LOG)) {
+        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(ACTIVE_MEMBER_LOG)) {
             preparedStatement.setLong(1, memberCount);
             preparedStatement.executeUpdate();
         } catch (SQLException sqlException) {
@@ -73,7 +77,7 @@ public class QueryHelper {
     }
 
     public static void logMemberAmount(Guild guild) {
-        try (Connection conn = DatabaseConnector.openConnection(); PreparedStatement statement = conn.prepareStatement(INSERT_MEMBER_AMOUNT)) {
+        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement statement = connection.prepareStatement(INSERT_MEMBER_AMOUNT)) {
             statement.setInt(1, guild.getMemberCount());
             statement.executeUpdate();
         } catch (SQLException sqlException) {
@@ -82,7 +86,7 @@ public class QueryHelper {
     }
 
     private static EmbedBuilder getTop(String query, String[] fieldNames, String[] fieldIcons) throws SQLException {
-        try (Connection conn = DatabaseConnector.openConnection(); Statement statement = conn.createStatement(); ResultSet resultSet = statement.executeQuery(query)) {
+        try (Connection connection = DatabaseConnector.openConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(query)) {
             EmbedBuilder embed = new EmbedBuilder();
             embed.setDescription("");
 
@@ -117,7 +121,7 @@ public class QueryHelper {
     }
 
     private static void logMemberStatus(String query, User member) {
-        try (Connection conn = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, member.getIdLong());
             preparedStatement.setString(2, member.getAsTag());
             preparedStatement.setString(3, member.getName());
@@ -137,7 +141,7 @@ public class QueryHelper {
     }
 
     private static void insertSanction(String query, Sanction sanction) {
-        try (Connection conn = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, sanction.userId);
             preparedStatement.setString(2, sanction.userTag);
             preparedStatement.setString(3, sanction.userName);
@@ -169,7 +173,7 @@ public class QueryHelper {
     public static Time getNextBumpTime() {
         Time nextBumpTime = null;
 
-        try (Connection conn = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = conn.prepareStatement(NEXT_BUMP_TIME)) {
+        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(NEXT_BUMP_TIME)) {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
@@ -185,7 +189,7 @@ public class QueryHelper {
     public static int getMinutesToNextBump() {
         int minutesBeforeBump = 0;
 
-        try (Connection conn = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = conn.prepareStatement(NEXT_BUMP)) {
+        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(NEXT_BUMP)) {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
@@ -199,14 +203,13 @@ public class QueryHelper {
     }
 
     public static int getActiveUserRecord() {
-        try (Connection conn = DatabaseConnector.openConnection(); Statement statement = conn.createStatement(); ResultSet resultSet = statement.executeQuery(ACTIVE_USER_RECORD)){
+        try (Connection connection = DatabaseConnector.openConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(ACTIVE_USER_RECORD)){
             if (!resultSet.next()) {
                 return 0;
             }
-
             int currentRecord = resultSet.getInt(1);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
         }
         return 0;
     }

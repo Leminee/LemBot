@@ -25,6 +25,6 @@ Du kannst Dich hier kurz vorstellen und Dir im Kanal [channel] Rollen zuweisen!
                 .replace("[member]", newMember)
                 .replace("[channel]", Config.getInstance().getChannels().getSelfRolesChannel().getAsMention());
         Config.getInstance().getChannels().getNewArrivalsChannel().sendMessage(output + "\n" + avatarUrl).queue();
-    }
 
+    }
 }

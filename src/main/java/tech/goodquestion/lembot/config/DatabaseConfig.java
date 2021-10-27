@@ -6,7 +6,7 @@ public class DatabaseConfig {
     private String username;
     private String password;
 
-    public String getUri() {
+    public String getUrl() {
         return uri;
     }
 

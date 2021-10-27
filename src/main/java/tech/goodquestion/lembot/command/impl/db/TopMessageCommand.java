@@ -4,7 +4,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
-import tech.goodquestion.lembot.command.BotCommand;
+import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.database.DatabaseConnector;
 import tech.goodquestion.lembot.lib.Helper;
 
@@ -14,14 +14,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class TopMessageCommand implements BotCommand {
+public class TopMessageCommand implements IBotCommand {
 
     @Override
-    public void dispatch(Message msg, TextChannel channel, Member sender, String[] args) {
-        Connection conn = DatabaseConnector.openConnection();
+    public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
+
+        Connection connection = DatabaseConnector.openConnection();
         String topFlooder = "SELECT username FROM user_message ORDER BY number_message DESC LIMIT 3;";
 
-        try (Statement statement = conn.createStatement(); ResultSet resultSet = statement.executeQuery(topFlooder)) {
+        try (Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(topFlooder)) {
             EmbedBuilder topFlooderEmbed = new EmbedBuilder();
 
             String embedTitle = "User mit den meisten Nachrichten";
@@ -30,6 +31,7 @@ public class TopMessageCommand implements BotCommand {
             Color embedColor = Color.white;
 
             Helper.addTopToEmbed(resultSet, topFlooderEmbed, embedTitle, embedDescription, embedThumbnail, embedColor, channel);
+
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
         }

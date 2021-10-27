@@ -1,9 +1,5 @@
 package tech.goodquestion.lembot.event;
 
-<<<<<<< HEAD:src/discord/bot/gq/event/UserAuthorization.java
-import net.dv8tion.jda.api.entities.Role;
-=======
->>>>>>> a04a4976d5acec61dd422eacb6782063ce5718de:src/main/java/tech/goodquestion/lembot/event/UserAuthorization.java
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
@@ -19,6 +15,7 @@ public class UserAuthorization extends ListenerAdapter {
 
     @Override
     public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
+
         long joinedUserId = event.getMember().getIdLong();
 
         String userVerificationCheck = "SELECT activ FROM muted_user WHERE id_discord = ? ORDER BY muted_on DESC LIMIT 1;";

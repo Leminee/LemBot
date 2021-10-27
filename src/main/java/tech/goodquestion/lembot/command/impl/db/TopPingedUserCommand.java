@@ -3,16 +3,16 @@ package tech.goodquestion.lembot.command.impl.db;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
-import tech.goodquestion.lembot.command.BotCommand;
+import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.database.QueryHelper;
 
 import java.awt.*;
 import java.sql.SQLException;
 
-public class TopPingedUserCommand implements BotCommand {
+public class TopPingedUserCommand implements IBotCommand {
 
     @Override
-    public void dispatch(Message msg, TextChannel channel, Member sender, String[] args) {
+    public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
         try {
             channel.sendMessage(
                 QueryHelper.getTopPingedUser()

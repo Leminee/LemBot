@@ -24,76 +24,71 @@ public class CommandManager extends ListenerAdapter {
         return INSTANCE;
     }
 
-    private final Map<String, BotCommand> commands = new HashMap<>();
-    private final JDA jda;
+    private final Map<String, IBotCommand> commands = new HashMap<>();
+    private final JDA JDA;
     private final Set<String> helpLists = new HashSet<>();
 
-    public void registerCommand(BotCommand cmd) {
-        commands.put(cmd.getName(), cmd);
+    public void registerCommand(IBotCommand command) {
+        commands.put(command.getName(), command);
 
-        if (cmd.getHelpList() != null) {
-            helpLists.add(cmd.getHelpList());
+        if (command.getHelpList() != null) {
+            helpLists.add(command.getHelpList());
         }
     }
 
-    public BotCommand getCommand(String name) {
+    public IBotCommand getCommand(String name) {
         return commands.getOrDefault(name, null);
     }
 
     public CommandManager(JDA jda) {
-        this.jda = jda;
+        this.JDA = jda;
         INSTANCE = this;
         jda.addEventListener(this);
     }
 
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
-        final Message msg = event.getMessage();
+        final Message message = event.getMessage();
 
-        // ignore bot users
-        if (msg.getAuthor().isBot()) {
+        if (message.getAuthor().isBot()) {
             return;
         }
 
-        Matcher commandMatcher = COMMAND_PATTERN.matcher(msg.getContentRaw());
+        Matcher commandMatcher = COMMAND_PATTERN.matcher(message.getContentRaw());
 
-        // message is not a command
         if (!commandMatcher.matches()) {
             return;
         }
 
         String command = commandMatcher.group(1);
 
-        // no command with that name
         if (!commands.containsKey(command)) {
             return;
         }
 
-        // split arguments
         String[] args = commandMatcher.group(2).split(" ");
 
-        // remove space from argument array
         args = Arrays.copyOfRange(args, 1, args.length);
 
-        BotCommand executor = commands.get(command);
+        IBotCommand executor = commands.get(command);
 
-        if (!executor.isPermitted(msg.getMember())) {
+        if (!executor.isPermitted(message.getMember())) {
             EmbedBuilder embedError = new EmbedBuilder();
             String embedDescription = "Permission Denied";
             Helper.createEmbed(embedError, "", embedDescription, Color.RED);
-            msg.getChannel().sendMessage(embedError.build()).queue();
+            message.getChannel().sendMessage(embedError.build()).queue();
             return;
         }
 
-        executor.dispatch(msg, event.getChannel(), event.getMember(), args);
+        executor.dispatch(message, event.getChannel(), event.getMember(), args);
     }
 
-    public Map<String, BotCommand> getCommands() {
+    public Map<String, IBotCommand> getCommands() {
         return commands;
     }
 
     public JDA getJDA() {
-        return jda;
+        return JDA;
     }
 
     public Set<String> getHelpLists() {

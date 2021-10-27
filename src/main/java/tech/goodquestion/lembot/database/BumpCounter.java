@@ -37,27 +37,27 @@ public class BumpCounter extends ListenerAdapter {
         String idPingedUser = matcher.group(1);
         String pingedUserName = event.getJDA().retrieveUserById(idPingedUser).complete().getName();
 
-        Connection conn = DatabaseConnector.openConnection();
+        Connection connection = DatabaseConnector.openConnection();
         String userExists = "SELECT id_discord FROM user_bump WHERE id_discord = ? ";
 
-        try (PreparedStatement preparedStatement = conn.prepareStatement(userExists)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(userExists)) {
             preparedStatement.setString(1, idPingedUser);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
                 String currentNumberBump = "UPDATE user_bump SET number_bumps = (number_bumps +1) WHERE id_discord = ?";
-                PreparedStatement prepareStatementOne = conn.prepareStatement(currentNumberBump);
+                PreparedStatement prepareStatementOne = connection.prepareStatement(currentNumberBump);
                 prepareStatementOne.setString(1, idPingedUser);
                 prepareStatementOne.executeUpdate();
 
                 String bumpTime = "INSERT INTO user_bump_time (id_user_bump_time, id_discord) VALUES (NULL,?)";
-                PreparedStatement insert = conn.prepareStatement(bumpTime);
+                PreparedStatement insert = connection.prepareStatement(bumpTime);
                 insert.setString(1, idPingedUser);
                 insert.executeUpdate();
             } else {
                 String bumpData = "INSERT INTO user_bump (id_discord, username, number_bumps) VALUES (?,?,?);";
 
-                PreparedStatement prepareStatementThree = conn.prepareStatement(bumpData);
+                PreparedStatement prepareStatementThree = connection.prepareStatement(bumpData);
                 prepareStatementThree.setString(1, idPingedUser);
                 prepareStatementThree.setString(2, pingedUserName);
                 prepareStatementThree.setInt(3, bump);

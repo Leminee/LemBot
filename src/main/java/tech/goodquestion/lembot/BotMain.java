@@ -25,6 +25,7 @@ public class BotMain {
 
     public static void main(String[] args) {
         try {
+
             jda = JDABuilder
                     .createDefault(Config.getInstance().getToken())
                     .enableIntents(GatewayIntent.GUILD_MEMBERS)
@@ -39,32 +40,32 @@ public class BotMain {
         jda.getPresence().setStatus(OnlineStatus.ONLINE);
         jda.getPresence().setActivity(Activity.playing("?help"));
 
-        CommandManager cmds = new CommandManager(jda);
-        cmds.registerCommand(new HelpList());
-        cmds.registerCommand(new ClearCommand());
-        cmds.registerCommand(new HelloCommand());
-        cmds.registerCommand(new PingCommand());
-        cmds.registerCommand(new CodeBlockHelpCommand());
-        cmds.registerCommand(new MetaQuestionCommand());
-        cmds.registerCommand(new BotSourceCommand());
-        cmds.registerCommand(new WarnCommand());
-        cmds.registerCommand(new MuteCommand());
-        cmds.registerCommand(new KickCommand());
-        cmds.registerCommand(new BanCommand());
-        cmds.registerCommand(new UnmuteCommand());
-        cmds.registerCommand(new NextBumpTimeCommand());
-        cmds.registerCommand(new PasswordCheckCommand());
-        cmds.registerCommand(new ServerRoleListCommand());
-        cmds.registerCommand(new UserRoleListCommand());
+        CommandManager commands = new CommandManager(jda);
+        commands.registerCommand(new HelpList());
+        commands.registerCommand(new ClearCommand());
+        commands.registerCommand(new HelloCommand());
+        commands.registerCommand(new PingCommand());
+        commands.registerCommand(new CodeBlockHelpCommand());
+        commands.registerCommand(new MetaQuestionCommand());
+        commands.registerCommand(new BotSourceCommand());
+        commands.registerCommand(new WarnCommand());
+        commands.registerCommand(new MuteCommand());
+        commands.registerCommand(new KickCommand());
+        commands.registerCommand(new BanCommand());
+        commands.registerCommand(new UnmuteCommand());
+        commands.registerCommand(new NextBumpTimeCommand());
+        commands.registerCommand(new PasswordCheckCommand());
+        commands.registerCommand(new ServerRoleListCommand());
+        commands.registerCommand(new UserRoleListCommand());
 
-        cmds.registerCommand(new ActiveUserRecordCommand());
-        cmds.registerCommand(new BumpCountCommand());
-        cmds.registerCommand(new MessageCountCommand());
-        cmds.registerCommand(new TopActiveChannelsCommand());
-        cmds.registerCommand(new TopBumperCommand());
-        cmds.registerCommand(new TopMessageCommand());
-        cmds.registerCommand(new TopPingedUserCommand());
-        cmds.registerCommand(new TopEmojiCommand());
+        commands.registerCommand(new ActiveUserRecordCommand());
+        commands.registerCommand(new BumpCountCommand());
+        commands.registerCommand(new MessageCountCommand());
+        commands.registerCommand(new TopActiveChannelsCommand());
+        commands.registerCommand(new TopBumperCommand());
+        commands.registerCommand(new TopMessageCommand());
+        commands.registerCommand(new TopPingedUserCommand());
+        commands.registerCommand(new TopEmojiCommand());
 
         jda.addEventListener(new Reminder());
         jda.addEventListener(new WelcomingMemberJoin());
@@ -89,19 +90,22 @@ public class BotMain {
         jda.addEventListener(new AutoAnswering());
 
         setupReactionRoles();
-        setupRoleCommands(cmds);
+        setupRoleCommands(commands);
     }
 
-    private static void setupRoleCommands(CommandManager cmds) {
+    private static void setupRoleCommands(CommandManager commands) {
         for (CommandRole role : Config.getInstance().getCommandRoles()) {
-            RoleToggleCommand.register(cmds, role.getAbbr(), role.getRole());
+            RoleToggleCommand.register(commands, role.getAbbr(), role.getRole());
         }
     }
 
     private static void setupReactionRoles() {
+
         ReactionManager manager = new ReactionManager(jda);
-        for (ReactionRoleMessage msg : Config.getInstance().getReactionRoles()) {
-            msg.getRoles().forEach((emote, role) -> manager.registerReaction(msg.getChannel(), msg.getMessage(), emote, role));
+
+        for (ReactionRoleMessage reactionRoleMessage : Config.getInstance().getReactionRoles()) {
+            reactionRoleMessage.getRoles().forEach((emote, role) -> manager.registerReaction(reactionRoleMessage.getChannel(), reactionRoleMessage.getMessage(), emote, role));
+
         }
     }
 }

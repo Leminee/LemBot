@@ -8,15 +8,6 @@ import tech.goodquestion.lembot.entities.Sanction;
 
 public class BanCommand extends UserBanishCommand {
 
-    @Override
-    public String getName() {
-        return "ban";
-    }
-
-    @Override
-    public String getDescription() {
-        return "`?ban <user> <reason>`: bannt den User";
-    }
 
     @Override
     public void banishUser(Member toBanish, Sanction sanction, Message originMsg) {
@@ -31,6 +22,16 @@ public class BanCommand extends UserBanishCommand {
         originMsg.getChannel().sendMessage(confirmation.build()).queue();
 
         QueryHelper.logUserBan(sanction);
+    }
+
+    @Override
+    public String getName() {
+        return "ban";
+    }
+
+    @Override
+    public String getDescription() {
+        return "`?ban <user> <reason>`: bannt den User";
     }
 
     @Override

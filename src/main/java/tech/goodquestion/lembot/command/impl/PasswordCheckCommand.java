@@ -3,7 +3,7 @@ package tech.goodquestion.lembot.command.impl;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
-import tech.goodquestion.lembot.command.BotCommand;
+import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.database.DatabaseConnector;
 
 import java.sql.Connection;
@@ -11,25 +11,27 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class PasswordCheckCommand implements BotCommand {
+public class PasswordCheckCommand implements IBotCommand {
 
     @Override
-    public void dispatch(Message msg, TextChannel channel, Member sender, String[] args) {
+    public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
+
         if (args.length != 1) {
             return;
         }
 
-        msg.delete().queue();
+        message.delete().queue();
         String userPassword = args[0];
 
         if (checkPassword(userPassword)) {
-            channel.sendMessage(" :red_circle:   Pwned - Passwort wurde gefunden! " + msg.getAuthor().getAsMention()).queue();
+            channel.sendMessage(" :red_circle:   Pwned - Passwort wurde gefunden! " + message.getAuthor().getAsMention()).queue();
         } else {
-            channel.sendMessage(" :green_circle:  Nicht gefunden! " + msg.getAuthor().getAsMention()).queue();
+            channel.sendMessage(" :green_circle:  Nicht gefunden! " + message.getAuthor().getAsMention()).queue();
         }
     }
 
     public boolean checkPassword(String userPassword) {
+
         if (userPassword.length() < 8) {
             return true;
         }

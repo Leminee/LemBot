@@ -4,7 +4,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
-import tech.goodquestion.lembot.command.BotCommand;
+import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.database.DatabaseConnector;
@@ -13,6 +13,7 @@ import tech.goodquestion.lembot.entities.VoiceChannel;
 
 import java.awt.*;
 import java.sql.*;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Executors;
@@ -24,6 +25,7 @@ public final class Helper {
     public static final String PREFIX = "?";
 
     public static boolean isSuccessfulBump(List<MessageEmbed> messages, User embedAuthor) {
+
         long disBoardId = Config.getInstance().getUsers().getDisboardId();
         String successfulBumpImageUrl = "https://disboard.org/images/bot-command-image-bump.png";
 
@@ -50,9 +52,9 @@ public final class Helper {
     }
 
     public static void getAmount(UserData userData, String query, String nextHigherUser) {
-        Connection conn = DatabaseConnector.openConnection();
+        Connection connection = DatabaseConnector.openConnection();
 
-        try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setLong(1, userData.userId);
 
@@ -62,7 +64,7 @@ public final class Helper {
 
                 userData.amountOf = resultSet.getInt(1);
 
-                PreparedStatement prepareStatementOne = conn.prepareStatement(nextHigherUser);
+                PreparedStatement prepareStatementOne = connection.prepareStatement(nextHigherUser);
                 prepareStatementOne.setLong(1, userData.amountOf);
 
                 ResultSet resultSetOne = prepareStatementOne.executeQuery();
@@ -80,6 +82,7 @@ public final class Helper {
     }
 
     public static void sendAmount(UserData userData, String embedColor, String amountOf, TextChannel channel) {
+
         String authorMention = "<@" + userData.userId + ">";
 
         if (!userData.hasBump()) {
@@ -109,13 +112,13 @@ public final class Helper {
     public static void scheduleCommand(String command, int delay, int period, TimeUnit timeUnit, String[] args) {
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-        BotCommand cmd = CommandManager.getInstance().getCommand(command);
+        IBotCommand botCommand = CommandManager.getInstance().getCommand(command);
 
-        if (cmd == null) {
+        if (botCommand == null) {
             return;
         }
 
-        final Runnable commandRunner = () -> cmd.dispatch(null, Config.getInstance().getChannels().getBumpChannel(), null, args);
+        final Runnable commandRunner = () -> botCommand.dispatch(null, Config.getInstance().getChannels().getBumpChannel(), null, args);
 
         scheduler.scheduleAtFixedRate(commandRunner, delay, period, timeUnit);
     }
@@ -134,9 +137,9 @@ public final class Helper {
     }
 
     public static void insertVoiceChannelData(String insertQuery, VoiceChannel voiceChannel) {
-        Connection conn = DatabaseConnector.openConnection();
+        Connection connection = DatabaseConnector.openConnection();
 
-        try (PreparedStatement preparedStatement = conn.prepareStatement(insertQuery)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
             preparedStatement.setLong(1, voiceChannel.userId);
             preparedStatement.setString(2, voiceChannel.userTag);
             preparedStatement.setString(3, voiceChannel.userName);
@@ -148,6 +151,7 @@ public final class Helper {
     }
 
     public static void addTopToEmbed(ResultSet resultSet, EmbedBuilder embedBuilder, String embedTitle, String embedDescription, String embedThumbnail, Color embedColor, TextChannel channel) {
+
         Helper.createEmbed(embedBuilder, embedTitle, embedDescription, embedColor, embedThumbnail);
 
         int top = 1;
@@ -163,4 +167,8 @@ public final class Helper {
         }
     }
 
+    public static String getCurrentTime(){
+        java.util.Date date = new Date();
+        return date.toString().substring(11, 16);
+    }
 }

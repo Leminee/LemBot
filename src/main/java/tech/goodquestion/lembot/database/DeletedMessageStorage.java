@@ -15,17 +15,17 @@ public class DeletedMessageStorage extends ListenerAdapter {
     public void onGuildMessageDelete(@Nonnull GuildMessageDeleteEvent event) {
         long idDeletedMessage = event.getMessageIdLong();
 
-        Connection conn = DatabaseConnector.openConnection();
+        Connection connection = DatabaseConnector.openConnection();
         String messageStored = "SELECT id_message FROM user_message_content WHERE id_message = ?";
         String deletedMessage = "INSERT INTO deleted_message (id_deleted_message) VALUES (?);";
 
         try {
-            PreparedStatement preparedStatement = conn.prepareStatement(messageStored);
+            PreparedStatement preparedStatement = connection.prepareStatement(messageStored);
             preparedStatement.setLong(1, idDeletedMessage);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                PreparedStatement preparedStatementOne = conn.prepareStatement(deletedMessage);
+                PreparedStatement preparedStatementOne = connection.prepareStatement(deletedMessage);
                 preparedStatementOne.setLong(1, idDeletedMessage);
                 preparedStatementOne.executeUpdate();
             }

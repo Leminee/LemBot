@@ -3,14 +3,14 @@ package tech.goodquestion.lembot.command.impl;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
-import tech.goodquestion.lembot.command.BotCommand;
+import tech.goodquestion.lembot.command.IBotCommand;
 
-public class HelloCommand implements BotCommand {
+public class HelloCommand implements IBotCommand {
 
     @Override
-    public void dispatch(Message msg, TextChannel channel, Member sender, String[] args) {
+    public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
         channel.sendTyping().queue();
-        channel.sendMessage("Hi, Wie geht's dir? " + msg.getAuthor().getAsMention() + " Was hast du heute schon gemacht? und was wirst du heute noch tun?").queue();
+        channel.sendMessage("Hi, Wie geht's dir? " + message.getAuthor().getAsMention() + " Was hast du heute schon gemacht? und was wirst du heute noch tun?").queue();
     }
 
     @Override
