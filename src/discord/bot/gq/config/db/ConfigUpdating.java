@@ -2,7 +2,6 @@ package discord.bot.gq.config.db;
 
 import discord.bot.gq.config.command.UpdatingChannel;
 import discord.bot.gq.config.command.UpdatingRole;
-import discord.bot.gq.database.ConnectionToDB;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

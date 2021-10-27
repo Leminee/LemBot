@@ -1,7 +1,5 @@
 package discord.bot.gq.config.db;
 
-import discord.bot.gq.database.ConnectionToDB;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;

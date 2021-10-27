@@ -1,7 +1,6 @@
 package discord.bot.gq.lib;
 
 import discord.bot.gq.config.db.ConfigSelection;
-import discord.bot.gq.database.ConnectionToDB;
 import discord.bot.gq.entities.MemberStatus;
 import discord.bot.gq.entities.Sanction;
 import discord.bot.gq.entities.UserData;

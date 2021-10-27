@@ -1,6 +1,5 @@
 package discord.bot.gq.command.moderation;
 
-import discord.bot.gq.database.ConnectionToDB;
 import discord.bot.gq.lib.Helper;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
