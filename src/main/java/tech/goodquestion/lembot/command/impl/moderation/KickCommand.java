@@ -20,6 +20,7 @@ public class KickCommand extends UserBanishCommand {
 
     @Override
     public void banishUser(Member toBanish, Sanction sanction, Message originMsg) {
+
         sendSanctionReason(toBanish.getUser(), "gekickt", sanction.reason, toBanish.getAsMention());
         toBanish.kick(sanction.reason).complete();
 

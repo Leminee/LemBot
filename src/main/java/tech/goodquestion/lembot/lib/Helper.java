@@ -24,27 +24,29 @@ public final class Helper {
 
     public static final String PREFIX = "?";
 
-    public static boolean isSuccessfulBump(List<MessageEmbed> messages, User embedAuthor) {
 
-        long disBoardId = Config.getInstance().getUsers().getDisboardId();
+    public static boolean isNotSuccessfulBump(List<MessageEmbed> messages, User embedAuthor) {
+
+        final long disBoardId = Config.getInstance().getUsers().getDisboardId();
         String successfulBumpImageUrl = "https://disboard.org/images/bot-command-image-bump.png";
 
         if (embedAuthor.getIdLong() != disBoardId) {
-            return false;
+            return true;
         }
 
         if (messages.get(0).getDescription() == null) {
-            return false;
+            return true;
         }
 
         if (messages.get(0).getImage() == null) {
-            return false;
+            return true;
         }
-        return Objects.equals(Objects.requireNonNull(messages.get(0).getImage()).getUrl(), successfulBumpImageUrl);
+
+        return !Objects.equals(Objects.requireNonNull(messages.get(0).getImage()).getUrl(), successfulBumpImageUrl);
     }
 
     public static Blob changeCharacterEncoding(PreparedStatement userDataInput, String userName) throws SQLException {
-        byte[] byteA = userName.getBytes();
+        final byte[] byteA = userName.getBytes();
         Blob blob = userDataInput.getConnection().createBlob();
         blob.setBytes(1, byteA);
 
@@ -111,13 +113,12 @@ public final class Helper {
     }
 
     public static void scheduleCommand(String command, int delay, int period, TimeUnit timeUnit, String[] args) {
+
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
         IBotCommand botCommand = CommandManager.getInstance().getCommand(command);
 
-        if (botCommand == null) {
-            return;
-        }
+        if (botCommand == null) return;
 
         final Runnable commandRunner = () -> botCommand.dispatch(null, Config.getInstance().getChannels().getBumpChannel(), null, args);
 

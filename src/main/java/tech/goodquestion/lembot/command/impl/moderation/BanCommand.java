@@ -11,7 +11,9 @@ public class BanCommand extends UserBanishCommand {
 
     @Override
     public void banishUser(Member toBanish, Sanction sanction, Message originMsg) {
+
         sendSanctionReason(toBanish.getUser(), "gebannt", sanction.reason, toBanish.getAsMention());
+
 
         toBanish.ban(0, sanction.reason).complete();
 

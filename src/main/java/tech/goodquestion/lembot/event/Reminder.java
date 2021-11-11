@@ -22,7 +22,7 @@ public class Reminder extends ListenerAdapter {
         List<MessageEmbed> disBoardEmbed = event.getMessage().getEmbeds();
         User embedAuthor = event.getAuthor();
 
-        if (!Helper.isSuccessfulBump(disBoardEmbed, embedAuthor)) return;
+        if (Helper.isNotSuccessfulBump(disBoardEmbed, embedAuthor)) return;
 
         scheduleReminder();
     }

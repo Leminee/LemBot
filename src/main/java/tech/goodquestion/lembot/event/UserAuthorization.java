@@ -31,6 +31,7 @@ public class UserAuthorization extends ListenerAdapter {
             long userId = event.getMember().getIdLong();
 
             if (resultSet.next()) {
+
                 int number = resultSet.getInt(1);
 
                 if (number == 1) {
@@ -42,5 +43,4 @@ public class UserAuthorization extends ListenerAdapter {
             sqlException.printStackTrace();
         }
     }
-
 }

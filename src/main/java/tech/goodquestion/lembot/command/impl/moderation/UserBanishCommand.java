@@ -117,6 +117,6 @@ public abstract class UserBanishCommand implements IBotCommand {
         String content = "Du wurdest aus dem folgenden Grund auf GoodQuestion " + "**" + typeSanction + "**" + ": " + reason;
         sanctionedUser.openPrivateChannel()
                 .flatMap(channel -> channel.sendMessage(content))
-                .queue();
+                .complete();
     }
 }

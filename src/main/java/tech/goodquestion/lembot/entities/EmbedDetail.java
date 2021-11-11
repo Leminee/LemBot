@@ -1,4 +1,4 @@
-package discord.bot.gq.entities;
+package tech.goodquestion.lembot.entities;
 
 public class EmbedDetail {
 

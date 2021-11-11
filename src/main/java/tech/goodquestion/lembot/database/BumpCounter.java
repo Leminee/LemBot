@@ -26,7 +26,7 @@ public class BumpCounter extends ListenerAdapter {
         Message message = event.getMessage();
         String pingedUser = "<@(\\d+)>";
 
-        if (!Helper.isSuccessfulBump(disBoardEmbed, embedAuthor)) return;
+        if (Helper.isNotSuccessfulBump(disBoardEmbed, embedAuthor)) return;
 
         String embedContent = message.getEmbeds().get(0).getDescription();
         Pattern p = Pattern.compile(pingedUser);

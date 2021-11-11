@@ -10,6 +10,7 @@ import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.lib.Helper;
 
 import java.awt.*;
+import java.util.Objects;
 
 public class RoleToggleCommand implements IBotCommand {
 
@@ -34,11 +35,12 @@ public class RoleToggleCommand implements IBotCommand {
         String embedDescription;
         EmbedBuilder roleAddedEmbed = new EmbedBuilder();
 
+        assert role != null;
         if (mode == Mode.ADD) {
-            message.getGuild().addRoleToMember(message.getMember().getIdLong(), role).complete();
+            message.getGuild().addRoleToMember(Objects.requireNonNull(message.getMember()).getIdLong(), role).complete();
             embedDescription = "<@&" + role_id + "> wurde dir erfolgreich zugewiesen " + message.getAuthor().getAsMention();
         } else {
-            message.getGuild().removeRoleFromMember(message.getMember().getIdLong(), role).complete();
+            message.getGuild().removeRoleFromMember(Objects.requireNonNull(message.getMember()).getIdLong(), role).complete();
             embedDescription = "<@&" + role_id + "> wurde dir erfolgreich entfernt " + message.getAuthor().getAsMention();
         }
 

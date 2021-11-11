@@ -205,6 +205,7 @@ public class QueryHelper {
     }
 
     public static int getActiveUserRecord() {
+
         try (Connection connection = DatabaseConnector.openConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(ACTIVE_USER_RECORD)){
 
 
