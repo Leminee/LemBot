@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 
 public interface IBotCommand {
+
     void dispatch(Message message, TextChannel channel, Member sender, String[] args);
     String getName();
     String getDescription();

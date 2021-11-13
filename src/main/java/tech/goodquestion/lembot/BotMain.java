@@ -58,6 +58,7 @@ public class BotMain {
 
         command.registerCommand(new ActiveUserRecordCommand());
         command.registerCommand(new BumpCountCommand());
+        command.registerCommand(new JoiningDate());
         command.registerCommand(new MessageCountCommand());
         command.registerCommand(new TopActiveChannelsCommand());
         command.registerCommand(new TopBumperCommand());

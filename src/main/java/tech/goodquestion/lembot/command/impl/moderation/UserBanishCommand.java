@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.config.Config;
@@ -45,20 +46,34 @@ public abstract class UserBanishCommand implements IBotCommand {
             return;
         }
 
+
         List<Member> mentionedMembers = message.getMentionedMembers();
         Member member = null;
 
-        if (mentionedMembers.size() > 0) {
-            member = mentionedMembers.get(0);
-        } else {
-            User user = CommandManager.getInstance().getJDA().retrieveUserById(args[0], true).complete();
+        try {
 
-            if (user != null) {
-                member = message.getGuild().retrieveMember(user).complete();
+            if (mentionedMembers.size() > 0) {
+                member = mentionedMembers.get(0);
+            } else {
+                User user = CommandManager.getInstance().getJDA().retrieveUserById(args[0], true).complete();
+
+                if (user != null) {
+                    member = message.getGuild().retrieveMember(user).complete();
+                }
             }
+
+        } catch (ErrorResponseException errorResponseException) {
+
+            EmbedBuilder embedError = new EmbedBuilder();
+            String embedDescription = "User ist nicht auf dem Server!";
+            Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED, "https://cdn.discorda.com/attachments/819694809765380146/87Bildschirmfoto_2021-08-23_um_07.06.46.png");
+            channel.sendMessage(embedError.build()).queue();
+            return;
+
         }
 
         if (member == null) {
+
             EmbedBuilder embedError = new EmbedBuilder();
             String embedDescription = "User ist nicht auf dem Server!";
             Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED);

@@ -55,6 +55,7 @@ public class QueryHelper {
     public static final String NEXT_BUMP = "SELECT TIMESTAMPDIFF(MINUTE,CURRENT_TIMESTAMP, TIMESTAMPADD(HOUR,2, bumped_at)) FROM user_bump_time ORDER BY bumped_at DESC LIMIT 1";
     public static final String ACTIVE_MEMBER_LOG = "INSERT INTO active_user (active_member) VALUES (?);";
     public static final String ACTIVE_USER_RECORD = "SELECT MAX(active_member) FROM active_user;";
+    public static final String USER_JOINED_DATE = "SELECT CONCAT(DAY(joined_on),'-', MONTH(joined_on),'-',YEAR(joined_on)) FROM `user_join` WHERE id_discord = ?";
 
     public static void logMemberStatusChange(long userId, String userTag, OnlineStatus newStatus) {
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement statement = connection.prepareStatement(INSERT_USER_STATUS)) {
@@ -141,6 +142,7 @@ public class QueryHelper {
     }
 
     private static void insertSanction(String query, Sanction sanction) {
+
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, sanction.userId);
             preparedStatement.setString(2, sanction.userTag);
@@ -149,6 +151,7 @@ public class QueryHelper {
             preparedStatement.setString(5, sanction.reason);
             preparedStatement.setString(6, sanction.channelName);
             preparedStatement.executeUpdate();
+
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
         }
@@ -219,5 +222,30 @@ public class QueryHelper {
             System.out.println(sqlException.getMessage());
         }
         return 0;
+    }
+
+    public static String getJoiningDate(long userId) {
+
+
+        try (Connection connection = DatabaseConnector.openConnection();  PreparedStatement preparedStatement = connection.prepareStatement(USER_JOINED_DATE)) {
+
+            preparedStatement.setLong(1,userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()){
+
+                return "am " +resultSet.getString(1);
+            }
+
+            else {
+
+                return "vor dem **1.3.2021";
+            }
+
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
+        }
+
+        return "";
     }
 }

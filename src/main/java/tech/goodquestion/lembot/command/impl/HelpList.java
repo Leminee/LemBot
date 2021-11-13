@@ -62,7 +62,7 @@ public class HelpList implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?help`: Zeigt diese Hilfe zum LemBot an\n`?help -`: Zeigt alle verfügbaren Command-Listen an";
+        return "`?help -`: Zeigt alle verfügbaren Command-Listen an";
     }
 
     @Override
