@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.database.DatabaseConnector;
+import tech.goodquestion.lembot.database.QueryHelper;
 import tech.goodquestion.lembot.lib.Helper;
 
 import java.awt.*;
@@ -21,9 +22,8 @@ public class TopBumperCommand implements IBotCommand {
 
         Connection connection = DatabaseConnector.openConnection();
 
-        String topBumper = "SELECT username FROM user_bump ORDER BY number_bumps DESC, username LIMIT 3;";
 
-        try (Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(topBumper)) {
+        try (Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(QueryHelper.TOP_BUMPER)) {
 
             EmbedBuilder topBumperEmbed = new EmbedBuilder();
 

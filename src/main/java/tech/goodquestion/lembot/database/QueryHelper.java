@@ -51,14 +51,19 @@ public class QueryHelper {
             "VALUES (NULL,?,?,?,?,?,?)";
     public static final String USER_WARN_DATA = "INSERT INTO warned_user (id_warned_user,id_discord,user_tag, username, warn_author, warn_reason, channel_name) " +
             "VALUES (NULL,?,?,?,?,?,?)";
-    public static final String NEXT_BUMP_TIME = "SELECT TIME(TIMESTAMPADD(HOUR,1, bumped_at)) FROM user_bump_time ORDER BY bumped_at DESC LIMIT 1";
-    public static final String NEXT_BUMP = "SELECT TIMESTAMPDIFF(MINUTE,CURRENT_TIMESTAMP, TIMESTAMPADD(HOUR,2, bumped_at)) FROM user_bump_time ORDER BY bumped_at DESC LIMIT 1";
+    public static final String NEXT_BUMP_TIME = "SELECT TIME(TIMESTAMPADD(HOUR,1, bumped_on)) FROM user_bump_time ORDER BY bumped_on DESC LIMIT 1";
+    public static final String NEXT_BUMP = "SELECT TIMESTAMPDIFF(MINUTE,CURRENT_TIMESTAMP, TIMESTAMPADD(HOUR,2, bumped_on)) FROM user_bump_time ORDER BY bumped_on DESC LIMIT 1";
     public static final String ACTIVE_MEMBER_LOG = "INSERT INTO active_user (active_member) VALUES (?);";
     public static final String ACTIVE_USER_RECORD = "SELECT MAX(active_member) FROM active_user;";
-    public static final String USER_JOINED_DATE = "SELECT CONCAT(DAY(joined_on),'-', MONTH(joined_on),'-',YEAR(joined_on)) FROM `user_join` WHERE id_discord = ?";
-    public static final String USERNAME_UPDATED_LOG = "INSERT INTO updated_username (id_updated_username, id_discord, old_username, new_username) VALUES (NULL,?,?,?);";
+    public static final String USER_JOINED_DATE = "SELECT CONCAT(DAY(joined_on),'-', MONTH(joined_on),'-',YEAR(joined_on)) FROM `user_join` WHERE id_discord = ? ORDER BY joined_on ASC LIMIT 1";
+    public static final String USERNAME_UPDATED_LOG = "INSERT INTO updated_username (id_updated_username, id_discord, user_tag, old_username, new_username) VALUES (NULL,?,?,?,?);";
     public static final String ADJUSTING_NEW_USERNAME_IN_BUMPER = "UPDATE user_bump SET username = ? WHERE id_discord = ?;";
     public static final String ADJUSTING_NEW_USERNAME_IN_MESSAGE = "UPDATE user_message SET username = ? WHERE id_discord = ?;";
+    public static final String TOP_MONTHLY_BUMPER = "SELECT username, COUNT(user_bump_time.id_discord) FROM `user_bump_time` INNER JOIN user_bump ON user_bump_time.id_discord = user_bump.id_discord  WHERE bumped_on > (SELECT DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 MONTH)) GROUP BY user_bump_time.id_discord ORDER BY COUNT(user_bump_time.id_discord) DESC LIMIT 3";
+    public static final  String TOP_BUMPER = "SELECT username FROM user_bump ORDER BY number_bumps DESC, username LIMIT 3;";
+    public static final  String TOP_FLOODER = "SELECT username FROM user_message ORDER BY number_message DESC LIMIT 3;";
+    public static final String AMOUNT_MESSAGES = "SELECT number_message FROM user_message WHERE id_discord = ?";
+    public static final String NEXT_HIGHER_USER_AMOUNT_MESSAGES = "SELECT id_discord, number_message FROM user_message WHERE number_message > ? ORDER BY number_message, username LIMIT 1";
 
 
 
@@ -73,12 +78,13 @@ public class QueryHelper {
         }
     }
 
-    public static void logUsernameUpdated(long userId, String oldUsername, String newUsername) {
+    public static void logUsernameUpdated(long userId, String userTag,String oldUsername, String newUsername) {
 
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement statement = connection.prepareStatement(USERNAME_UPDATED_LOG)) {
             statement.setLong(1, userId);
-            statement.setBlob(2, Helper.changeCharacterEncoding(statement, oldUsername));
-            statement.setBlob(3, Helper.changeCharacterEncoding(statement, newUsername));
+            statement.setBlob(2, Helper.changeCharacterEncoding(statement,userTag));
+            statement.setBlob(3, Helper.changeCharacterEncoding(statement, oldUsername));
+            statement.setBlob(4, Helper.changeCharacterEncoding(statement, newUsername));
             statement.executeUpdate();
 
         } catch (SQLException sqlException) {

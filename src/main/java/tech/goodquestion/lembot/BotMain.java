@@ -65,6 +65,8 @@ public class BotMain {
         command.registerCommand(new TopMessageCommand());
         command.registerCommand(new TopPingedUserCommand());
         command.registerCommand(new TopEmojiCommand());
+        command.registerCommand(new TopMonthlyBumper());
+
 
         jda.addEventListener(new Reminder());
         jda.addEventListener(new WelcomingMemberJoin());

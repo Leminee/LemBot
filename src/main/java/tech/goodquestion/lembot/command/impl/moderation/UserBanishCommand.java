@@ -48,19 +48,11 @@ public abstract class UserBanishCommand implements IBotCommand {
 
 
         List<Member> mentionedMembers = message.getMentionedMembers();
-        Member member = null;
+        Member member;
 
         try {
 
-            if (mentionedMembers.size() > 0) {
-                member = mentionedMembers.get(0);
-            } else {
-                User user = CommandManager.getInstance().getJDA().retrieveUserById(args[0], true).complete();
-
-                if (user != null) {
-                    member = message.getGuild().retrieveMember(user).complete();
-                }
-            }
+            member = getMember(message, args, mentionedMembers, null);
 
         } catch (ErrorResponseException errorResponseException) {
 
@@ -72,15 +64,7 @@ public abstract class UserBanishCommand implements IBotCommand {
 
         }
 
-        if (member == null) {
-
-            EmbedBuilder embedError = new EmbedBuilder();
-            String embedDescription = "User ist nicht auf dem Server!";
-            Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED);
-            channel.sendMessage(embedError.build()).queue();
-            return;
-        }
-
+        assert member != null;
         if (member.hasPermission(Permission.ADMINISTRATOR)) {
             EmbedBuilder embedError = new EmbedBuilder();
             String embedDescription = "Admins/Moderatoren können nicht gekickt oder gebannt werden!";
@@ -113,6 +97,19 @@ public abstract class UserBanishCommand implements IBotCommand {
         }
 
         banishUser(member, sanction, message);
+    }
+
+    public static Member getMember(Message message, String[] args, List<Member> mentionedMembers, Member member) {
+        if (mentionedMembers.size() > 0) {
+            member = mentionedMembers.get(0);
+        } else {
+            User user = CommandManager.getInstance().getJDA().retrieveUserById(args[0], true).complete();
+
+            if (user != null) {
+                member = message.getGuild().retrieveMember(user).complete();
+            }
+        }
+        return member;
     }
 
     public abstract void banishUser(Member toBanish, Sanction sanction, Message originMsg);

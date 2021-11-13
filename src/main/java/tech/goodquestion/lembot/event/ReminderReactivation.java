@@ -13,5 +13,6 @@ public class ReminderReactivation extends ListenerAdapter {
     public void onReady(@NotNull ReadyEvent event) {
 
         Reminder.scheduleReminder(QueryHelper.getMinutesToNextBump(), TimeUnit.MINUTES);
+
     }
 }

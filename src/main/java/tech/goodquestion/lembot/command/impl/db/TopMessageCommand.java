@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.database.DatabaseConnector;
+import tech.goodquestion.lembot.database.QueryHelper;
 import tech.goodquestion.lembot.lib.Helper;
 
 import java.awt.*;
@@ -20,9 +21,9 @@ public class TopMessageCommand implements IBotCommand {
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
 
         Connection connection = DatabaseConnector.openConnection();
-        String topFlooder = "SELECT username FROM user_message ORDER BY number_message DESC LIMIT 3;";
 
-        try (Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(topFlooder)) {
+
+        try (Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(QueryHelper.TOP_FLOODER)) {
             EmbedBuilder topFlooderEmbed = new EmbedBuilder();
 
             String embedTitle = "User mit den meisten Nachrichten";

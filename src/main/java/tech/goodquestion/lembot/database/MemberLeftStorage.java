@@ -11,5 +11,4 @@ public class MemberLeftStorage extends ListenerAdapter {
         QueryHelper.logUserLeave(event.getUser());
         QueryHelper.logMemberAmount(event.getGuild());
     }
-
 }

@@ -5,9 +5,7 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.entities.User;
 import tech.goodquestion.lembot.command.IBotCommand;
-import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.database.DatabaseConnector;
 import tech.goodquestion.lembot.lib.Helper;
@@ -30,15 +28,7 @@ public class UnmuteCommand implements IBotCommand {
         List<Member> mentionedMembers = msg.getMentionedMembers();
         Member member = null;
 
-        if (mentionedMembers.size() > 0) {
-            member = mentionedMembers.get(0);
-        } else {
-            User user = CommandManager.getInstance().getJDA().retrieveUserById(args[0], true).complete();
-
-            if (user != null) {
-                member = msg.getGuild().retrieveMember(user).complete();
-            }
-        }
+        member = UserBanishCommand.getMember(msg, args, mentionedMembers, member);
 
         if (member == null) {
             EmbedBuilder embedError = new EmbedBuilder();

@@ -14,6 +14,7 @@ public class UserMessageCounter extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
+
         String userMessageContent = event.getMessage().getContentRaw();
         String userId = Objects.requireNonNull(event.getMember()).getId();
         String userName = event.getMember().getEffectiveName();
@@ -41,6 +42,7 @@ public class UserMessageCounter extends ListenerAdapter {
                 PreparedStatement updatePStatement = conn.prepareStatement(currentNumberMessage);
                 updatePStatement.setString(1, userId);
                 updatePStatement.executeUpdate();
+
             } else {
                 preparedStatement.executeUpdate();
             }
