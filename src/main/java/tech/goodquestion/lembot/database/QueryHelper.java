@@ -40,7 +40,7 @@ public class QueryHelper {
                   UNION ALL
                   SELECT '\uD83D\uDE04', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE04%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
                   ORDER BY c DESC LIMIT 3;""";
-    public static final String TOP_CHANNELS = "SELECT channel_name, COUNT(id_channel) FROM `channel` GROUP BY id_channel ORDER BY COUNT(id_channel) DESC LIMIT 3;";
+    public static final String TOP_CHANNELS = "SELECT channel_name, COUNT(id_channel) FROM `channel` GROUP BY id_channel ORDER BY COUNT(id_channel) DESC LIMIT 5;";
     public static final String TOP_PINGED_USER = "SELECT content, COUNT(id_discord) FROM `user_message_content` WHERE content LIKE '%<@!%' OR '%<@I%' GROUP BY content HAVING COUNT(id_discord) > 1 ORDER BY COUNT(id_discord) DESC LIMIT 3";
     public static final String USER_LEAVE_LOG = "INSERT INTO user_leave (id_user_leave,id_discord,user_tag,username,avatar_url) VALUES (NULL,?,?,?,?);";
     public static final String USER_JOIN_LOG = "INSERT INTO user_join (id_user_join,id_discord,user_tag,username,avatar_url) VALUES (NULL,?,?,?,?);";
@@ -56,6 +56,11 @@ public class QueryHelper {
     public static final String ACTIVE_MEMBER_LOG = "INSERT INTO active_user (active_member) VALUES (?);";
     public static final String ACTIVE_USER_RECORD = "SELECT MAX(active_member) FROM active_user;";
     public static final String USER_JOINED_DATE = "SELECT CONCAT(DAY(joined_on),'-', MONTH(joined_on),'-',YEAR(joined_on)) FROM `user_join` WHERE id_discord = ?";
+    public static final String USERNAME_UPDATED_LOG = "INSERT INTO updated_username (id_updated_username, id_discord, old_username, new_username) VALUES (NULL,?,?,?);";
+    public static final String ADJUSTING_NEW_USERNAME_IN_BUMPER = "UPDATE user_bump SET username = ? WHERE id_discord = ?;";
+    public static final String ADJUSTING_NEW_USERNAME_IN_MESSAGE = "UPDATE user_message SET username = ? WHERE id_discord = ?;";
+
+
 
     public static void logMemberStatusChange(long userId, String userTag, OnlineStatus newStatus) {
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement statement = connection.prepareStatement(INSERT_USER_STATUS)) {
@@ -63,6 +68,19 @@ public class QueryHelper {
             statement.setBlob(2, Helper.changeCharacterEncoding(statement, userTag));
             statement.setString(3, String.valueOf(newStatus));
             statement.executeUpdate();
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
+        }
+    }
+
+    public static void logUsernameUpdated(long userId, String oldUsername, String newUsername) {
+
+        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement statement = connection.prepareStatement(USERNAME_UPDATED_LOG)) {
+            statement.setLong(1, userId);
+            statement.setBlob(2, Helper.changeCharacterEncoding(statement, oldUsername));
+            statement.setBlob(3, Helper.changeCharacterEncoding(statement, newUsername));
+            statement.executeUpdate();
+
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
         }
@@ -87,6 +105,7 @@ public class QueryHelper {
     }
 
     private static EmbedBuilder getTop(String query, String[] fieldNames, String[] fieldIcons) throws SQLException {
+
         try (Connection connection = DatabaseConnector.openConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(query)) {
             EmbedBuilder embed = new EmbedBuilder();
             embed.setDescription("");
@@ -247,5 +266,39 @@ public class QueryHelper {
         }
 
         return "";
+    }
+
+    public static void adjustUsername(String adjustingDateQuery, String newUsername, long userId) {
+
+        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(adjustingDateQuery)) {
+
+            preparedStatement.setString(1, newUsername);
+            preparedStatement.setLong(2, userId);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
+        }
+    }
+
+    public static boolean isActiveUserRecord(int approximatePresentMember) {
+
+
+        try (Connection connection = DatabaseConnector.openConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(ACTIVE_USER_RECORD)){
+
+
+            if (resultSet.next()) {
+
+               int currentActiveUseRecord = resultSet.getInt(1);
+
+               if (approximatePresentMember > currentActiveUseRecord) {
+                   return true;
+               }
+            }
+
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
+        }
+        return false;
     }
 }
