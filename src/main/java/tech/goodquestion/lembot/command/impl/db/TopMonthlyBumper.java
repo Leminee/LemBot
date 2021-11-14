@@ -33,7 +33,7 @@ public class TopMonthlyBumper implements IBotCommand {
             Color embedColor = Color.cyan;
 
 
-            Helper.addTopMonthlyDataToEmbed(channel, resultSet, topBumperEmbed, embedTitle, embedDescription, embedThumbnail, embedColor);
+            Helper.addTopMonthlyDataToEmbed(channel, resultSet, topBumperEmbed, embedTitle, embedDescription, embedThumbnail, embedColor, "Bumps");
 
 
         } catch (SQLException sqlException) {

@@ -178,13 +178,13 @@ public final class Helper {
         return date.toString().substring(11, 16);
     }
 
-    public static void addTopMonthlyDataToEmbed(TextChannel channel, ResultSet resultSet, EmbedBuilder topBumperEmbed, String embedTitle, String embedDescription, String embedThumbnail, Color embedColor) {
+    public static void addTopMonthlyDataToEmbed(TextChannel channel, ResultSet resultSet, EmbedBuilder topBumperEmbed, String embedTitle, String embedDescription, String embedThumbnail, Color embedColor, String amountOf) {
         createEmbed(topBumperEmbed, embedTitle, embedDescription, embedColor, embedThumbnail);
 
         int top = 1;
         try {
             while (resultSet.next()) {
-                topBumperEmbed.addField("TOP " + top, resultSet.getString(1) + " **(" +resultSet.getString(2)+" Bumps)**", false);
+                topBumperEmbed.addField("TOP " + top, resultSet.getString(1) + " **(" +resultSet.getString(2)+ " " +amountOf +")**", false);
                 top++;
             }
 

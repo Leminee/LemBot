@@ -88,9 +88,9 @@ public class BotMain {
         jda.addEventListener(new AmountMemberStatus());
         jda.addEventListener(new ReminderReactivation());
         jda.addEventListener(new UpdatingUsername());
-
         jda.addEventListener(new MemberLeftStorage());
         jda.addEventListener(new AutoAnswering());
+        jda.addEventListener(new AddingRole());
 
         setupReactionRoles();
         setupRoleCommands(command);

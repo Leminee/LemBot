@@ -33,7 +33,7 @@ public class TopMonthlyFlooder implements IBotCommand {
             Color embedColor = Color.white;
 
 
-            Helper.addTopMonthlyDataToEmbed(channel, resultSet, topFlooderEmbed, embedTitle, embedDescription, embedThumbnail, embedColor);
+            Helper.addTopMonthlyDataToEmbed(channel, resultSet, topFlooderEmbed, embedTitle, embedDescription, embedThumbnail, embedColor, "Nachrichten");
 
 
         } catch (SQLException sqlException) {

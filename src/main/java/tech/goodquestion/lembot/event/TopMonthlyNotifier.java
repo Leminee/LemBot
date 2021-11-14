@@ -18,7 +18,7 @@ public class TopMonthlyNotifier extends ListenerAdapter {
         int daysBeforeNextMonth = LocalDate.now().getMonth().maxLength() - dayOfCurrentMonth;
 
         Helper.scheduleCommand("topmb", daysBeforeNextMonth, 30, TimeUnit.DAYS);
-        Helper.scheduleCommand("topmf", daysBeforeNextMonth, 30, TimeUnit.SECONDS);
+        Helper.scheduleCommand("topmf", daysBeforeNextMonth, 30, TimeUnit.DAYS);
 
     }
 }
