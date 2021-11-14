@@ -11,7 +11,7 @@ public class BotSourceCommand implements IBotCommand {
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
         EmbedBuilder botInfoEmbed = new EmbedBuilder()
-                .setTitle("LemBot Informationen")
+                .setTitle("LemBot Information")
                 .setColor(-9862987)
                 .setThumbnail("https://cdn.discordapp.com/avatars/815894805896888362/e8ac27a6bda7b0846bf5135d39e14943.webp?size=128")
                 .addField("Geschrieben in:", "Java (JDA)", false)

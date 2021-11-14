@@ -15,7 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class TopMonthlyBumper implements IBotCommand {
+public class TopMonthlyFlooder implements IBotCommand {
 
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
@@ -23,17 +23,17 @@ public class TopMonthlyBumper implements IBotCommand {
         Connection connection = DatabaseConnector.openConnection();
 
 
-        try (Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(QueryHelper.TOP_MONTHLY_BUMPER)) {
+        try (Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(QueryHelper.TOP_MONTHLY_FLOODER)) {
 
-            EmbedBuilder topBumperEmbed = new EmbedBuilder();
+            EmbedBuilder topFlooderEmbed = new EmbedBuilder();
 
-            String embedTitle = "Top Bumper der letzten 30 Tage";
+            String embedTitle = "Top Flooder der letzten 30 Tage";
             String embedDescription = "";
-            String embedThumbnail = "https://cdn.discordapp.com/attachments/819694809765380146/869248076446052402/Bildschirmfoto_2021-07-26_um_17.48.08.png";
-            Color embedColor = Color.cyan;
+            String embedThumbnail = "https://cdn.discordapp.com/attachments/819694809765380146/844312789531230208/typing.png";
+            Color embedColor = Color.white;
 
 
-            Helper.addTopMonthlyDataToEmbed(channel, resultSet, topBumperEmbed, embedTitle, embedDescription, embedThumbnail, embedColor);
+            Helper.addTopMonthlyDataToEmbed(channel, resultSet, topFlooderEmbed, embedTitle, embedDescription, embedThumbnail, embedColor);
 
 
         } catch (SQLException sqlException) {
@@ -41,15 +41,14 @@ public class TopMonthlyBumper implements IBotCommand {
         }
     }
 
-
     @Override
     public String getName() {
-        return "topmb";
+        return "topmf";
     }
 
     @Override
     public String getDescription() {
-        return "`?topmb`: Zeigt die Top Bumper *der letzten 30 Tage* an";
+        return "`?topmf`: Zeigt die Top Flooder *der letzten 30 Tage* an";
     }
 
 }

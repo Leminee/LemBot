@@ -66,6 +66,7 @@ public class BotMain {
         command.registerCommand(new TopPingedUserCommand());
         command.registerCommand(new TopEmojiCommand());
         command.registerCommand(new TopMonthlyBumper());
+        command.registerCommand(new TopMonthlyFlooder());
 
 
         jda.addEventListener(new Reminder());
@@ -76,7 +77,7 @@ public class BotMain {
         jda.addEventListener(new InviteLinkDeletion());
         jda.addEventListener(new UpdatedMessageStorage());
         jda.addEventListener(new DeletedMessageStorage());
-        jda.addEventListener(new TopListReminder());
+        jda.addEventListener(new TopMonthlyNotifier());
         jda.addEventListener(new ActiveUsers());
         jda.addEventListener(new ChannelMessageCounter());
         jda.addEventListener(new VoiceJoinedStorage());

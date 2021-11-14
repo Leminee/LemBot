@@ -9,7 +9,7 @@ import tech.goodquestion.lembot.lib.Helper;
 
 import java.sql.*;
 
-public class QueryHelper {
+public final class QueryHelper {
 
     private static final String INSERT_USER_STATUS = "INSERT INTO user_status (id_discord, user_tag, status) VALUES (?,?,?);";
     private static final String INSERT_MEMBER_AMOUNT = "INSERT INTO number_member (total_member) VALUES (?);";
@@ -55,17 +55,22 @@ public class QueryHelper {
     public static final String NEXT_BUMP = "SELECT TIMESTAMPDIFF(MINUTE,CURRENT_TIMESTAMP, TIMESTAMPADD(HOUR,2, bumped_on)) FROM user_bump_time ORDER BY bumped_on DESC LIMIT 1";
     public static final String ACTIVE_MEMBER_LOG = "INSERT INTO active_user (active_member) VALUES (?);";
     public static final String ACTIVE_USER_RECORD = "SELECT MAX(active_member) FROM active_user;";
-    public static final String USER_JOINED_DATE = "SELECT CONCAT(DAY(joined_on),'-', MONTH(joined_on),'-',YEAR(joined_on)) FROM `user_join` WHERE id_discord = ? ORDER BY joined_on ASC LIMIT 1";
     public static final String USERNAME_UPDATED_LOG = "INSERT INTO updated_username (id_updated_username, id_discord, user_tag, old_username, new_username) VALUES (NULL,?,?,?,?);";
     public static final String ADJUSTING_NEW_USERNAME_IN_BUMPER = "UPDATE user_bump SET username = ? WHERE id_discord = ?;";
     public static final String ADJUSTING_NEW_USERNAME_IN_MESSAGE = "UPDATE user_message SET username = ? WHERE id_discord = ?;";
     public static final String TOP_MONTHLY_BUMPER = "SELECT username, COUNT(user_bump_time.id_discord) FROM `user_bump_time` INNER JOIN user_bump ON user_bump_time.id_discord = user_bump.id_discord  WHERE bumped_on > (SELECT DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 MONTH)) GROUP BY user_bump_time.id_discord ORDER BY COUNT(user_bump_time.id_discord) DESC LIMIT 3";
+    public static final String TOP_MONTHLY_FLOODER = "SELECT username, COUNT(user_message_content.id_discord) FROM `user_message_content` INNER JOIN user_message ON user_message_content.id_discord = user_message.id_discord  WHERE posted_on > (SELECT DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 MONTH)) GROUP BY user_message.id_discord ORDER BY COUNT(user_message_content.id_discord) DESC LIMIT 3;";
     public static final  String TOP_BUMPER = "SELECT username FROM user_bump ORDER BY number_bumps DESC, username LIMIT 3;";
     public static final  String TOP_FLOODER = "SELECT username FROM user_message ORDER BY number_message DESC LIMIT 3;";
     public static final String AMOUNT_MESSAGES = "SELECT number_message FROM user_message WHERE id_discord = ?";
     public static final String NEXT_HIGHER_USER_AMOUNT_MESSAGES = "SELECT id_discord, number_message FROM user_message WHERE number_message > ? ORDER BY number_message, username LIMIT 1";
 
 
+
+
+    private QueryHelper(){
+
+    }
 
     public static void logMemberStatusChange(long userId, String userTag, OnlineStatus newStatus) {
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement statement = connection.prepareStatement(INSERT_USER_STATUS)) {
@@ -249,30 +254,6 @@ public class QueryHelper {
         return 0;
     }
 
-    public static String getJoiningDate(long userId) {
-
-
-        try (Connection connection = DatabaseConnector.openConnection();  PreparedStatement preparedStatement = connection.prepareStatement(USER_JOINED_DATE)) {
-
-            preparedStatement.setLong(1,userId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()){
-
-                return "am " +resultSet.getString(1);
-            }
-
-            else {
-
-                return "vor dem **1.3.2021";
-            }
-
-        } catch (SQLException sqlException) {
-            System.out.println(sqlException.getMessage());
-        }
-
-        return "";
-    }
 
     public static void adjustUsername(String adjustingDateQuery, String newUsername, long userId) {
 

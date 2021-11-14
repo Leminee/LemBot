@@ -177,4 +177,21 @@ public final class Helper {
 
         return date.toString().substring(11, 16);
     }
+
+    public static void addTopMonthlyDataToEmbed(TextChannel channel, ResultSet resultSet, EmbedBuilder topBumperEmbed, String embedTitle, String embedDescription, String embedThumbnail, Color embedColor) {
+        createEmbed(topBumperEmbed, embedTitle, embedDescription, embedColor, embedThumbnail);
+
+        int top = 1;
+        try {
+            while (resultSet.next()) {
+                topBumperEmbed.addField("TOP " + top, resultSet.getString(1) + " **(" +resultSet.getString(2)+" Bumps)**", false);
+                top++;
+            }
+
+            channel.sendMessage(topBumperEmbed.build()).queue();
+
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
+        }
+    }
 }

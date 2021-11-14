@@ -27,7 +27,7 @@ public class ActiveUsers extends ListenerAdapter {
 
             EmbedBuilder embedBuilder = new EmbedBuilder();
 
-            Helper.createEmbed(embedBuilder,"New Active User Record", "Der neue Record an gleichzeitig aktiven Usern liegt bei : " + "**" + approximatePresentMember + "** :tada:", Color.yellow);
+            Helper.createEmbed(embedBuilder,"New Active User Record", "Der neue Record an gleichzeitig aktiven Usern liegt bei : " + "**" + approximatePresentMember + "** :tada:  ", Color.yellow);
             Objects.requireNonNull(event.getJDA().getTextChannelById(Config.getInstance().getChannels().getBumpChannel().getIdLong())).sendMessage(embedBuilder.build()).queue();
 
         }

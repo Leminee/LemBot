@@ -40,11 +40,11 @@ public class TopMessageCommand implements IBotCommand {
 
     @Override
     public String getName() {
-        return "topu";
+        return "topf";
     }
 
     @Override
     public String getDescription() {
-        return "`?topu`: Zeigt die User mit den meisten Nachrichten an";
+        return "`?topf`: Zeigt die User mit den meisten Nachrichten an";
     }
 }

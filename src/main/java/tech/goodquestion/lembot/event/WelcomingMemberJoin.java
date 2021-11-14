@@ -10,6 +10,7 @@ public class WelcomingMemberJoin extends ListenerAdapter {
 
     @Override
     public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
+
         if (event.getUser().isBot()) return;
 
         String welcomeMessage = """

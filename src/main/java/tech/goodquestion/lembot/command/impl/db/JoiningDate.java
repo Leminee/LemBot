@@ -5,7 +5,6 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import tech.goodquestion.lembot.command.IBotCommand;
-import tech.goodquestion.lembot.database.QueryHelper;
 import tech.goodquestion.lembot.lib.Helper;
 
 import java.awt.*;
@@ -15,9 +14,12 @@ public class JoiningDate implements IBotCommand {
 
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
+
         EmbedBuilder recordEmbed = new EmbedBuilder();
-        Helper.createEmbed(recordEmbed, "JoiningDate", "Du bist dem Server " + "**" + QueryHelper.getJoiningDate(sender.getIdLong()) + "**" + " beigetreten " + sender.getAsMention(), Color.gray);
+
+        Helper.createEmbed(recordEmbed, "Date Joined", "Du bist dem Server am " + "**" + getDateJoined(sender) + "**" + " beigetreten " + sender.getAsMention(), Color.gray);
         channel.sendMessage(recordEmbed.build()).queue();
+
     }
 
     @Override
@@ -29,4 +31,15 @@ public class JoiningDate implements IBotCommand {
     public String getDescription() {
         return "`?jd`: Zeigt das Beitrittsdatum zum Server an";
     }
+
+    private static String getDateJoined(Member sender) {
+
+        String day = String.valueOf(sender.getTimeJoined().getDayOfMonth());
+        String month = String.valueOf(sender.getTimeJoined().getMonthValue());
+        String year  = String.valueOf(sender.getTimeJoined().getYear());
+
+        return day + "-" + month + "-" + year;
+
+    }
+
 }
