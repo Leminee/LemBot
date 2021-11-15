@@ -16,7 +16,7 @@ public class WelcomingMemberJoin extends ListenerAdapter {
         String welcomeMessage = """
 Hallo [member], Willkommen auf **GoodQuestion (GQ)**!
 
-Du kannst Dich hier kurz vorstellen und Dir im Kanal [channel] Rollen zuweisen!
+Du kannst Dir im Kanal [channel] Rollen zuweisen!
 
 """;
         String avatarUrl = event.getUser().getEffectiveAvatarUrl();
@@ -25,7 +25,9 @@ Du kannst Dich hier kurz vorstellen und Dir im Kanal [channel] Rollen zuweisen!
         String output = welcomeMessage
                 .replace("[member]", newMember)
                 .replace("[channel]", Config.getInstance().getChannels().getSelfRolesChannel().getAsMention());
-        Config.getInstance().getChannels().getNewArrivalsChannel().sendMessage(output + "\n" + avatarUrl).queue();
+
+        Config.getInstance().getChannels().getNewArrivalsChannel().sendMessage(output).queue();
+        Config.getInstance().getChannels().getNewArrivalsChannel().sendMessage(avatarUrl).queue();
 
     }
 }

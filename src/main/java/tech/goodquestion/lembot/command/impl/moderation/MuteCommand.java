@@ -25,9 +25,11 @@ public class MuteCommand extends UserBanishCommand {
 
     @Override
     public void banishUser(Member toBanish, Sanction sanction, Message originMsg) {
-        List<Role> userRoleList = Objects.requireNonNull(toBanish).getRoles();
 
-        for (Role role : userRoleList) {
+        List<Role> userRolesList = Objects.requireNonNull(toBanish).getRoles();
+
+        for (Role role : userRolesList) {
+
             toBanish.getGuild().removeRoleFromMember(sanction.userId, role).queue();
         }
 

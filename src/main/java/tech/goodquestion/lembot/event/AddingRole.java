@@ -1,41 +1,52 @@
 package tech.goodquestion.lembot.event;
 
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
+import net.dv8tion.jda.api.events.guild.member.GuildMemberUpdateEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 public class AddingRole extends ListenerAdapter {
 
+    Map<Long, Future<?>> tasks = new HashMap<>();
+
     @Override
     public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
 
-        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-        List<Role> userRoleListAfter1Minute = Objects.requireNonNull(event.getMember()).getRoles();
-        Role codingRole = event.getJDA().getRoleById(784773593942327297L);
+        Member member = event.getMember();
+        Guild guild = member.getGuild();
+        Role codingRole = guild.getRoleById(784773593942327297L);
 
-        final Runnable addRole = () -> {
+        assert codingRole != null;
+        int delay = 5;
+        Future<?> task = guild.addRoleToMember(member, codingRole).queueAfter(delay, TimeUnit.MINUTES);
+        tasks.put(member.getIdLong(), task);
+    }
 
-            for (Role roleAfter1Minute : userRoleListAfter1Minute) {
+    @Override
+    public void onGuildMemberUpdate(GuildMemberUpdateEvent event) {
 
-                if (roleAfter1Minute == null || roleAfter1Minute.getIdLong() == 808779281211719680L || roleAfter1Minute.getIdLong() == 809152859492974692L
-                        || roleAfter1Minute.getIdLong() == 846812921375359027L || roleAfter1Minute.getIdLong() == 846856698979418152L ||
-                        roleAfter1Minute.getIdLong() == 808768626844893184L || roleAfter1Minute.getIdLong() == 808767910696189975L
-                        || roleAfter1Minute.getIdLong() == 808779520286654554L) {
+        Member member = event.getMember();
+        Guild guild = member.getGuild();
+        long hRoleId = 811741950092116038L;
+        long lRole = 808779281211719680L;
+        Role codingRole = guild.getRoleById(784773593942327297L);
 
-                    assert codingRole != null;
-                    event.getMember().getGuild().addRoleToMember(event.getMember(), codingRole).queue();
-                }
-            }
-        };
 
-        scheduler.schedule(addRole, 1, TimeUnit.MINUTES);
+        if (!member.getRoles().isEmpty()) {
+            Future<?> task = tasks.remove(member.getIdLong());
+            if (task != null) task.cancel(false);
+        }
 
+        if (member.getRoles().contains(lRole) && !member.getRoles().contains(hRoleId)) {
+            guild.addRoleToMember(member,codingRole).queue();
+        }
     }
 }

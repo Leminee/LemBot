@@ -34,6 +34,7 @@ public class JoiningDate implements IBotCommand {
 
     private static String getDateJoined(Member sender) {
 
+
         String day = String.valueOf(sender.getTimeJoined().getDayOfMonth());
         String month = String.valueOf(sender.getTimeJoined().getMonthValue());
         String year  = String.valueOf(sender.getTimeJoined().getYear());
