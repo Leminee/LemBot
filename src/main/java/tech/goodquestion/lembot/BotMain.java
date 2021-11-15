@@ -63,7 +63,6 @@ public class BotMain {
         command.registerCommand(new TopActiveChannelsCommand());
         command.registerCommand(new TopBumperCommand());
         command.registerCommand(new TopMessageCommand());
-        command.registerCommand(new TopPingedUserCommand());
         command.registerCommand(new TopEmojiCommand());
         command.registerCommand(new TopMonthlyBumper());
         command.registerCommand(new TopMonthlyFlooder());
