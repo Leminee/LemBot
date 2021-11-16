@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import tech.goodquestion.lembot.lib.Helper;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
 
 public class TopMonthlyNotifier extends ListenerAdapter {
@@ -16,10 +17,12 @@ public class TopMonthlyNotifier extends ListenerAdapter {
 
         int dayOfCurrentMonth = LocalDate.now().getDayOfMonth();
         int daysBeforeNextMonth = LocalDate.now().getMonth().maxLength() - dayOfCurrentMonth;
-        int period = 30;
+
+        LocalDate firstDayThisMonth = LocalDate.now().withDayOfMonth(1);
+        LocalDate firstDayNextMonth = firstDayThisMonth.plusMonths(1);
+        long period = ChronoUnit.DAYS.between(firstDayThisMonth, firstDayNextMonth);
 
         Helper.scheduleCommand("topmb", daysBeforeNextMonth, period, TimeUnit.DAYS);
         Helper.scheduleCommand("topmf", daysBeforeNextMonth, period, TimeUnit.DAYS);
-
     }
 }

@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import tech.goodquestion.lembot.command.AutoAnswering;
 import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.command.impl.*;
@@ -29,8 +30,10 @@ public class BotMain {
             jda = JDABuilder
                     .createDefault(Config.getInstance().getToken())
                     .enableIntents(GatewayIntent.GUILD_MEMBERS)
+                    .setMemberCachePolicy(MemberCachePolicy.ALL)
                     .enableIntents(GatewayIntent.GUILD_PRESENCES)
                     .build();
+
         } catch (LoginException loginException) {
             loginException.printStackTrace();
         }
@@ -90,6 +93,7 @@ public class BotMain {
         jda.addEventListener(new MemberLeftStorage());
         jda.addEventListener(new AutoAnswering());
         jda.addEventListener(new AddingRole());
+        jda.addEventListener(new SpamDetection());
 
         setupReactionRoles();
         setupRoleCommands(command);

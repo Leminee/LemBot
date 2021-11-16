@@ -108,11 +108,11 @@ public final class Helper {
         channel.sendMessage(numberInfo.build()).queue();
     }
 
-    public static void scheduleCommand(String command, int delay, int period, TimeUnit timeUnit) {
+    public static void scheduleCommand(String command, int delay, long period, TimeUnit timeUnit) {
         scheduleCommand(command, delay, period, timeUnit, new String[0]);
     }
 
-    public static void scheduleCommand(String command, int delay, int period, TimeUnit timeUnit, String[] args) {
+    public static void scheduleCommand(String command, int delay, long period, TimeUnit timeUnit, String[] args) {
 
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
