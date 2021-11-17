@@ -9,7 +9,7 @@ import tech.goodquestion.lembot.lib.Helper;
 
 import java.awt.*;
 
-public class JoiningDate implements IBotCommand {
+public class JoiningDateCommand implements IBotCommand {
 
 
     @Override

@@ -39,17 +39,17 @@ public class AddingRole extends ListenerAdapter {
         Role codingRole = guild.getRoleById(784773593942327297L);
         Role hackingRole = guild.getRoleById(811741950092116038L);
         Role mutedRole = guild.getRoleById(879329567947489352L);
-        List<Role> memberRoles = member.getRoles();
+        List<Role> memberAddedRoles = member.getRoles();
 
 
-        for (Role role : memberRoles) {
+        for (Role addedRole : memberAddedRoles) {
 
             assert codingRole != null;
             assert hackingRole != null;
             assert mutedRole != null;
 
-            boolean hasAlreadyAccess = role.getIdLong() == codingRole.getIdLong() || role.getIdLong() == hackingRole.getIdLong();
-            boolean isMuted = role.getIdLong() == mutedRole.getIdLong();
+            boolean hasAlreadyAccess = addedRole.getIdLong() == codingRole.getIdLong() || addedRole.getIdLong() == hackingRole.getIdLong();
+            boolean isMuted = addedRole.getIdLong() == mutedRole.getIdLong();
 
             if (hasAlreadyAccess || isMuted) {
 

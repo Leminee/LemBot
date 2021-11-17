@@ -24,9 +24,9 @@ commandRoles:
   - abbr: bumper
     role: 815922232106156033
 database:
-  uri: "jdbc:mysql://localhost:3306/discordbot?autoReconnect=true&serverTimezone=UTC"
-  username: mel
-  password: "36177436"
+  uri: "jdbc:mysql://localhost:3306/lembot?autoReconnect=true&serverTimezone=UTC"
+  username: lem
+  password: "mysql"
 channels:
   sanction: 871615666959032340
   newArrivals: 779107500381175808

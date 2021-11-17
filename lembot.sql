@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Erstellungszeit: 28. Aug 2021 um 04:24
--- Server-Version: 10.3.29-MariaDB-0+deb10u1
--- PHP-Version: 7.4.20
+-- Erstellungszeit: 17. Nov 2021 um 23:07
+-- Server-Version: 10.3.31-MariaDB-0+deb10u1
+-- PHP-Version: 7.4.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Datenbank: `discordbot`
+-- Datenbank: `lembot`
 --
 
 -- --------------------------------------------------------
@@ -28,6 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `active_user` (
+  `id_active_user` bigint(20) NOT NULL,
   `active_member` int(11) NOT NULL,
   `time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -39,13 +40,13 @@ CREATE TABLE `active_user` (
 --
 
 CREATE TABLE `banned_user` (
-  `id_banned_user` int(20) NOT NULL,
+  `id_banned_user` bigint(20) NOT NULL,
   `id_discord` bigint(20) NOT NULL,
-  `user_tag` varchar(50) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `ban_author` varchar(50) NOT NULL,
+  `user_tag` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `ban_author` varchar(255) NOT NULL,
   `ban_reason` text NOT NULL,
-  `channel_name` varchar(50) NOT NULL,
+  `channel_name` varchar(255) NOT NULL,
   `banned_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -58,7 +59,7 @@ CREATE TABLE `banned_user` (
 CREATE TABLE `channel` (
   `id_message` bigint(20) NOT NULL,
   `id_channel` bigint(20) NOT NULL,
-  `channel_name` varchar(50) NOT NULL,
+  `channel_name` varchar(255) NOT NULL,
   `sent_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -73,17 +74,6 @@ CREATE TABLE `config` (
   `config_value` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Daten für Tabelle `config`
---
-
-INSERT INTO `config` (`config_name`, `config_value`) VALUES
-('id_owner', '739143338975952959'),
-('id_partnership_channel', '809152008082292836'),
-('id_ping_channel', '838453508311220234'),
-('id_ping_role', '<@&815922232106156033>'),
-('id_welcome_channel', '779107500381175808');
-
 -- --------------------------------------------------------
 
 --
@@ -91,8 +81,8 @@ INSERT INTO `config` (`config_name`, `config_value`) VALUES
 --
 
 CREATE TABLE `deleted_message` (
-  `id_deleted_message` bigint(11) NOT NULL,
-  `deleted_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `id_deleted_message` bigint(20) NOT NULL,
+  `deleted_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -119,7 +109,9 @@ CREATE TABLE `kicked_user` (
 --
 
 CREATE TABLE `leaked_password` (
-  `pass` varchar(500) NOT NULL
+  `id_pass` bigint(20) NOT NULL,
+  `pass` varchar(500) NOT NULL,
+  `id` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -131,11 +123,11 @@ CREATE TABLE `leaked_password` (
 CREATE TABLE `muted_user` (
   `id_muted_user` int(11) NOT NULL,
   `id_discord` bigint(20) NOT NULL,
-  `user_tag` varchar(50) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `mute_author` varchar(50) NOT NULL,
+  `user_tag` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `mute_author` varchar(255) NOT NULL,
   `mute_reason` text NOT NULL,
-  `channel_name` varchar(50) NOT NULL,
+  `channel_name` varchar(255) NOT NULL,
   `activ` tinyint(4) NOT NULL DEFAULT 1,
   `muted_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -147,7 +139,8 @@ CREATE TABLE `muted_user` (
 --
 
 CREATE TABLE `number_member` (
-  `total_member` int(11) NOT NULL,
+  `id_number_member` bigint(20) NOT NULL,
+  `total_member` smallint(6) NOT NULL,
   `time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -158,13 +151,28 @@ CREATE TABLE `number_member` (
 --
 
 CREATE TABLE `updated_message` (
-  `id_updated_message` int(11) NOT NULL,
+  `id_updated_message` bigint(11) NOT NULL,
   `id_message` bigint(20) NOT NULL,
   `id_discord` bigint(20) NOT NULL,
-  `username` varchar(50) NOT NULL,
+  `username` varchar(255) NOT NULL,
   `content` text NOT NULL,
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `updated_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `updated_username`
+--
+
+CREATE TABLE `updated_username` (
+  `id_updated_username` bigint(20) NOT NULL,
+  `id_discord` bigint(20) NOT NULL,
+  `user_tag` varchar(255) NOT NULL,
+  `old_username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `new_username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `updated_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -174,8 +182,8 @@ CREATE TABLE `updated_message` (
 
 CREATE TABLE `user_bump` (
   `id_discord` bigint(20) NOT NULL,
-  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `number_bumps` int(11) NOT NULL
+  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `number_bumps` mediumint(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -185,9 +193,9 @@ CREATE TABLE `user_bump` (
 --
 
 CREATE TABLE `user_bump_time` (
-  `id_user_bump_time` int(11) NOT NULL,
+  `id_user_bump_time` bigint(11) NOT NULL,
   `id_discord` bigint(20) NOT NULL,
-  `bumped_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `bumped_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -197,11 +205,11 @@ CREATE TABLE `user_bump_time` (
 --
 
 CREATE TABLE `user_join` (
-  `id_user_join` int(11) NOT NULL,
+  `id_user_join` bigint(20) NOT NULL,
   `id_discord` bigint(20) NOT NULL,
-  `user_tag` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `avatar_url` varchar(500) DEFAULT NULL,
+  `user_tag` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `avatar_url` text DEFAULT NULL,
   `joined_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -212,11 +220,11 @@ CREATE TABLE `user_join` (
 --
 
 CREATE TABLE `user_leave` (
-  `id_user_leave` int(11) NOT NULL,
+  `id_user_leave` bigint(20) NOT NULL,
   `id_discord` bigint(20) NOT NULL,
-  `user_tag` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-  `avatar_url` varchar(500) DEFAULT NULL,
+  `user_tag` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `avatar_url` text DEFAULT NULL,
   `left_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -242,7 +250,7 @@ CREATE TABLE `user_message_content` (
   `id_message` bigint(20) NOT NULL,
   `id_discord` bigint(20) NOT NULL,
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `posted_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `posted_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -252,11 +260,11 @@ CREATE TABLE `user_message_content` (
 --
 
 CREATE TABLE `user_status` (
-  `id_user_status` int(11) NOT NULL,
+  `id_user_status` bigint(11) NOT NULL,
   `id_discord` bigint(20) NOT NULL,
-  `user_tag` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-  `status` varchar(50) NOT NULL,
-  `changed_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `user_tag` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `status` varchar(255) NOT NULL,
+  `changed_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -267,9 +275,9 @@ CREATE TABLE `user_status` (
 
 CREATE TABLE `voice_join` (
   `id_discord` bigint(20) NOT NULL,
-  `user_tag` varchar(50) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `voice_channel_name` varchar(50) NOT NULL,
+  `user_tag` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `voice_channel_name` varchar(255) NOT NULL,
   `joined_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -281,9 +289,9 @@ CREATE TABLE `voice_join` (
 
 CREATE TABLE `voice_leave` (
   `id_discord` bigint(20) NOT NULL,
-  `user_tag` varchar(50) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `voice_channel_name` varchar(50) NOT NULL,
+  `user_tag` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `voice_channel_name` varchar(255) NOT NULL,
   `left_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -294,13 +302,13 @@ CREATE TABLE `voice_leave` (
 --
 
 CREATE TABLE `warned_user` (
-  `id_warned_user` int(11) NOT NULL,
+  `id_warned_user` bigint(11) NOT NULL,
   `id_discord` bigint(20) NOT NULL,
-  `user_tag` varchar(50) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `warn_author` varchar(50) NOT NULL,
+  `user_tag` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `warn_author` varchar(255) NOT NULL,
   `warn_reason` text NOT NULL,
-  `channel_name` varchar(50) NOT NULL,
+  `channel_name` varchar(255) NOT NULL,
   `warned_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -312,6 +320,7 @@ CREATE TABLE `warned_user` (
 -- Indizes für die Tabelle `active_user`
 --
 ALTER TABLE `active_user`
+  ADD PRIMARY KEY (`id_active_user`),
   ADD KEY `active_member` (`active_member`);
 
 --
@@ -348,6 +357,7 @@ ALTER TABLE `kicked_user`
 -- Indizes für die Tabelle `leaked_password`
 --
 ALTER TABLE `leaked_password`
+  ADD PRIMARY KEY (`id_pass`),
   ADD KEY `pass` (`pass`);
 
 --
@@ -360,6 +370,7 @@ ALTER TABLE `muted_user`
 -- Indizes für die Tabelle `number_member`
 --
 ALTER TABLE `number_member`
+  ADD PRIMARY KEY (`id_number_member`),
   ADD KEY `total_member` (`total_member`);
 
 --
@@ -368,6 +379,12 @@ ALTER TABLE `number_member`
 ALTER TABLE `updated_message`
   ADD PRIMARY KEY (`id_updated_message`),
   ADD KEY `id_message` (`id_message`);
+
+--
+-- Indizes für die Tabelle `updated_username`
+--
+ALTER TABLE `updated_username`
+  ADD PRIMARY KEY (`id_updated_username`);
 
 --
 -- Indizes für die Tabelle `user_bump`
@@ -426,10 +443,16 @@ ALTER TABLE `warned_user`
 --
 
 --
+-- AUTO_INCREMENT für Tabelle `active_user`
+--
+ALTER TABLE `active_user`
+  MODIFY `id_active_user` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT für Tabelle `banned_user`
 --
 ALTER TABLE `banned_user`
-  MODIFY `id_banned_user` int(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_banned_user` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT für Tabelle `kicked_user`
@@ -438,46 +461,64 @@ ALTER TABLE `kicked_user`
   MODIFY `id_kicked_user` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT für Tabelle `leaked_password`
+--
+ALTER TABLE `leaked_password`
+  MODIFY `id_pass` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT für Tabelle `muted_user`
 --
 ALTER TABLE `muted_user`
   MODIFY `id_muted_user` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT für Tabelle `number_member`
+--
+ALTER TABLE `number_member`
+  MODIFY `id_number_member` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT für Tabelle `updated_message`
 --
 ALTER TABLE `updated_message`
-  MODIFY `id_updated_message` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_updated_message` bigint(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `updated_username`
+--
+ALTER TABLE `updated_username`
+  MODIFY `id_updated_username` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT für Tabelle `user_bump_time`
 --
 ALTER TABLE `user_bump_time`
-  MODIFY `id_user_bump_time` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_user_bump_time` bigint(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT für Tabelle `user_join`
 --
 ALTER TABLE `user_join`
-  MODIFY `id_user_join` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_user_join` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT für Tabelle `user_leave`
 --
 ALTER TABLE `user_leave`
-  MODIFY `id_user_leave` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_user_leave` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT für Tabelle `user_status`
 --
 ALTER TABLE `user_status`
-  MODIFY `id_user_status` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_user_status` bigint(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT für Tabelle `warned_user`
 --
 ALTER TABLE `warned_user`
-  MODIFY `id_warned_user` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_warned_user` bigint(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints der exportierten Tabellen
@@ -493,7 +534,7 @@ ALTER TABLE `deleted_message`
 -- Constraints der Tabelle `updated_message`
 --
 ALTER TABLE `updated_message`
-  ADD CONSTRAINT `updated_message_ibfk_2` FOREIGN KEY (`id_message`) REFERENCES `user_message_content` (`id_message`);
+  ADD CONSTRAINT `updated_message_ibfk_1` FOREIGN KEY (`id_message`) REFERENCES `user_message_content` (`id_message`);
 
 --
 -- Constraints der Tabelle `user_bump_time`
@@ -511,5 +552,3 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-SET GLOBAL sql_mode="STRICT_TRANS_TABLES"

@@ -40,7 +40,7 @@ public abstract class UserBanishCommand implements IBotCommand {
 
         if (channel.getIdLong() != Config.getInstance().getChannels().getSanctionChannel().getIdLong()) {
             EmbedBuilder embedError = new EmbedBuilder();
-            String embedDescription = "Dieser Befehl kann in diesem Channel nicht ausgeführt werden!";
+            String embedDescription = "Dieser Befehl kann nur in [channel] ausgeführt werden!".replace("[channel]",Config.getInstance().getChannels().getSanctionChannel().getAsMention());
             Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED);
             channel.sendMessage(embedError.build()).queue();
             return;

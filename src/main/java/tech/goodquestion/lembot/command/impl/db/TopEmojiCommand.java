@@ -34,6 +34,6 @@ public class TopEmojiCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?tope`: Zeigt die meistgenutzen Emojis an";
+        return "`?tope`: Zeigt die meistgenutzen Emojis auf dem Server an";
     }
 }

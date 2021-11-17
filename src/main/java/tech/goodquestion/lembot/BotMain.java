@@ -61,14 +61,14 @@ public class BotMain {
 
         command.registerCommand(new ActiveUserRecordCommand());
         command.registerCommand(new BumpCountCommand());
-        command.registerCommand(new JoiningDate());
+        command.registerCommand(new JoiningDateCommand());
         command.registerCommand(new MessageCountCommand());
         command.registerCommand(new TopActiveChannelsCommand());
         command.registerCommand(new TopBumperCommand());
         command.registerCommand(new TopMessageCommand());
         command.registerCommand(new TopEmojiCommand());
-        command.registerCommand(new TopMonthlyBumper());
-        command.registerCommand(new TopMonthlyFlooder());
+        command.registerCommand(new TopMonthlyBumperCommand());
+        command.registerCommand(new TopMonthlyFlooderCommand());
 
 
         jda.addEventListener(new Reminder());

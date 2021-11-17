@@ -60,6 +60,6 @@ public class PasswordCheckCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?check <password>`: überprüft, ob das Passwort sicher ist";
+        return "`?check <password>`: Überprüft, ob das Passwort sicher ist";
     }
 }
