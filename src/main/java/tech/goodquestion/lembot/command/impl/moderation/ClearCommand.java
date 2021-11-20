@@ -50,7 +50,7 @@ public class ClearCommand implements IBotCommand {
 
             } else if (iae instanceof NumberFormatException) {
                 EmbedBuilder errorNFEEmbed = new EmbedBuilder();
-                Helper.createEmbed(errorNFEEmbed, "Fehler", "Bitte gibt eine gültige Zahl an!", Color.RED);
+                Helper.createEmbed(errorNFEEmbed, "Fehler", "Bitte gib bitte eine gültige Zahl an!", Color.RED);
                 channel.sendMessage(errorNFEEmbed.build()).queue();
             }
         }

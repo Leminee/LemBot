@@ -8,6 +8,7 @@ import tech.goodquestion.lembot.config.Config;
 
 public class InviteLinkDeletion extends ListenerAdapter {
 
+    @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
         String userMessage = event.getMessage().getContentRaw();
 

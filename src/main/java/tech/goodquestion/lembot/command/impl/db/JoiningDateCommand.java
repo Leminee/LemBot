@@ -17,7 +17,7 @@ public class JoiningDateCommand implements IBotCommand {
 
         EmbedBuilder recordEmbed = new EmbedBuilder();
 
-        Helper.createEmbed(recordEmbed, "Date Joined", "Du bist dem Server am " + "**" + getDateJoined(sender) + "**" + " beigetreten " + sender.getAsMention(), Color.gray);
+        Helper.createEmbed(recordEmbed, "Last Joining Date", "Du bist dem Server am " + "**" + getDateJoined(sender) + "**" + " beigetreten " + sender.getAsMention(), Color.gray);
         channel.sendMessage(recordEmbed.build()).queue();
 
     }
