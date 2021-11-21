@@ -9,8 +9,6 @@ import tech.goodquestion.lembot.entities.Sanction;
 import tech.goodquestion.lembot.lib.Helper;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public final class QueryHelper {
@@ -18,32 +16,32 @@ public final class QueryHelper {
     private static final String INSERT_USER_STATUS = "INSERT INTO user_status (id_discord, user_tag, status) VALUES (?,?,?);";
     private static final String INSERT_MEMBER_AMOUNT = "INSERT INTO number_member (total_member) VALUES (?);";
     public static final String TOP_EMOJIS = """
-                  SELECT '\uD83D\uDC4D', SUM(id_discord) AS c  FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDC4D%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T
-                  UNION ALL\s
-                  SELECT '\uD83D\uDE05', SUM(id_discord) AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE05%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
-                  UNION ALL  \s
-                  SELECT '\uD83D\uDE0A', SUM(id_discord )AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE0A%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
-                  UNION ALL
-                  SELECT '\uD83D\uDC40', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDC40%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
-                  UNION ALL
-                  SELECT '\uD83D\uDE02', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE02%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
-                  UNION ALL
-                  SELECT '\uD83D\uDE09', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE09%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
-                  UNION ALL
-                  SELECT '\uD83D\uDE1B', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE1B%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T \s
-                  UNION ALL
-                  SELECT content, SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE42%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
-                  UNION ALL
-                  SELECT '\uD83D\uDE42', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE43%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
-                  UNION ALL
-                  SELECT '🔴' as emoji, SUM(id_discord) AS c FROM (SELECT content, Count(id_discord) AS id_discord FROM `user_message_content` WHERE  content LIKE '%🔴%') AS T
-                  UNION ALL
-                  SELECT '🟢' as emoji, SUM(id_discord) AS c FROM (SELECT content, Count(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%🟢%') AS T
-                  UNION ALL
-                  SELECT '\uD83E\uDD13', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83E\uDD13%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T \s
-                  UNION ALL
-                  SELECT '\uD83D\uDE04', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE04%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
-                  ORDER BY c DESC LIMIT 3;""";
+            SELECT '\uD83D\uDC4D', SUM(id_discord) AS c  FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDC4D%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T
+            UNION ALL\s
+            SELECT '\uD83D\uDE05', SUM(id_discord) AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE05%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
+            UNION ALL  \s
+            SELECT '\uD83D\uDE0A', SUM(id_discord )AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE0A%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
+            UNION ALL
+            SELECT '\uD83D\uDC40', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDC40%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
+            UNION ALL
+            SELECT '\uD83D\uDE02', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE02%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
+            UNION ALL
+            SELECT '\uD83D\uDE09', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE09%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
+            UNION ALL
+            SELECT '\uD83D\uDE1B', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE1B%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T \s
+            UNION ALL
+            SELECT content, SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE42%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
+            UNION ALL
+            SELECT '\uD83D\uDE42', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE43%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
+            UNION ALL
+            SELECT '🔴' as emoji, SUM(id_discord) AS c FROM (SELECT content, Count(id_discord) AS id_discord FROM `user_message_content` WHERE  content LIKE '%🔴%') AS T
+            UNION ALL
+            SELECT '🟢' as emoji, SUM(id_discord) AS c FROM (SELECT content, Count(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%🟢%') AS T
+            UNION ALL
+            SELECT '\uD83E\uDD13', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83E\uDD13%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T \s
+            UNION ALL
+            SELECT '\uD83D\uDE04', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE04%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
+            ORDER BY c DESC LIMIT 3;""";
     public static final String TOP_CHANNELS = "SELECT channel_name, COUNT(id_channel) FROM `channel` GROUP BY id_channel ORDER BY COUNT(id_channel) DESC LIMIT 5;";
     public static final String TOP_PINGED_USER = "SELECT content, COUNT(id_discord) FROM `user_message_content` WHERE content LIKE '%<@!%' OR '%<@I%' GROUP BY content HAVING COUNT(id_discord) > 1 ORDER BY COUNT(id_discord) DESC LIMIT 3";
     public static final String USER_LEAVE_LOG = "INSERT INTO user_leave (id_user_leave,id_discord,user_tag,username,avatar_url) VALUES (NULL,?,?,?,?);";
@@ -64,15 +62,15 @@ public final class QueryHelper {
     public static final String ADJUSTING_NEW_USERNAME_IN_MESSAGE = "UPDATE user_message SET username = ? WHERE id_discord = ?;";
     public static final String TOP_MONTHLY_BUMPER = "SELECT username, COUNT(user_bump_time.id_discord) FROM `user_bump_time` INNER JOIN user_bump ON user_bump_time.id_discord = user_bump.id_discord  WHERE bumped_on > (SELECT DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 MONTH)) GROUP BY user_bump_time.id_discord ORDER BY COUNT(user_bump_time.id_discord) DESC LIMIT 3";
     public static final String TOP_MONTHLY_FLOODER = "SELECT username, COUNT(user_message_content.id_discord) FROM `user_message_content` INNER JOIN user_message ON user_message_content.id_discord = user_message.id_discord  WHERE posted_on > (SELECT DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 MONTH)) GROUP BY user_message.id_discord ORDER BY COUNT(user_message_content.id_discord) DESC LIMIT 3;";
-    public static final  String TOP_BUMPER = "SELECT username FROM user_bump ORDER BY number_bumps DESC, username LIMIT 3;";
-    public static final  String TOP_FLOODER = "SELECT username FROM user_message ORDER BY number_message DESC LIMIT 3;";
+    public static final String TOP_BUMPER = "SELECT username FROM user_bump ORDER BY number_bumps DESC, username LIMIT 3;";
+    public static final String TOP_FLOODER = "SELECT username FROM user_message ORDER BY number_message DESC LIMIT 3;";
     public static final String AMOUNT_MESSAGES = "SELECT number_message FROM user_message WHERE id_discord = ?";
     public static final String NEXT_HIGHER_USER_AMOUNT_MESSAGES = "SELECT id_discord, number_message FROM user_message WHERE number_message > ? ORDER BY number_message, username LIMIT 1";
     public static final String SPAM_VERIFICATION = "SELECT COUNT(DISTINCT id_channel) FROM `channel` INNER JOIN user_message_content ON channel.id_message = user_message_content.id_message WHERE user_message_content.id_discord = ? AND content = ? AND posted_on >= NOW() - INTERVAL 1 MINUTE";
-    public static final String SPAMMED_CHANNEL_AND_MESSAGE_ID = "SELECT id_channel, channel.id_message FROM `channel` INNER JOIN user_message_content ON channel.id_message = user_message_content.id_message WHERE user_message_content.id_discord = ? AND content = ? AND posted_on >= NOW() - INTERVAL 1 MINUTE";
+    public static final String SPAM_DATA = "SELECT id_channel, channel.id_message FROM `channel` INNER JOIN user_message_content ON channel.id_message = user_message_content.id_message WHERE user_message_content.id_discord = ? AND content = ? AND posted_on >= NOW() - INTERVAL 1 MINUTE";
+    public static final String AMOUNT_SPAM_MESSAGES = "SELECT COUNT(id_discord) FROM user_message_content WHERE id_discord = ? AND content = ? AND posted_on >= NOW() - INTERVAL 30 SECOND";
 
-
-    private QueryHelper(){
+    private QueryHelper() {
 
     }
 
@@ -87,11 +85,11 @@ public final class QueryHelper {
         }
     }
 
-    public static void logUsernameUpdated(long userId, String userTag,String oldUsername, String newUsername) {
+    public static void logUsernameUpdated(long userId, String userTag, String oldUsername, String newUsername) {
 
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement statement = connection.prepareStatement(USERNAME_UPDATED_LOG)) {
             statement.setLong(1, userId);
-            statement.setBlob(2, Helper.changeCharacterEncoding(statement,userTag));
+            statement.setBlob(2, Helper.changeCharacterEncoding(statement, userTag));
             statement.setBlob(3, Helper.changeCharacterEncoding(statement, oldUsername));
             statement.setBlob(4, Helper.changeCharacterEncoding(statement, newUsername));
             statement.executeUpdate();
@@ -243,7 +241,7 @@ public final class QueryHelper {
 
     public static int getActiveUserRecord() {
 
-        try (Connection connection = DatabaseConnector.openConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(ACTIVE_USER_RECORD)){
+        try (Connection connection = DatabaseConnector.openConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(ACTIVE_USER_RECORD)) {
 
 
             if (resultSet.next()) {
@@ -275,16 +273,16 @@ public final class QueryHelper {
     public static boolean isActiveUserRecord(int approximatePresentMember) {
 
 
-        try (Connection connection = DatabaseConnector.openConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(ACTIVE_USER_RECORD)){
+        try (Connection connection = DatabaseConnector.openConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(ACTIVE_USER_RECORD)) {
 
 
             if (resultSet.next()) {
 
-               int currentActiveUseRecord = resultSet.getInt(1);
+                int currentActiveUseRecord = resultSet.getInt(1);
 
-               if (approximatePresentMember > currentActiveUseRecord) {
-                   return true;
-               }
+                if (approximatePresentMember > currentActiveUseRecord) {
+                    return true;
+                }
             }
 
         } catch (SQLException sqlException) {
@@ -293,12 +291,12 @@ public final class QueryHelper {
         return false;
     }
 
-    public static boolean isSpammer(long userId, String messageContent){
+    public static boolean isSpammer(long userId, String messageContent) {
 
-        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(SPAM_VERIFICATION)){
+        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(SPAM_VERIFICATION)) {
 
-            preparedStatement.setLong(1,userId);
-            preparedStatement.setString(2,messageContent);
+            preparedStatement.setLong(1, userId);
+            preparedStatement.setString(2, messageContent);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -318,36 +316,54 @@ public final class QueryHelper {
     }
 
 
-    public static void deleteSpammersMessages(GuildMessageReceivedEvent event, long userId, String messageContent){
-
-        List<Long> channelsIds = new ArrayList<>();
-        List<Long> messagesIds = new ArrayList<>();
-
-        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(SPAMMED_CHANNEL_AND_MESSAGE_ID)){
+    public static void deleteSpammerMessages(GuildMessageReceivedEvent event, long userId, String messageContent) {
 
 
-            preparedStatement.setLong(1,userId);
-            preparedStatement.setString(2,messageContent);
+        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(SPAM_DATA)) {
+
+
+            preparedStatement.setLong(1, userId);
+            preparedStatement.setString(2, messageContent);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
 
-                channelsIds.add(resultSet.getLong("id_channel"));
-                messagesIds.add(resultSet.getLong("id_message"));
+                Objects.requireNonNull(event.getGuild()
+                        .getTextChannelById(resultSet.getLong("id_channel")))
+                        .deleteMessageById(resultSet.getLong("id_message"))
+                        .queue();
+
             }
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
         }
 
-        if (channelsIds.size() == 0 || messagesIds.size() == 0) {
-            return;
+        event.getMessage().delete().queue();
+    }
+
+    public static boolean areToManyMessages(long userId, String messageContent) {
+
+        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(AMOUNT_SPAM_MESSAGES)) {
+
+            preparedStatement.setLong(1, userId);
+            preparedStatement.setString(2, messageContent);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+
+                int amountResult = resultSet.getInt(1);
+
+                if (amountResult >= 10) {
+                    return true;
+                }
+            }
+
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
         }
-
-
-        Objects.requireNonNull(event.getGuild().getTextChannelById(channelsIds.get(0))).deleteMessageById(messagesIds.get(0)).queue();
-        Objects.requireNonNull(event.getGuild().getTextChannelById(channelsIds.get(1))).deleteMessageById(messagesIds.get(1)).queue();
-        event.getChannel().delete().queue();
+        return false;
     }
 }

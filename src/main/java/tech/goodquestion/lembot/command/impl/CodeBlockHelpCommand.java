@@ -19,6 +19,6 @@ public class CodeBlockHelpCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?hcb`: Zeigt, dir wie man farbige Codeblöcke sendet";
+        return "`?hcb`: Zeigt, wie man farbige Codeblöcke sendet";
     }
 }
