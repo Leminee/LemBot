@@ -26,9 +26,9 @@ public class UnmuteCommand implements IBotCommand {
         }
 
         List<Member> mentionedMembers = msg.getMentionedMembers();
-        Member member = null;
+        Member member;
 
-        member = UserBanishCommand.getMember(msg, args, mentionedMembers, member);
+        member = UserBanishCommand.getMember(msg, args, mentionedMembers, null);
 
         if (member == null) {
             EmbedBuilder embedError = new EmbedBuilder();

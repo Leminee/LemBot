@@ -24,7 +24,6 @@ public class SpamDetection extends ListenerAdapter {
         String messageContent = event.getMessage().getContentRaw();
         assert member != null;
         List<Role> userRoles = member.getRoles();
-        String modRoleAsMention = Objects.requireNonNull(event.getGuild().getRoleById(873654698996015104L)).getAsMention();
 
 
         if (senderIsBot || senderIsStaff) return;
@@ -43,22 +42,25 @@ public class SpamDetection extends ListenerAdapter {
             assert mutedRole != null;
             event.getGuild().addRoleToMember(userId,mutedRole).queue();
 
-            event.getChannel().sendMessage("Du wurdest aufgrund verdächtigem Verhalten durch den Bot **gemutet**." + " \n" +
-                    "Bitte kontaktiere einen [Moderator] zwecks Überprüfung ".replace("[Moderator]", modRoleAsMention) + userAsMention +"!").queue();
+            event.getChannel().sendMessage("Du wurdest aufgrund verdächtigem Verhalten durch den Bot **gemutet** " + userAsMention +".").queue();
 
-            return;
 
         }
 
         if (QueryHelper.areToManyMessages(userId,messageContent)) {
 
-            Role warnedRole = event.getGuild().getRoleById(879448018372395048L);
+            for (Role role : userRoles) {
 
-            assert warnedRole != null;
-            event.getGuild().addRoleToMember(userId,warnedRole).queue();
-            List<Message> messagesToDelete = event.getMessage().getChannel().getHistory().retrievePast(10).complete();
+                event.getGuild().removeRoleFromMember(userId, role).queue();
+            }
+
+            Role mutedRole = event.getGuild().getRoleById(879329567947489352L);
+
+            assert mutedRole!= null;
+            event.getGuild().addRoleToMember(userId, mutedRole).queue();
+            List<Message> messagesToDelete = event.getMessage().getChannel().getHistory().retrievePast(7).complete();
             event.getChannel().deleteMessages(messagesToDelete).queue();
-            event.getChannel().sendMessage("Du wurdest aufgrund verdächtigem Verhalten durch den Bot **verwarnt**. " + userAsMention).queue();
+            event.getChannel().sendMessage("Du wurdest aufgrund verdächtigem Verhalten durch den Bot **gemutet** " + userAsMention +".").queue();
         }
 
     }

@@ -15,6 +15,7 @@ public class ClearCommand implements IBotCommand {
 
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
+
         if (args.length < 1) {
             EmbedBuilder helpEmbed = new EmbedBuilder();
             Helper.createEmbed(helpEmbed, "Hilfe", "Richtige Benutzung: " + Helper.PREFIX + "clear <Anzahl der zu löschenden Nachrichten als Zahl>", Color.lightGray);
@@ -42,6 +43,7 @@ public class ClearCommand implements IBotCommand {
 
             Helper.createEmbed(confirmationEmbed, "Bestätigung", "Es wurden " + (messageAmountToDelete - 1) + " Nachrichten durch " + message.getAuthor().getAsMention() + " erfolgreich gelöscht!", Color.GREEN);
             channel.sendMessage(confirmationEmbed.build()).queue();
+
         } catch (IllegalArgumentException iae) {
             if (iae.getMessage().equals("Message retrieval")) {
                 EmbedBuilder errorIAEEmbed = new EmbedBuilder();

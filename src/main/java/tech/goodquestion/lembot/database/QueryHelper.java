@@ -43,12 +43,9 @@ public final class QueryHelper {
             SELECT '\uD83D\uDE04', SUM(id_discord)AS c FROM (SELECT content, COUNT(id_discord) AS id_discord FROM `user_message_content` WHERE content LIKE '%\uD83D\uDE04%' GROUP BY content ORDER BY COUNT(id_discord) DESC) AS T\s
             ORDER BY c DESC LIMIT 3;""";
     public static final String TOP_CHANNELS = "SELECT channel_name, COUNT(id_channel) FROM `channel` GROUP BY id_channel ORDER BY COUNT(id_channel) DESC LIMIT 5;";
-    public static final String TOP_PINGED_USER = "SELECT content, COUNT(id_discord) FROM `user_message_content` WHERE content LIKE '%<@!%' OR '%<@I%' GROUP BY content HAVING COUNT(id_discord) > 1 ORDER BY COUNT(id_discord) DESC LIMIT 3";
     public static final String USER_LEAVE_LOG = "INSERT INTO user_leave (id_user_leave,id_discord,user_tag,username,avatar_url) VALUES (NULL,?,?,?,?);";
     public static final String USER_JOIN_LOG = "INSERT INTO user_join (id_user_join,id_discord,user_tag,username,avatar_url) VALUES (NULL,?,?,?,?);";
     public static final String USER_BAN_DATA = "INSERT INTO banned_user (id_banned_user,id_discord,user_tag, username, ban_author, ban_reason, channel_name) VALUES (NULL,?,?,?,?,?,?)";
-    public static final String USER_KICK_DATA = "INSERT INTO kicked_user (id_kicked_user,id_discord,user_tag, username, kick_author, kick_reason, channel_name) " +
-            "VALUES (NULL,?,?,?,?,?,?)";
     public static final String USER_MUTE_DATA = "INSERT INTO muted_user (id_muted_user,id_discord,user_tag, username, mute_author, mute_reason, channel_name) " +
             "VALUES (NULL,?,?,?,?,?,?)";
     public static final String USER_WARN_DATA = "INSERT INTO warned_user (id_warned_user,id_discord,user_tag, username, warn_author, warn_reason, channel_name) " +
@@ -149,9 +146,6 @@ public final class QueryHelper {
         return getTop(TOP_CHANNELS, new String[]{"**TOP 1**", "**TOP 2**", "**TOP 3**"}, new String[]{"", "", ""});
     }
 
-    public static EmbedBuilder getTopPingedUser() throws SQLException {
-        return getTop(TOP_PINGED_USER, new String[]{":first_place:", ":second_place:", ":third_place:"}, new String[]{"", "", ""});
-    }
 
     private static void logMemberStatus(String query, User member) {
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -191,10 +185,6 @@ public final class QueryHelper {
 
     public static void logUserBan(Sanction s) {
         insertSanction(USER_BAN_DATA, s);
-    }
-
-    public static void logUserKick(Sanction s) {
-        insertSanction(USER_KICK_DATA, s);
     }
 
     public static void logUserMute(Sanction s) {

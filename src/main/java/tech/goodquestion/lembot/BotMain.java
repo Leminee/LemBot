@@ -52,7 +52,6 @@ public class BotMain {
         command.registerCommand(new BotSourceCommand());
         command.registerCommand(new WarnCommand());
         command.registerCommand(new MuteCommand());
-        command.registerCommand(new KickCommand());
         command.registerCommand(new BanCommand());
         command.registerCommand(new UnmuteCommand());
         command.registerCommand(new NextBumpTimeCommand());
