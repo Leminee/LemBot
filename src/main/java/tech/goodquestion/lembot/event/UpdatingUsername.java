@@ -14,10 +14,17 @@ public class UpdatingUsername extends ListenerAdapter {
         String newUsername = event.getNewNickname();
         String userTag = event.getMember().getUser().getAsTag();
 
-        QueryHelper.logUsernameUpdated(userId, userTag, oldUsername, newUsername);
+        if (oldUsername == null) {
+            oldUsername = event.getMember().getNickname()+"*";
+        }
+
+        if (newUsername == null) {
+            newUsername = "N/A*";
+        }
+
+        QueryHelper.logUpdatedUsername(userId, userTag, oldUsername, newUsername);
         QueryHelper.adjustUsername(QueryHelper.ADJUSTING_NEW_USERNAME_IN_BUMPER,newUsername,userId);
         QueryHelper.adjustUsername(QueryHelper.ADJUSTING_NEW_USERNAME_IN_MESSAGE,newUsername,userId);
-
 
     }
 }

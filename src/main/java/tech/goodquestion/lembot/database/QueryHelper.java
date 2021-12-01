@@ -82,13 +82,13 @@ public final class QueryHelper {
         }
     }
 
-    public static void logUsernameUpdated(long userId, String userTag, String oldUsername, String newUsername) {
+    public static void logUpdatedUsername(long userId, String userTag, String oldUsername, String newUsername) {
 
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement statement = connection.prepareStatement(USERNAME_UPDATED_LOG)) {
             statement.setLong(1, userId);
             statement.setBlob(2, Helper.changeCharacterEncoding(statement, userTag));
             statement.setBlob(3, Helper.changeCharacterEncoding(statement, oldUsername));
-            statement.setBlob(4, Helper.changeCharacterEncoding(statement, newUsername));
+            statement.setBlob(4, Helper.changeCharacterEncoding(statement,newUsername));
             statement.executeUpdate();
 
         } catch (SQLException sqlException) {
@@ -167,7 +167,7 @@ public final class QueryHelper {
         logMemberStatus(USER_JOIN_LOG, member);
     }
 
-    private static void insertSanction(String query, Sanction sanction) {
+    private static void logSanction(String query, Sanction sanction) {
 
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, sanction.userId);
@@ -183,16 +183,16 @@ public final class QueryHelper {
         }
     }
 
-    public static void logUserBan(Sanction s) {
-        insertSanction(USER_BAN_DATA, s);
+    public static void logUserBan(Sanction sanction) {
+        logSanction(USER_BAN_DATA, sanction);
     }
 
-    public static void logUserMute(Sanction s) {
-        insertSanction(USER_MUTE_DATA, s);
+    public static void logUserMute(Sanction sanction) {
+        logSanction(USER_MUTE_DATA, sanction);
     }
 
-    public static void logUserWarn(Sanction s) {
-        insertSanction(USER_WARN_DATA, s);
+    public static void logUserWarn(Sanction sanction) {
+        logSanction(USER_WARN_DATA, sanction);
     }
 
     public static Time getNextBumpTime() {

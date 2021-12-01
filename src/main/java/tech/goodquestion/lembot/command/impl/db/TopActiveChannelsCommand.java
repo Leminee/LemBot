@@ -16,12 +16,12 @@ public class TopActiveChannelsCommand implements IBotCommand {
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
 
         try {
-            MessageEmbed embed = QueryHelper.getTopActiveChannels()
+            MessageEmbed activeChannelEmbed = QueryHelper.getTopActiveChannels()
                     .setColor(Color.gray)
                     .setTitle("Die aktivsten Channels")
                     .setThumbnail("https://cdn.discordapp.com/attachments/819694809765380146/872673996280303616/Bildschirmfoto_2021-08-05_um_04.54.26.png")
                     .build();
-            channel.sendMessage(embed).queue();
+            channel.sendMessage(activeChannelEmbed).queue();
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
         }

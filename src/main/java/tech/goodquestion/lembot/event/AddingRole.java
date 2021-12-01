@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRoleAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
+import tech.goodquestion.lembot.config.Config;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +24,7 @@ public class AddingRole extends ListenerAdapter {
 
         Member member = event.getMember();
         Guild guild = member.getGuild();
-        Role codingRole = guild.getRoleById(784773593942327297L);
+        Role codingRole = Config.getInstance().getRoles().getCodingRole();
 
         int delay = 5;
         assert codingRole != null;
@@ -36,9 +37,9 @@ public class AddingRole extends ListenerAdapter {
 
         Member member = event.getMember();
         Guild guild = member.getGuild();
-        Role codingRole = guild.getRoleById(784773593942327297L);
-        Role hackingRole = guild.getRoleById(811741950092116038L);
-        Role mutedRole = guild.getRoleById(879329567947489352L);
+        Role codingRole = Config.getInstance().getRoles().getCodingRole();
+        Role hackingRole = Config.getInstance().getRoles().getHackingRole();
+        Role mutedRole = Config.getInstance().getRoles().getMuteRole();
         List<Role> memberAddedRoles = member.getRoles();
 
 

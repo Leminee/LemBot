@@ -11,6 +11,7 @@ public class BumpCountCommand implements IBotCommand {
 
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
+
         UserData userData = new UserData();
         userData.userId = sender.getIdLong();
 

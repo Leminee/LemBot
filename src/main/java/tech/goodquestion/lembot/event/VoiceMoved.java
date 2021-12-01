@@ -15,7 +15,7 @@ public class VoiceMoved extends ListenerAdapter {
     public void onGuildVoiceMove(@NotNull GuildVoiceMoveEvent event) {
 
         String userMentioned = event.getMember().getAsMention();
-        String voiceChannelLeft= event.getChannelLeft().getName();
+        String voiceChannelLeft = event.getChannelLeft().getName();
         String voiceChannelJoined = event.getChannelJoined().getName();
 
         EmbedBuilder moveEmbed = new EmbedBuilder();

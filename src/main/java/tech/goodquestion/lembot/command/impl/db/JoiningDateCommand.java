@@ -15,10 +15,11 @@ public class JoiningDateCommand implements IBotCommand {
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
 
-        EmbedBuilder recordEmbed = new EmbedBuilder();
+        EmbedBuilder joiningDateEmbed = new EmbedBuilder();
 
-        Helper.createEmbed(recordEmbed, "Last Joining Date", "Du bist dem Server am " + "**" + getDateJoined(sender) + "**" + " beigetreten " + sender.getAsMention(), Color.gray);
-        channel.sendMessage(recordEmbed.build()).queue();
+        Helper.createEmbed(joiningDateEmbed, "Last Joining Date", "Du bist dem Server am " + "**" + getDateJoined(sender) + "**" + " beigetreten " + sender.getAsMention(), Color.gray);
+
+        channel.sendMessage(joiningDateEmbed.build()).queue();
 
     }
 
@@ -37,7 +38,7 @@ public class JoiningDateCommand implements IBotCommand {
 
         String day = String.valueOf(sender.getTimeJoined().getDayOfMonth());
         String month = String.valueOf(sender.getTimeJoined().getMonthValue());
-        String year  = String.valueOf(sender.getTimeJoined().getYear());
+        String year = String.valueOf(sender.getTimeJoined().getYear());
 
         return day + "-" + month + "-" + year;
 

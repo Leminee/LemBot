@@ -14,8 +14,11 @@ public class ActiveUserRecordCommand implements IBotCommand {
 
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
+
         EmbedBuilder recordEmbed = new EmbedBuilder();
+
         Helper.createEmbed(recordEmbed, "Rekord an gleichzeitig aktiven Usern", "Der aktuelle Record liegt bei " + "**" + QueryHelper.getActiveUserRecord() + "**" + " gleichzeitig aktiven Usern " + sender.getAsMention(), Color.magenta);
+
         channel.sendMessage(recordEmbed.build()).queue();
     }
 

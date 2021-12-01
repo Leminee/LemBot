@@ -22,7 +22,6 @@ public class TopMonthlyBumperCommand implements IBotCommand {
 
         Connection connection = DatabaseConnector.openConnection();
 
-
         try (Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(QueryHelper.TOP_MONTHLY_BUMPER)) {
 
             EmbedBuilder topBumperEmbed = new EmbedBuilder();

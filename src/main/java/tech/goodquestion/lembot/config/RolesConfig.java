@@ -7,13 +7,19 @@ public class RolesConfig {
     private long bump;
     private long mute;
     private long warn;
+    private long coding;
+    private long hacking;
 
     public long getBumpRoleId() {
         return bump;
     }
 
-    public Role getBumpRole() {
-        return Config.getInstance().getGuild().getRoleById(bump);
+    public Role getCodingRole() {
+        return Config.getInstance().getGuild().getRoleById(coding);
+    }
+
+    public Role getHackingRole() {
+        return Config.getInstance().getGuild().getRoleById(hacking);
     }
 
     public Role getMuteRole() {

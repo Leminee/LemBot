@@ -22,7 +22,6 @@ public class TopMessageCommand implements IBotCommand {
 
         Connection connection = DatabaseConnector.openConnection();
 
-
         try (Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(QueryHelper.TOP_FLOODER)) {
             EmbedBuilder topFlooderEmbed = new EmbedBuilder();
 
