@@ -19,7 +19,7 @@ public class UpdatingUsername extends ListenerAdapter {
         }
 
         if (newUsername == null) {
-            newUsername = "N/A*";
+            newUsername = event.getMember().getNickname();
         }
 
         QueryHelper.logUpdatedUsername(userId, userTag, oldUsername, newUsername);
