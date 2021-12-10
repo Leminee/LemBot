@@ -94,6 +94,7 @@ public class BotMain {
         jda.addEventListener(new AddingRole());
         jda.addEventListener(new SpamDetection());
         jda.addEventListener(new VoiceCreation());
+        jda.addEventListener(new AttachmentStorage());
 
         setupReactionRoles();
         setupRoleCommands(command);

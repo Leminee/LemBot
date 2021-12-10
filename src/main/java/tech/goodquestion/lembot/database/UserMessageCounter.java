@@ -24,22 +24,22 @@ public class UserMessageCounter extends ListenerAdapter {
 
         if (userMessageContent.isEmpty()) return;
 
-        Connection conn = DatabaseConnector.openConnection();
+        Connection connection = DatabaseConnector.openConnection();
         String insertMessageData = "INSERT INTO user_message (id_discord, username, number_message) VALUES (?,?,?);";
 
-        try (PreparedStatement preparedStatement = conn.prepareStatement(insertMessageData)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(insertMessageData)) {
             preparedStatement.setString(1, userId);
             preparedStatement.setString(2, userName);
             preparedStatement.setInt(3, numberMessage);
 
             String isUserInDB = "SELECT id_discord FROM user_message WHERE id_discord = ? ";
-            PreparedStatement prepareStatementOne = conn.prepareStatement(isUserInDB);
+            PreparedStatement prepareStatementOne = connection.prepareStatement(isUserInDB);
             prepareStatementOne.setString(1, userId);
             ResultSet resultSet = prepareStatementOne.executeQuery();
 
             if (resultSet.next()) {
                 String currentNumberMessage = "UPDATE user_message SET number_message = (number_message +1) WHERE id_discord = ?";
-                PreparedStatement updatePStatement = conn.prepareStatement(currentNumberMessage);
+                PreparedStatement updatePStatement = connection.prepareStatement(currentNumberMessage);
                 updatePStatement.setString(1, userId);
                 updatePStatement.executeUpdate();
 
