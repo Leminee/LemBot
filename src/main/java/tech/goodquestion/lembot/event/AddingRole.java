@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 
 public class AddingRole extends ListenerAdapter {
 
-    Map<Long, ScheduledFuture<?>> tasks = new HashMap<>();
+    public final Map<Long, ScheduledFuture<?>> tasks = new HashMap<>();
 
     @Override
     public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
@@ -30,6 +30,7 @@ public class AddingRole extends ListenerAdapter {
         assert codingRole != null;
         ScheduledFuture<?> task = guild.addRoleToMember(member, codingRole).queueAfter(delay, TimeUnit.MINUTES);
         tasks.put(member.getIdLong(), task);
+
     }
 
     @Override

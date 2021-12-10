@@ -50,7 +50,7 @@ public final class QueryHelper {
             "VALUES (NULL,?,?,?,?,?,?)";
     public static final String USER_WARN_DATA = "INSERT INTO warned_user (id_warned_user,id_discord,user_tag, username, warn_author, warn_reason, channel_name) " +
             "VALUES (NULL,?,?,?,?,?,?)";
-    public static final String NEXT_BUMP_TIME = "SELECT TIME(TIMESTAMPADD(HOUR,1, bumped_on)) FROM user_bump_time ORDER BY bumped_on DESC LIMIT 1";
+    public static final String NEXT_BUMP_TIME = "SELECT TIME(TIMESTAMPADD(HOUR,2, bumped_on)) FROM user_bump_time ORDER BY bumped_on DESC LIMIT 1";
     public static final String NEXT_BUMP = "SELECT TIMESTAMPDIFF(MINUTE,CURRENT_TIMESTAMP, TIMESTAMPADD(HOUR,2, bumped_on)) FROM user_bump_time ORDER BY bumped_on DESC LIMIT 1";
     public static final String ACTIVE_MEMBER_LOG = "INSERT INTO active_user (active_member) VALUES (?);";
     public static final String ACTIVE_USER_RECORD = "SELECT MAX(active_member) FROM active_user;";
