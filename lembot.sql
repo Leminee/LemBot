@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Erstellungszeit: 17. Nov 2021 um 23:07
+-- Erstellungszeit: 10. Dez 2021 um 23:53
 -- Server-Version: 10.3.31-MariaDB-0+deb10u1
--- PHP-Version: 7.4.25
+-- PHP-Version: 7.4.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Datenbank: `lembot`
+-- Datenbank: `discordbot`
 --
 
 -- --------------------------------------------------------
@@ -66,17 +66,6 @@ CREATE TABLE `channel` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `config`
---
-
-CREATE TABLE `config` (
-  `config_name` varchar(50) NOT NULL,
-  `config_value` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
 -- Tabellenstruktur für Tabelle `deleted_message`
 --
 
@@ -84,23 +73,6 @@ CREATE TABLE `deleted_message` (
   `id_deleted_message` bigint(20) NOT NULL,
   `deleted_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `kicked_user`
---
-
-CREATE TABLE `kicked_user` (
-  `id_kicked_user` int(11) NOT NULL,
-  `id_discord` bigint(20) NOT NULL,
-  `user_tag` varchar(50) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `kick_author` varchar(50) NOT NULL,
-  `kick_reason` varchar(50) NOT NULL,
-  `channel_name` varchar(50) NOT NULL,
-  `kicked_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -173,6 +145,22 @@ CREATE TABLE `updated_username` (
   `new_username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `updated_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `user_attachment`
+--
+
+CREATE TABLE `user_attachment` (
+  `id_attachment` bigint(20) NOT NULL,
+  `id_discord` bigint(20) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `url` text NOT NULL,
+  `extension` varchar(255) NOT NULL,
+  `size` decimal(20,0) NOT NULL,
+  `uploaded_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -336,22 +324,10 @@ ALTER TABLE `channel`
   ADD PRIMARY KEY (`id_message`);
 
 --
--- Indizes für die Tabelle `config`
---
-ALTER TABLE `config`
-  ADD PRIMARY KEY (`config_name`);
-
---
 -- Indizes für die Tabelle `deleted_message`
 --
 ALTER TABLE `deleted_message`
   ADD PRIMARY KEY (`id_deleted_message`);
-
---
--- Indizes für die Tabelle `kicked_user`
---
-ALTER TABLE `kicked_user`
-  ADD PRIMARY KEY (`id_kicked_user`);
 
 --
 -- Indizes für die Tabelle `leaked_password`
@@ -385,6 +361,12 @@ ALTER TABLE `updated_message`
 --
 ALTER TABLE `updated_username`
   ADD PRIMARY KEY (`id_updated_username`);
+
+--
+-- Indizes für die Tabelle `user_attachment`
+--
+ALTER TABLE `user_attachment`
+  ADD KEY `id_discord` (`id_discord`);
 
 --
 -- Indizes für die Tabelle `user_bump`
@@ -453,12 +435,6 @@ ALTER TABLE `active_user`
 --
 ALTER TABLE `banned_user`
   MODIFY `id_banned_user` bigint(20) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT für Tabelle `kicked_user`
---
-ALTER TABLE `kicked_user`
-  MODIFY `id_kicked_user` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT für Tabelle `leaked_password`
@@ -535,6 +511,12 @@ ALTER TABLE `deleted_message`
 --
 ALTER TABLE `updated_message`
   ADD CONSTRAINT `updated_message_ibfk_1` FOREIGN KEY (`id_message`) REFERENCES `user_message_content` (`id_message`);
+
+--
+-- Constraints der Tabelle `user_attachment`
+--
+ALTER TABLE `user_attachment`
+  ADD CONSTRAINT `user_attachment_ibfk_1` FOREIGN KEY (`id_discord`) REFERENCES `user_message` (`id_discord`);
 
 --
 -- Constraints der Tabelle `user_bump_time`

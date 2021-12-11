@@ -1,11 +1,11 @@
 package tech.goodquestion.lembot.event;
 
+import net.dv8tion.jda.api.entities.Category;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
-import net.dv8tion.jda.api.entities.*;
 
 import java.util.Random;
 
@@ -252,7 +252,7 @@ public class VoiceCreation extends ListenerAdapter {
     @Override
     public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
 
-        boolean areThereToManyCreatedVoice = event.getGuild().getVoiceChannels().size() >= 5;
+        boolean areThereToManyCreatedVoice = event.getGuild().getVoiceChannels().size() >= 10;
 
         if (areThereToManyCreatedVoice) {
             return;
@@ -272,53 +272,44 @@ public class VoiceCreation extends ListenerAdapter {
     @Override
     public void onGuildVoiceLeave(@NotNull GuildVoiceLeaveEvent event) {
 
-        boolean isEmptyChannel = event.getChannelLeft().getMembers().size() == 0;
+        boolean isVoiceLeftEmpty = event.getChannelLeft().getMembers().size() == 0;
 
-        if (isEmptyChannel) {
+        if (isVoiceLeftEmpty) {
             event.getChannelLeft().delete().queue();
         }
     }
 
-
     @Override
     public void onGuildVoiceMove(@NotNull GuildVoiceMoveEvent event) {
 
-        boolean areThereToManyCreatedVoice = event.getGuild().getVoiceChannels().size() >= 5;
+        boolean areThereToManyCreatedVoice = event.getGuild().getVoiceChannels().size() >= 10;
 
         if (areThereToManyCreatedVoice) {
             return;
         }
 
-        String voiceName = LEFT[random.nextInt(LEFT.length)] + "_" + RIGHT[random.nextInt(RIGHT.length)];
+        String randomlyCombinedVoiceName = LEFT[random.nextInt(LEFT.length)] + "_" + RIGHT[random.nextInt(RIGHT.length)];
+        Category voiceFunCategory = event.getGuild().getCategoryById(779105998420967465L);
 
-        Category category = event.getGuild().getCategoryById(779105998420967465L);
+        boolean isVoiceLeftEmpty = event.getChannelLeft().getMembers().size() == 0;
+        boolean wasVoiceJoinedEmpty = event.getChannelJoined().getMembers().size() == 1;
 
-
-        if (event.getChannelJoined().getMembers().size() >= 2 && event.getChannelLeft().getMembers().size() == 0) {
-
+        if (isVoiceLeftEmpty && wasVoiceJoinedEmpty) {
             event.getChannelLeft().delete().queue();
+            event.getGuild().createVoiceChannel(randomlyCombinedVoiceName, voiceFunCategory).queue();
             return;
         }
 
-        if (event.getChannelJoined().getMembers().size() >= 1 && event.getChannelLeft().getMembers().size() == 0) {
-            event.getGuild().createVoiceChannel(voiceName,category).queue();
+        boolean wasVoiceJoinedNotEmpty = event.getChannelJoined().getMembers().size() >= 2;
+
+        if (isVoiceLeftEmpty && wasVoiceJoinedNotEmpty) {
             event.getChannelLeft().delete().queue();
             return;
+
         }
 
-        if (event.getChannelLeft().getMembers().size() >= 1 && event.getChannelJoined().getMembers().size() == 1) {
-            event.getGuild().createVoiceChannel(voiceName,category).queue();
-            return;
-        }
-
-        if (event.getChannelLeft().getMembers().size() == 0) {
-            event.getChannelLeft().delete().queue();
-            event.getGuild().createVoiceChannel(voiceName,category).queue();
-            return;
-        }
-
-        if (event.getChannelJoined().getMembers().size() >= 2 && event.getChannelLeft().getMembers().size() == 0) {
-            event.getChannelLeft().delete().queue();
+        if (!isVoiceLeftEmpty && wasVoiceJoinedEmpty) {
+            event.getGuild().createVoiceChannel(randomlyCombinedVoiceName, voiceFunCategory).queue();
         }
     }
 }
