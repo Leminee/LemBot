@@ -1,8 +1,13 @@
 package tech.goodquestion.lembot.database;
 
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import tech.goodquestion.lembot.command.CommandManager;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -21,7 +26,9 @@ public class AttachmentStorage extends ListenerAdapter {
         String attachmentUrl = event.getMessage().getAttachments().get(0).getUrl();
         String attachmentExtension = event.getMessage().getAttachments().get(0).getFileExtension();
         double attachmentSize = event.getMessage().getAttachments().get(0).getSize();
-        double attachmentSizeInKiloByte = attachmentSize/1024;
+        double attachmentSizeInKiloByte = attachmentSize / 1024;
+
+        saveLocally(event.getMessage().getAttachments().get(0), userId, event.getMember(), event.getMessage());
 
         Connection connection = DatabaseConnector.openConnection();
         String insertMessageData = "INSERT INTO user_attachment (id_discord,id_attachment, name, url, extension,size) VALUES (?,?,?,?,?,?);";
@@ -41,5 +48,26 @@ public class AttachmentStorage extends ListenerAdapter {
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
         }
+    }
+
+    private void saveLocally(Message.Attachment attachment, long userId, Member member, Message message) {
+        attachment.downloadToFile("attachments/" + getFileSenderAsTag(member, userId, message) + "_" + attachment.getIdLong() + "_" + attachment.getFileName())
+                .thenAccept(File::getName)
+                .exceptionally(t ->
+                {
+                    System.out.println(t.getMessage());
+                    return null;
+                });
+    }
+
+    private String getFileSenderAsTag(Member member, long userId, Message message) {
+
+        User user = CommandManager.getInstance().getJDA().retrieveUserById(userId, true).complete();
+
+        if (user != null) {
+            member = message.getGuild().retrieveMember(user).complete();
+        }
+
+        return member.getUser().getAsTag();
     }
 }

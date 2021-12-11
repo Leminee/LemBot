@@ -123,3 +123,5 @@ buildNumber.properties
 
 lembot.config.yml
 .gitattributes
+attachments
+*.png
