@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import tech.goodquestion.lembot.command.CommandManager;
+import tech.goodquestion.lembot.entity.OccurredException;
 
 import java.io.File;
 import java.sql.Connection;
@@ -48,6 +49,7 @@ public class AttachmentStorage extends ListenerAdapter {
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
+            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, this.getClass().getName()));
         }
     }
 

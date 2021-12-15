@@ -2,6 +2,7 @@ package tech.goodquestion.lembot.database;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageDeleteEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import tech.goodquestion.lembot.entity.OccurredException;
 
 import javax.annotation.Nonnull;
 import java.sql.Connection;
@@ -31,6 +32,7 @@ public class DeletedMessageStorage extends ListenerAdapter {
             }
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
+            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, this.getClass().getName()));
         }
     }
 

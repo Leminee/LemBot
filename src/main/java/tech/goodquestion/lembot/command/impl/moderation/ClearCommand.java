@@ -50,10 +50,12 @@ public class ClearCommand implements IBotCommand {
                 Helper.createEmbed(errorIAEEmbed, "Fehler", "Mehr als 100 Nachrichten können nicht gelöscht werden!", EmbedColorHelper.ERROR);
                 channel.sendMessage(errorIAEEmbed.build()).queue();
 
+
             } else if (iae instanceof NumberFormatException) {
                 EmbedBuilder errorNFEEmbed = new EmbedBuilder();
                 Helper.createEmbed(errorNFEEmbed, "Fehler", "Bitte gib bitte eine gültige Zahl an!", EmbedColorHelper.ERROR);
                 channel.sendMessage(errorNFEEmbed.build()).queue();
+
             }
         }
     }

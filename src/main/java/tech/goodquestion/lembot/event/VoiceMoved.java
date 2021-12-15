@@ -21,7 +21,7 @@ public class VoiceMoved extends ListenerAdapter {
 
         String embedDescription = userMentioned + " ist von " + "**" + voiceChannelLeft + "**" + " in " + "**" +voiceChannelJoined + "**"+ " um " + Helper.getCurrentTime() + " Uhr **gemovt**.";
 
-        Helper.createEmbed(moveEmbed,"Voice **Moved** ",embedDescription, EmbedColorHelper.VOICE_MOVED);
+        Helper.createEmbed(moveEmbed,"Voice **Moved** ",embedDescription, EmbedColorHelper.VOICE_MOVED, "https://cdn.discordapp.com/attachments/819694809765380146/880646674366754856/Bildschirmfoto_2021-08-27_um_04.55.07.png");
         Config.getInstance().getChannel().getVoiceChatChannel().sendMessage(moveEmbed.build()).queue();
 
     }

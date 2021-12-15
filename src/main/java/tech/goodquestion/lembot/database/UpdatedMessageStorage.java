@@ -2,6 +2,7 @@ package tech.goodquestion.lembot.database;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageUpdateEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import tech.goodquestion.lembot.entity.OccurredException;
 import tech.goodquestion.lembot.lib.Helper;
 
 import javax.annotation.Nonnull;
@@ -30,6 +31,8 @@ public class UpdatedMessageStorage extends ListenerAdapter {
             preparedStatement.executeUpdate();
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
+
+            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, this.getClass().getName()));
         }
     }
 

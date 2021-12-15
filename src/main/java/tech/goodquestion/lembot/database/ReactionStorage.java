@@ -17,7 +17,7 @@ public class ReactionStorage extends ListenerAdapter {
         String addedReaction = event.getReaction().getReactionEmote().getEmoji();
         int count = event.getReaction().getCount();
 
-        CommandsHelper.logUserReactions(messageId,userId,String.valueOf(addedReaction),count);
+        CommandsHelper.logUserReaction(messageId,userId,addedReaction,count);
 
     }
 

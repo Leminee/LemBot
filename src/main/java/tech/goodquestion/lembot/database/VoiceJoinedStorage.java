@@ -13,7 +13,8 @@ public class VoiceJoinedStorage extends ListenerAdapter {
 
     @Override
     public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
-        String insertQuery = "INSERT INTO voice_join (id_discord, user_tag, username, voice_channel_name) VALUES (?,?,?,?);";
+
+        String insertQuery = "INSERT INTO voice_join (id_discord, user_tag, username, name) VALUES (?,?,?,?);";
 
         VoiceChannel voiceChannel = new VoiceChannel();
 
@@ -28,9 +29,9 @@ public class VoiceJoinedStorage extends ListenerAdapter {
 
         String embedDescription = userMentioned + " ist **" + voiceChannel.name + "** um " + Helper.getCurrentTime() + " Uhr **gejoint**.";
 
-        Helper.createEmbed(joinEmbed, "Voice **Joined** ", embedDescription, EmbedColorHelper.VOICE_JOINED);
+        Helper.createEmbed(joinEmbed, "Voice **Joined** ", embedDescription, EmbedColorHelper.VOICE_JOINED, "https://cdn.discordapp.com/attachments/819694809765380146/880646674366754856/Bildschirmfoto_2021-08-27_um_04.55.07.png");
         Config.getInstance().getChannel().getVoiceChatChannel().sendMessage(joinEmbed.build()).queue();
 
-        Helper.insertVoiceChannelData(insertQuery, voiceChannel);
+        CommandsHelper.insertVoiceChannelData(insertQuery, voiceChannel);
     }
 }

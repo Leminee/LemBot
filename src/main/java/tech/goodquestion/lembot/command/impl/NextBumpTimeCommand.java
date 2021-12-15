@@ -13,9 +13,9 @@ public class NextBumpTimeCommand implements IBotCommand {
         try {
             channel.sendMessage("Nächster Bump um **" + String.valueOf(QueryHelper.getNextBumpTime()).substring(0,5)
                     + "** " + "Uhr " + "(in **" + (QueryHelper.getMinutesToNextBump() + 1) + "** Minuten) " + message.getAuthor().getAsMention()).queue();
-        } catch (StringIndexOutOfBoundsException exc) {
+        } catch (StringIndexOutOfBoundsException stringIndexOutOfBoundsException) {
             channel.sendMessage("Nächter Bump unbekannt! " + sender.getAsMention()).queue();
-            exc.printStackTrace();
+            System.out.println(stringIndexOutOfBoundsException.getMessage());
         }
     }
 

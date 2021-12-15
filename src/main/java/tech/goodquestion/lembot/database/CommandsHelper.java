@@ -3,7 +3,9 @@ package tech.goodquestion.lembot.database;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
+import tech.goodquestion.lembot.entity.OccurredException;
 import tech.goodquestion.lembot.entity.Sanction;
+import tech.goodquestion.lembot.entity.VoiceChannel;
 import tech.goodquestion.lembot.lib.Helper;
 
 import java.sql.Connection;
@@ -29,12 +31,14 @@ public final class CommandsHelper {
     public static final String ADJUSTING_NEW_USERNAME_IN_MESSAGE = "UPDATE user_message SET username = ? WHERE id_discord = ?;";
     public static final String USERNAME_UPDATED_LOG = "INSERT INTO updated_username (id_updated_username, id_discord, user_tag, old_username, new_username) VALUES (NULL,?,?,?,?);";
     public static final String REACTION_LOG = "INSERT INTO user_reaction (id_reaction, id_message, id_discord, reaction, count) VALUES (NULL,?,?,?,?);";
+    public static final String EXCEPTION_LOG = "INSERT INTO exception (id_exception, occurred_in, exception_type, details) VALUES (NULL,?,?,?);";
+    private static final String CLASS_NAME = CommandsHelper.class.getName();
 
     private CommandsHelper(){
 
     }
 
-    public static void logUserReactions (long messageId, long userId, String addedReaction, int count) {
+    public static void logUserReaction(long messageId, long userId, String addedReaction, int count) {
 
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement statement = connection.prepareStatement(REACTION_LOG)) {
             statement.setLong(1, messageId);
@@ -42,10 +46,14 @@ public final class CommandsHelper {
             statement.setString(3, addedReaction);
             statement.setInt(4, count);
             statement.executeUpdate();
+
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
+
+            logException(OccurredException.getOccurredExceptionData(sqlException,CLASS_NAME));
         }
     }
+
 
     public static void logMemberStatusChange(long userId, String userTag, OnlineStatus newStatus) {
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement statement = connection.prepareStatement(INSERT_USER_STATUS)) {
@@ -55,6 +63,8 @@ public final class CommandsHelper {
             statement.executeUpdate();
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
+
+            logException(OccurredException.getOccurredExceptionData(sqlException,CLASS_NAME));
         }
     }
 
@@ -69,6 +79,8 @@ public final class CommandsHelper {
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
+
+            logException(OccurredException.getOccurredExceptionData(sqlException,CLASS_NAME));
         }
     }
 
@@ -77,7 +89,10 @@ public final class CommandsHelper {
             preparedStatement.setLong(1, memberCount);
             preparedStatement.executeUpdate();
         } catch (SQLException sqlException) {
+
             System.out.println(sqlException.getMessage());
+
+            logException(OccurredException.getOccurredExceptionData(sqlException,CLASS_NAME));
         }
     }
 
@@ -87,6 +102,8 @@ public final class CommandsHelper {
             statement.executeUpdate();
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
+
+            logException(OccurredException.getOccurredExceptionData(sqlException,CLASS_NAME));
         }
     }
 
@@ -111,6 +128,8 @@ public final class CommandsHelper {
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
+
+            logException(OccurredException.getOccurredExceptionData(sqlException,CLASS_NAME));
         }
     }
 
@@ -122,7 +141,10 @@ public final class CommandsHelper {
             preparedStatement.setString(4, member.getEffectiveAvatarUrl());
             preparedStatement.executeUpdate();
         } catch (SQLException sqlException) {
+
             System.out.println(sqlException.getMessage());
+
+            logException(OccurredException.getOccurredExceptionData(sqlException,CLASS_NAME));
         }
     }
 
@@ -136,5 +158,39 @@ public final class CommandsHelper {
 
     public static void logUserWarn(Sanction sanction) {
         logSanction(USER_WARN_DATA, sanction);
+    }
+
+    public static void logException(OccurredException occurredException) {
+
+        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(EXCEPTION_LOG)) {
+            preparedStatement.setString(1, occurredException.occurredIn);
+            preparedStatement.setString(2, occurredException.exceptionType);
+            preparedStatement.setString(3, occurredException.details);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException sqlException) {
+
+            System.out.println(sqlException.getMessage());
+
+        }
+    }
+
+    public static void insertVoiceChannelData(String insertQuery, VoiceChannel voiceChannel) {
+
+        Connection connection = DatabaseConnector.openConnection();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
+            preparedStatement.setLong(1, voiceChannel.userId);
+            preparedStatement.setString(2, voiceChannel.userTag);
+            preparedStatement.setString(3, voiceChannel.userName);
+            preparedStatement.setString(4, voiceChannel.name);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException sqlException) {
+
+            System.out.println(sqlException.getMessage());
+
+            logException(OccurredException.getOccurredExceptionData(sqlException,CommandsHelper.class.getName()));
+        }
     }
 }

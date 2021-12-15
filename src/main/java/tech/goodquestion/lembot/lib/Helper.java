@@ -4,12 +4,13 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
-import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.command.CommandManager;
+import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.config.Config;
+import tech.goodquestion.lembot.database.CommandsHelper;
 import tech.goodquestion.lembot.database.DatabaseConnector;
+import tech.goodquestion.lembot.entity.OccurredException;
 import tech.goodquestion.lembot.entity.UserData;
-import tech.goodquestion.lembot.entity.VoiceChannel;
 
 import java.awt.*;
 import java.sql.*;
@@ -80,6 +81,8 @@ public final class Helper {
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
+
+            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, Helper.class.getName()));
         }
 
     }
@@ -138,21 +141,6 @@ public final class Helper {
         embedBuilder.setColor(Color.decode(embedColor));
     }
 
-    public static void insertVoiceChannelData(String insertQuery, VoiceChannel voiceChannel) {
-
-        Connection connection = DatabaseConnector.openConnection();
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
-            preparedStatement.setLong(1, voiceChannel.userId);
-            preparedStatement.setString(2, voiceChannel.userTag);
-            preparedStatement.setString(3, voiceChannel.userName);
-            preparedStatement.setString(4, voiceChannel.name);
-            preparedStatement.executeUpdate();
-
-        } catch (SQLException sqlException) {
-            System.out.println(sqlException.getMessage());
-        }
-    }
 
     public static void addTopToEmbed(ResultSet resultSet, EmbedBuilder embedBuilder, String embedTitle, String embedDescription, String embedThumbnail, String embedColor, TextChannel channel, String amountOf) {
 
@@ -172,6 +160,7 @@ public final class Helper {
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
+            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, Helper.class.getName()));
         }
     }
 

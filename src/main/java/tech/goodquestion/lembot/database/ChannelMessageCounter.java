@@ -3,6 +3,7 @@ package tech.goodquestion.lembot.database;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
+import tech.goodquestion.lembot.entity.OccurredException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,7 +24,7 @@ public class ChannelMessageCounter extends ListenerAdapter {
         Connection connection = DatabaseConnector.openConnection();
         String insertChannel = "INSERT INTO channel (id_message, id_channel,channel_name) VALUES (?,?,?);";
 
-        try(PreparedStatement preparedStatement = connection.prepareStatement(insertChannel)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(insertChannel)) {
 
             preparedStatement.setString(1, messageId);
             preparedStatement.setString(2, channelId);
@@ -33,6 +34,7 @@ public class ChannelMessageCounter extends ListenerAdapter {
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
+            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, this.getClass().getName()));
         }
     }
 

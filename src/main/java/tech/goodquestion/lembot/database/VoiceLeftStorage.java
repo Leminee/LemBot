@@ -14,7 +14,7 @@ public class VoiceLeftStorage extends ListenerAdapter {
     @Override
     public void onGuildVoiceLeave(@NotNull GuildVoiceLeaveEvent event) {
 
-        String insertQuery = "INSERT INTO voice_leave (id_discord, user_tag, username, voice_channel_name) VALUES (?,?,?,?);";
+        String insertQuery = "INSERT INTO voice_leave (id_discord, user_tag, username, name) VALUES (?,?,?,?);";
 
         VoiceChannel voiceChannel = new VoiceChannel();
         voiceChannel.userId = event.getMember().getIdLong();
@@ -27,10 +27,10 @@ public class VoiceLeftStorage extends ListenerAdapter {
 
         String embedDescription = userMentioned + " hat " + "**" + voiceChannel.name + "**" + " um " + Helper.getCurrentTime() + " Uhr **verlassen**.";
 
-        Helper.createEmbed(leftEmbed,"Voice **Left** ",embedDescription, EmbedColorHelper.VOICE_LEFT);
+        Helper.createEmbed(leftEmbed,"Voice **Left** ",embedDescription, EmbedColorHelper.VOICE_LEFT, "https://cdn.discordapp.com/attachments/819694809765380146/880646674366754856/Bildschirmfoto_2021-08-27_um_04.55.07.png");
         Config.getInstance().getChannel().getVoiceChatChannel().sendMessage(leftEmbed.build()).queue();
 
-        Helper.insertVoiceChannelData(insertQuery,voiceChannel);
+        CommandsHelper.insertVoiceChannelData(insertQuery,voiceChannel);
     }
 
 }

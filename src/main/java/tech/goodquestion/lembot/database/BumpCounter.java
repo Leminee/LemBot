@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import tech.goodquestion.lembot.entity.OccurredException;
 import tech.goodquestion.lembot.lib.Helper;
 
 import java.sql.Connection;
@@ -71,6 +72,7 @@ public class BumpCounter extends ListenerAdapter {
             }
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
+            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, this.getClass().getName()));
         }
     }
 

@@ -2,6 +2,7 @@ package tech.goodquestion.lembot.database;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import tech.goodquestion.lembot.entity.OccurredException;
 import tech.goodquestion.lembot.lib.Helper;
 
 import java.sql.Connection;
@@ -50,6 +51,8 @@ public class UserMessageCounter extends ListenerAdapter {
             insertData(userMessageContent, userId, messageId);
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
+
+            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, this.getClass().getName()));
         }
 
     }
@@ -68,6 +71,8 @@ public class UserMessageCounter extends ListenerAdapter {
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
+
+            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, this.getClass().getName()));
         }
     }
 }

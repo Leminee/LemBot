@@ -4,7 +4,9 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import tech.goodquestion.lembot.command.IBotCommand;
+import tech.goodquestion.lembot.database.CommandsHelper;
 import tech.goodquestion.lembot.database.DatabaseConnector;
+import tech.goodquestion.lembot.entity.OccurredException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -49,6 +51,8 @@ public class PasswordCheckCommand implements IBotCommand {
             }
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
+
+            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, this.getClass().getName()));
         }
         return false;
     }

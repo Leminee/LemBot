@@ -4,7 +4,9 @@ import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import tech.goodquestion.lembot.config.Config;
+import tech.goodquestion.lembot.database.CommandsHelper;
 import tech.goodquestion.lembot.database.DatabaseConnector;
+import tech.goodquestion.lembot.entity.OccurredException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -40,7 +42,9 @@ public class UserAuthorization extends ListenerAdapter {
             }
 
         } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
+            System.out.println(sqlException.getMessage());
+
+            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, this.getClass().getName()));
         }
     }
 }

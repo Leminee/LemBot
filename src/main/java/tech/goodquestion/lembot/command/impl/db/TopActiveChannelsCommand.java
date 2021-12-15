@@ -5,7 +5,9 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;
 import tech.goodquestion.lembot.command.IBotCommand;
+import tech.goodquestion.lembot.database.CommandsHelper;
 import tech.goodquestion.lembot.database.QueryHelper;
+import tech.goodquestion.lembot.entity.OccurredException;
 import tech.goodquestion.lembot.lib.EmbedColorHelper;
 
 import java.awt.*;
@@ -23,8 +25,11 @@ public class TopActiveChannelsCommand implements IBotCommand {
                     .setThumbnail("https://cdn.discordapp.com/attachments/819694809765380146/872673996280303616/Bildschirmfoto_2021-08-05_um_04.54.26.png")
                     .build();
             channel.sendMessage(activeChannelEmbed).queue();
+
         } catch (SQLException sqlException) {
+
             System.out.println(sqlException.getMessage());
+            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, this.getClass().getName()));
         }
     }
 

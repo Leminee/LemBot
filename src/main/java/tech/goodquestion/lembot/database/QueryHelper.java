@@ -2,6 +2,7 @@ package tech.goodquestion.lembot.database;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import tech.goodquestion.lembot.entity.OccurredException;
 
 import java.sql.*;
 import java.util.Objects;
@@ -22,7 +23,7 @@ public final class QueryHelper {
     public static final String SPAM_VERIFICATION = "SELECT COUNT(DISTINCT id_channel) FROM `channel` INNER JOIN user_message_content ON channel.id_message = user_message_content.id_message WHERE user_message_content.id_discord = ? AND content = ? AND posted_on >= NOW() - INTERVAL 1 MINUTE";
     public static final String SPAM_DATA = "SELECT id_channel, channel.id_message FROM `channel` INNER JOIN user_message_content ON channel.id_message = user_message_content.id_message WHERE user_message_content.id_discord = ? AND content = ? AND posted_on >= NOW() - INTERVAL 1 MINUTE";
     public static final String AMOUNT_SPAM_MESSAGES = "SELECT COUNT(id_discord) FROM user_message_content WHERE id_discord = ? AND content = ? AND posted_on >= NOW() - INTERVAL 30 SECOND";
-    private static final String HOPPING_CHECK = "SELECT COUNT(id_discord) FROM voice_join WHERE id_discord = ? AND joined_on >= NOW() - INTERVAL 30 SECOND";
+    private static final String HOPPING_CHECK = "SELECT COUNT(id_discord) FROM voice_join WHERE id_discord = ? AND joined_at >= NOW() - INTERVAL 30 SECOND";
 
     private QueryHelper() {
 
@@ -72,6 +73,7 @@ public final class QueryHelper {
             }
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
+            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
         }
 
         return nextBumpTime;
@@ -89,6 +91,8 @@ public final class QueryHelper {
             }
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
+
+            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
         }
 
         return minutesBeforeBump;
@@ -107,6 +111,8 @@ public final class QueryHelper {
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
+
+            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
         }
         return 0;
     }
@@ -122,6 +128,8 @@ public final class QueryHelper {
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
+
+            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
         }
     }
 
@@ -142,6 +150,8 @@ public final class QueryHelper {
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
+
+            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
         }
         return false;
     }
@@ -193,6 +203,8 @@ public final class QueryHelper {
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
+
+            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
         }
 
         event.getMessage().delete().queue();
@@ -218,6 +230,8 @@ public final class QueryHelper {
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
+
+            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
         }
         return false;
     }
@@ -242,6 +256,8 @@ public final class QueryHelper {
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
+
+            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
         }
         return false;
 

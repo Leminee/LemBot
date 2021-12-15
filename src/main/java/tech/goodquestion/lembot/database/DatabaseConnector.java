@@ -3,6 +3,7 @@ package tech.goodquestion.lembot.database;
 import com.mysql.cj.jdbc.MysqlConnectionPoolDataSource;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.config.DatabaseConfig;
+import tech.goodquestion.lembot.entity.OccurredException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -27,7 +28,9 @@ public class DatabaseConnector {
 
             return dataSource.getConnection();
         } catch (SQLException sqlException) {
+            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, MysqlConnectionPoolDataSource.class.getName()));
             throw new RuntimeException("database connection couldn't be established");
+
         }
     }
 
