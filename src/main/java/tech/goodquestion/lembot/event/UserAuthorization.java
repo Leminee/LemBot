@@ -35,7 +35,7 @@ public class UserAuthorization extends ListenerAdapter {
                 int number = resultSet.getInt(1);
 
                 if (number == 1) {
-                    event.getGuild().addRoleToMember(userId, Config.getInstance().getRoles().getMuteRole()).queue();
+                    event.getGuild().addRoleToMember(userId, Config.getInstance().getRole().getMuteRole()).queue();
                 }
             }
 

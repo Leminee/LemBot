@@ -19,7 +19,7 @@ public class LinkDeletion extends ListenerAdapter {
         assert author != null;
         boolean isStaff = author.hasPermission(Permission.MESSAGE_MANAGE);
 
-        if (channelId != Config.getInstance().getChannels().getNewArrivalsChannel().getIdLong() || isStaff) {
+        if (channelId != Config.getInstance().getChannel().getNewArrivalsChannel().getIdLong() || isStaff) {
             return;
         }
 

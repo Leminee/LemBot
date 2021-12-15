@@ -11,6 +11,7 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 public class AttachmentStorage extends ListenerAdapter {
 
@@ -51,13 +52,22 @@ public class AttachmentStorage extends ListenerAdapter {
     }
 
     private void saveLocally(Message.Attachment attachment, long userId, Member member, Message message) {
-        attachment.downloadToFile("attachments/" + getFileSenderAsTag(member, userId, message) + "_" + attachment.getIdLong() + "_" + attachment.getFileName())
+        attachment.downloadToFile("attachments/" + getFileSenderAsTag(member, userId, message) + "_" + getGermanDate(LocalDateTime.now()) + "_" + attachment.getFileName())
                 .thenAccept(File::getName)
                 .exceptionally(t ->
                 {
                     System.out.println(t.getMessage());
                     return null;
                 });
+    }
+
+    private String getGermanDate(LocalDateTime localDateTime) {
+
+        return LocalDateTime.now().getDayOfMonth()
+                + "-" + LocalDateTime.now().getMonth().getValue()
+                + "-" + LocalDateTime.now().getYear()
+                + "-" + LocalDateTime.now().getHour()
+                + ":" + LocalDateTime.now().getMinute();
     }
 
     private String getFileSenderAsTag(Member member, long userId, Message message) {

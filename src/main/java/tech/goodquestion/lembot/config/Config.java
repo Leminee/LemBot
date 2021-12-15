@@ -11,8 +11,17 @@ import java.util.List;
 
 public class Config {
 
-    public static final String CONFIG_FILE = "lembot.config.yml";
+    public static final String CONFIG_FILE = "example.config.yml";
     private static Config INSTANCE = null;
+    private String token;
+    private List<ReactionRoleMessage> reactionRoles;
+    private List<CommandRole> commandRoles;
+    private DatabaseConfig database;
+    private long guild;
+    private RoleConfig role;
+    private ChannelConfig channel;
+    private UserConfig user;
+    private CategoryConfig category;
 
     public static Config getInstance() {
         if (INSTANCE == null) {
@@ -32,6 +41,7 @@ public class Config {
         }
     }
 
+
     public void save() {
         Yaml configDumper = new Yaml();
         configDumper.setBeanAccess(BeanAccess.FIELD);
@@ -44,14 +54,6 @@ public class Config {
         }
     }
 
-    private String token;
-    private List<ReactionRoleMessage> reactionRoles;
-    private List<CommandRole> commandRoles;
-    private DatabaseConfig database;
-    private long guild;
-    private RolesConfig roles;
-    private ChannelsConfig channels;
-    private UserConfig users;
 
     public String getToken() {
         return token;
@@ -73,16 +75,20 @@ public class Config {
         return BotMain.jda.getGuildById(guild);
     }
 
-    public RolesConfig getRoles() {
-        return roles;
+    public RoleConfig getRole() {
+        return role;
     }
 
-    public ChannelsConfig getChannels() {
-        return channels;
+    public ChannelConfig getChannel() {
+        return channel;
     }
 
-    public UserConfig getUsers() {
-        return users;
+    public CategoryConfig getCategory() {
+        return category;
+    }
+
+    public UserConfig getUser() {
+        return user;
     }
 
 }

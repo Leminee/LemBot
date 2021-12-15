@@ -31,8 +31,9 @@ public class TopBumperCommand implements IBotCommand {
             String embedDescription = "";
             String embedThumbnail = "https://cdn.discordapp.com/attachments/819694809765380146/869248076446052402/Bildschirmfoto_2021-07-26_um_17.48.08.png";
             Color embedColor = Color.cyan;
+            String amountOf = "Bumps";
 
-            Helper.addTopToEmbed(resultSet, topBumperEmbed, embedTitle, embedDescription, embedThumbnail, embedColor, channel);
+            Helper.addTopToEmbed(resultSet, topBumperEmbed, embedTitle, embedDescription, embedThumbnail, embedColor, channel,amountOf);
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());

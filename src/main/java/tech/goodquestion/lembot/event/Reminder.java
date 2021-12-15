@@ -35,7 +35,7 @@ public class Reminder extends ListenerAdapter {
 
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-        String bumperRole = "<@&" + Config.getInstance().getRoles().getBumpRoleId() + ">";
+        String bumperRole = "<@&" + Config.getInstance().getRole().getBumpRoleId() + ">";
 
         String[] pingContent = {
                 "Jetzt kann wieder gebumpt werden " + bumperRole + " :smile: ",
@@ -46,7 +46,7 @@ public class Reminder extends ListenerAdapter {
 
         final Runnable ping = () -> {
             int randomNumber = random.nextInt(pingContent.length);
-            Config.getInstance().getChannels().getBumpChannel().sendMessage(pingContent[randomNumber]).queue();
+            Config.getInstance().getChannel().getBumpChannel().sendMessage(pingContent[randomNumber]).queue();
         };
 
         scheduler.schedule(ping, delay, timeUnit);

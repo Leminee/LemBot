@@ -19,7 +19,7 @@ public class ActiveUsers extends ListenerAdapter {
         String userTag = event.getMember().getUser().getAsTag();
         long userId = event.getUser().getIdLong();
 
-        QueryHelper.logMemberStatusChange(userId, userTag, newStatus);
+        CommandsHelper.logMemberStatusChange(userId, userTag, newStatus);
 
         int approximatePresentMember = event.getGuild().retrieveMetaData().complete().getApproximatePresences();
 
@@ -28,10 +28,10 @@ public class ActiveUsers extends ListenerAdapter {
             EmbedBuilder embedBuilder = new EmbedBuilder();
 
             Helper.createEmbed(embedBuilder,"New Active User Record", "Der neue Record an gleichzeitig aktiven Usern liegt bei: " + "**" + approximatePresentMember + "** :tada:  ", Color.yellow);
-            Objects.requireNonNull(event.getJDA().getTextChannelById(Config.getInstance().getChannels().getBumpChannel().getIdLong())).sendMessage(embedBuilder.build()).queue();
+            Objects.requireNonNull(event.getJDA().getTextChannelById(Config.getInstance().getChannel().getBumpChannel().getIdLong())).sendMessage(embedBuilder.build()).queue();
 
         }
 
-        QueryHelper.logActiveMemberCount(approximatePresentMember);
+        CommandsHelper.logActiveMemberCount(approximatePresentMember);
     }
 }

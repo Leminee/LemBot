@@ -4,7 +4,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import tech.goodquestion.lembot.config.Config;
-import tech.goodquestion.lembot.database.QueryHelper;
+import tech.goodquestion.lembot.database.CommandsHelper;
 import tech.goodquestion.lembot.entities.Sanction;
 
 public class WarnCommand extends UserBanishCommand {
@@ -22,7 +22,7 @@ public class WarnCommand extends UserBanishCommand {
     @Override
     public void banishUser(Member toBanish, Sanction sanction, Message originMsg) {
 
-        toBanish.getGuild().addRoleToMember(sanction.userId, Config.getInstance().getRoles().getWarnRole()).queue();
+        toBanish.getGuild().addRoleToMember(sanction.userId, Config.getInstance().getRole().getWarnRole()).queue();
 
         sendSanctionReason(toBanish.getUser(), "verwarnt", sanction.reason, toBanish.getAsMention());
 
@@ -33,7 +33,7 @@ public class WarnCommand extends UserBanishCommand {
                 "**" + " verwarnt." + "**" + "\n Angegebener Grund: " + sanction.reason);
         originMsg.getChannel().sendMessage(confirmation.build()).queue();
 
-        QueryHelper.logUserWarn(sanction);
+        CommandsHelper.logUserWarn(sanction);
     }
 
     @Override

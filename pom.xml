@@ -63,7 +63,7 @@
             </plugin>
         </plugins>
 
-        <finalName>lembotv2</finalName>
+        <finalName>lembotv3</finalName>
     </build>
 
     <repositories>

@@ -16,12 +16,12 @@ public class InviteLinkDeletion extends ListenerAdapter {
 
         long authorId = event.getAuthor().getIdLong();
         long channelId = event.getChannel().getIdLong();
-        long ownerId = Config.getInstance().getUsers().getOwnerId();
+        long ownerId = Config.getInstance().getUser().getOwnerId();
         Member author = event.getMember();
         assert author != null;
         boolean isStaff = author.hasPermission(Permission.MESSAGE_MANAGE);
 
-        if (authorId == ownerId || isStaff || channelId == Config.getInstance().getChannels().getYourProjectsChannel().getIdLong()) {
+        if (authorId == ownerId || isStaff || channelId == Config.getInstance().getChannel().getYourProjectsChannel().getIdLong()) {
             return;
         }
 

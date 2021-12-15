@@ -1,5 +1,5 @@
-token: ""
-guild:
+token: "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.7qRjzrV2cYF7ihtn-iu3VjILYAs"
+guild: 919074433505841172
 reactionRoles:
   - channel: 779107472622223400 # self-roles
     message: 821186181903024179
@@ -20,24 +20,27 @@ commandRoles:
   - abbr: bumper
     role: 815922232106156033
 database:
-  uri: "jdbc:mysql://localhost:3306/lembot?autoReconnect=true&serverTimezone=UTC"
-  username:
-  password:
-channels:
-  sanction: 871615666959032340
-  newArrivals: 779107500381175808
-  bump: 838453508311220234
-  voice: 834521617668374569
-  yourProjects: 784973821790257192
-  memberCount: 811775664566698054 # voice channel
-  selfRoles: 779107472622223400
-roles:
-  bump: 815922232106156033
-  mute: 879329567947489352
-  warn: 879448018372395048
-  coding: 784773593942327297
-  hacking: 811741950092116038
+  uri: "jdbc:mysql://localhost:3306/discordbot?autoReconnect=true&serverTimezone=UTC"
+  username: mel
+  password: "36177436"
+channel:
+  sanction: 919074434021736502
+  newArrivals: 919074434021736503
+  bump: 919074434021736507
+  voice: 919074435410042926
+  yourProjects: 919074434415984640
+  memberCount: 919074435951116352 # voice channel
+  selfRoles: 919074434021736500
+  staff: 919074435951116350
+role:
+  bump: 919074433556160536
+  mute: 919074433505841174
+  warn: 919074433505841173
+  coding: 919074433556160534
+  hacking: 919074433556160533
+category:
+  voiceFun: 919074435410042924
 
-users:
+user:
   owner: 739143338975952959
   disboard: 302050872383242240

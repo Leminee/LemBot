@@ -6,6 +6,8 @@ import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
+import tech.goodquestion.lembot.config.Config;
+import tech.goodquestion.lembot.database.QueryHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -261,6 +263,34 @@ public class VoiceCreation extends ListenerAdapter {
     @Override
     public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
 
+
+
+        if (QueryHelper.isHopper(event.getMember().getIdLong())) {
+
+            for (int i = 0; i < event.getMember().getRoles().size(); i++) {
+
+                if (event.getMember().getRoles().get(i).getIdLong() == Config.getInstance().getRole().getWarnRole().getIdLong()) {
+
+
+                    event.getGuild().removeRoleFromMember(event.getMember(),Objects.requireNonNull(event.getGuild().getRoleById(event.getMember().getRoles().get(i).getIdLong()))).queue();
+                            ;
+                    event.getGuild().addRoleToMember(event.getMember(), Objects.requireNonNull(event.getGuild().getRoleById(Config.getInstance().getRole().getMuteRole().getIdLong()))).queue();
+                    event.getGuild().getTextChannelById(Config.getInstance().getChannel().getBumpChannel().getIdLong()).sendMessage("muted").queue();
+                    return;
+
+
+                }
+
+                else {
+                    event.getGuild().addRoleToMember(event.getMember(), Objects.requireNonNull(event.getGuild().getRoleById(Config.getInstance().getRole().getWarnRole().getIdLong()))).queue();
+                    event.getGuild().getTextChannelById(Config.getInstance().getChannel().getBumpChannel().getIdLong()).sendMessage("warned").queue();
+                }
+
+            }
+        }
+
+
+
         boolean areThereToManyCreatedVoice = event.getGuild().getVoiceChannels().size() >= 10;
 
         if (areThereToManyCreatedVoice) {
@@ -273,7 +303,7 @@ public class VoiceCreation extends ListenerAdapter {
 
         if (isOnlyOneMemberInVoice) {
 
-            Category voiceFunCategory = event.getGuild().getCategoryById(779105998420967465L);
+            Category voiceFunCategory = Config.getInstance().getCategory().getVoiceFunCategory();
             event.getGuild().createVoiceChannel(voiceName, voiceFunCategory).queue();
         }
     }
@@ -291,6 +321,9 @@ public class VoiceCreation extends ListenerAdapter {
     @Override
     public void onGuildVoiceMove(@NotNull GuildVoiceMoveEvent event) {
 
+
+        System.out.println(event.getMember().getUser().getIdLong());
+
         boolean areThereToManyCreatedVoice = event.getGuild().getVoiceChannels().size() >= 10;
 
         if (areThereToManyCreatedVoice) {
@@ -298,7 +331,7 @@ public class VoiceCreation extends ListenerAdapter {
         }
 
         String randomlyCombinedVoiceName = LEFT[random.nextInt(LEFT.length)] + "_" + RIGHT[random.nextInt(RIGHT.length)];
-        Category voiceFunCategory = event.getGuild().getCategoryById(779105998420967465L);
+        Category voiceFunCategory = Config.getInstance().getCategory().getVoiceFunCategory();
 
         boolean isVoiceLeftEmpty = event.getChannelLeft().getMembers().size() == 0;
         boolean wasVoiceJoinedEmpty = event.getChannelJoined().getMembers().size() == 1;
@@ -331,7 +364,7 @@ public class VoiceCreation extends ListenerAdapter {
 
         List<Integer> indices = new ArrayList<>();
 
-        for (int i = 0; i < Objects.requireNonNull(event.getGuild().getCategoryById(voiceFunCategoryId)).getVoiceChannels().size(); i++) {
+        for (int i = 0; i < Objects.requireNonNull(Config.getInstance().getCategory().getVoiceFunCategory()).getVoiceChannels().size(); i++) {
 
             if (Objects.requireNonNull(event.getGuild().getCategoryById(voiceFunCategoryId)).getVoiceChannels().get(i).getMembers().size() == 0) {
                 emptyVoices++;
@@ -350,4 +383,5 @@ public class VoiceCreation extends ListenerAdapter {
             }
         }
     }
+
 }

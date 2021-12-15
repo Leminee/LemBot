@@ -24,10 +24,10 @@ Du kannst Dir im Kanal [channel] Rollen zuweisen!
 
         String output = welcomeMessage
                 .replace("[member]", newMember)
-                .replace("[channel]", Config.getInstance().getChannels().getSelfRolesChannel().getAsMention());
+                .replace("[channel]", Config.getInstance().getChannel().getSelfRolesChannel().getAsMention());
 
-        Config.getInstance().getChannels().getNewArrivalsChannel().sendMessage(output).queue();
-        Config.getInstance().getChannels().getNewArrivalsChannel().sendMessage(avatarUrl).queue();
+        Config.getInstance().getChannel().getNewArrivalsChannel().sendMessage(output).queue();
+        Config.getInstance().getChannel().getNewArrivalsChannel().sendMessage(avatarUrl).queue();
 
     }
 }

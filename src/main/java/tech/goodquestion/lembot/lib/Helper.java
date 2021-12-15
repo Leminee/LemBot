@@ -27,7 +27,7 @@ public final class Helper {
 
     public static boolean isNotSuccessfulBump(List<MessageEmbed> messages, User embedAuthor) {
 
-        final long disBoardId = Config.getInstance().getUsers().getDisboardId();
+        final long disBoardId = Config.getInstance().getUser().getDisboardId();
         String successfulBumpImageUrl = "https://disboard.org/images/bot-command-image-bump.png";
 
         if (embedAuthor.getIdLong() != disBoardId) {
@@ -120,7 +120,7 @@ public final class Helper {
 
         if (botCommand == null) return;
 
-        final Runnable commandRunner = () -> botCommand.dispatch(null, Config.getInstance().getChannels().getBumpChannel(), null, args);
+        final Runnable commandRunner = () -> botCommand.dispatch(null, Config.getInstance().getChannel().getBumpChannel(), null, args);
 
         scheduler.scheduleAtFixedRate(commandRunner, delay, period, timeUnit);
     }
@@ -154,14 +154,14 @@ public final class Helper {
         }
     }
 
-    public static void addTopToEmbed(ResultSet resultSet, EmbedBuilder embedBuilder, String embedTitle, String embedDescription, String embedThumbnail, Color embedColor, TextChannel channel) {
+    public static void addTopToEmbed(ResultSet resultSet, EmbedBuilder embedBuilder, String embedTitle, String embedDescription, String embedThumbnail, Color embedColor, TextChannel channel, String amountOf) {
 
         Helper.createEmbed(embedBuilder, embedTitle, embedDescription, embedColor, embedThumbnail);
 
         int top = 1;
         try {
             while (resultSet.next()) {
-                embedBuilder.addField("TOP " + top, resultSet.getString(1), false);
+                embedBuilder.addField("TOP " + top, resultSet.getString(1) + " **(" +resultSet.getString(2)+ " " +amountOf +")**", false);
                 top++;
             }
 

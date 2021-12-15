@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import tech.goodquestion.lembot.config.Config;
+import tech.goodquestion.lembot.database.CommandsHelper;
 import tech.goodquestion.lembot.database.QueryHelper;
 import tech.goodquestion.lembot.entities.Sanction;
 
@@ -48,12 +49,12 @@ public class SpamDetection extends ListenerAdapter {
                 event.getGuild().removeRoleFromMember(userId, role).queue();
             }
 
-            Role mutedRole = Config.getInstance().getRoles().getMuteRole();
+            Role mutedRole = Config.getInstance().getRole().getMuteRole();
 
             assert mutedRole != null;
             event.getGuild().addRoleToMember(userId, mutedRole).queue();
 
-            QueryHelper.logUserMute(sanction);
+            CommandsHelper.logUserMute(sanction);
             event.getChannel().sendMessage("Du wurdest aufgrund verdächtigem Verhalten durch den Bot **gemutet** " + userAsMention + ".").queue();
 
 
@@ -66,13 +67,13 @@ public class SpamDetection extends ListenerAdapter {
                 event.getGuild().removeRoleFromMember(userId, role).queue();
             }
 
-            Role mutedRole = Config.getInstance().getRoles().getMuteRole();
+            Role mutedRole = Config.getInstance().getRole().getMuteRole();
 
             assert mutedRole != null;
             event.getGuild().addRoleToMember(userId, mutedRole).queue();
             List<Message> messagesToDelete = event.getMessage().getChannel().getHistory().retrievePast(10).complete();
 
-            QueryHelper.logUserMute(sanction);
+            CommandsHelper.logUserMute(sanction);
 
             event.getChannel().deleteMessages(messagesToDelete).queue();
             event.getChannel().sendMessage("Du wurdest aufgrund verdächtigem Verhalten durch den Bot **gemutet** " + userAsMention + ".").queue();

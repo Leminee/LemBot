@@ -29,8 +29,9 @@ public class TopMessageCommand implements IBotCommand {
             String embedDescription = "";
             String embedThumbnail = "https://cdn.discordapp.com/attachments/819694809765380146/844312789531230208/typing.png";
             Color embedColor = Color.white;
+            String amountOf = "Nachrichten";
 
-            Helper.addTopToEmbed(resultSet, topFlooderEmbed, embedTitle, embedDescription, embedThumbnail, embedColor, channel);
+            Helper.addTopToEmbed(resultSet, topFlooderEmbed, embedTitle, embedDescription, embedThumbnail, embedColor, channel, amountOf);
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());

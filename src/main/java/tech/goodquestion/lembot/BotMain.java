@@ -65,7 +65,6 @@ public class BotMain {
         command.registerCommand(new TopActiveChannelsCommand());
         command.registerCommand(new TopBumperCommand());
         command.registerCommand(new TopMessageCommand());
-        command.registerCommand(new TopEmojiCommand());
         command.registerCommand(new TopMonthlyBumperCommand());
         command.registerCommand(new TopMonthlyFlooderCommand());
 
@@ -95,6 +94,9 @@ public class BotMain {
         jda.addEventListener(new SpamDetection());
         jda.addEventListener(new VoiceCreation());
         jda.addEventListener(new AttachmentStorage());
+        jda.addEventListener(new RoleEvents());
+        jda.addEventListener(new BoostStorage());
+        jda.addEventListener(new ReactionStorage());
 
         setupReactionRoles();
         setupRoleCommands(command);

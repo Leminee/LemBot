@@ -3,7 +3,7 @@ package tech.goodquestion.lembot.command.impl.moderation;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
-import tech.goodquestion.lembot.database.QueryHelper;
+import tech.goodquestion.lembot.database.CommandsHelper;
 import tech.goodquestion.lembot.entities.Sanction;
 
 public class BanCommand extends UserBanishCommand {
@@ -23,7 +23,7 @@ public class BanCommand extends UserBanishCommand {
         confirmation.setDescription("User " + toBanish.getAsMention() + " wurde durch " + originMsg.getAuthor().getAsMention() + "**" + " gebannt." + "**" + "\n Angegebener Grund: " + sanction.reason);
         originMsg.getChannel().sendMessage(confirmation.build()).queue();
 
-        QueryHelper.logUserBan(sanction);
+        CommandsHelper.logUserBan(sanction);
     }
 
     @Override

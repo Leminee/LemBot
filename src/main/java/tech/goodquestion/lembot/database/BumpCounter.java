@@ -63,6 +63,11 @@ public class BumpCounter extends ListenerAdapter {
                 prepareStatementThree.setString(2, pingedUserName);
                 prepareStatementThree.setInt(3, bump);
                 prepareStatementThree.executeUpdate();
+
+                String bumpTime = "INSERT INTO user_bump_time (id_user_bump_time, id_discord) VALUES (NULL,?)";
+                PreparedStatement insert = connection.prepareStatement(bumpTime);
+                insert.setString(1, idPingedUser);
+                insert.executeUpdate();
             }
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());

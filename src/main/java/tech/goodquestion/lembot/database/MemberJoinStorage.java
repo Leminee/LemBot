@@ -7,7 +7,8 @@ public class MemberJoinStorage extends ListenerAdapter {
 
     @Override
     public void onGuildMemberJoin(GuildMemberJoinEvent event) {
-        QueryHelper.logUserJoin(event.getUser());
-        QueryHelper.logMemberAmount(event.getGuild());
+        CommandsHelper.logUserJoin(event.getUser());
+        CommandsHelper.logMemberAmount(event.getGuild());
+
     }
 }
