@@ -273,7 +273,7 @@ public class VoiceCreation extends ListenerAdapter {
 
 
                     event.getGuild().removeRoleFromMember(event.getMember(),Objects.requireNonNull(event.getGuild().getRoleById(event.getMember().getRoles().get(i).getIdLong()))).queue();
-                            ;
+
                     event.getGuild().addRoleToMember(event.getMember(), Objects.requireNonNull(event.getGuild().getRoleById(Config.getInstance().getRole().getMuteRole().getIdLong()))).queue();
                     event.getGuild().getTextChannelById(Config.getInstance().getChannel().getBumpChannel().getIdLong()).sendMessage("muted").queue();
                     return;

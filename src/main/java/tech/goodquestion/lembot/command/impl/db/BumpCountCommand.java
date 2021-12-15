@@ -4,7 +4,8 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import tech.goodquestion.lembot.command.IBotCommand;
-import tech.goodquestion.lembot.entities.UserData;
+import tech.goodquestion.lembot.entity.UserData;
+import tech.goodquestion.lembot.lib.EmbedColorHelper;
 import tech.goodquestion.lembot.lib.Helper;
 
 public class BumpCountCommand implements IBotCommand {
@@ -17,10 +18,9 @@ public class BumpCountCommand implements IBotCommand {
 
         String amountBumps = "SELECT number_bumps FROM user_bump WHERE id_discord = ?";
         String nextHigherUserAmountBumps = "SELECT id_discord, number_bumps FROM user_bump WHERE number_bumps > ? ORDER BY number_bumps, username LIMIT 1";
-        String embedColor = "0x26b7b8";
 
         Helper.getAmount(userData, amountBumps, nextHigherUserAmountBumps);
-        Helper.sendAmount(userData, embedColor, "Bumps", channel);
+        Helper.sendAmount(userData, EmbedColorHelper.BUMP, "Bumps", channel);
     }
 
     @Override

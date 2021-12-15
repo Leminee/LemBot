@@ -6,8 +6,11 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.command.CommandManager;
+import tech.goodquestion.lembot.lib.EmbedColorHelper;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 import static tech.goodquestion.lembot.lib.Helper.PREFIX;
 
@@ -15,9 +18,11 @@ public class HelpList implements IBotCommand {
 
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
+
+
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle("HILFE \n");
-        embedBuilder.setColor(0x002d47);
+        embedBuilder.setColor(Color.decode(EmbedColorHelper.HELP));
         embedBuilder.setThumbnail("https://cotelangues.com/wp-content/uploads/2019/06/Fragezeichen-Tafel-868x524.jpg");
 
         String queriedHelpList = "default";

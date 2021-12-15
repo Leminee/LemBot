@@ -6,9 +6,8 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.database.QueryHelper;
+import tech.goodquestion.lembot.lib.EmbedColorHelper;
 import tech.goodquestion.lembot.lib.Helper;
-
-import java.awt.*;
 
 public class ActiveUserRecordCommand implements IBotCommand {
 
@@ -17,7 +16,7 @@ public class ActiveUserRecordCommand implements IBotCommand {
 
         EmbedBuilder recordEmbed = new EmbedBuilder();
 
-        Helper.createEmbed(recordEmbed, "Rekord an gleichzeitig aktiven Usern", "Der aktuelle Record liegt bei " + "**" + QueryHelper.getActiveUserRecord() + "**" + " gleichzeitig aktiven Usern " + sender.getAsMention(), Color.magenta);
+        Helper.createEmbed(recordEmbed, "Rekord an gleichzeitig aktiven Usern", "Der aktuelle Record liegt bei " + "**" + QueryHelper.getActiveUserRecord() + "**" + " gleichzeitig aktiven Usern " + sender.getAsMention(), EmbedColorHelper.ACTIVE_USER_RECORD);
 
         channel.sendMessage(recordEmbed.build()).queue();
     }

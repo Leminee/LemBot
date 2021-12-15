@@ -6,7 +6,7 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.Role;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.database.CommandsHelper;
-import tech.goodquestion.lembot.entities.Sanction;
+import tech.goodquestion.lembot.entity.Sanction;
 
 import java.util.List;
 import java.util.Objects;

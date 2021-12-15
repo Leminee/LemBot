@@ -7,9 +7,9 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.database.DatabaseConnector;
 import tech.goodquestion.lembot.database.QueryHelper;
+import tech.goodquestion.lembot.lib.EmbedColorHelper;
 import tech.goodquestion.lembot.lib.Helper;
 
-import java.awt.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,10 +30,9 @@ public class TopMonthlyFlooderCommand implements IBotCommand {
             String embedTitle = "Top Flooder der letzten 30 Tage";
             String embedDescription = "";
             String embedThumbnail = "https://cdn.discordapp.com/attachments/819694809765380146/844312789531230208/typing.png";
-            Color embedColor = Color.white;
 
 
-            Helper.addTopMonthlyDataToEmbed(channel, resultSet, topFlooderEmbed, embedTitle, embedDescription, embedThumbnail, embedColor, "Nachrichten");
+            Helper.addTopMonthlyDataToEmbed(channel, resultSet, topFlooderEmbed, embedTitle, embedDescription, embedThumbnail, EmbedColorHelper.BUMP, "Nachrichten");
 
 
         } catch (SQLException sqlException) {

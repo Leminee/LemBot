@@ -5,7 +5,8 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.database.QueryHelper;
-import tech.goodquestion.lembot.entities.UserData;
+import tech.goodquestion.lembot.entity.UserData;
+import tech.goodquestion.lembot.lib.EmbedColorHelper;
 import tech.goodquestion.lembot.lib.Helper;
 
 public class MessageCountCommand implements IBotCommand {
@@ -16,10 +17,8 @@ public class MessageCountCommand implements IBotCommand {
         UserData userData = new UserData();
         userData.userId = sender.getIdLong();
 
-        String embedColor = "0xffffff";
-
         Helper.getAmount(userData, QueryHelper.AMOUNT_MESSAGES, QueryHelper.NEXT_HIGHER_USER_AMOUNT_MESSAGES);
-        Helper.sendAmount(userData, embedColor, "Nachrichten", channel);
+        Helper.sendAmount(userData, EmbedColorHelper.FLOOD, "Nachrichten", channel);
     }
 
     @Override

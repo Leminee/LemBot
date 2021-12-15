@@ -3,7 +3,7 @@ package tech.goodquestion.lembot.database;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
-import tech.goodquestion.lembot.entities.Sanction;
+import tech.goodquestion.lembot.entity.Sanction;
 import tech.goodquestion.lembot.lib.Helper;
 
 import java.sql.Connection;
@@ -23,7 +23,7 @@ public final class CommandsHelper {
             "VALUES (NULL,?,?,?,?,?,?)";
     public static final String USER_WARN_DATA = "INSERT INTO warned_user (id_warned_user,id_discord,user_tag, username, warn_author, warn_reason, channel_name) " +
             "VALUES (NULL,?,?,?,?,?,?)";
-    public static final String ACTIVE_MEMBER_LOG = "INSERT INTO active_user (active_member) VALUES (?);";
+    public static final String ACTIVE_MEMBER_LOG = "INSERT INTO user_online (amount) VALUES (?);";
 
     public static final String ADJUSTING_NEW_USERNAME_IN_BUMPER = "UPDATE user_bump SET username = ? WHERE id_discord = ?;";
     public static final String ADJUSTING_NEW_USERNAME_IN_MESSAGE = "UPDATE user_message SET username = ? WHERE id_discord = ?;";
@@ -91,11 +91,11 @@ public final class CommandsHelper {
     }
 
     public static void logUserLeave(User member) {
-        QueryHelper.logMemberStatus(USER_LEAVE_LOG, member);
+        logMemberStatus(USER_LEAVE_LOG, member);
     }
 
     public static void logUserJoin(User member) {
-        QueryHelper.logMemberStatus(USER_JOIN_LOG, member);
+        logMemberStatus(USER_JOIN_LOG, member);
     }
 
     private static void logSanction(String query, Sanction sanction) {
@@ -109,6 +109,18 @@ public final class CommandsHelper {
             preparedStatement.setString(6, sanction.channelName);
             preparedStatement.executeUpdate();
 
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
+        }
+    }
+
+    public static void logMemberStatus(String query, User member) {
+        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, member.getIdLong());
+            preparedStatement.setString(2, member.getAsTag());
+            preparedStatement.setString(3, member.getName());
+            preparedStatement.setString(4, member.getEffectiveAvatarUrl());
+            preparedStatement.executeUpdate();
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
         }

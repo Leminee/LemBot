@@ -5,9 +5,8 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import tech.goodquestion.lembot.command.IBotCommand;
+import tech.goodquestion.lembot.lib.EmbedColorHelper;
 import tech.goodquestion.lembot.lib.Helper;
-
-import java.awt.*;
 
 public class JoiningDateCommand implements IBotCommand {
 
@@ -17,7 +16,7 @@ public class JoiningDateCommand implements IBotCommand {
 
         EmbedBuilder joiningDateEmbed = new EmbedBuilder();
 
-        Helper.createEmbed(joiningDateEmbed, "Last Joining Date", "Du bist dem Server am " + "**" + getDateJoined(sender) + "**" + " beigetreten " + sender.getAsMention(), Color.gray);
+        Helper.createEmbed(joiningDateEmbed, "Letztes Beitrittsdatum", "Du bist dem Server am " + "**" + getDateJoined(sender) + "**" + " beigetreten " + sender.getAsMention(), EmbedColorHelper.JOIN_DATE);
 
         channel.sendMessage(joiningDateEmbed.build()).queue();
 

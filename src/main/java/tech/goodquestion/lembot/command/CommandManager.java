@@ -6,9 +6,9 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
+import tech.goodquestion.lembot.lib.EmbedColorHelper;
 import tech.goodquestion.lembot.lib.Helper;
 
-import java.awt.*;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -75,7 +75,7 @@ public class CommandManager extends ListenerAdapter {
         if (!executor.isPermitted(message.getMember())) {
             EmbedBuilder embedError = new EmbedBuilder();
             String embedDescription = "Permission Denied";
-            Helper.createEmbed(embedError, "", embedDescription, Color.RED);
+            Helper.createEmbed(embedError, "", embedDescription, EmbedColorHelper.ERROR);
             message.getChannel().sendMessage(embedError.build()).queue();
             return;
         }

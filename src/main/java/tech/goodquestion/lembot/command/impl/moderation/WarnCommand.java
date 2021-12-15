@@ -5,7 +5,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.database.CommandsHelper;
-import tech.goodquestion.lembot.entities.Sanction;
+import tech.goodquestion.lembot.entity.Sanction;
 
 public class WarnCommand extends UserBanishCommand {
 

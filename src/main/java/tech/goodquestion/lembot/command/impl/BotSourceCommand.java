@@ -5,6 +5,9 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import tech.goodquestion.lembot.command.IBotCommand;
+import tech.goodquestion.lembot.lib.EmbedColorHelper;
+
+import java.awt.*;
 
 public class BotSourceCommand implements IBotCommand {
 
@@ -12,8 +15,8 @@ public class BotSourceCommand implements IBotCommand {
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
         EmbedBuilder botInfoEmbed = new EmbedBuilder()
                 .setTitle("LemBot Information")
-                .setColor(-9862987)
-                .setThumbnail("https://cdn.discordapp.com/avatars/815894805896888362/e8ac27a6bda7b0846bf5135d39e14943.webp?size=128")
+                .setColor(Color.decode(EmbedColorHelper.GOOD_QUESTION))
+                .setThumbnail("https://cdn.discordapp.com/attachments/919074434021736507/920552764784914472/logoqg1_1.gif")
                 .addField("Geschrieben in:", "Java (JDA)", false)
                 .addField("Geschrieben von:", "Lemine#5985", false)
                 .addField("Source Code:", "https://github.com/Leminee/LemBot", false);

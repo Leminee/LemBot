@@ -7,13 +7,13 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
-import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.command.CommandManager;
+import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.config.Config;
-import tech.goodquestion.lembot.entities.Sanction;
+import tech.goodquestion.lembot.entity.Sanction;
+import tech.goodquestion.lembot.lib.EmbedColorHelper;
 import tech.goodquestion.lembot.lib.Helper;
 
-import java.awt.*;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,7 +25,7 @@ public abstract class UserBanishCommand implements IBotCommand {
         if (args.length < 1) {
             EmbedBuilder embedError = new EmbedBuilder();
             String embedDescription = "Bitte gebe die ID des zu kickenden Users und den Grund für die Bestrafung an!";
-            Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED);
+            Helper.createEmbed(embedError, "Fehler", embedDescription, EmbedColorHelper.ERROR);
             channel.sendMessage(embedError.build()).queue();
             return;
         }
@@ -33,7 +33,7 @@ public abstract class UserBanishCommand implements IBotCommand {
         if (args.length < 2) {
             EmbedBuilder embedError = new EmbedBuilder();
             String embedDescription = "Bitte gebe einen Grund an!";
-            Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED);
+            Helper.createEmbed(embedError, "Fehler", embedDescription, EmbedColorHelper.ERROR);
             channel.sendMessage(embedError.build()).queue();
             return;
         }
@@ -41,7 +41,7 @@ public abstract class UserBanishCommand implements IBotCommand {
         if (channel.getIdLong() != Config.getInstance().getChannel().getSanctionChannel().getIdLong()) {
             EmbedBuilder embedError = new EmbedBuilder();
             String embedDescription = "Dieser Befehl kann nur in [channel] ausgeführt werden!".replace("[channel]",Config.getInstance().getChannel().getSanctionChannel().getAsMention());
-            Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED);
+            Helper.createEmbed(embedError, "Fehler", embedDescription, EmbedColorHelper.ERROR);
             channel.sendMessage(embedError.build()).queue();
             return;
         }
@@ -58,7 +58,7 @@ public abstract class UserBanishCommand implements IBotCommand {
 
             EmbedBuilder embedError = new EmbedBuilder();
             String embedDescription = "User ist nicht auf dem Server!";
-            Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED, "https://cdn.discorda.com/attachments/819694809765380146/87Bildschirmfoto_2021-08-23_um_07.06.46.png");
+            Helper.createEmbed(embedError, "Fehler", embedDescription, EmbedColorHelper.ERROR);
             channel.sendMessage(embedError.build()).queue();
             return;
 
@@ -68,7 +68,7 @@ public abstract class UserBanishCommand implements IBotCommand {
         if (member.hasPermission(Permission.ADMINISTRATOR)) {
             EmbedBuilder embedError = new EmbedBuilder();
             String embedDescription = "Admins/Moderatoren können nicht gekickt oder gebannt werden!";
-            Helper.createEmbed(embedError, "Fehler", embedDescription, Color.RED, "https://cdn.discoapp.com/attachments/819694809765380146/879230207763038228/Bildschirmfoto_2021-086.png");
+            Helper.createEmbed(embedError, "Fehler", embedDescription, EmbedColorHelper.ERROR);
             channel.sendMessage(embedError.build()).queue();
             return;
         }
@@ -91,7 +91,7 @@ public abstract class UserBanishCommand implements IBotCommand {
         if (requiresAdmin() && !Objects.requireNonNull(message.getMember()).hasPermission(Permission.MANAGE_ROLES)) {
             EmbedBuilder embedError = new EmbedBuilder();
             String embedDescription = "Permission Denied";
-            Helper.createEmbed(embedError, "", embedDescription, Color.RED);
+            Helper.createEmbed(embedError, "", embedDescription, EmbedColorHelper.ERROR);
             channel.sendMessage(embedError.build()).queue();
             return;
         }

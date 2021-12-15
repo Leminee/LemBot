@@ -6,7 +6,9 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
 import tech.goodquestion.lembot.command.IBotCommand;
+import tech.goodquestion.lembot.lib.EmbedColorHelper;
 
+import java.awt.*;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,7 +20,7 @@ public class ServerRoleListCommand implements IBotCommand {
         List<Role> serverRoleList = Objects.requireNonNull(message.getGuild().getRoles());
 
         showRoles.setTitle("Liste aller Rollen auf GQ");
-        showRoles.setColor(0x002d47);
+        showRoles.setColor(Color.decode(EmbedColorHelper.SERVER_ROLES));
         StringBuilder stringBuilder = new StringBuilder();
 
         for (int i = 0; i < serverRoleList.size() - 2; i++) {

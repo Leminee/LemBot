@@ -8,8 +8,8 @@ import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.database.DatabaseConnector;
-import tech.goodquestion.lembot.entities.UserData;
-import tech.goodquestion.lembot.entities.VoiceChannel;
+import tech.goodquestion.lembot.entity.UserData;
+import tech.goodquestion.lembot.entity.VoiceChannel;
 
 import java.awt.*;
 import java.sql.*;
@@ -125,17 +125,17 @@ public final class Helper {
         scheduler.scheduleAtFixedRate(commandRunner, delay, period, timeUnit);
     }
 
-    public static void createEmbed(EmbedBuilder embedBuilder, String title, String description, Color color, String thumbnail) {
+    public static void createEmbed(EmbedBuilder embedBuilder, String title, String description, String embedColor,  String thumbnail) {
         embedBuilder.setTitle(title);
         embedBuilder.setDescription(description);
-        embedBuilder.setColor(color);
+        embedBuilder.setColor(Color.decode(embedColor));
         embedBuilder.setThumbnail(thumbnail);
     }
 
-    public static void createEmbed(EmbedBuilder embedBuilder, String title, String description, Color color) {
+    public static void createEmbed(EmbedBuilder embedBuilder, String title, String description, String embedColor) {
         embedBuilder.setTitle(title);
         embedBuilder.setDescription(description);
-        embedBuilder.setColor(color);
+        embedBuilder.setColor(Color.decode(embedColor));
     }
 
     public static void insertVoiceChannelData(String insertQuery, VoiceChannel voiceChannel) {
@@ -154,10 +154,13 @@ public final class Helper {
         }
     }
 
-    public static void addTopToEmbed(ResultSet resultSet, EmbedBuilder embedBuilder, String embedTitle, String embedDescription, String embedThumbnail, Color embedColor, TextChannel channel, String amountOf) {
+    public static void addTopToEmbed(ResultSet resultSet, EmbedBuilder embedBuilder, String embedTitle, String embedDescription, String embedThumbnail, String embedColor, TextChannel channel, String amountOf) {
 
-        Helper.createEmbed(embedBuilder, embedTitle, embedDescription, embedColor, embedThumbnail);
+        createEmbed(embedBuilder, embedTitle, embedDescription, embedColor,embedThumbnail);
+        create(resultSet, embedBuilder, channel, amountOf);
+    }
 
+    public static void create(ResultSet resultSet, EmbedBuilder embedBuilder, TextChannel channel, String amountOf) {
         int top = 1;
         try {
             while (resultSet.next()) {
@@ -178,20 +181,9 @@ public final class Helper {
         return date.toString().substring(11, 16);
     }
 
-    public static void addTopMonthlyDataToEmbed(TextChannel channel, ResultSet resultSet, EmbedBuilder topBumperEmbed, String embedTitle, String embedDescription, String embedThumbnail, Color embedColor, String amountOf) {
-        createEmbed(topBumperEmbed, embedTitle, embedDescription, embedColor, embedThumbnail);
+    public static void addTopMonthlyDataToEmbed(TextChannel channel, ResultSet resultSet, EmbedBuilder topBumperEmbed, String embedTitle, String embedDescription, String embedThumbnail, String embedColor, String amountOf) {
+        createEmbed(topBumperEmbed, embedTitle, embedDescription, embedColor);
 
-        int top = 1;
-        try {
-            while (resultSet.next()) {
-                topBumperEmbed.addField("TOP " + top, resultSet.getString(1) + " **(" +resultSet.getString(2)+ " " +amountOf +")**", false);
-                top++;
-            }
-
-            channel.sendMessage(topBumperEmbed.build()).queue();
-
-        } catch (SQLException sqlException) {
-            System.out.println(sqlException.getMessage());
-        }
+        create(resultSet, topBumperEmbed, channel, amountOf);
     }
 }

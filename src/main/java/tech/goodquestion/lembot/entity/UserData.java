@@ -1,4 +1,4 @@
-package tech.goodquestion.lembot.entities;
+package tech.goodquestion.lembot.entity;
 
 public class UserData {
 

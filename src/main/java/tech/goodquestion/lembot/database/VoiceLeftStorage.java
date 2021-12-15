@@ -5,10 +5,9 @@ import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import tech.goodquestion.lembot.config.Config;
-import tech.goodquestion.lembot.entities.VoiceChannel;
+import tech.goodquestion.lembot.entity.VoiceChannel;
+import tech.goodquestion.lembot.lib.EmbedColorHelper;
 import tech.goodquestion.lembot.lib.Helper;
-
-import java.awt.*;
 
 public class VoiceLeftStorage extends ListenerAdapter {
 
@@ -28,7 +27,7 @@ public class VoiceLeftStorage extends ListenerAdapter {
 
         String embedDescription = userMentioned + " hat " + "**" + voiceChannel.name + "**" + " um " + Helper.getCurrentTime() + " Uhr **verlassen**.";
 
-        Helper.createEmbed(leftEmbed,"Voice **Left** ",embedDescription, Color.MAGENTA,"https://cdn.discordapp.com/attachments/819694809765380146/880646674366754856/Bildschirmfoto_2021-08-27_um_04.55.07.png");
+        Helper.createEmbed(leftEmbed,"Voice **Left** ",embedDescription, EmbedColorHelper.VOICE_LEFT);
         Config.getInstance().getChannel().getVoiceChatChannel().sendMessage(leftEmbed.build()).queue();
 
         Helper.insertVoiceChannelData(insertQuery,voiceChannel);
