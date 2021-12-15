@@ -51,7 +51,7 @@ public class TopMonthlyBumperCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?topmb`: Zeigt die Top Bumper *der letzten 30 Tage* an";
+        return "`?topmb`: Top Bumper *der letzten 30 Tage*";
     }
 
 }

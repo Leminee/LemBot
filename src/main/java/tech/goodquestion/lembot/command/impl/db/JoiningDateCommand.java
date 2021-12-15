@@ -29,7 +29,7 @@ public class JoiningDateCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?jd`: Zeigt das Beitrittsdatum zum Server an";
+        return "`?jd`: Beitrittsdatum zum Server";
     }
 
     private static String getDateJoined(Member sender) {

@@ -1,24 +1,24 @@
-package tech.goodquestion.lembot.command.impl;
+package tech.goodquestion.lembot.command.impl.db;
 
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import tech.goodquestion.lembot.command.IBotCommand;
 
-public class CodeBlockHelpCommand implements IBotCommand {
-
+public class ServerData implements IBotCommand {
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
-        channel.sendMessage("https://cdn.discordapp.com/attachments/819694809765380146/832676790875062272/farbiger_code.png").queue();
+
+
     }
 
     @Override
     public String getName() {
-        return "hcb";
+        return "?server";
     }
 
     @Override
     public String getDescription() {
-        return "`?hcb`: farbige Codeblöcke ";
+        return "`?server`: Informationen zum Server";
     }
 }

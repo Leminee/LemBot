@@ -13,15 +13,6 @@ import java.util.Objects;
 
 public class MuteCommand extends UserBanishCommand {
 
-    @Override
-    public String getName() {
-        return "mute";
-    }
-
-    @Override
-    public String getDescription() {
-        return "`?mute <user> <reason>`: weist dem User " + Config.getInstance().getRole().getMuteRole().getAsMention() + " zu (Mute)";
-    }
 
     @Override
     public void banishUser(Member toBanish, Sanction sanction, Message originMsg) {
@@ -50,5 +41,15 @@ public class MuteCommand extends UserBanishCommand {
     @Override
     public boolean requiresAdmin() {
         return false;
+    }
+
+    @Override
+    public String getName() {
+        return "mute";
+    }
+
+    @Override
+    public String getDescription() {
+        return "`?mute <user> <reason>`: weist " + Config.getInstance().getRole().getMuteRole().getAsMention() + " zu";
     }
 }

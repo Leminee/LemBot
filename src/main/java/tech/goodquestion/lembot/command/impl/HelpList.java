@@ -32,13 +32,15 @@ public class HelpList implements IBotCommand {
         }
 
         if (queriedHelpList.equals("-")) {
-            EmbedBuilder e = new EmbedBuilder().setTitle("Verfügbare Help-Listen").setDescription(String.join("\n", CommandManager.getInstance().getHelpLists()));
+            EmbedBuilder e = new EmbedBuilder().setColor(Color.decode(EmbedColorHelper.HELP))
+                    .setTitle("Verfügbare Help-Listen")
+                    .setDescription(String.join("\n", CommandManager.getInstance().getHelpLists()));
             message.getChannel().sendMessage(e.build()).queue();
             return;
         }
 
         if (!CommandManager.getInstance().getHelpLists().contains(queriedHelpList)) {
-            channel.sendMessage("Diese Commands existieren nicht! " + sender.getAsMention()).queue();
+            channel.sendMessage("Dieser Befehl ist nicht valid! " + sender.getAsMention()).queue();
             return;
         }
 
@@ -67,7 +69,7 @@ public class HelpList implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?help -`: Zeigt alle verfügbaren Command-Listen an";
+        return "`?help -`: Verfügbare Command-Listen";
     }
 
     @Override

@@ -9,7 +9,7 @@ public final class EmbedColorHelper {
     public static final String VOICE_JOINED = "0xFFFFFF";
     public static final String VOICE_LEFT = "0x000000";
     public static final String VOICE_MOVED = "0x706935";
-    public static final String ACTIVE_USER_RECORD = "0xFFFF00";
+    public static final String RECORD = "0xFFFF00";
     public static final String BOOST = "0xf47fff";
     public static final String GOOD_QUESTION = "0x393e86";
     public static final String CHECK_PASSWORD = "";

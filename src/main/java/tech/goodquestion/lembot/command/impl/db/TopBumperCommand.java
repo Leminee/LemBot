@@ -51,6 +51,6 @@ public class TopBumperCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?topb`: Zeigt die Top Bumper des Servers an";
+        return "`?topb`: User mit den meisten Bumps";
     }
 }

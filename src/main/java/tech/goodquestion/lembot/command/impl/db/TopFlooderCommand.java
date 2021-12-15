@@ -44,6 +44,6 @@ public class TopFlooderCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?topf`: Zeigt die User mit den meisten Nachrichten an";
+        return "`?topf`: User mit den meisten Nachrichten";
     }
 }

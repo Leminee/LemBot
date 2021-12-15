@@ -25,11 +25,11 @@ public class BotSourceCommand implements IBotCommand {
 
     @Override
     public String getName() {
-        return "bsource";
+        return "lembot";
     }
 
     @Override
     public String getDescription() {
-        return "`?bsource`: Zeigt Information zum Discord Bot an";
+        return "`?lembot`: Informationen zum LemBot";
     }
 }

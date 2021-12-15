@@ -26,6 +26,6 @@ public class NextBumpTimeCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?nbt`: Zeigt an, wann das nächste Bump ist";
+        return "`?nbt`: Uhrzeit des nächsten Bumps";
     }
 }

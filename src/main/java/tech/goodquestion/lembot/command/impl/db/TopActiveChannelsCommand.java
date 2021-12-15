@@ -40,6 +40,6 @@ public class TopActiveChannelsCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?topc`: Zeigt die aktivsten Channels des Servers an";
+        return "`?topc`: Die aktivsten Channels";
     }
 }

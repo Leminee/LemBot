@@ -10,16 +10,6 @@ import tech.goodquestion.lembot.entity.Sanction;
 public class WarnCommand extends UserBanishCommand {
 
     @Override
-    public String getName() {
-        return "warn";
-    }
-
-    @Override
-    public String getDescription() {
-        return "`?warn` <user> <reason>: Weist dem <user> <@&879448018372395048> zu (Verwarnung)";
-    }
-
-    @Override
     public void banishUser(Member toBanish, Sanction sanction, Message originMsg) {
 
         toBanish.getGuild().addRoleToMember(sanction.userId, Config.getInstance().getRole().getWarnRole()).queue();
@@ -39,5 +29,15 @@ public class WarnCommand extends UserBanishCommand {
     @Override
     public boolean requiresAdmin() {
         return false;
+    }
+
+    @Override
+    public String getName() {
+        return "warn";
+    }
+
+    @Override
+    public String getDescription() {
+        return "`?warn` <user> <reason>: Weist " + Config.getInstance().getRole().getWarnRole().getAsMention() +" zu";
     }
 }

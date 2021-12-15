@@ -16,7 +16,9 @@ public class ActiveUserRecordCommand implements IBotCommand {
 
         EmbedBuilder recordEmbed = new EmbedBuilder();
 
-        Helper.createEmbed(recordEmbed, "Rekord an gleichzeitig aktiven Usern", "Der aktuelle Record liegt bei " + "**" + QueryHelper.getActiveUserRecord() + "**" + " gleichzeitig aktiven Usern " + sender.getAsMention(), EmbedColorHelper.ACTIVE_USER_RECORD);
+        Helper.createEmbed(recordEmbed, "Rekord an gleichzeitig aktiven Usern",
+                "Der aktuelle Record liegt bei " + "**" + QueryHelper.getActiveUserRecord() + "**" + " gleichzeitig aktiven Usern " + sender.getAsMention(),
+                EmbedColorHelper.RECORD);
 
         channel.sendMessage(recordEmbed.build()).queue();
     }
@@ -28,6 +30,6 @@ public class ActiveUserRecordCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?aur`: Active User Record";
+        return "`?aur`: Record an gleichzeitig aktiven Usern";
     }
 }

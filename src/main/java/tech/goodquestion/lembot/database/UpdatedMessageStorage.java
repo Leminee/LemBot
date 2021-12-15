@@ -22,7 +22,7 @@ public class UpdatedMessageStorage extends ListenerAdapter {
         Connection connection = DatabaseConnector.openConnection();
         String updatedMessageData = "INSERT INTO updated_message (id_updated_message, id_message, id_discord, username,content) VALUES (NULL,?,?,?,?);";
 
-        try(PreparedStatement preparedStatement = connection.prepareStatement(updatedMessageData)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(updatedMessageData)) {
             preparedStatement.setLong(1, idUpdatedMessage);
             preparedStatement.setLong(2, authorId);
             preparedStatement.setBlob(3, Helper.changeCharacterEncoding(preparedStatement, authorUpdatedMessage));

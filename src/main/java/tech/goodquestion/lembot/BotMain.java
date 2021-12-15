@@ -45,7 +45,6 @@ public class BotMain {
 
         command.registerCommand(new HelpList());
         command.registerCommand(new ClearCommand());
-        command.registerCommand(new HelloCommand());
         command.registerCommand(new PingCommand());
         command.registerCommand(new CodeBlockHelpCommand());
         command.registerCommand(new MetaQuestionCommand());
@@ -67,6 +66,7 @@ public class BotMain {
         command.registerCommand(new TopFlooderCommand());
         command.registerCommand(new TopMonthlyBumperCommand());
         command.registerCommand(new TopMonthlyFlooderCommand());
+        command.registerCommand(new ServerData());
 
 
         jda.addEventListener(new Reminder());

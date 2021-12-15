@@ -72,7 +72,7 @@ public class ClearCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?clear <anzahl>`: löscht die letzten <anzahl> Nachrichten aus dem Kanal";
+        return "`?clear <anzahl>`: löscht die letzten <anzahl> Nachrichten";
     }
 
     @Override
