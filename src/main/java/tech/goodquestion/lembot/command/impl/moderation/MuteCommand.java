@@ -50,6 +50,6 @@ public class MuteCommand extends UserBanishCommand {
 
     @Override
     public String getDescription() {
-        return "`?mute <user> <reason>`: weist " + Config.getInstance().getRole().getMuteRole().getAsMention() + " zu";
+        return "`?mute <user> <reason>`: Weist " + Config.getInstance().getRole().getMuteRole().getAsMention() + " zu";
     }
 }

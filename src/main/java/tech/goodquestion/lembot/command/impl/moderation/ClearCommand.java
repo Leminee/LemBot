@@ -41,7 +41,7 @@ public class ClearCommand implements IBotCommand {
 
             EmbedBuilder confirmationEmbed = new EmbedBuilder();
 
-            Helper.createEmbed(confirmationEmbed, "Bestätigung", "Es wurden " + (messageAmountToDelete - 1) + " Nachrichten durch " + message.getAuthor().getAsMention() + " erfolgreich gelöscht!", EmbedColorHelper.CONFIRMATION);
+            Helper.createEmbed(confirmationEmbed, "Bestätigung", "Es wurden " + (messageAmountToDelete - 1) + " Nachrichten durch " + message.getAuthor().getAsMention() + " erfolgreich gelöscht!", EmbedColorHelper.SUCCESS);
             channel.sendMessage(confirmationEmbed.build()).queue();
 
         } catch (IllegalArgumentException iae) {
@@ -72,7 +72,7 @@ public class ClearCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?clear <anzahl>`: löscht die letzten <anzahl> Nachrichten";
+        return "`?clear <anzahl>`: Löscht die letzten <anzahl> Nachrichten";
     }
 
     @Override

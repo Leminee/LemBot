@@ -16,6 +16,7 @@ public class ServerRoleListCommand implements IBotCommand {
 
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
+
         EmbedBuilder showRoles = new EmbedBuilder();
         List<Role> serverRoleList = Objects.requireNonNull(message.getGuild().getRoles());
 

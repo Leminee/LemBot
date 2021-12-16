@@ -44,7 +44,7 @@ public class RoleToggleCommand implements IBotCommand {
             embedDescription = "<@&" + role_id + "> wurde dir erfolgreich entfernt " + message.getAuthor().getAsMention();
         }
 
-        Helper.createEmbed(roleAddedEmbed, "Bestätigung", embedDescription, EmbedColorHelper.CONFIRMATION);
+        Helper.createEmbed(roleAddedEmbed, "Bestätigung", embedDescription, EmbedColorHelper.SUCCESS);
         channel.sendMessage(roleAddedEmbed.build()).queue();
     }
 

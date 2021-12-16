@@ -1,5 +1,6 @@
-package tech.goodquestion.lembot.command.impl;
+package tech.goodquestion.lembot.command.impl.db;
 
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -7,6 +8,8 @@ import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.database.CommandsHelper;
 import tech.goodquestion.lembot.database.DatabaseConnector;
 import tech.goodquestion.lembot.entity.OccurredException;
+import tech.goodquestion.lembot.lib.EmbedColorHelper;
+import tech.goodquestion.lembot.lib.Helper;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,6 +20,7 @@ public class PasswordCheckCommand implements IBotCommand {
 
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
+        EmbedBuilder embedBuilder = new EmbedBuilder();
 
         if (args.length != 1) {
             return;
@@ -25,14 +29,24 @@ public class PasswordCheckCommand implements IBotCommand {
         message.delete().queue();
         String userPassword = args[0];
 
-        if (checkPassword(userPassword)) {
-            channel.sendMessage(" :red_circle:   Pwned - Passwort wurde gefunden! " + message.getAuthor().getAsMention()).queue();
+
+
+        if (hasBeenLeaked(userPassword)) {
+
+            Helper.createEmbed(embedBuilder,"Passwort-Sicherheitsüberprüfung",
+                    ":red_circle: Passwort wurde leider gefunden " + message.getAuthor().getAsMention(),
+                    EmbedColorHelper.ERROR);
         } else {
-            channel.sendMessage(" :green_circle:  Nicht gefunden! " + message.getAuthor().getAsMention()).queue();
+
+            Helper.createEmbed(embedBuilder,"Passwort-Sicherheitsüberprüfung",
+                    ":green_circle: Nicht gefunden " +message.getAuthor().getAsMention(),
+                    EmbedColorHelper.SUCCESS);
         }
+
+        channel.sendMessage(embedBuilder.build()).queue();
     }
 
-    public boolean checkPassword(String userPassword) {
+    public boolean hasBeenLeaked(String userPassword) {
 
         if (userPassword.length() < 8) {
             return true;

@@ -24,12 +24,12 @@ public class JoiningDateCommand implements IBotCommand {
 
     @Override
     public String getName() {
-        return "jd";
+        return "ljd";
     }
 
     @Override
     public String getDescription() {
-        return "`?jd`: Beitrittsdatum zum Server";
+        return "`?ljd`: Letztes Beitrittsdatum zum Server";
     }
 
     private static String getDateJoined(Member sender) {

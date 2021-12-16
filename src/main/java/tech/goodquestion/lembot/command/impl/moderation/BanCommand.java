@@ -33,7 +33,7 @@ public class BanCommand extends UserBanishCommand {
 
     @Override
     public String getDescription() {
-        return "`?ban <user> <reason>`: bannt den User";
+        return "`?ban <user> <reason>`: Bannt den User";
     }
 
     @Override

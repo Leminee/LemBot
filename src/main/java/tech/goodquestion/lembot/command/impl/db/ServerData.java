@@ -19,7 +19,7 @@ public class ServerData implements IBotCommand {
 
         EmbedBuilder botInfoEmbed = new EmbedBuilder();
 
-        botInfoEmbed.setTitle("Server Information")
+        botInfoEmbed.setTitle("Informationen zum Server")
                 .setColor(Color.decode(EmbedColorHelper.GOOD_QUESTION))
                 .setDescription("Informationen zu **GoodQuestion**")
                 .setThumbnail("https://cdn.discordapp.com/attachments/919074434021736507/920552764784914472/logoqg1_1.gif")

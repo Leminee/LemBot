@@ -37,9 +37,10 @@ public final class QueryHelper {
     }
 
 
-    private static EmbedBuilder getTop(String query, String[] fieldNames, String[] fieldIcons) throws SQLException {
+    //string query
+    private static EmbedBuilder getTop(String[] fieldNames, String[] fieldIcons) throws SQLException {
 
-        try (Connection connection = DatabaseConnector.openConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(query)) {
+        try (Connection connection = DatabaseConnector.openConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(QueryHelper.TOP_CHANNELS)) {
             EmbedBuilder embed = new EmbedBuilder();
             embed.setDescription("");
 
@@ -63,7 +64,7 @@ public final class QueryHelper {
 
 
     public static EmbedBuilder getTopActiveChannels() throws SQLException {
-        return getTop(TOP_CHANNELS, new String[]{"**TOP 1**", "**TOP 2**", "**TOP 3**"}, new String[]{"", "", ""});
+        return getTop(new String[]{"**TOP 1**", "**TOP 2**", "**TOP 3**"}, new String[]{"", "", ""});
     }
 
 

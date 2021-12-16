@@ -90,7 +90,7 @@ public abstract class UserBanishCommand implements IBotCommand {
 
         if (requiresAdmin() && !Objects.requireNonNull(message.getMember()).hasPermission(Permission.MANAGE_ROLES)) {
             EmbedBuilder embedError = new EmbedBuilder();
-            String embedDescription = "Permission Denied";
+            String embedDescription = "Verweigert";
             Helper.createEmbed(embedError, "", embedDescription, EmbedColorHelper.ERROR);
             channel.sendMessage(embedError.build()).queue();
             return;

@@ -48,6 +48,7 @@ public class CommandManager extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
+
         final Message message = event.getMessage();
 
         if (message.getAuthor().isBot()) {
@@ -60,7 +61,7 @@ public class CommandManager extends ListenerAdapter {
             return;
         }
 
-        String command = commandMatcher.group(1);
+        String command = commandMatcher.group(1).toLowerCase();
 
         if (!commands.containsKey(command)) {
             return;

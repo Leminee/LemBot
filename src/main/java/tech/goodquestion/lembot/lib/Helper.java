@@ -142,6 +142,8 @@ public final class Helper {
     }
 
 
+    //TODO
+
     public static void addTopToEmbed(ResultSet resultSet, EmbedBuilder embedBuilder, String embedTitle, String embedDescription, String embedThumbnail, String embedColor, TextChannel channel, String amountOf) {
 
         createEmbed(embedBuilder, embedTitle, embedDescription, embedColor,embedThumbnail);
@@ -171,6 +173,7 @@ public final class Helper {
         return date.toString().substring(11, 16);
     }
 
+    //TODO
     public static void addTopMonthlyDataToEmbed(TextChannel channel, ResultSet resultSet, EmbedBuilder topBumperEmbed, String embedTitle, String embedDescription, String embedThumbnail, String embedColor, String amountOf) {
         createEmbed(topBumperEmbed, embedTitle, embedDescription, embedColor);
 
