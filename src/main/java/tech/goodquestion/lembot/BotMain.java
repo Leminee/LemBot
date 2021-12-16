@@ -48,7 +48,7 @@ public class BotMain {
         command.registerCommand(new PingCommand());
         command.registerCommand(new CodeBlockHelpCommand());
         command.registerCommand(new MetaQuestionCommand());
-        command.registerCommand(new BotSourceCommand());
+        command.registerCommand(new BotDataCommand());
         command.registerCommand(new WarnCommand());
         command.registerCommand(new MuteCommand());
         command.registerCommand(new BanCommand());

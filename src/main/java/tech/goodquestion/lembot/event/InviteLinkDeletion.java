@@ -16,7 +16,7 @@ public class InviteLinkDeletion extends ListenerAdapter {
 
         long authorId = event.getAuthor().getIdLong();
         long channelId = event.getChannel().getIdLong();
-        long ownerId = Config.getInstance().getUser().getOwnerId();
+        long ownerId = Config.getInstance().getGuild().getOwnerIdLong();
         Member author = event.getMember();
         assert author != null;
         boolean isStaff = author.hasPermission(Permission.MESSAGE_MANAGE);

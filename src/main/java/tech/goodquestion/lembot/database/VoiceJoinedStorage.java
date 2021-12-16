@@ -27,7 +27,7 @@ public class VoiceJoinedStorage extends ListenerAdapter {
 
         EmbedBuilder joinEmbed = new EmbedBuilder();
 
-        String embedDescription = userMentioned + " ist **" + voiceChannel.name + "** um " + Helper.getCurrentTime() + " Uhr **gejoint**.";
+        String embedDescription = userMentioned + " ist **" + voiceChannel.name + "** um " + Helper.getCurrentDateTime() + " Uhr **gejoint**.";
 
         Helper.createEmbed(joinEmbed, "Voice **Joined** ", embedDescription, EmbedColorHelper.VOICE_JOINED, "https://cdn.discordapp.com/attachments/819694809765380146/880646674366754856/Bildschirmfoto_2021-08-27_um_04.55.07.png");
         Config.getInstance().getChannel().getVoiceChatChannel().sendMessage(joinEmbed.build()).queue();

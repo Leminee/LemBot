@@ -5,6 +5,8 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import tech.goodquestion.lembot.entity.OccurredException;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public final class QueryHelper {
@@ -24,6 +26,11 @@ public final class QueryHelper {
     public static final String SPAM_DATA = "SELECT id_channel, channel.id_message FROM `channel` INNER JOIN user_message_content ON channel.id_message = user_message_content.id_message WHERE user_message_content.id_discord = ? AND content = ? AND posted_on >= NOW() - INTERVAL 1 MINUTE";
     public static final String AMOUNT_SPAM_MESSAGES = "SELECT COUNT(id_discord) FROM user_message_content WHERE id_discord = ? AND content = ? AND posted_on >= NOW() - INTERVAL 30 SECOND";
     private static final String HOPPING_CHECK = "SELECT COUNT(id_discord) FROM voice_join WHERE id_discord = ? AND joined_at >= NOW() - INTERVAL 30 SECOND";
+    private static String MESSAGE_COUNT = "SELECT COUNT(user_message_content.id_discord) + 40000 FROM user_message_content";
+    private static String ADMINS_MENTIONED = "SELECT mention FROM staff WHERE role_name = 'Administrator' AND mention != '<@739143338975952959>' ORDER BY staff_since;";
+    private static String MODERATORS_MENTIONED = "SELECT mention FROM staff WHERE role_name = 'Moderator' ORDER BY staff_since;";
+    public static final List<String> adminsAsMention = new ArrayList<>();
+    public static final List<String> moderatorsAsMention = new ArrayList<>();
 
     private QueryHelper() {
 
@@ -58,7 +65,6 @@ public final class QueryHelper {
     public static EmbedBuilder getTopActiveChannels() throws SQLException {
         return getTop(TOP_CHANNELS, new String[]{"**TOP 1**", "**TOP 2**", "**TOP 3**"}, new String[]{"", "", ""});
     }
-
 
 
     public static Time getNextBumpTime() {
@@ -100,38 +106,9 @@ public final class QueryHelper {
 
     public static int getActiveUserRecord() {
 
-        try (Connection connection = DatabaseConnector.openConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(ACTIVE_USER_RECORD)) {
-
-
-            if (resultSet.next()) {
-
-                return resultSet.getInt(1);
-
-            }
-
-        } catch (SQLException sqlException) {
-            System.out.println(sqlException.getMessage());
-
-            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
-        }
-        return 0;
+        return getServerData(ACTIVE_USER_RECORD);
     }
 
-
-    public static void adjustUsername(String adjustingDateQuery, String newUsername, long userId) {
-
-        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(adjustingDateQuery)) {
-
-            preparedStatement.setString(1, newUsername);
-            preparedStatement.setLong(2, userId);
-            preparedStatement.executeUpdate();
-
-        } catch (SQLException sqlException) {
-            System.out.println(sqlException.getMessage());
-
-            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
-        }
-    }
 
     public static boolean isActiveUserRecord(int approximatePresentMember) {
 
@@ -247,7 +224,7 @@ public final class QueryHelper {
 
             if (resultSet.next()) {
 
-                int amountHops= resultSet.getInt(1);
+                int amountHops = resultSet.getInt(1);
 
                 if (amountHops >= 3) {
                     return true;
@@ -260,6 +237,64 @@ public final class QueryHelper {
             CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
         }
         return false;
+
+    }
+
+
+    public static int getMessagesCount() {
+
+        return getServerData(MESSAGE_COUNT);
+    }
+
+    public static int getServerData(String serverData) {
+        try (Connection connection = DatabaseConnector.openConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(serverData)) {
+
+            if (resultSet.next()) {
+
+                return resultSet.getInt(1);
+
+            }
+
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
+
+            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
+        }
+        return 0;
+    }
+
+    public static List<String> getAdminsAsMention() {
+
+        if (adminsAsMention.size() > 0) return adminsAsMention;
+
+        return getStaffAsMention(ADMINS_MENTIONED, adminsAsMention);
+
+    }
+
+    public static List<String> getStaffAsMention(String adminIds, List<String> adminsAsMention) {
+        try (Connection connection = DatabaseConnector.openConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(adminIds)) {
+
+
+            while (resultSet.next()) {
+
+                adminsAsMention.add(resultSet.getString(1));
+
+            }
+
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
+
+            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
+        }
+
+        return adminsAsMention;
+    }
+
+    public static List<String> getModeratorsAsMention() {
+
+        if (moderatorsAsMention.size() > 0) return moderatorsAsMention;
+
+        return getStaffAsMention(MODERATORS_MENTIONED, moderatorsAsMention);
 
     }
 }

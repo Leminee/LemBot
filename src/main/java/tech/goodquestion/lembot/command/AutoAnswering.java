@@ -22,7 +22,7 @@ public class AutoAnswering extends ListenerAdapter {
                 userMessageContent.equalsIgnoreCase("Uhrzeit?") || userMessageContent.equalsIgnoreCase("Welche Uhrzeit?") ||
                 userMessageContent.equalsIgnoreCase(Helper.PREFIX + "time")) {
             event.getChannel().sendTyping().queue();
-            event.getChannel().sendMessage("Uhrzeit: " + Helper.getCurrentTime()).queue();
+            event.getChannel().sendMessage("Uhrzeit: " + Helper.getCurrentDateTime()).queue();
         }
 
         if ((userMessageContent.startsWith("kennt sich wer") || (userMessageContent.contains("kennt sich wer") || userMessageContent.startsWith("kennt sich jemand") || userMessageContent.startsWith("Kennt sich jemand") ||

@@ -145,10 +145,10 @@ public final class Helper {
     public static void addTopToEmbed(ResultSet resultSet, EmbedBuilder embedBuilder, String embedTitle, String embedDescription, String embedThumbnail, String embedColor, TextChannel channel, String amountOf) {
 
         createEmbed(embedBuilder, embedTitle, embedDescription, embedColor,embedThumbnail);
-        create(resultSet, embedBuilder, channel, amountOf);
+        addTopToEmbed(resultSet, embedBuilder, channel, amountOf);
     }
 
-    public static void create(ResultSet resultSet, EmbedBuilder embedBuilder, TextChannel channel, String amountOf) {
+    public static void addTopToEmbed(ResultSet resultSet, EmbedBuilder embedBuilder, TextChannel channel, String amountOf) {
         int top = 1;
         try {
             while (resultSet.next()) {
@@ -159,12 +159,13 @@ public final class Helper {
             channel.sendMessage(embedBuilder.build()).queue();
 
         } catch (SQLException sqlException) {
+
             System.out.println(sqlException.getMessage());
             CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, Helper.class.getName()));
         }
     }
 
-    public static String getCurrentTime(){
+    public static String getCurrentDateTime(){
         java.util.Date date = new Date();
 
         return date.toString().substring(11, 16);
@@ -173,6 +174,6 @@ public final class Helper {
     public static void addTopMonthlyDataToEmbed(TextChannel channel, ResultSet resultSet, EmbedBuilder topBumperEmbed, String embedTitle, String embedDescription, String embedThumbnail, String embedColor, String amountOf) {
         createEmbed(topBumperEmbed, embedTitle, embedDescription, embedColor);
 
-        create(resultSet, topBumperEmbed, channel, amountOf);
+        addTopToEmbed(resultSet, topBumperEmbed, channel, amountOf);
     }
 }

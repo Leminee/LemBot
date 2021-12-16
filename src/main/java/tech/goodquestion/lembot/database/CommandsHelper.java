@@ -14,8 +14,6 @@ import java.sql.SQLException;
 
 public final class CommandsHelper {
 
-
-
     private static final String INSERT_USER_STATUS = "INSERT INTO user_status (id_discord, user_tag, status) VALUES (?,?,?);";
     private static final String INSERT_MEMBER_AMOUNT = "INSERT INTO number_member (total_member) VALUES (?);";
     public static final String USER_LEAVE_LOG = "INSERT INTO user_leave (id_user_leave,id_discord,user_tag,username,avatar_url) VALUES (NULL,?,?,?,?);";
@@ -54,6 +52,20 @@ public final class CommandsHelper {
         }
     }
 
+    public static void adjustUsername(String adjustingDateQuery, String newUsername, long userId) {
+
+        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(adjustingDateQuery)) {
+
+            preparedStatement.setString(1, newUsername);
+            preparedStatement.setLong(2, userId);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
+
+            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
+        }
+    }
 
     public static void logMemberStatusChange(long userId, String userTag, OnlineStatus newStatus) {
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement statement = connection.prepareStatement(INSERT_USER_STATUS)) {
