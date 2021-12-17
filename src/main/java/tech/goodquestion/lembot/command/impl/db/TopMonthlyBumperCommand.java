@@ -33,7 +33,7 @@ public class TopMonthlyBumperCommand implements IBotCommand {
             String embedThumbnail = "https://cdn.discordapp.com/attachments/819694809765380146/869248076446052402/Bildschirmfoto_2021-07-26_um_17.48.08.png";
 
 
-            Helper.addTopMonthlyDataToEmbed(channel, resultSet, topBumperEmbed, embedTitle, embedDescription, embedThumbnail, EmbedColorHelper.BUMP, "Bumps");
+            Helper.addTopMonthlyDataToEmbed(channel, resultSet, topBumperEmbed, embedTitle, embedThumbnail, EmbedColorHelper.BUMP, "Bumps");
 
 
         } catch (SQLException sqlException) {

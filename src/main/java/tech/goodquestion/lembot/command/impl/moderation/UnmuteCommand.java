@@ -61,7 +61,7 @@ public class UnmuteCommand implements IBotCommand {
             if (resultSet.next()) {
 
 
-                String userUnmute = "UPDATE muted_user SET activ = ? WHERE id_discord = ? ORDER BY muted_on DESC LIMIT 1;";
+                String userUnmute = "UPDATE muted_user SET activ = ? WHERE id_discord = ? ORDER BY muted_at DESC LIMIT 1;";
 
                 PreparedStatement preparedStatementOne = conn.prepareStatement(userUnmute);
 

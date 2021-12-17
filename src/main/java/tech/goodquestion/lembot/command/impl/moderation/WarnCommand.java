@@ -38,6 +38,6 @@ public class WarnCommand extends UserBanishCommand {
 
     @Override
     public String getDescription() {
-        return "`?warn` <user> <reason>: Weist " + Config.getInstance().getRole().getWarnRole().getAsMention() +" zu";
+        return "`?warn <user> <reason>:` Weist " + Config.getInstance().getRole().getWarnRole().getAsMention() +" zu";
     }
 }

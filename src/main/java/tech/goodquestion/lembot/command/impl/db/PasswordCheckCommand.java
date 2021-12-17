@@ -20,6 +20,7 @@ public class PasswordCheckCommand implements IBotCommand {
 
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
+
         EmbedBuilder embedBuilder = new EmbedBuilder();
 
         if (args.length != 1) {
@@ -28,19 +29,20 @@ public class PasswordCheckCommand implements IBotCommand {
 
         message.delete().queue();
         String userPassword = args[0];
-
-
+        String embedTitle = "Passwort-Sicherheitsüberprüfung";
 
         if (hasBeenLeaked(userPassword)) {
 
-            Helper.createEmbed(embedBuilder,"Passwort-Sicherheitsüberprüfung",
-                    ":red_circle: Passwort wurde leider gefunden " + message.getAuthor().getAsMention(),
-                    EmbedColorHelper.ERROR);
+            String description = ":red_circle: Passwort wurde leider gefunden " + message.getAuthor().getAsMention();
+
+
+            Helper.createEmbed(embedBuilder, embedTitle, description, EmbedColorHelper.ERROR);
         } else {
 
-            Helper.createEmbed(embedBuilder,"Passwort-Sicherheitsüberprüfung",
-                    ":green_circle: Nicht gefunden " +message.getAuthor().getAsMention(),
-                    EmbedColorHelper.SUCCESS);
+
+            String description = ":green_circle: Nicht gefunden " +message.getAuthor().getAsMention();
+
+            Helper.createEmbed(embedBuilder, embedTitle,description, EmbedColorHelper.SUCCESS);
         }
 
         channel.sendMessage(embedBuilder.build()).queue();

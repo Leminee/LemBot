@@ -4,6 +4,9 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.config.Config;
@@ -13,6 +16,7 @@ import tech.goodquestion.lembot.entity.OccurredException;
 import tech.goodquestion.lembot.entity.UserData;
 
 import java.awt.*;
+import java.io.IOException;
 import java.sql.*;
 import java.util.Date;
 import java.util.List;
@@ -174,9 +178,26 @@ public final class Helper {
     }
 
     //TODO
-    public static void addTopMonthlyDataToEmbed(TextChannel channel, ResultSet resultSet, EmbedBuilder topBumperEmbed, String embedTitle, String embedDescription, String embedThumbnail, String embedColor, String amountOf) {
+    public static void addTopMonthlyDataToEmbed(TextChannel channel, ResultSet resultSet, EmbedBuilder topBumperEmbed, String embedTitle, String embedDescription,String embedColor, String amountOf) {
         createEmbed(topBumperEmbed, embedTitle, embedDescription, embedColor);
-
         addTopToEmbed(resultSet, topBumperEmbed, channel, amountOf);
+    }
+
+
+    public static String getLemBotContributorsCount() {
+
+        final String base_url = "https://github.com/Leminee/LemBot";
+        try {
+            Document document = Jsoup.connect(base_url)
+                    .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36")
+                    .get();
+            Elements element = document.getElementsByClass("Counter");
+
+            return element.get(element.size() - 1).text();
+
+        } catch (IOException ioException) {
+            System.out.println(ioException.getMessage());
+        }
+        return "-1";
     }
 }

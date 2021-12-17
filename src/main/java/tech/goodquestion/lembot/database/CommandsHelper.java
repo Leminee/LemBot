@@ -16,18 +16,18 @@ public final class CommandsHelper {
 
     private static final String INSERT_USER_STATUS = "INSERT INTO user_status (id_discord, user_tag, status) VALUES (?,?,?);";
     private static final String INSERT_MEMBER_AMOUNT = "INSERT INTO number_member (total_member) VALUES (?);";
-    public static final String USER_LEAVE_LOG = "INSERT INTO user_leave (id_user_leave,id_discord,user_tag,username,avatar_url) VALUES (NULL,?,?,?,?);";
-    public static final String USER_JOIN_LOG = "INSERT INTO user_join (id_user_join,id_discord,user_tag,username,avatar_url) VALUES (NULL,?,?,?,?);";
-    public static final String USER_BAN_DATA = "INSERT INTO banned_user (id_banned_user,id_discord,user_tag, username, ban_author, ban_reason, channel_name) VALUES (NULL,?,?,?,?,?,?)";
-    public static final String USER_MUTE_DATA = "INSERT INTO muted_user (id_muted_user,id_discord,user_tag, username, mute_author, mute_reason, channel_name) " +
+    public static final String USER_LEAVE_LOG = "INSERT INTO user_leave (id,id_discord,user_tag,username,avatar_url) VALUES (NULL,?,?,?,?);";
+    public static final String USER_JOIN_LOG = "INSERT INTO user_join (id,id_discord,user_tag,username,avatar_url) VALUES (NULL,?,?,?,?);";
+    public static final String USER_BAN_DATA = "INSERT INTO banned_user (id,id_discord,user_tag, username, ban_author, ban_reason, channel_name) VALUES (NULL,?,?,?,?,?,?)";
+    public static final String USER_MUTE_DATA = "INSERT INTO muted_user (id,id_discord,user_tag, username, mute_author, mute_reason, channel_name) " +
             "VALUES (NULL,?,?,?,?,?,?)";
-    public static final String USER_WARN_DATA = "INSERT INTO warned_user (id_warned_user,id_discord,user_tag, username, warn_author, warn_reason, channel_name) " +
+    public static final String USER_WARN_DATA = "INSERT INTO warned_user (id,id_discord,user_tag, username, warn_author, warn_reason, channel_name) " +
             "VALUES (NULL,?,?,?,?,?,?)";
     public static final String ACTIVE_MEMBER_LOG = "INSERT INTO user_online (amount) VALUES (?);";
 
     public static final String ADJUSTING_NEW_USERNAME_IN_BUMPER = "UPDATE user_bump SET username = ? WHERE id_discord = ?;";
     public static final String ADJUSTING_NEW_USERNAME_IN_MESSAGE = "UPDATE user_message SET username = ? WHERE id_discord = ?;";
-    public static final String USERNAME_UPDATED_LOG = "INSERT INTO updated_username (id_updated_username, id_discord, user_tag, old_username, new_username) VALUES (NULL,?,?,?,?);";
+    public static final String USERNAME_UPDATED_LOG = "INSERT INTO updated_username (id, id_discord, user_tag, old_username, new_username) VALUES (NULL,?,?,?,?);";
     public static final String REACTION_LOG = "INSERT INTO user_reaction (id_reaction, id_message, id_discord, reaction, count) VALUES (NULL,?,?,?,?);";
     public static final String EXCEPTION_LOG = "INSERT INTO exception (id_exception, occurred_in, exception_type, details) VALUES (NULL,?,?,?);";
     private static final String CLASS_NAME = CommandsHelper.class.getName();

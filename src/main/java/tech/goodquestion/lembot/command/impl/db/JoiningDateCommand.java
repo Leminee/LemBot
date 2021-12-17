@@ -14,11 +14,13 @@ public class JoiningDateCommand implements IBotCommand {
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
 
-        EmbedBuilder joiningDateEmbed = new EmbedBuilder();
+        EmbedBuilder embedBuilder = new EmbedBuilder();
+        String title = "Letztes Beitrittsdatum";
+        String description = "Du bist dem Server am " + "**" + getDateJoined(sender) + "**" + " beigetreten " + sender.getAsMention();
 
-        Helper.createEmbed(joiningDateEmbed, "Letztes Beitrittsdatum", "Du bist dem Server am " + "**" + getDateJoined(sender) + "**" + " beigetreten " + sender.getAsMention(), EmbedColorHelper.JOIN_DATE);
+        Helper.createEmbed(embedBuilder, title, description, EmbedColorHelper.JOIN_DATE);
 
-        channel.sendMessage(joiningDateEmbed.build()).queue();
+        channel.sendMessage(embedBuilder.build()).queue();
 
     }
 

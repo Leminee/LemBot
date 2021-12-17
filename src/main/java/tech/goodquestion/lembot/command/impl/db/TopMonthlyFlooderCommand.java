@@ -34,7 +34,7 @@ public class TopMonthlyFlooderCommand implements IBotCommand {
             String embedThumbnail = "https://cdn.discordapp.com/attachments/819694809765380146/844312789531230208/typing.png";
 
 
-            Helper.addTopMonthlyDataToEmbed(channel, resultSet, topFlooderEmbed, embedTitle, embedDescription, embedThumbnail, EmbedColorHelper.BUMP, "Nachrichten");
+            Helper.addTopMonthlyDataToEmbed(channel, resultSet, topFlooderEmbed, embedTitle, embedDescription, EmbedColorHelper.BUMP, "Nachrichten");
 
 
         } catch (SQLException sqlException) {

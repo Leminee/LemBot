@@ -7,22 +7,27 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.lib.EmbedColorHelper;
+import tech.goodquestion.lembot.lib.Helper;
 
 import java.awt.*;
+import java.util.Objects;
 
 public class BotDataCommand implements IBotCommand {
 
     @Override
-    public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
+    public void dispatch(Message message, TextChannel channel, Member sender, String[] args)  {
+
 
         EmbedBuilder botInfoEmbed = new EmbedBuilder()
                 .setTitle("Informationen zum LemBot")
                 .setColor(Color.decode(EmbedColorHelper.GOOD_QUESTION))
                 .setThumbnail("https://cdn.discordapp.com/attachments/919074434021736507/920552764784914472/logoqg1_1.gif")
                 .addField("Geschrieben in:", "Java (JDA)", true)
-                .addField("Geschrieben von:", Config.getInstance().getGuild().getOwner().getAsMention(), true)
-                .addField("Aktuelle Version:", "3.0", true)
-                .addField("Source Code:", "https://github.com/Leminee/LemBot", true);
+                .addField("Geschrieben von:", Objects.requireNonNull(Config.getInstance().getGuild().getOwner()).getAsMention(), true)
+                .addField("Akutelle Version", "3.0", true)
+                .addField("Mitwirkende", Helper.getLemBotContributorsCount(), true)
+                .addField("Source Code", "https://github.com/Leminee/LemBot", true);
+
         channel.sendMessage(botInfoEmbed.build()).queue();
     }
 
