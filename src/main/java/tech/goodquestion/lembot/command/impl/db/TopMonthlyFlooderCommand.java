@@ -27,12 +27,12 @@ public class TopMonthlyFlooderCommand implements IBotCommand {
 
         try (Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(QueryHelper.TOP_MONTHLY_FLOODER)) {
 
-            EmbedBuilder embedBuilder = new EmbedBuilder();
+           final EmbedBuilder embedBuilder = new EmbedBuilder();
 
-            String embedTitle = "Top Flooder der letzten 30 Tage";
-            String embedDescription = "";
-            String embedThumbnail = "https://cdn.discordapp.com/attachments/819694809765380146/844312789531230208/typing.png";
-            String amountOf = "Nachrichten";
+            final String embedTitle = "Top Flooder der letzten 30 Tage";
+            final String embedDescription = "";
+            final String embedThumbnail = "https://cdn.discordapp.com/attachments/819694809765380146/844312789531230208/typing.png";
+            final String amountOf = "Nachrichten";
 
             Helper.addTopToEmbed(resultSet, embedBuilder, embedTitle, embedDescription, embedThumbnail, EmbedColorHelper.FLOOD, channel,amountOf);
 

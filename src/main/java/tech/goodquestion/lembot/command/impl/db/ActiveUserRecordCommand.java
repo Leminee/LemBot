@@ -15,9 +15,9 @@ public class ActiveUserRecordCommand implements IBotCommand {
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
 
 
-        EmbedBuilder embedBuilder = new EmbedBuilder();
-        String title = "Rekord an gleichzeitig aktiven Usern";
-        String description = "Der aktuelle Record liegt bei " + "**" + QueryHelper.getActiveUserRecord() + "**" + " gleichzeitig aktiven Usern ";
+        final EmbedBuilder embedBuilder = new EmbedBuilder();
+        final String title = "Rekord an gleichzeitig aktiven Usern";
+        final String description = "Der aktuelle Record liegt bei " + "**" + QueryHelper.getActiveUserRecord() + "**" + " gleichzeitig aktiven Usern ";
 
         Helper.createEmbed(embedBuilder, title, description, EmbedColorHelper.RECORD);
 

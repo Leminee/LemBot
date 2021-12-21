@@ -1,5 +1,6 @@
 package tech.goodquestion.lembot.event;
 
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Invite;
@@ -12,8 +13,13 @@ import net.dv8tion.jda.api.events.guild.invite.GuildInviteCreateEvent;
 import net.dv8tion.jda.api.events.guild.invite.GuildInviteDeleteEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import tech.goodquestion.lembot.config.Config;
+import tech.goodquestion.lembot.database.CommandsHelper;
 import tech.goodquestion.lembot.entity.InviteData;
+import tech.goodquestion.lembot.entity.InviteTrackingData;
+import tech.goodquestion.lembot.lib.EmbedColorHelper;
 
+import java.awt.*;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -38,16 +44,14 @@ public class InviteTracking extends ListenerAdapter {
     @Override
     public void onGuildMemberJoin(final GuildMemberJoinEvent event) {
 
-        System.out.println("test");
         final Guild guild = event.getGuild();
         final User user = event.getUser();
         final Member selfMember = guild.getSelfMember();
 
-        if (!selfMember.hasPermission(Permission.MANAGE_SERVER) || user.isBot())
-            return;
+        if (!selfMember.hasPermission(Permission.MANAGE_SERVER) || user.isBot()) return;
 
-        guild.retrieveInvites().queue(retrievedInvites ->
-        {
+        guild.retrieveInvites().queue(retrievedInvites -> {
+
             for (final Invite retrievedInvite : retrievedInvites) {
                 final String code = retrievedInvite.getCode();
                 final InviteData cachedInvite = invitesCache.get(code);
@@ -56,12 +60,35 @@ public class InviteTracking extends ListenerAdapter {
                 if (retrievedInvite.getUses() == cachedInvite.getUses())
                     continue;
                 cachedInvite.incrementUses();
-                final String pattern = "User %s hat den Invite-Link mit der Url %s genutzt. Dieser wurde durch %s erstellt.";
-                final String tag = user.getAsTag();
+
+                EmbedBuilder embedBuilder = new EmbedBuilder();
+                String title = "Einladungslinks-Tracking";
+
+                final String usedBy = user.getAsTag();
                 final String url = retrievedInvite.getUrl();
-                final String inviterTag = Objects.requireNonNull(retrievedInvite.getInviter()).getAsTag();
-                final String toLog = String.format(pattern, tag, url, inviterTag);
-                System.out.println(toLog);
+                final int uses = retrievedInvite.getUses();
+                final String invitedBy = Objects.requireNonNull(retrievedInvite.getInviter()).getAsTag();
+
+                embedBuilder.setTitle(title)
+                        .setColor(Color.decode(EmbedColorHelper.INVITE_TRACKING))
+                        .setDescription("")
+                        .addField("Einladender", invitedBy, true)
+                        .addField("Eingeladener", usedBy, true)
+                        .addField("Genutzt", String.valueOf(uses), true)
+                        .addField("URL", url, true);
+
+                InviteTrackingData inviteTrackingData = new InviteTrackingData();
+                inviteTrackingData.url = url;
+                inviteTrackingData.invitedBy = invitedBy;
+                inviteTrackingData.usedBy = usedBy;
+                inviteTrackingData.uses = uses;
+
+                Objects.requireNonNull(event.getGuild().getTextChannelById(Config.getInstance()
+                        .getChannel().getLogChannel().getIdLong()))
+                        .sendMessage(embedBuilder.build())
+                        .queue();
+
+                CommandsHelper.logInviteLinkTracking(inviteTrackingData);
                 break;
             }
         });

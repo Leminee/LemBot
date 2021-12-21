@@ -23,12 +23,12 @@ public class TopFlooderCommand implements IBotCommand {
         Connection connection = DatabaseConnector.openConnection();
 
         try (Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(QueryHelper.TOP_FLOODER)) {
-            EmbedBuilder topFlooderEmbed = new EmbedBuilder();
+            final EmbedBuilder topFlooderEmbed = new EmbedBuilder();
 
-            String embedTitle = "User mit den meisten Nachrichten";
-            String embedDescription = "";
-            String embedThumbnail = "https://cdn.discordapp.com/attachments/819694809765380146/844312789531230208/typing.png";
-            String amountOf = "Nachrichten";
+            final String embedTitle = "User mit den meisten Nachrichten";
+            final String embedDescription = "";
+            final String embedThumbnail = "https://cdn.discordapp.com/attachments/819694809765380146/844312789531230208/typing.png";
+            final String amountOf = "Nachrichten";
 
             Helper.addTopToEmbed(resultSet, topFlooderEmbed, embedTitle, embedDescription, embedThumbnail, EmbedColorHelper.FLOOD, channel, amountOf);
 

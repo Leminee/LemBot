@@ -13,10 +13,10 @@ public class CodeBlockHelpCommand implements IBotCommand {
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
 
-        EmbedBuilder embedBuilder = new EmbedBuilder();
-        String highlightedCodeBlock = "\n\\```<Programmiersprache>\n // Code\n```";
-        String title = "Farbige Codeblöcke";
-        String description = String.format("So sendest du farbige Codeblöcke:\n%s", highlightedCodeBlock);
+        final EmbedBuilder embedBuilder = new EmbedBuilder();
+        final String highlightedCodeBlock = "\n\\```<Programmiersprache>\n // Code\n```";
+        final String title = "Farbige Codeblöcke";
+        final String description = String.format("So sendest du farbige Codeblöcke:\n%s", highlightedCodeBlock);
 
 
         Helper.createEmbed(embedBuilder, title,

@@ -6,26 +6,30 @@ import net.dv8tion.jda.api.entities.Message;
 import tech.goodquestion.lembot.database.CommandsHelper;
 import tech.goodquestion.lembot.entity.Sanction;
 import tech.goodquestion.lembot.entity.SanctionType;
+import tech.goodquestion.lembot.lib.EmbedColorHelper;
+
+import java.awt.*;
 
 public class BanCommand extends UserBanishCommand {
 
 
     @Override
-    public void banishUser(Member toBanish, Sanction sanction, Message originMsg) {
-
-
-        sendSanctionReason(toBanish.getUser(), SanctionType.GEBANNT, sanction.reason, toBanish.getAsMention());
+    public void banishUser(Member toBanish, Sanction sanction, Message originMessage) {
 
 
         toBanish.ban(0, sanction.reason).complete();
 
-        EmbedBuilder confirmation = new EmbedBuilder();
-        confirmation.setColor(0x00ff60);
+        final EmbedBuilder confirmation = new EmbedBuilder();
+        confirmation.setColor(Color.decode(EmbedColorHelper.SUCCESS));
         confirmation.setTitle("Bestätigung");
-        confirmation.setDescription("User " + toBanish.getAsMention() + " wurde durch " + originMsg.getAuthor().getAsMention() + "**" + " gebannt." + "**" + "\n Angegebener Grund: " + sanction.reason);
-        originMsg.getChannel().sendMessage(confirmation.build()).queue();
+        confirmation.setDescription("User " + toBanish.getAsMention() + " wurde durch " + originMessage.getAuthor().getAsMention() + "**" + " gebannt." + "**" + "\n Angegebener Grund: " + sanction.reason);
+        originMessage.getChannel().sendMessage(confirmation.build()).queue();
 
         CommandsHelper.logUserBan(sanction);
+
+        final String performedSanction = "gebannt";
+        final SanctionType sanctionType = SanctionType.BAN;
+        sendSanctionReason(toBanish.getUser(),sanctionType, performedSanction, sanction.reason, "");
     }
 
     @Override

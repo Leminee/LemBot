@@ -14,10 +14,10 @@ public class MessageCountCommand implements IBotCommand {
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
 
-        UserData userData = new UserData();
+        final UserData userData = new UserData();
         userData.userId = sender.getIdLong();
 
-        String embedTitle = "Nachrichten";
+        final String embedTitle = "Nachrichten";
 
         Helper.getAmount(userData, QueryHelper.AMOUNT_MESSAGES, QueryHelper.NEXT_HIGHER_USER_AMOUNT_MESSAGES);
         Helper.sendAmount(userData, EmbedColorHelper.FLOOD, "Nachrichten", channel, embedTitle);

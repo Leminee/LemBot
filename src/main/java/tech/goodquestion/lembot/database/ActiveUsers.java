@@ -15,17 +15,17 @@ public class ActiveUsers extends ListenerAdapter {
 
     public void onUserUpdateOnlineStatus(@Nonnull UserUpdateOnlineStatusEvent event) {
 
-        OnlineStatus newStatus = event.getNewOnlineStatus();
-        String userTag = event.getMember().getUser().getAsTag();
-        long userId = event.getUser().getIdLong();
+        final OnlineStatus newStatus = event.getNewOnlineStatus();
+        final String userTag = event.getMember().getUser().getAsTag();
+        final long userId = event.getUser().getIdLong();
 
         CommandsHelper.logMemberStatusChange(userId, userTag, newStatus);
 
-        int approximatePresentMember = event.getGuild().retrieveMetaData().complete().getApproximatePresences();
+        final int approximatePresentMember = event.getGuild().retrieveMetaData().complete().getApproximatePresences();
 
         if (QueryHelper.isActiveUserRecord(approximatePresentMember)) {
 
-            EmbedBuilder embedBuilder = new EmbedBuilder();
+            final EmbedBuilder embedBuilder = new EmbedBuilder();
 
             Helper.createEmbed(embedBuilder,"Neuer Record", "Der neue Record an gleichzeitig aktiven Usern liegt bei: " + "**" + approximatePresentMember + "** :tada:  ", EmbedColorHelper.RECORD);
             Objects.requireNonNull(event.getJDA().getTextChannelById(Config.getInstance().getChannel().getBumpChannel().getIdLong())).sendMessage(embedBuilder.build()).queue();

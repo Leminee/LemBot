@@ -13,6 +13,7 @@ public class ChannelConfig {
     private long memberCount;
     private long selfRoles;
     private long staff;
+    private long log;
 
 
     public TextChannel getSanctionChannel() {
@@ -46,5 +47,10 @@ public class ChannelConfig {
     public TextChannel getStaffRoomChannel() {
         return Config.getInstance().getGuild().getTextChannelById(staff);
     }
+
+    public TextChannel getLogChannel() {
+        return Config.getInstance().getGuild().getTextChannelById(log);
+    }
+
 
 }

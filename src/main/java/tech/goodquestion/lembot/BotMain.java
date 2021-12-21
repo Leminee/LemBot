@@ -11,7 +11,6 @@ import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.command.impl.*;
 import tech.goodquestion.lembot.command.impl.db.*;
 import tech.goodquestion.lembot.command.impl.moderation.*;
-import tech.goodquestion.lembot.config.CommandRole;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.config.ReactionRoleMessage;
 import tech.goodquestion.lembot.database.*;
@@ -96,14 +95,8 @@ public class BotMain {
         jda.addEventListener(new InviteTracking());
 
         setupReactionRoles();
-        setupRoleCommands(commandManager);
     }
 
-    private static void setupRoleCommands(CommandManager commands) {
-        for (CommandRole role : Config.getInstance().getCommandRoles()) {
-            RoleToggleCommand.register(commands, role.getAbbr(), role.getRole());
-        }
-    }
 
     private static void setupReactionRoles() {
 

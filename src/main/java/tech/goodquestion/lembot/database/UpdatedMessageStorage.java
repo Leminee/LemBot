@@ -14,13 +14,13 @@ public class UpdatedMessageStorage extends ListenerAdapter {
     @Override
     public void onGuildMessageUpdate(@Nonnull GuildMessageUpdateEvent event) {
 
-        long idUpdatedMessage = event.getMessageIdLong();
-        long authorId = event.getAuthor().getIdLong();
-        String authorUpdatedMessage = event.getAuthor().getAsTag();
-        String updatedMessageContent = event.getMessage().getContentRaw();
+        final long idUpdatedMessage = event.getMessageIdLong();
+        final long authorId = event.getAuthor().getIdLong();
+        final String authorUpdatedMessage = event.getAuthor().getAsTag();
+        final String updatedMessageContent = event.getMessage().getContentRaw();
 
         Connection connection = DatabaseConnector.openConnection();
-        String updatedMessageData = "INSERT INTO updated_message (id, id_message, id_discord, username,content) VALUES (NULL,?,?,?,?);";
+        final String updatedMessageData = "INSERT INTO updated_message (id, id_message, id_discord, username,content) VALUES (NULL,?,?,?,?);";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(updatedMessageData)) {
             preparedStatement.setLong(1, idUpdatedMessage);

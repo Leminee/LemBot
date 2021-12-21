@@ -17,12 +17,13 @@ public class ServerRoleListCommand implements IBotCommand {
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
 
-        EmbedBuilder showRoles = new EmbedBuilder();
-        List<Role> serverRoleList = Objects.requireNonNull(message.getGuild().getRoles());
+        final EmbedBuilder showRoles = new EmbedBuilder();
+        final List<Role> serverRoleList = Objects.requireNonNull(message.getGuild().getRoles());
 
         showRoles.setTitle("Liste aller Rollen auf GQ");
         showRoles.setColor(Color.decode(EmbedColorHelper.SERVER_ROLES));
-        StringBuilder stringBuilder = new StringBuilder();
+
+        final StringBuilder stringBuilder = new StringBuilder();
 
         for (int i = 0; i < serverRoleList.size() - 2; i++) {
             stringBuilder.append(serverRoleList.get(i).getAsMention()).append("\n");

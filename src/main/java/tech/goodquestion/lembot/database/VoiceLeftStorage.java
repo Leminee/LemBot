@@ -14,18 +14,19 @@ public class VoiceLeftStorage extends ListenerAdapter {
     @Override
     public void onGuildVoiceLeave(@NotNull GuildVoiceLeaveEvent event) {
 
-        String insertQuery = "INSERT INTO voice_leave (id_discord, user_tag, username, name) VALUES (?,?,?,?);";
+        final String insertQuery = "INSERT INTO voice_leave (id_discord, user_tag, username, name) VALUES (?,?,?,?);";
 
-        VoiceChannel voiceChannel = new VoiceChannel();
+        final VoiceChannel voiceChannel = new VoiceChannel();
         voiceChannel.userId = event.getMember().getIdLong();
         voiceChannel.userTag = event.getMember().getUser().getAsTag();
         voiceChannel.userName = event.getMember().getUser().getName();
         voiceChannel.name = event.getChannelLeft().getName();
-        String userMentioned = event.getMember().getAsMention();
 
-        EmbedBuilder leftEmbed = new EmbedBuilder();
+        final String userMentioned = event.getMember().getAsMention();
 
-        String embedDescription = userMentioned + " hat " + "**" + voiceChannel.name + "**" + " um " + Helper.getCurrentDateTime() + " Uhr **verlassen**.";
+        final EmbedBuilder leftEmbed = new EmbedBuilder();
+
+        final String embedDescription = userMentioned + " hat " + "**" + voiceChannel.name + "**" + " um " + Helper.getCurrentDateTime() + " Uhr **verlassen**.";
 
         Helper.createEmbed(leftEmbed,"Voice verlassen ",embedDescription, EmbedColorHelper.VOICE_LEFT, "https://cdn.discordapp.com/attachments/819694809765380146/880646674366754856/Bildschirmfoto_2021-08-27_um_04.55.07.png");
         Config.getInstance().getChannel().getVoiceChatChannel().sendMessage(leftEmbed.build()).queue();

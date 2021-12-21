@@ -13,6 +13,7 @@ import tech.goodquestion.lembot.entity.OccurredException;
 import tech.goodquestion.lembot.lib.EmbedColorHelper;
 import tech.goodquestion.lembot.lib.Helper;
 
+import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,14 +28,14 @@ public class UnmuteCommand implements IBotCommand {
             return;
         }
 
-        List<Member> mentionedMembers = msg.getMentionedMembers();
+        final List<Member> mentionedMembers = msg.getMentionedMembers();
         Member member;
 
         member = UserBanishCommand.getMember(msg, args, mentionedMembers, null);
 
         if (member == null) {
             EmbedBuilder embedError = new EmbedBuilder();
-            String embedDescription = "User ist nicht auf dem Server!";
+            final String embedDescription = ":x: User ist nicht auf dem Server!";
             Helper.createEmbed(embedError, "Fehler", embedDescription, EmbedColorHelper.ERROR);
             channel.sendMessage(embedError.build()).queue();
             return;
@@ -42,17 +43,17 @@ public class UnmuteCommand implements IBotCommand {
 
         member.getGuild().removeRoleFromMember(member.getIdLong(), Config.getInstance().getRole().getMuteRole()).queue();
 
-        EmbedBuilder confirmation = new EmbedBuilder();
-        confirmation.setColor(0x00ff60);
+        final EmbedBuilder confirmation = new EmbedBuilder();
+        confirmation.setColor(Color.decode(EmbedColorHelper.SUCCESS));
         confirmation.setTitle("Bestätigung");
         confirmation.setDescription("User " + member.getAsMention() + " wurde durch " + msg.getAuthor().getAsMention() + " erfolgreich **" + " ungemutet." + "**");
         channel.sendMessage(confirmation.build()).queue();
 
-        Connection conn = DatabaseConnector.openConnection();
+        Connection connection = DatabaseConnector.openConnection();
 
         String userMuted = "SELECT activ FROM muted_user WHERE id_discord = ?;";
 
-        try (PreparedStatement preparedStatement = conn.prepareStatement(userMuted)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(userMuted)) {
 
             preparedStatement.setLong(1, member.getIdLong());
 
@@ -63,7 +64,7 @@ public class UnmuteCommand implements IBotCommand {
 
                 String userUnmute = "UPDATE muted_user SET activ = ? WHERE id_discord = ? ORDER BY muted_at DESC LIMIT 1;";
 
-                PreparedStatement preparedStatementOne = conn.prepareStatement(userUnmute);
+                PreparedStatement preparedStatementOne = connection.prepareStatement(userUnmute);
 
                 preparedStatementOne.setString(1, "0");
                 preparedStatementOne.setLong(2, member.getIdLong());

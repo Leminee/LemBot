@@ -16,10 +16,10 @@ public class UserMessageCounter extends ListenerAdapter {
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 
-        String userMessageContent = event.getMessage().getContentRaw();
-        String userId = Objects.requireNonNull(event.getMember()).getId();
-        String userName = event.getMember().getEffectiveName();
-        String messageId = event.getMessageId();
+        final String userMessageContent = event.getMessage().getContentRaw();
+        final String userId = Objects.requireNonNull(event.getMember()).getId();
+        final String userName = event.getMember().getEffectiveName();
+        final String messageId = event.getMessageId();
 
         int numberMessage = 1;
 

@@ -13,13 +13,13 @@ public class VoiceMoved extends ListenerAdapter {
     @Override
     public void onGuildVoiceMove(@NotNull GuildVoiceMoveEvent event) {
 
-        String userMentioned = event.getMember().getAsMention();
-        String voiceChannelLeft = event.getChannelLeft().getName();
-        String voiceChannelJoined = event.getChannelJoined().getName();
+        final String userMentioned = event.getMember().getAsMention();
+        final String voiceChannelLeft = event.getChannelLeft().getName();
+        final String voiceChannelJoined = event.getChannelJoined().getName();
 
-        EmbedBuilder moveEmbed = new EmbedBuilder();
+        final EmbedBuilder moveEmbed = new EmbedBuilder();
 
-        String embedDescription = userMentioned + " ist von " + "**" + voiceChannelLeft + "**" + " in " + "**" + voiceChannelJoined + "**" + " um " + Helper.getCurrentDateTime() + " Uhr **gemovt**.";
+        final String embedDescription = userMentioned + " ist von " + "**" + voiceChannelLeft + "**" + " in " + "**" + voiceChannelJoined + "**" + " um " + Helper.getCurrentDateTime() + " Uhr **gemovt**.";
 
         Helper.createEmbed(moveEmbed, "Voice gewechselt ", embedDescription, EmbedColorHelper.VOICE_MOVED, "https://cdn.discordapp.com/attachments/819694809765380146/880646674366754856/Bildschirmfoto_2021-08-27_um_04.55.07.png");
         Config.getInstance().getChannel().getVoiceChatChannel().sendMessage(moveEmbed.build()).queue();

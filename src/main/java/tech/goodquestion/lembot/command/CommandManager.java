@@ -76,8 +76,8 @@ public class CommandManager extends ListenerAdapter {
 
         if (!executor.isPermitted(message.getMember())) {
             EmbedBuilder embedError = new EmbedBuilder();
-            String embedDescription = "Permission Denied";
-            Helper.createEmbed(embedError, "", embedDescription, EmbedColorHelper.ERROR);
+            String embedDescription = ":x: Permission Denied";
+            Helper.createEmbed(embedError, "Error", embedDescription, EmbedColorHelper.ERROR);
             message.getChannel().sendMessage(embedError.build()).queue();
             return;
         }

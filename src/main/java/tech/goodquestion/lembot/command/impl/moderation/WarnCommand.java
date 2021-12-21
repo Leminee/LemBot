@@ -7,24 +7,30 @@ import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.database.CommandsHelper;
 import tech.goodquestion.lembot.entity.Sanction;
 import tech.goodquestion.lembot.entity.SanctionType;
+import tech.goodquestion.lembot.lib.EmbedColorHelper;
+
+import java.awt.*;
 
 public class WarnCommand extends UserBanishCommand {
 
     @Override
     public void banishUser(Member toBanish, Sanction sanction, Message originMsg) {
 
+
         toBanish.getGuild().addRoleToMember(sanction.userId, Config.getInstance().getRole().getWarnRole()).queue();
 
-        sendSanctionReason(toBanish.getUser(), SanctionType.VERWARNT, sanction.reason, toBanish.getAsMention());
-
-        EmbedBuilder confirmation = new EmbedBuilder();
-        confirmation.setColor(0x00ff60);
+        final EmbedBuilder confirmation = new EmbedBuilder();
+        confirmation.setColor(Color.decode(EmbedColorHelper.SUCCESS));
         confirmation.setTitle("Bestätigung");
         confirmation.setDescription("User " + toBanish.getAsMention() + " wurde durch " + originMsg.getAuthor().getAsMention() +
                 "**" + " verwarnt." + "**" + "\n Angegebener Grund: " + sanction.reason);
         originMsg.getChannel().sendMessage(confirmation.build()).queue();
 
         CommandsHelper.logUserWarn(sanction);
+
+        final String performedSanction = "verwarnt";
+        final SanctionType sanctionType = SanctionType.VERWARNUNG;
+        sendSanctionReason(toBanish.getUser(), sanctionType, performedSanction, sanction.reason, toBanish.getAsMention());
     }
 
     @Override
@@ -39,6 +45,6 @@ public class WarnCommand extends UserBanishCommand {
 
     @Override
     public String getDescription() {
-        return "`?warn <user> <reason>:` Weist " + Config.getInstance().getRole().getWarnRole().getAsMention() +" zu";
+        return "`?warn <user> <reason>:` Weist " + Config.getInstance().getRole().getWarnRole().getAsMention() + " zu";
     }
 }

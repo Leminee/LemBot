@@ -10,7 +10,8 @@ public class LinkDeletion extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
-        String userMessage = event.getMessage().getContentRaw();
+
+        final String userMessage = event.getMessage().getContentRaw();
 
         if (!userMessage.contains("https://")) return;
 

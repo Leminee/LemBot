@@ -18,9 +18,9 @@ public class ServerData implements IBotCommand {
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
 
-        EmbedBuilder botInfoEmbed = new EmbedBuilder();
+        final EmbedBuilder botInfoEmbed = new EmbedBuilder();
 
-        List<Member> memberList = message.getGuild().getMembers();
+        final List<Member> memberList = message.getGuild().getMembers();
         long amountBots = memberList.stream()
                 .filter(member -> member.getUser().isBot())
                 .count();

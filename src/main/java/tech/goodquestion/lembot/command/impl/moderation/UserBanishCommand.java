@@ -10,6 +10,8 @@ import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.config.Config;
+import tech.goodquestion.lembot.database.CommandsHelper;
+import tech.goodquestion.lembot.entity.OccurredException;
 import tech.goodquestion.lembot.entity.Sanction;
 import tech.goodquestion.lembot.entity.SanctionType;
 import tech.goodquestion.lembot.lib.EmbedColorHelper;
@@ -23,32 +25,25 @@ public abstract class UserBanishCommand implements IBotCommand {
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
 
-        if (args.length < 1) {
-            EmbedBuilder embedError = new EmbedBuilder();
-            String embedDescription = "Bitte gebe die ID des zu kickenden Users und den Grund für die Bestrafung an!";
-            Helper.createEmbed(embedError, "Fehler", embedDescription, EmbedColorHelper.ERROR);
-            channel.sendMessage(embedError.build()).queue();
-            return;
-        }
 
         if (args.length < 2) {
-            EmbedBuilder embedError = new EmbedBuilder();
-            String embedDescription = "Bitte gebe einen Grund an!";
+            final EmbedBuilder embedError = new EmbedBuilder();
+            final String embedDescription = ":x: Bitte gebe einen Grund an!";
             Helper.createEmbed(embedError, "Fehler", embedDescription, EmbedColorHelper.ERROR);
             channel.sendMessage(embedError.build()).queue();
             return;
         }
 
         if (channel.getIdLong() != Config.getInstance().getChannel().getSanctionChannel().getIdLong()) {
-            EmbedBuilder embedError = new EmbedBuilder();
-            String embedDescription = "Dieser Befehl kann nur in [channel] ausgeführt werden!".replace("[channel]",Config.getInstance().getChannel().getSanctionChannel().getAsMention());
+            final EmbedBuilder embedError = new EmbedBuilder();
+            final String embedDescription = ":x: Dieser Befehl kann nur in [channel] ausgeführt werden!".replace("[channel]",Config.getInstance().getChannel().getSanctionChannel().getAsMention());
             Helper.createEmbed(embedError, "Fehler", embedDescription, EmbedColorHelper.ERROR);
             channel.sendMessage(embedError.build()).queue();
             return;
         }
 
 
-        List<Member> mentionedMembers = message.getMentionedMembers();
+        final List<Member> mentionedMembers = message.getMentionedMembers();
         Member member;
 
         try {
@@ -57,8 +52,8 @@ public abstract class UserBanishCommand implements IBotCommand {
 
         } catch (ErrorResponseException errorResponseException) {
 
-            EmbedBuilder embedError = new EmbedBuilder();
-            String embedDescription = "User ist nicht auf dem Server!";
+            final EmbedBuilder embedError = new EmbedBuilder();
+            final String embedDescription = "User ist nicht auf dem Server!";
             Helper.createEmbed(embedError, "Fehler", embedDescription, EmbedColorHelper.ERROR);
             channel.sendMessage(embedError.build()).queue();
             return;
@@ -67,20 +62,20 @@ public abstract class UserBanishCommand implements IBotCommand {
 
         assert member != null;
         if (member.hasPermission(Permission.ADMINISTRATOR)) {
-            EmbedBuilder embedError = new EmbedBuilder();
-            String embedDescription = "Admins/Moderatoren können nicht gekickt oder gebannt werden!";
+            final EmbedBuilder embedError = new EmbedBuilder();
+            final String embedDescription = "Admins/Moderatoren können nicht gekickt oder gebannt werden!";
             Helper.createEmbed(embedError, "Fehler", embedDescription, EmbedColorHelper.ERROR);
             channel.sendMessage(embedError.build()).queue();
             return;
         }
 
-        StringBuilder reason = new StringBuilder();
+        final StringBuilder reason = new StringBuilder();
 
         for (int i = 1; i < args.length; i++) {
             reason.append(args[i]).append(" ");
         }
 
-        Sanction sanction = new Sanction();
+        final Sanction sanction = new Sanction();
 
         sanction.userId = member.getIdLong();
         sanction.userTag = member.getUser().getAsTag();
@@ -90,8 +85,8 @@ public abstract class UserBanishCommand implements IBotCommand {
         sanction.channelName = channel.getName();
 
         if (requiresAdmin() && !Objects.requireNonNull(message.getMember()).hasPermission(Permission.MANAGE_ROLES)) {
-            EmbedBuilder embedError = new EmbedBuilder();
-            String embedDescription = "Verweigert";
+            final EmbedBuilder embedError = new EmbedBuilder();
+            final String embedDescription = ":x: Verweigert";
             Helper.createEmbed(embedError, "", embedDescription, EmbedColorHelper.ERROR);
             channel.sendMessage(embedError.build()).queue();
             return;
@@ -113,7 +108,7 @@ public abstract class UserBanishCommand implements IBotCommand {
         return member;
     }
 
-    public abstract void banishUser(Member toBanish, Sanction sanction, Message originMsg);
+    public abstract void banishUser(Member toBanish, Sanction sanction, Message originMessage);
     public abstract boolean requiresAdmin();
 
     @Override
@@ -126,11 +121,16 @@ public abstract class UserBanishCommand implements IBotCommand {
         return "staff";
     }
 
-    public static void sendSanctionReason(User sanctionedUser, SanctionType typeSanction, String reason, String mentionedUser) {
-        EmbedBuilder embedBuilder = new EmbedBuilder();
-        Helper.createEmbed(embedBuilder,String.valueOf(typeSanction),"Du wurdest aus dem folgenden Grund auf **GoodQuestion** " + typeSanction +"\n Angegebener Grund: " + reason,EmbedColorHelper.NONE);
-        sanctionedUser.openPrivateChannel()
-                .flatMap(channel -> channel.sendMessage(embedBuilder.build()))
-                .complete();
+    public static void sendSanctionReason(User sanctionedUser,SanctionType sanctionType, String performedSanction, String reason, String banAuthor) {
+        final EmbedBuilder embedBuilder = new EmbedBuilder();
+        try {
+            Helper.createEmbed(embedBuilder, String.valueOf(sanctionType), "Du wurdest aus dem folgenden Grund auf **GoodQuestion** durch " + banAuthor + " **" + performedSanction + "**" + "\n Angegebener Grund: " + reason, EmbedColorHelper.ERROR);
+            sanctionedUser.openPrivateChannel()
+                    .flatMap(channel -> channel.sendMessage(embedBuilder.build()))
+                    .complete();
+        }catch (ErrorResponseException errorResponseException) {
+            System.out.println(errorResponseException.getMessage());
+            CommandsHelper.logException(OccurredException.getOccurredExceptionData(errorResponseException,UserBanishCommand.class.getName()));
+        }
     }
 }

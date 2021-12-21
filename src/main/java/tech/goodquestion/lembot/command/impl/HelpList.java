@@ -20,7 +20,7 @@ public class HelpList implements IBotCommand {
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
 
 
-        EmbedBuilder embedBuilder = new EmbedBuilder();
+        final EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle("HILFE \n");
         embedBuilder.setColor(Color.decode(EmbedColorHelper.HELP));
         embedBuilder.setThumbnail("https://cotelangues.com/wp-content/uploads/2019/06/Fragezeichen-Tafel-868x524.jpg");

@@ -257,7 +257,7 @@ public class VoiceCreation extends ListenerAdapter {
 
     };
 
-    Random random = new Random();
+    final Random random = new Random();
 
     @Override
     public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
@@ -296,9 +296,9 @@ public class VoiceCreation extends ListenerAdapter {
             return;
         }
 
-        String voiceName = LEFT[random.nextInt(LEFT.length)] + "_" + RIGHT[random.nextInt(RIGHT.length)];
+        final String voiceName = LEFT[random.nextInt(LEFT.length)] + "_" + RIGHT[random.nextInt(RIGHT.length)];
 
-        boolean isOnlyOneMemberInVoice = event.getChannelJoined().getMembers().size() == 1;
+        final boolean isOnlyOneMemberInVoice = event.getChannelJoined().getMembers().size() == 1;
 
         if (isOnlyOneMemberInVoice) {
 
@@ -310,7 +310,7 @@ public class VoiceCreation extends ListenerAdapter {
     @Override
     public void onGuildVoiceLeave(@NotNull GuildVoiceLeaveEvent event) {
 
-        boolean isVoiceLeftEmpty = event.getChannelLeft().getMembers().size() == 0;
+        final boolean isVoiceLeftEmpty = event.getChannelLeft().getMembers().size() == 0;
 
         if (isVoiceLeftEmpty) {
             event.getChannelLeft().delete().queue();
@@ -320,7 +320,7 @@ public class VoiceCreation extends ListenerAdapter {
     @Override
     public void onGuildVoiceMove(@NotNull GuildVoiceMoveEvent event) {
 
-        boolean areThereToManyCreatedVoice = event.getGuild().getVoiceChannels().size() >= 10;
+        final boolean areThereToManyCreatedVoice = event.getGuild().getVoiceChannels().size() >= 10;
 
         if (areThereToManyCreatedVoice) {
             return;
@@ -329,8 +329,8 @@ public class VoiceCreation extends ListenerAdapter {
         String randomlyCombinedVoiceName = LEFT[random.nextInt(LEFT.length)] + "_" + RIGHT[random.nextInt(RIGHT.length)];
         Category voiceFunCategory = Config.getInstance().getCategory().getVoiceFunCategory();
 
-        boolean isVoiceLeftEmpty = event.getChannelLeft().getMembers().size() == 0;
-        boolean wasVoiceJoinedEmpty = event.getChannelJoined().getMembers().size() == 1;
+        final boolean isVoiceLeftEmpty = event.getChannelLeft().getMembers().size() == 0;
+        final boolean wasVoiceJoinedEmpty = event.getChannelJoined().getMembers().size() == 1;
 
         if (isVoiceLeftEmpty && wasVoiceJoinedEmpty) {
             event.getChannelLeft().delete().queue();
@@ -356,9 +356,9 @@ public class VoiceCreation extends ListenerAdapter {
 
         int emptyVoices = 0;
 
-        long voiceFunCategoryId = 779105998420967465L;
+        final long voiceFunCategoryId = 779105998420967465L;
 
-        List<Integer> indices = new ArrayList<>();
+        final List<Integer> indices = new ArrayList<>();
 
         for (int i = 0; i < Objects.requireNonNull(Config.getInstance().getCategory().getVoiceFunCategory()).getVoiceChannels().size(); i++) {
 
@@ -370,7 +370,7 @@ public class VoiceCreation extends ListenerAdapter {
 
         if (emptyVoices >= 2) {
 
-            for (int index : indices) {
+            for (final int index : indices) {
 
                 final Runnable delete = () -> Objects.requireNonNull(event.getGuild().getCategoryById(voiceFunCategoryId)).getVoiceChannels().get(index).delete().queue();
 

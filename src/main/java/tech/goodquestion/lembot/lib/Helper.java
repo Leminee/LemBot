@@ -18,6 +18,7 @@ import tech.goodquestion.lembot.entity.UserData;
 import java.awt.*;
 import java.io.IOException;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -30,10 +31,10 @@ public final class Helper {
     public static final String PREFIX = "?";
 
 
-    public static boolean isNotSuccessfulBump(List<MessageEmbed> messages, User embedAuthor) {
+    public static boolean isNotSuccessfulBump(final List<MessageEmbed> messages, final User embedAuthor) {
 
         final long disBoardId = Config.getInstance().getUser().getDisboardId();
-        String successfulBumpImageUrl = "https://disboard.org/images/bot-command-image-bump.png";
+        final String successfulBumpImageUrl = "https://disboard.org/images/bot-command-image-bump.png";
 
         if (embedAuthor.getIdLong() != disBoardId) {
             return true;
@@ -50,15 +51,15 @@ public final class Helper {
         return !Objects.equals(Objects.requireNonNull(messages.get(0).getImage()).getUrl(), successfulBumpImageUrl);
     }
 
-    public static Blob changeCharacterEncoding(PreparedStatement userDataInput, String userName) throws SQLException {
+    public static Blob changeCharacterEncoding(final PreparedStatement userDataInput, final String userName) throws SQLException {
         final byte[] byteA = userName.getBytes();
-        Blob blob = userDataInput.getConnection().createBlob();
+        final Blob blob = userDataInput.getConnection().createBlob();
         blob.setBytes(1, byteA);
 
         return blob;
     }
 
-    public static void getAmount(UserData userData, String query, String nextHigherUser) {
+    public static void getAmount(final UserData userData, final String query, final String nextHigherUser) {
 
         Connection connection = DatabaseConnector.openConnection();
 
@@ -91,7 +92,7 @@ public final class Helper {
 
     }
 
-    public static void sendAmount(UserData userData, String embedColor, String amountOf, TextChannel channel, String embedTitle) {
+    public static void sendAmount(final UserData userData,final String embedColor, final String amountOf, final TextChannel channel, final String embedTitle) {
 
         String authorMention = "<@" + userData.userId + ">";
 
@@ -107,7 +108,7 @@ public final class Helper {
 
         String mentionedUser = CommandManager.getInstance().getJDA().retrieveUserById(userData.nextHigherUserId).complete().getAsMention();
 
-        EmbedBuilder numberInfo = new EmbedBuilder();
+        final EmbedBuilder numberInfo = new EmbedBuilder();
         numberInfo.setColor(Color.decode(embedColor));
         numberInfo.setTitle(embedTitle);
         numberInfo.setDescription("Anzahl deiner " + amountOf + " **" + userData.amountOf + "**" + " " + authorMention + "\n" + "Du bist hinter dem User " + mentionedUser + " **(" + userData.nextHigherUserAmountOf + " " + amountOf + ")**");
@@ -115,11 +116,11 @@ public final class Helper {
         channel.sendMessage(numberInfo.build()).queue();
     }
 
-    public static void scheduleCommand(String command, int delay, long period, TimeUnit timeUnit) {
+    public static void scheduleCommand(final String command,final int delay, final long period, final TimeUnit timeUnit) {
         scheduleCommand(command, delay, period, timeUnit, new String[0]);
     }
 
-    public static void scheduleCommand(String command, int delay, long period, TimeUnit timeUnit, String[] args) {
+    public static void scheduleCommand(final String command, final int delay, final long period, final TimeUnit timeUnit, final String[] args) {
 
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
@@ -138,14 +139,14 @@ public final class Helper {
         scheduler.scheduleAtFixedRate(commandRunner, delay, period, timeUnit);
     }
 
-    public static void createEmbed(EmbedBuilder embedBuilder, String title, String description, String embedColor, String thumbnail) {
+    public static void createEmbed(final EmbedBuilder embedBuilder, final String title, final String description, final String embedColor, final String thumbnail) {
         embedBuilder.setTitle(title);
         embedBuilder.setDescription(description);
         embedBuilder.setColor(Color.decode(embedColor));
         embedBuilder.setThumbnail(thumbnail);
     }
 
-    public static void createEmbed(EmbedBuilder embedBuilder, String title, String description, String embedColor) {
+    public static void createEmbed(final EmbedBuilder embedBuilder, final String title, final String description, final String embedColor) {
         embedBuilder.setTitle(title);
         embedBuilder.setDescription(description);
         embedBuilder.setColor(Color.decode(embedColor));
@@ -153,12 +154,12 @@ public final class Helper {
 
 
 
-    public static void addTopToEmbed(ResultSet resultSet, EmbedBuilder embedBuilder, String embedTitle, String embedDescription, String embedThumbnail, String embedColor, TextChannel channel, String amountOf) {
+    public static void addTopToEmbed(ResultSet resultSet,final EmbedBuilder embedBuilder, final String embedTitle, final String embedDescription, final String embedThumbnail, final String embedColor, final TextChannel channel, final String amountOf) {
         createEmbed(embedBuilder, embedTitle, embedDescription, embedColor, embedThumbnail);
         addTopToEmbed(resultSet, embedBuilder, channel, amountOf);
     }
 
-    public static void addTopToEmbed(ResultSet resultSet, EmbedBuilder embedBuilder, TextChannel channel, String amountOf) {
+    public static void addTopToEmbed(ResultSet resultSet, final EmbedBuilder embedBuilder, final TextChannel channel, final String amountOf) {
         int top = 1;
         try {
             while (resultSet.next()) {
@@ -176,7 +177,7 @@ public final class Helper {
     }
 
     public static String getCurrentDateTime() {
-        java.util.Date date = new Date();
+        final Date date = new Date();
 
         return date.toString().substring(11, 16);
     }
@@ -185,11 +186,12 @@ public final class Helper {
     public static String getLemBotContributorsCount() {
 
         final String base_url = "https://github.com/Leminee/LemBot";
+
         try {
-            Document document = Jsoup.connect(base_url)
+           final Document document = Jsoup.connect(base_url)
                     .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36")
                     .get();
-            Elements element = document.getElementsByClass("Counter");
+           final Elements element = document.getElementsByClass("Counter");
 
             return element.get(element.size() - 1).text();
 
@@ -197,5 +199,14 @@ public final class Helper {
             System.out.println(ioException.getMessage());
         }
         return "-1";
+    }
+
+    public static String getGermanDateTime() {
+
+        return LocalDateTime.now().getDayOfMonth()
+                + "-" + LocalDateTime.now().getMonth().getValue()
+                + "-" + LocalDateTime.now().getYear()
+                + "-" + LocalDateTime.now().getHour()
+                + ":" + LocalDateTime.now().getMinute();
     }
 }

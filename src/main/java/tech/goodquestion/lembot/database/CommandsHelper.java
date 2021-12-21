@@ -3,6 +3,7 @@ package tech.goodquestion.lembot.database;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
+import tech.goodquestion.lembot.entity.InviteTrackingData;
 import tech.goodquestion.lembot.entity.OccurredException;
 import tech.goodquestion.lembot.entity.Sanction;
 import tech.goodquestion.lembot.entity.VoiceChannel;
@@ -18,10 +19,10 @@ public final class CommandsHelper {
     private static final String INSERT_MEMBER_AMOUNT = "INSERT INTO number_member (total_member) VALUES (?);";
     public static final String USER_LEAVE_LOG = "INSERT INTO user_leave (id,id_discord,user_tag,username,avatar_url) VALUES (NULL,?,?,?,?);";
     public static final String USER_JOIN_LOG = "INSERT INTO user_join (id,id_discord,user_tag,username,avatar_url) VALUES (NULL,?,?,?,?);";
-    public static final String USER_BAN_DATA = "INSERT INTO banned_user (id,id_discord,user_tag, username, ban_author, ban_reason, name) VALUES (NULL,?,?,?,?,?,?)";
-    public static final String USER_MUTE_DATA = "INSERT INTO muted_user (id,id_discord,user_tag, username, mute_author, mute_reason, name) " +
+    public static final String USER_BAN_DATA = "INSERT INTO banned_user (id,id_discord,user_tag, username, ban_author, reason, channel_name) VALUES (NULL,?,?,?,?,?,?)";
+    public static final String USER_MUTE_DATA = "INSERT INTO muted_user (id,id_discord,user_tag, username, mute_author, reason, channel_name) " +
             "VALUES (NULL,?,?,?,?,?,?)";
-    public static final String USER_WARN_DATA = "INSERT INTO warned_user (id,id_discord,user_tag, username, warn_author, warn_reason, name) " +
+    public static final String USER_WARN_DATA = "INSERT INTO warned_user (id,id_discord,user_tag, username, warn_author, reason, channel_name) " +
             "VALUES (NULL,?,?,?,?,?,?)";
     public static final String ACTIVE_MEMBER_LOG = "INSERT INTO user_online (amount) VALUES (?);";
 
@@ -30,6 +31,7 @@ public final class CommandsHelper {
     public static final String USERNAME_UPDATED_LOG = "INSERT INTO updated_username (id, id_discord, user_tag, old_username, new_username) VALUES (NULL,?,?,?,?);";
     public static final String REACTION_LOG = "INSERT INTO user_reaction (id, id_message, id_discord, reaction) VALUES (NULL,?,?,?);";
     public static final String EXCEPTION_LOG = "INSERT INTO exception (id_exception, occurred_in, type, details) VALUES (NULL,?,?,?);";
+    public static final String INVITE_TRACKING_LOG = "INSERT INTO invite_tracking (id, url, used_by, invited_by, amount) VALUES (NULL,?,?,?,?);";
     private static final String CLASS_NAME = CommandsHelper.class.getName();
 
     private CommandsHelper(){
@@ -118,12 +120,12 @@ public final class CommandsHelper {
         }
     }
 
-    public static void logUserLeave(User member) {
-        logMemberStatus(USER_LEAVE_LOG, member);
+    public static void logUserLeave(User user) {
+        logMemberStatus(USER_LEAVE_LOG, user);
     }
 
-    public static void logUserJoin(User member) {
-        logMemberStatus(USER_JOIN_LOG, member);
+    public static void logUserJoin(User user) {
+        logMemberStatus(USER_JOIN_LOG, user);
     }
 
     private static void logSanction(String query, Sanction sanction) {
@@ -175,7 +177,7 @@ public final class CommandsHelper {
 
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(EXCEPTION_LOG)) {
             preparedStatement.setString(1, occurredException.occurredIn);
-            preparedStatement.setString(2, occurredException.exceptionType);
+            preparedStatement.setString(2, occurredException.type);
             preparedStatement.setString(3, occurredException.details);
             preparedStatement.executeUpdate();
 
@@ -203,5 +205,26 @@ public final class CommandsHelper {
 
             logException(OccurredException.getOccurredExceptionData(sqlException,CommandsHelper.class.getName()));
         }
+    }
+
+    public static void logInviteLinkTracking(InviteTrackingData inviteTrackingData){
+
+
+        Connection connection = DatabaseConnector.openConnection();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(INVITE_TRACKING_LOG)) {
+            preparedStatement.setString(1, inviteTrackingData.url);
+            preparedStatement.setString(2, inviteTrackingData.usedBy);
+            preparedStatement.setString(3, inviteTrackingData.invitedBy);
+            preparedStatement.setInt(4, inviteTrackingData.uses);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException sqlException) {
+
+            System.out.println(sqlException.getMessage());
+
+            logException(OccurredException.getOccurredExceptionData(sqlException,CommandsHelper.class.getName()));
+        }
+
     }
 }

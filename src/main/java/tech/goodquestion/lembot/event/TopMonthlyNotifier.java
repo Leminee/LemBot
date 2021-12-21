@@ -15,12 +15,12 @@ public class TopMonthlyNotifier extends ListenerAdapter {
     @Override
     public void onReady(@NotNull ReadyEvent event) {
 
-        int dayOfCurrentMonth = LocalDate.now().getDayOfMonth();
-        int daysBeforeNextMonth = LocalDate.now().getMonth().maxLength() - dayOfCurrentMonth;
+        final int dayOfCurrentMonth = LocalDate.now().getDayOfMonth();
+        final int daysBeforeNextMonth = LocalDate.now().getMonth().maxLength() - dayOfCurrentMonth;
 
-        LocalDate firstDayThisMonth = LocalDate.now().withDayOfMonth(1);
-        LocalDate firstDayNextMonth = firstDayThisMonth.plusMonths(1);
-        long period = ChronoUnit.DAYS.between(firstDayThisMonth, firstDayNextMonth);
+        final LocalDate firstDayThisMonth = LocalDate.now().withDayOfMonth(1);
+        final LocalDate firstDayNextMonth = firstDayThisMonth.plusMonths(1);
+        final long period = ChronoUnit.DAYS.between(firstDayThisMonth, firstDayNextMonth);
 
         Helper.scheduleCommand("topmb", daysBeforeNextMonth, period, TimeUnit.DAYS);
         Helper.scheduleCommand("topmf", daysBeforeNextMonth, period, TimeUnit.DAYS);

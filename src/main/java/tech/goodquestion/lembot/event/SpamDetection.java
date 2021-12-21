@@ -20,16 +20,16 @@ public class SpamDetection extends ListenerAdapter {
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 
 
-        long userId = event.getMessage().getAuthor().getIdLong();
-        boolean senderIsBot = event.getMessage().getAuthor().isBot();
-        boolean senderIsStaff = Objects.requireNonNull(event.getMessage().getMember()).hasPermission(Permission.MESSAGE_MANAGE);
-        Member member = event.getMember();
-        String userAsMention = event.getMessage().getAuthor().getAsMention();
-        String messageContent = event.getMessage().getContentRaw();
+        final long userId = event.getMessage().getAuthor().getIdLong();
+        final boolean senderIsBot = event.getMessage().getAuthor().isBot();
+        final boolean senderIsStaff = Objects.requireNonNull(event.getMessage().getMember()).hasPermission(Permission.MESSAGE_MANAGE);
+        final Member member = event.getMember();
+        final String userAsMention = event.getMessage().getAuthor().getAsMention();
+        final String messageContent = event.getMessage().getContentRaw();
         assert member != null;
-        List<Role> userRoles = member.getRoles();
+        final List<Role> userRoles = member.getRoles();
 
-        Sanction sanction = new Sanction();
+        final Sanction sanction = new Sanction();
         sanction.userId = userId;
         sanction.author = "LemBot#1207";
         sanction.userTag = event.getMessage().getAuthor().getAsTag();
@@ -44,12 +44,12 @@ public class SpamDetection extends ListenerAdapter {
 
             QueryHelper.deleteSpammerMessages(event, userId, messageContent);
 
-            for (Role role : userRoles) {
+            for (final Role role : userRoles) {
 
                 event.getGuild().removeRoleFromMember(userId, role).queue();
             }
 
-            Role mutedRole = Config.getInstance().getRole().getMuteRole();
+            final Role mutedRole = Config.getInstance().getRole().getMuteRole();
 
             assert mutedRole != null;
             event.getGuild().addRoleToMember(userId, mutedRole).queue();
@@ -62,16 +62,16 @@ public class SpamDetection extends ListenerAdapter {
 
         if (QueryHelper.areToManyMessages(userId, messageContent)) {
 
-            for (Role role : userRoles) {
+            for (final Role role : userRoles) {
 
                 event.getGuild().removeRoleFromMember(userId, role).queue();
             }
 
-            Role mutedRole = Config.getInstance().getRole().getMuteRole();
+            final Role mutedRole = Config.getInstance().getRole().getMuteRole();
 
             assert mutedRole != null;
             event.getGuild().addRoleToMember(userId, mutedRole).queue();
-            List<Message> messagesToDelete = event.getMessage().getChannel().getHistory().retrievePast(10).complete();
+            final List<Message> messagesToDelete = event.getMessage().getChannel().getHistory().retrievePast(10).complete();
 
             CommandsHelper.logUserMute(sanction);
 

@@ -18,7 +18,7 @@ public class BotDataCommand implements IBotCommand {
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args){
 
 
-        EmbedBuilder botInfoEmbed = new EmbedBuilder()
+        final EmbedBuilder botInfoEmbed = new EmbedBuilder()
                 .setTitle("Informationen zum LemBot")
                 .setColor(Color.decode(EmbedColorHelper.GOOD_QUESTION))
                 .setThumbnail("https://cdn.discordapp.com/attachments/919074434021736507/920552764784914472/logoqg1_1.gif")

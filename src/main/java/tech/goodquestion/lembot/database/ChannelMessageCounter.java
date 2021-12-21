@@ -14,15 +14,15 @@ public class ChannelMessageCounter extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
-        String userMessage = event.getMessage().getContentRaw();
-        String channelId = event.getChannel().getId();
-        String channelName = Objects.requireNonNull(event.getJDA().getTextChannelById(channelId)).getName();
-        String messageId = event.getMessageId();
+        final String userMessage = event.getMessage().getContentRaw();
+        final String channelId = event.getChannel().getId();
+        final String channelName = Objects.requireNonNull(event.getJDA().getTextChannelById(channelId)).getName();
+        final String messageId = event.getMessageId();
 
         if (userMessage.isEmpty()) return;
 
         Connection connection = DatabaseConnector.openConnection();
-        String insertChannel = "INSERT INTO channel (id_message, id_channel, name) VALUES (?,?,?);";
+        final String insertChannel = "INSERT INTO channel (id_message, id_channel, name) VALUES (?,?,?);";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertChannel)) {
 

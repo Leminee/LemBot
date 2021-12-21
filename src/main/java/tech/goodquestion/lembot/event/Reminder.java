@@ -19,8 +19,8 @@ public class Reminder extends ListenerAdapter {
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
 
-        List<MessageEmbed> disBoardEmbed = event.getMessage().getEmbeds();
-        User embedAuthor = event.getAuthor();
+        final List<MessageEmbed> disBoardEmbed = event.getMessage().getEmbeds();
+        final User embedAuthor = event.getAuthor();
 
         if (Helper.isNotSuccessfulBump(disBoardEmbed, embedAuthor)) return;
 
@@ -33,16 +33,16 @@ public class Reminder extends ListenerAdapter {
 
     public static void scheduleReminder(int delay, TimeUnit timeUnit) {
 
-        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-        String bumperRole = "<@&" + Config.getInstance().getRole().getBumpRoleId() + ">";
+        final String bumperRole = "<@&" + Config.getInstance().getRole().getBumpRoleId() + ">";
 
-        String[] pingContent = {
+        final String[] pingContent = {
                 "Jetzt kann wieder gebumpt werden " + bumperRole + " :bumper:",
                 "Es ist wieder Zeit zu bumpen " + bumperRole + " :bumper:",
                 "Bumpe den Server jetzt " + bumperRole + " :bumper:"};
 
-        Random random = new Random();
+       final Random random = new Random();
 
         final Runnable ping = () -> {
             int randomNumber = random.nextInt(pingContent.length);

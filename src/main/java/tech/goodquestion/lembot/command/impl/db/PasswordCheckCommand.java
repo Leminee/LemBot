@@ -21,15 +21,15 @@ public class PasswordCheckCommand implements IBotCommand {
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
 
-        EmbedBuilder embedBuilder = new EmbedBuilder();
+        final EmbedBuilder embedBuilder = new EmbedBuilder();
 
         if (args.length != 1) {
             return;
         }
 
         message.delete().queue();
-        String userPassword = args[0];
-        String embedTitle = "Passwort-Sicherheitsüberprüfung";
+        final String userPassword = args[0];
+        final String embedTitle = "Passwort-Sicherheitsüberprüfung";
 
         if (hasBeenLeaked(userPassword)) {
 
@@ -39,7 +39,6 @@ public class PasswordCheckCommand implements IBotCommand {
             Helper.createEmbed(embedBuilder, embedTitle, description, EmbedColorHelper.ERROR);
         } else {
 
-
             String description = ":green_circle: Nicht gefunden " +message.getAuthor().getAsMention();
 
             Helper.createEmbed(embedBuilder, embedTitle,description, EmbedColorHelper.SUCCESS);
@@ -48,17 +47,17 @@ public class PasswordCheckCommand implements IBotCommand {
         channel.sendMessage(embedBuilder.build()).queue();
     }
 
-    public boolean hasBeenLeaked(String userPassword) {
+    public boolean hasBeenLeaked(final String userPassword) {
 
         if (userPassword.length() < 8) {
             return true;
         }
 
-        Connection conn = DatabaseConnector.openConnection();
+        Connection connection = DatabaseConnector.openConnection();
 
-        String passwordCheck = "SELECT pass FROM leaked_password WHERE pass = ?";
+        final String passwordCheck = "SELECT pass FROM leaked_password WHERE pass = ?";
 
-        try (PreparedStatement preparedStatement = conn.prepareStatement(passwordCheck)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(passwordCheck)) {
 
             preparedStatement.setString(1, userPassword);
 

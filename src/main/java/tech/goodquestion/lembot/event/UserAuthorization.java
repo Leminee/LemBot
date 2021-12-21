@@ -18,9 +18,9 @@ public class UserAuthorization extends ListenerAdapter {
     @Override
     public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
 
-        long joinedUserId = event.getMember().getIdLong();
+        final long joinedUserId = event.getMember().getIdLong();
 
-        String userVerificationCheck = "SELECT activ FROM muted_user WHERE id_discord = ? ORDER BY muted_at DESC LIMIT 1;";
+        final String userVerificationCheck = "SELECT activ FROM muted_user WHERE id_discord = ? ORDER BY muted_at DESC LIMIT 1;";
 
         Connection connection = DatabaseConnector.openConnection();
 
@@ -30,11 +30,11 @@ public class UserAuthorization extends ListenerAdapter {
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            long userId = event.getMember().getIdLong();
+            final long userId = event.getMember().getIdLong();
 
             if (resultSet.next()) {
 
-                int number = resultSet.getInt(1);
+               final int number = resultSet.getInt(1);
 
                 if (number == 1) {
                     event.getGuild().addRoleToMember(userId, Config.getInstance().getRole().getMuteRole()).queue();

@@ -22,11 +22,11 @@ public class AddingRole extends ListenerAdapter {
     @Override
     public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
 
-        Member member = event.getMember();
-        Guild guild = member.getGuild();
-        Role codingRole = Config.getInstance().getRole().getCodingRole();
+        final Member member = event.getMember();
+        final Guild guild = member.getGuild();
+        final Role codingRole = Config.getInstance().getRole().getCodingRole();
 
-        int delay = 5;
+        final int delay = 5;
         assert codingRole != null;
         ScheduledFuture<?> task = guild.addRoleToMember(member, codingRole).queueAfter(delay, TimeUnit.MINUTES);
         tasks.put(member.getIdLong(), task);
@@ -36,22 +36,22 @@ public class AddingRole extends ListenerAdapter {
     @Override
     public void onGuildMemberRoleAdd(GuildMemberRoleAddEvent event) {
 
-        Member member = event.getMember();
-        Guild guild = member.getGuild();
-        Role codingRole = Config.getInstance().getRole().getCodingRole();
-        Role hackingRole = Config.getInstance().getRole().getHackingRole();
-        Role mutedRole = Config.getInstance().getRole().getMuteRole();
-        List<Role> memberAddedRoles = member.getRoles();
+        final Member member = event.getMember();
+        final Guild guild = member.getGuild();
+        final Role codingRole = Config.getInstance().getRole().getCodingRole();
+        final Role hackingRole = Config.getInstance().getRole().getHackingRole();
+        final Role mutedRole = Config.getInstance().getRole().getMuteRole();
+        final List<Role> memberAddedRoles = member.getRoles();
 
 
-        for (Role addedRole : memberAddedRoles) {
+        for (final Role addedRole : memberAddedRoles) {
 
             assert codingRole != null;
             assert hackingRole != null;
             assert mutedRole != null;
 
-            boolean hasAlreadyAccess = addedRole.getIdLong() == codingRole.getIdLong() || addedRole.getIdLong() == hackingRole.getIdLong();
-            boolean isMuted = addedRole.getIdLong() == mutedRole.getIdLong();
+            final boolean hasAlreadyAccess = addedRole.getIdLong() == codingRole.getIdLong() || addedRole.getIdLong() == hackingRole.getIdLong();
+            final boolean isMuted = addedRole.getIdLong() == mutedRole.getIdLong();
 
             if (hasAlreadyAccess || isMuted) {
 

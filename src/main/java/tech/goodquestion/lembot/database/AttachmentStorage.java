@@ -7,33 +7,33 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.entity.OccurredException;
+import tech.goodquestion.lembot.lib.Helper;
 
 import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 
 public class AttachmentStorage extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 
-        long userId = event.getMessage().getAuthor().getIdLong();
+        final long userId = event.getMessage().getAuthor().getIdLong();
 
         if (event.getMessage().getAttachments().size() == 0) return;
 
-        long attachmentId = event.getMessage().getAttachments().get(0).getIdLong();
-        String attachmentName = event.getMessage().getAttachments().get(0).getFileName();
-        String attachmentUrl = event.getMessage().getAttachments().get(0).getUrl();
-        String attachmentExtension = event.getMessage().getAttachments().get(0).getFileExtension();
-        double attachmentSize = event.getMessage().getAttachments().get(0).getSize();
-        double attachmentSizeInKiloByte = attachmentSize / 1024;
+        final long attachmentId = event.getMessage().getAttachments().get(0).getIdLong();
+        final String attachmentName = event.getMessage().getAttachments().get(0).getFileName();
+        final String attachmentUrl = event.getMessage().getAttachments().get(0).getUrl();
+        final String attachmentExtension = event.getMessage().getAttachments().get(0).getFileExtension();
+        final double attachmentSize = event.getMessage().getAttachments().get(0).getSize();
+        final double attachmentSizeInKiloByte = attachmentSize / 1024;
 
         saveLocally(event.getMessage().getAttachments().get(0), userId, event.getMember(), event.getMessage());
 
         Connection connection = DatabaseConnector.openConnection();
-        String insertMessageData = "INSERT INTO user_attachment (id_discord,id_attachment, name, url, extension,size) VALUES (?,?,?,?,?,?);";
+        final String insertMessageData = "INSERT INTO user_attachment (id_discord,id_attachment, name, url, extension,size) VALUES (?,?,?,?,?,?);";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertMessageData)) {
 
@@ -54,7 +54,7 @@ public class AttachmentStorage extends ListenerAdapter {
     }
 
     private void saveLocally(Message.Attachment attachment, long userId, Member member, Message message) {
-        attachment.downloadToFile("attachments/" + getFileSenderAsTag(member, userId, message) + "_" + getGermanDate() + "_" + attachment.getFileName())
+        attachment.downloadToFile("attachments/" + getFileSenderAsTag(member, userId, message) + "_" + Helper.getGermanDateTime() + "_" + attachment.getFileName())
                 .thenAccept(File::getName)
                 .exceptionally(t ->
                 {
@@ -63,18 +63,10 @@ public class AttachmentStorage extends ListenerAdapter {
                 });
     }
 
-    private String getGermanDate() {
-
-        return LocalDateTime.now().getDayOfMonth()
-                + "-" + LocalDateTime.now().getMonth().getValue()
-                + "-" + LocalDateTime.now().getYear()
-                + "-" + LocalDateTime.now().getHour()
-                + ":" + LocalDateTime.now().getMinute();
-    }
 
     private String getFileSenderAsTag(Member member, long userId, Message message) {
 
-        User user = CommandManager.getInstance().getJDA().retrieveUserById(userId, true).complete();
+       final User user = CommandManager.getInstance().getJDA().retrieveUserById(userId, true).complete();
 
         if (user != null) {
             member = message.getGuild().retrieveMember(user).complete();

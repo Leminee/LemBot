@@ -27,12 +27,12 @@ public class TopBumperCommand implements IBotCommand {
 
         try (Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(QueryHelper.TOP_BUMPER)) {
 
-            EmbedBuilder topBumperEmbed = new EmbedBuilder();
+            final EmbedBuilder topBumperEmbed = new EmbedBuilder();
 
-            String embedTitle = "User mit den meisten Bumps";
-            String embedDescription = "";
-            String embedThumbnail = "https://cdn.discordapp.com/attachments/819694809765380146/869248076446052402/Bildschirmfoto_2021-07-26_um_17.48.08.png";
-            String amountOf = "Bumps";
+            final String embedTitle = "User mit den meisten Bumps";
+            final String embedDescription = "";
+            final String embedThumbnail = "https://cdn.discordapp.com/attachments/819694809765380146/869248076446052402/Bildschirmfoto_2021-07-26_um_17.48.08.png";
+            final String amountOf = "Bumps";
 
             Helper.addTopToEmbed(resultSet, topBumperEmbed, embedTitle, embedDescription, embedThumbnail, EmbedColorHelper.BUMP, channel,amountOf);
 
