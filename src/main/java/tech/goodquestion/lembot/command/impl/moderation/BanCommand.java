@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import tech.goodquestion.lembot.database.CommandsHelper;
 import tech.goodquestion.lembot.entity.Sanction;
+import tech.goodquestion.lembot.entity.SanctionType;
 
 public class BanCommand extends UserBanishCommand {
 
@@ -12,7 +13,8 @@ public class BanCommand extends UserBanishCommand {
     @Override
     public void banishUser(Member toBanish, Sanction sanction, Message originMsg) {
 
-        sendSanctionReason(toBanish.getUser(), "gebannt", sanction.reason, toBanish.getAsMention());
+
+        sendSanctionReason(toBanish.getUser(), SanctionType.GEBANNT, sanction.reason, toBanish.getAsMention());
 
 
         toBanish.ban(0, sanction.reason).complete();

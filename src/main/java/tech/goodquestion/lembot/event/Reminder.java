@@ -38,9 +38,9 @@ public class Reminder extends ListenerAdapter {
         String bumperRole = "<@&" + Config.getInstance().getRole().getBumpRoleId() + ">";
 
         String[] pingContent = {
-                "Jetzt kann wieder gebumpt werden " + bumperRole + " :smile: ",
-                "Es ist wieder Zeit zu bumpen " + bumperRole + " :smile:",
-                "Bumpe den Server jetzt! " + bumperRole + " :smile:"};
+                "Jetzt kann wieder gebumpt werden " + bumperRole + " :bumper:",
+                "Es ist wieder Zeit zu bumpen " + bumperRole + " :bumper:",
+                "Bumpe den Server jetzt " + bumperRole + " :bumper:"};
 
         Random random = new Random();
 

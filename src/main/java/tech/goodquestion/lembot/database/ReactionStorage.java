@@ -14,14 +14,20 @@ public class ReactionStorage extends ListenerAdapter {
 
         long messageId = event.getMessageIdLong();
         long userId = Objects.requireNonNull(event.getMember()).getUser().getIdLong();
-        String addedReaction = event.getReaction().getReactionEmote().getEmoji();
-        int count = event.getReaction().getCount();
 
-        CommandsHelper.logUserReaction(messageId,userId,addedReaction,count);
+        try {
+            String addedReaction = event.getReaction().getReactionEmote().getEmoji();
+            CommandsHelper.logUserReaction(messageId,userId,addedReaction);
 
+        }catch (IllegalStateException illegalStateException) {
+
+            CommandsHelper.logUserReaction(messageId,userId,null);
+        }
     }
 
 
-    public void onMessageReactionRemove(@Nonnull MessageReactionRemoveEvent event) {}
+    public void onMessageReactionRemove(@Nonnull MessageReactionRemoveEvent event) {
+
+    }
 
 }

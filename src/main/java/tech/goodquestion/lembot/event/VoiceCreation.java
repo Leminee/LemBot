@@ -19,8 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 public class VoiceCreation extends ListenerAdapter {
 
-    private final ScheduledExecutorService scheduler =
-            Executors.newScheduledThreadPool(1);
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     public static final String[] LEFT = {
             "admiring",
@@ -320,9 +319,6 @@ public class VoiceCreation extends ListenerAdapter {
 
     @Override
     public void onGuildVoiceMove(@NotNull GuildVoiceMoveEvent event) {
-
-
-        System.out.println(event.getMember().getUser().getIdLong());
 
         boolean areThereToManyCreatedVoice = event.getGuild().getVoiceChannels().size() >= 10;
 

@@ -14,11 +14,11 @@ public class WelcomingMemberJoin extends ListenerAdapter {
         if (event.getUser().isBot()) return;
 
         String welcomeMessage = """
-Hallo [member], Willkommen auf **GoodQuestion (GQ)**!
+                Hallo [member], Willkommen auf **GoodQuestion (GQ)**!
 
-Du kannst Dir im Kanal [channel] Rollen zuweisen.
+                Du kannst Dir im Kanal [channel] Rollen zuweisen.
 
-""";
+                """;
         String avatarUrl = event.getUser().getEffectiveAvatarUrl();
         String newMember = event.getMember().getAsMention();
 

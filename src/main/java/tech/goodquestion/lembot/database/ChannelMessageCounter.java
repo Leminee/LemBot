@@ -22,7 +22,7 @@ public class ChannelMessageCounter extends ListenerAdapter {
         if (userMessage.isEmpty()) return;
 
         Connection connection = DatabaseConnector.openConnection();
-        String insertChannel = "INSERT INTO channel (id_message, id_channel,channel_name) VALUES (?,?,?);";
+        String insertChannel = "INSERT INTO channel (id_message, id_channel, name) VALUES (?,?,?);";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertChannel)) {
 

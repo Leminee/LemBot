@@ -26,6 +26,6 @@ public class InviteLinkDeletion extends ListenerAdapter {
         }
 
         event.getMessage().delete().queue();
-        event.getChannel().sendMessage("Hier dürfen keine Invitelinks gepostet werden " + event.getAuthor().getAsMention() + "!").queue();
+        event.getChannel().sendMessage(":x: Hier dürfen keine Invitelinks gepostet werden " + event.getAuthor().getAsMention() + "!").queue();
     }
 }

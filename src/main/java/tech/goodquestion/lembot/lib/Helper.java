@@ -91,7 +91,7 @@ public final class Helper {
 
     }
 
-    public static void sendAmount(UserData userData, String embedColor, String amountOf, TextChannel channel) {
+    public static void sendAmount(UserData userData, String embedColor, String amountOf, TextChannel channel, String embedTitle) {
 
         String authorMention = "<@" + userData.userId + ">";
 
@@ -109,7 +109,7 @@ public final class Helper {
 
         EmbedBuilder numberInfo = new EmbedBuilder();
         numberInfo.setColor(Color.decode(embedColor));
-        numberInfo.setTitle("Information");
+        numberInfo.setTitle(embedTitle);
         numberInfo.setDescription("Anzahl deiner " + amountOf + " **" + userData.amountOf + "**" + " " + authorMention + "\n" + "Du bist hinter dem User " + mentionedUser + " **(" + userData.nextHigherUserAmountOf + " " + amountOf + ")**");
 
         channel.sendMessage(numberInfo.build()).queue();
@@ -127,12 +127,18 @@ public final class Helper {
 
         if (botCommand == null) return;
 
-        final Runnable commandRunner = () -> botCommand.dispatch(null, Config.getInstance().getChannel().getBumpChannel(), null, args);
+        final Runnable commandRunner = () -> {
+            try {
+                botCommand.dispatch(null, Config.getInstance().getChannel().getBumpChannel(), null, args);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        };
 
         scheduler.scheduleAtFixedRate(commandRunner, delay, period, timeUnit);
     }
 
-    public static void createEmbed(EmbedBuilder embedBuilder, String title, String description, String embedColor,  String thumbnail) {
+    public static void createEmbed(EmbedBuilder embedBuilder, String title, String description, String embedColor, String thumbnail) {
         embedBuilder.setTitle(title);
         embedBuilder.setDescription(description);
         embedBuilder.setColor(Color.decode(embedColor));
@@ -146,11 +152,9 @@ public final class Helper {
     }
 
 
-    //TODO
 
     public static void addTopToEmbed(ResultSet resultSet, EmbedBuilder embedBuilder, String embedTitle, String embedDescription, String embedThumbnail, String embedColor, TextChannel channel, String amountOf) {
-
-        createEmbed(embedBuilder, embedTitle, embedDescription, embedColor,embedThumbnail);
+        createEmbed(embedBuilder, embedTitle, embedDescription, embedColor, embedThumbnail);
         addTopToEmbed(resultSet, embedBuilder, channel, amountOf);
     }
 
@@ -158,7 +162,7 @@ public final class Helper {
         int top = 1;
         try {
             while (resultSet.next()) {
-                embedBuilder.addField("TOP " + top, resultSet.getString(1) + " **(" +resultSet.getString(2)+ " " +amountOf +")**", false);
+                embedBuilder.addField("TOP " + top, resultSet.getString(1) + " **(" + resultSet.getString(2) + " " + amountOf + ")**", false);
                 top++;
             }
 
@@ -171,16 +175,10 @@ public final class Helper {
         }
     }
 
-    public static String getCurrentDateTime(){
+    public static String getCurrentDateTime() {
         java.util.Date date = new Date();
 
         return date.toString().substring(11, 16);
-    }
-
-    //TODO
-    public static void addTopMonthlyDataToEmbed(TextChannel channel, ResultSet resultSet, EmbedBuilder topBumperEmbed, String embedTitle, String embedDescription,String embedColor, String amountOf) {
-        createEmbed(topBumperEmbed, embedTitle, embedDescription, embedColor);
-        addTopToEmbed(resultSet, topBumperEmbed, channel, amountOf);
     }
 
 

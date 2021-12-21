@@ -24,7 +24,7 @@ public class LinkDeletion extends ListenerAdapter {
         }
 
         event.getMessage().delete().queue();
-        event.getChannel().sendMessage("Nachricht wurde gelöscht, da sie einen Link enthält, der nicht verifiziert werden konnte " + event.getAuthor().getAsMention() + "!").queue();
+        event.getChannel().sendMessage(" :x: Nachricht wurde gelöscht, da sie einen Link enthält, der nicht verifiziert werden konnte " + event.getAuthor().getAsMention() + "!").queue();
     }
 
 }

@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import tech.goodquestion.lembot.lib.EmbedColorHelper;
 import tech.goodquestion.lembot.lib.Helper;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -81,7 +82,11 @@ public class CommandManager extends ListenerAdapter {
             return;
         }
 
-        executor.dispatch(message, event.getChannel(), event.getMember(), args);
+        try {
+            executor.dispatch(message, event.getChannel(), event.getMember(), args);
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
     }
 
     public Map<String, IBotCommand> getCommands() {

@@ -26,14 +26,14 @@ public class TopMonthlyBumperCommand implements IBotCommand {
 
         try (Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(QueryHelper.TOP_MONTHLY_BUMPER)) {
 
-            EmbedBuilder topBumperEmbed = new EmbedBuilder();
+            EmbedBuilder embedBuilder = new EmbedBuilder();
 
             String embedTitle = "Top Bumper der letzten 30 Tage";
             String embedDescription = "";
             String embedThumbnail = "https://cdn.discordapp.com/attachments/819694809765380146/869248076446052402/Bildschirmfoto_2021-07-26_um_17.48.08.png";
+            String amountOf = "Bumps";
 
-
-            Helper.addTopMonthlyDataToEmbed(channel, resultSet, topBumperEmbed, embedTitle, embedThumbnail, EmbedColorHelper.BUMP, "Bumps");
+            Helper.addTopToEmbed(resultSet, embedBuilder, embedTitle, embedDescription, embedThumbnail, EmbedColorHelper.BUMP, channel,amountOf);
 
 
         } catch (SQLException sqlException) {

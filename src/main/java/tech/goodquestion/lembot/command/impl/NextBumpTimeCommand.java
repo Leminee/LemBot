@@ -25,13 +25,13 @@ public class NextBumpTimeCommand implements IBotCommand {
 
             String title = "Uhrzeit nächsten Bumps";
             String description =  "Nächster Bump um **" + nextBumpTime
-                    + "** " + "Uhr " + "(in **" + minutesBeforeNextBump + "** Minuten) " + message.getAuthor().getAsMention();
+                    + "** " + "Uhr " + "(in **" + minutesBeforeNextBump + "** Minuten) ";
             EmbedBuilder embedBuilder = new EmbedBuilder();
 
             Helper.createEmbed(embedBuilder,title,description, EmbedColorHelper.BUMP);
             channel.sendMessage(embedBuilder.build()).queue();
         } catch (StringIndexOutOfBoundsException stringIndexOutOfBoundsException) {
-            channel.sendMessage("Nächter Bump unbekannt! " + sender.getAsMention()).queue();
+            //channel.sendMessage("Nächter Bump unbekannt! ").queue();
             System.out.println(stringIndexOutOfBoundsException.getMessage());
         }
     }

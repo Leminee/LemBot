@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.entities.Message;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.database.CommandsHelper;
 import tech.goodquestion.lembot.entity.Sanction;
+import tech.goodquestion.lembot.entity.SanctionType;
 
 public class WarnCommand extends UserBanishCommand {
 
@@ -14,7 +15,7 @@ public class WarnCommand extends UserBanishCommand {
 
         toBanish.getGuild().addRoleToMember(sanction.userId, Config.getInstance().getRole().getWarnRole()).queue();
 
-        sendSanctionReason(toBanish.getUser(), "verwarnt", sanction.reason, toBanish.getAsMention());
+        sendSanctionReason(toBanish.getUser(), SanctionType.VERWARNT, sanction.reason, toBanish.getAsMention());
 
         EmbedBuilder confirmation = new EmbedBuilder();
         confirmation.setColor(0x00ff60);

@@ -12,23 +12,25 @@ import java.util.Objects;
 public final class QueryHelper {
 
 
-    public static final String TOP_CHANNELS = "SELECT channel_name, COUNT(id_channel) FROM `channel` GROUP BY id_channel ORDER BY COUNT(id_channel) DESC LIMIT 5;";
+    public static final String TOP_CHANNELS = "SELECT name, COUNT(id_channel) FROM `channel` GROUP BY id_channel ORDER BY COUNT(id_channel) DESC LIMIT 5;";
     public static final String NEXT_BUMP_TIME = "SELECT TIME(TIMESTAMPADD(HOUR,2, bumped_at)) FROM user_bump_time ORDER BY bumped_at DESC LIMIT 1";
     public static final String NEXT_BUMP = "SELECT TIMESTAMPDIFF(MINUTE,CURRENT_TIMESTAMP, TIMESTAMPADD(HOUR,2, bumped_at)) FROM user_bump_time ORDER BY bumped_at DESC LIMIT 1";
     public static final String ACTIVE_USER_RECORD = "SELECT MAX(user_online.amount) FROM user_online;";
     public static final String TOP_MONTHLY_BUMPER = "SELECT username, COUNT(user_bump_time.id_discord) FROM `user_bump_time` INNER JOIN user_bump ON user_bump_time.id_discord = user_bump.id_discord  WHERE bumped_at > (SELECT DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 MONTH)) GROUP BY user_bump_time.id_discord ORDER BY COUNT(user_bump_time.id_discord) DESC LIMIT 3";
-    public static final String TOP_MONTHLY_FLOODER = "SELECT username, COUNT(user_message_content.id_discord) FROM `user_message_content` INNER JOIN user_message ON user_message_content.id_discord = user_message.id_discord  WHERE posted_on > (SELECT DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 MONTH)) GROUP BY user_message.id_discord ORDER BY COUNT(user_message_content.id_discord) DESC LIMIT 3;";
+    public static final String TOP_MONTHLY_FLOODER = "SELECT username, COUNT(user_message_content.id_discord) FROM `user_message_content` INNER JOIN user_message ON user_message_content.id_discord = user_message.id_discord  WHERE posted_at > (SELECT DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 MONTH)) GROUP BY user_message.id_discord ORDER BY COUNT(user_message_content.id_discord) DESC LIMIT 3;";
     public static final String TOP_BUMPER = "SELECT username, number_bumps FROM user_bump ORDER BY number_bumps DESC, username LIMIT 3;";
     public static final String TOP_FLOODER = "SELECT username, number_message FROM user_message ORDER BY number_message DESC LIMIT 3;";
     public static final String AMOUNT_MESSAGES = "SELECT number_message FROM user_message WHERE id_discord = ?";
     public static final String NEXT_HIGHER_USER_AMOUNT_MESSAGES = "SELECT id_discord, number_message FROM user_message WHERE number_message > ? ORDER BY number_message, username LIMIT 1";
-    public static final String SPAM_VERIFICATION = "SELECT COUNT(DISTINCT id_channel) FROM `channel` INNER JOIN user_message_content ON channel.id_message = user_message_content.id_message WHERE user_message_content.id_discord = ? AND content = ? AND posted_on >= NOW() - INTERVAL 1 MINUTE";
-    public static final String SPAM_DATA = "SELECT id_channel, channel.id_message FROM `channel` INNER JOIN user_message_content ON channel.id_message = user_message_content.id_message WHERE user_message_content.id_discord = ? AND content = ? AND posted_on >= NOW() - INTERVAL 1 MINUTE";
-    public static final String AMOUNT_SPAM_MESSAGES = "SELECT COUNT(id_discord) FROM user_message_content WHERE id_discord = ? AND content = ? AND posted_on >= NOW() - INTERVAL 30 SECOND";
-    private static final String HOPPING_CHECK = "SELECT COUNT(id_discord) FROM voice_join WHERE id_discord = ? AND joined_at >= NOW() - INTERVAL 30 SECOND";
-    private static String MESSAGE_COUNT = "SELECT COUNT(user_message_content.id_discord) + 40000 FROM user_message_content";
-    private static String ADMINS_MENTIONED = "SELECT mention FROM staff WHERE role_name = 'Administrator' AND mention != '<@739143338975952959>' ORDER BY staff_since;";
-    private static String MODERATORS_MENTIONED = "SELECT mention FROM staff WHERE role_name = 'Moderator' ORDER BY staff_since;";
+    public static final String SPAM_VERIFICATION = "SELECT COUNT(DISTINCT id_channel) FROM `channel` INNER JOIN user_message_content ON channel.id_message = user_message_content.id_message WHERE user_message_content.id_discord = ? AND content = ? AND posted_at >= NOW() - INTERVAL 1 MINUTE";
+    public static final String SPAM_DATA = "SELECT id_channel, channel.id_message FROM `channel` INNER JOIN user_message_content ON channel.id_message = user_message_content.id_message WHERE user_message_content.id_discord = ? AND content = ? AND posted_at >= NOW() - INTERVAL 1 MINUTE";
+    public static final String AMOUNT_SPAM_MESSAGES = "SELECT COUNT(id_discord) FROM user_message_content WHERE id_discord = ? AND content = ? AND posted_at >= NOW() - INTERVAL 30 SECOND";
+    public static final String HOPPING_CHECK = "SELECT COUNT(id_discord) FROM voice_join WHERE id_discord = ? AND joined_at >= NOW() - INTERVAL 30 SECOND";
+    public static String MESSAGE_COUNT = "SELECT COUNT(user_message_content.id_discord) + 40000 FROM user_message_content";
+    public static String ADMINS_MENTIONED = "SELECT mention FROM staff WHERE role_name = 'Administrator' AND mention != '<@739143338975952959>' ORDER BY staff_since;";
+    public static String MODERATORS_MENTIONED = "SELECT mention FROM staff WHERE role_name = 'Moderator' ORDER BY staff_since;";
+    public static final String AMOUNT_BUMPS = "SELECT number_bumps FROM user_bump WHERE id_discord = ?";
+    public static final String NEXT_HIGHER_USER_AMOUNT_BUMPS = "SELECT id_discord, number_bumps FROM user_bump WHERE number_bumps > ? ORDER BY number_bumps, username LIMIT 1";
     public static final List<String> adminsAsMention = new ArrayList<>();
     public static final List<String> moderatorsAsMention = new ArrayList<>();
 
@@ -37,7 +39,6 @@ public final class QueryHelper {
     }
 
 
-    //string query
     private static EmbedBuilder getTop(String[] fieldNames, String[] fieldIcons) throws SQLException {
 
         try (Connection connection = DatabaseConnector.openConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(QueryHelper.TOP_CHANNELS)) {

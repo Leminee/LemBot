@@ -4,13 +4,13 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
-import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.command.CommandManager;
+import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.lib.EmbedColorHelper;
 
 import java.awt.*;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 import static tech.goodquestion.lembot.lib.Helper.PREFIX;
 
@@ -34,19 +34,14 @@ public class HelpList implements IBotCommand {
         if (queriedHelpList.equals("-")) {
             EmbedBuilder e = new EmbedBuilder().setColor(Color.decode(EmbedColorHelper.HELP))
                     .setTitle("Verfügbare Help-Listen")
-                    .setDescription(String.join("\n", CommandManager.getInstance().getHelpLists()));
+                    .setDescription(PREFIX+"help " + String.join("\n" +PREFIX+"help ",CommandManager.getInstance().getHelpLists()));
             message.getChannel().sendMessage(e.build()).queue();
             return;
         }
 
-        if (!CommandManager.getInstance().getHelpLists().contains(queriedHelpList)) {
-            channel.sendMessage("Dieser Befehl ist nicht valid! " + sender.getAsMention()).queue();
-            return;
-        }
-
-        StringBuilder descriptionBuilder = new StringBuilder("Hallo, ich heiße **LemBot** und bin ein Bot für GoodQuestion :)");
-        descriptionBuilder.append("\n\n----------------- **BEFEHLSLISTE** -----------------\n");
-        descriptionBuilder.append("\nPrefix: **" + PREFIX + "**\n\n");
+        StringBuilder descriptionBuilder = new StringBuilder("Hallo, ich heiße **LemBot** und bin ein Bot für **GoodQuestion** :)");
+        descriptionBuilder.append("\n----------------- **BEFEHLSLISTE** -----------------\n");
+        descriptionBuilder.append("\n");
 
         List<IBotCommand> commandsOnHelpList = new ArrayList<>();
 

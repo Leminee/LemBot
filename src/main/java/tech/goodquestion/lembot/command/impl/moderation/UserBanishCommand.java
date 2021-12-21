@@ -11,6 +11,7 @@ import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.entity.Sanction;
+import tech.goodquestion.lembot.entity.SanctionType;
 import tech.goodquestion.lembot.lib.EmbedColorHelper;
 import tech.goodquestion.lembot.lib.Helper;
 
@@ -125,10 +126,11 @@ public abstract class UserBanishCommand implements IBotCommand {
         return "staff";
     }
 
-    public static void sendSanctionReason(User sanctionedUser, String typeSanction, String reason, String mentionedUser) {
-        String content = "Du wurdest aus dem folgenden Grund auf GoodQuestion " + "**" + typeSanction + "**" + ": " + reason;
+    public static void sendSanctionReason(User sanctionedUser, SanctionType typeSanction, String reason, String mentionedUser) {
+        EmbedBuilder embedBuilder = new EmbedBuilder();
+        Helper.createEmbed(embedBuilder,String.valueOf(typeSanction),"Du wurdest aus dem folgenden Grund auf **GoodQuestion** " + typeSanction +"\n Angegebener Grund: " + reason,EmbedColorHelper.NONE);
         sanctionedUser.openPrivateChannel()
-                .flatMap(channel -> channel.sendMessage(content))
+                .flatMap(channel -> channel.sendMessage(embedBuilder.build()))
                 .complete();
     }
 }

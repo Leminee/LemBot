@@ -1,3 +1,30 @@
+version: '3.9'
+
 services:
-    web:
-      image:mysql:latest
+  lembot:
+    image: lem/lembot
+    restart: always
+    tty: true
+    config_file: lembot.config.yml
+    depends_on:
+      - db
+      - redis
+    networks:
+      - lembot
+
+  db:
+    image: mariadb
+    restart: always
+    volumes:
+      - ./data/mariadb:/var/lib/mysql
+    networks:
+      - lembot
+
+  redis:
+    image: redis:alpine
+    restart: always
+    networks:
+      - lembot
+
+networks:
+  lembot:

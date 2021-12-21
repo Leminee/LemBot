@@ -10,6 +10,7 @@ import tech.goodquestion.lembot.database.QueryHelper;
 import tech.goodquestion.lembot.lib.EmbedColorHelper;
 
 import java.awt.*;
+import java.util.List;
 import java.util.Objects;
 
 public class ServerData implements IBotCommand {
@@ -19,6 +20,12 @@ public class ServerData implements IBotCommand {
 
         EmbedBuilder botInfoEmbed = new EmbedBuilder();
 
+        List<Member> memberList = message.getGuild().getMembers();
+        long amountBots = memberList.stream()
+                .filter(member -> member.getUser().isBot())
+                .count();
+
+
         botInfoEmbed.setTitle("Informationen zum Server")
                 .setColor(Color.decode(EmbedColorHelper.GOOD_QUESTION))
                 .setDescription("Informationen zu **GoodQuestion**")
@@ -27,7 +34,7 @@ public class ServerData implements IBotCommand {
                 .addField("Erstellungsdatum", getTimeCreated(), true)
                 .addField("Nachrichten", String.valueOf(QueryHelper.getMessagesCount()), true)
                 .addField("Boosts", String.valueOf(Config.getInstance().getGuild().getBoostCount()), true)
-                .addField("Bots", "2", true)
+                .addField("Bots", String.valueOf(amountBots), true)
                 .addField("Einladungslink", "https://discord.gg/4YwafTCKGh", true)
                 .addField("Rollen", String.valueOf(Config.getInstance().getGuild().getRoles().size()), true)
                 .addField("Textkanäle", String.valueOf(Config.getInstance().getGuild().getTextChannels().size()), true)

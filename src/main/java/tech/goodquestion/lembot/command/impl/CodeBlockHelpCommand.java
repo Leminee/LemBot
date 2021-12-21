@@ -14,7 +14,7 @@ public class CodeBlockHelpCommand implements IBotCommand {
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
 
         EmbedBuilder embedBuilder = new EmbedBuilder();
-        String highlightedCodeBlock = "\n\\```<Programmiersprache>\n //Code\n```";
+        String highlightedCodeBlock = "\n\\```<Programmiersprache>\n // Code\n```";
         String title = "Farbige Codeblöcke";
         String description = String.format("So sendest du farbige Codeblöcke:\n%s", highlightedCodeBlock);
 

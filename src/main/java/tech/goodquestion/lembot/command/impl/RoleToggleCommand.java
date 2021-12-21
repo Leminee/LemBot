@@ -14,9 +14,9 @@ import java.util.Objects;
 
 public class RoleToggleCommand implements IBotCommand {
 
-    public static void register(CommandManager cmds, String roleAbbr, long roleId) {
-        cmds.registerCommand(new RoleToggleCommand(roleAbbr, roleId, Mode.ADD));
-        cmds.registerCommand(new RoleToggleCommand(roleAbbr, roleId, Mode.REMOVE));
+    public static void register(CommandManager commandManager, String roleAbbr, long roleId) {
+        commandManager.registerCommand(new RoleToggleCommand(roleAbbr, roleId, Mode.ADD));
+        commandManager.registerCommand(new RoleToggleCommand(roleAbbr, roleId, Mode.REMOVE));
     }
 
     private final String role_abbr;

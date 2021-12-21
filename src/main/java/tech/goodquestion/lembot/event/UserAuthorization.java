@@ -20,7 +20,7 @@ public class UserAuthorization extends ListenerAdapter {
 
         long joinedUserId = event.getMember().getIdLong();
 
-        String userVerificationCheck = "SELECT activ FROM muted_user WHERE id_discord = ? ORDER BY muted_on DESC LIMIT 1;";
+        String userVerificationCheck = "SELECT activ FROM muted_user WHERE id_discord = ? ORDER BY muted_at DESC LIMIT 1;";
 
         Connection connection = DatabaseConnector.openConnection();
 
@@ -42,6 +42,7 @@ public class UserAuthorization extends ListenerAdapter {
             }
 
         } catch (SQLException sqlException) {
+
             System.out.println(sqlException.getMessage());
 
             CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, this.getClass().getName()));

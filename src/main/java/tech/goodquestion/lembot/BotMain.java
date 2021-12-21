@@ -35,39 +35,35 @@ public class BotMain {
                     .build();
 
         } catch (LoginException loginException) {
-            loginException.printStackTrace();
+            System.out.println(loginException.getMessage());
         }
 
         jda.getPresence().setStatus(OnlineStatus.ONLINE);
         jda.getPresence().setActivity(Activity.playing("?help"));
 
-        CommandManager command = new CommandManager(jda);
+        CommandManager commandManager = new CommandManager(jda);
 
-        command.registerCommand(new HelpList());
-        command.registerCommand(new ClearCommand());
-        command.registerCommand(new PingCommand());
-        command.registerCommand(new CodeBlockHelpCommand());
-        command.registerCommand(new MetaQuestionCommand());
-        command.registerCommand(new BotDataCommand());
-        command.registerCommand(new WarnCommand());
-        command.registerCommand(new MuteCommand());
-        command.registerCommand(new BanCommand());
-        command.registerCommand(new UnmuteCommand());
-        command.registerCommand(new NextBumpTimeCommand());
-        command.registerCommand(new PasswordCheckCommand());
-        command.registerCommand(new ServerRoleListCommand());
-
-        command.registerCommand(new ActiveUserRecordCommand());
-        command.registerCommand(new BumpCountCommand());
-        command.registerCommand(new JoiningDateCommand());
-        command.registerCommand(new MessageCountCommand());
-        command.registerCommand(new TopActiveChannelsCommand());
-        command.registerCommand(new TopBumperCommand());
-        command.registerCommand(new TopFlooderCommand());
-        command.registerCommand(new TopMonthlyBumperCommand());
-        command.registerCommand(new TopMonthlyFlooderCommand());
-        command.registerCommand(new ServerData());
-
+        commandManager.registerCommand(new HelpList());
+        commandManager.registerCommand(new ClearCommand());
+        commandManager.registerCommand(new CodeBlockHelpCommand());
+        commandManager.registerCommand(new BotDataCommand());
+        commandManager.registerCommand(new WarnCommand());
+        commandManager.registerCommand(new MuteCommand());
+        commandManager.registerCommand(new BanCommand());
+        commandManager.registerCommand(new UnmuteCommand());
+        commandManager.registerCommand(new NextBumpTimeCommand());
+        commandManager.registerCommand(new PasswordCheckCommand());
+        commandManager.registerCommand(new ServerRoleListCommand());
+        commandManager.registerCommand(new ActiveUserRecordCommand());
+        commandManager.registerCommand(new BumpCountCommand());
+        commandManager.registerCommand(new JoiningDateCommand());
+        commandManager.registerCommand(new MessageCountCommand());
+        commandManager.registerCommand(new TopActiveChannelsCommand());
+        commandManager.registerCommand(new TopBumperCommand());
+        commandManager.registerCommand(new TopFlooderCommand());
+        commandManager.registerCommand(new TopMonthlyBumperCommand());
+        commandManager.registerCommand(new TopMonthlyFlooderCommand());
+        commandManager.registerCommand(new ServerData());
 
         jda.addEventListener(new Reminder());
         jda.addEventListener(new WelcomingMemberJoin());
@@ -97,9 +93,10 @@ public class BotMain {
         jda.addEventListener(new RoleEvents());
         jda.addEventListener(new BoostStorage());
         jda.addEventListener(new ReactionStorage());
+        jda.addEventListener(new InviteTracking());
 
         setupReactionRoles();
-        setupRoleCommands(command);
+        setupRoleCommands(commandManager);
     }
 
     private static void setupRoleCommands(CommandManager commands) {
