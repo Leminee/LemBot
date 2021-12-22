@@ -5,6 +5,9 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import tech.goodquestion.lembot.config.Config;
+import tech.goodquestion.lembot.lib.Helper;
+
+import java.util.Objects;
 
 public class InviteLinkDeletion extends ListenerAdapter {
 
@@ -27,5 +30,8 @@ public class InviteLinkDeletion extends ListenerAdapter {
 
         event.getMessage().delete().queue();
         event.getChannel().sendMessage(":x: Hier dürfen keine Invitelinks gepostet werden " + event.getAuthor().getAsMention() + "!").queue();
+        Objects.requireNonNull(event.getGuild().getTextChannelById(Config.getInstance().getChannel().getLogChannel().getIdLong()))
+                .sendMessage("Einladungslik gelöscht " + userMessage + " (gespotet von " + event.getMember().getAsMention() +"um " + Helper.getGermanDateTime() +")")
+                .queue();
     }
 }

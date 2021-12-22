@@ -8,7 +8,6 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import tech.goodquestion.lembot.config.Config;
 
-import java.util.Objects;
 import java.util.Random;
 
 public class VoiceCreation extends ListenerAdapter {
@@ -254,26 +253,6 @@ public class VoiceCreation extends ListenerAdapter {
 
     @Override
     public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
-
-
-        for (int i = 0; i < event.getMember().getRoles().size(); i++) {
-
-            if (event.getMember().getRoles().get(i).getIdLong() == Config.getInstance().getRole().getWarnRole().getIdLong()) {
-
-
-                event.getGuild().removeRoleFromMember(event.getMember(), Objects.requireNonNull(event.getGuild().getRoleById(event.getMember().getRoles().get(i).getIdLong()))).queue();
-
-                event.getGuild().addRoleToMember(event.getMember(), Objects.requireNonNull(event.getGuild().getRoleById(Config.getInstance().getRole().getMuteRole().getIdLong()))).queue();
-                Objects.requireNonNull(event.getGuild().getTextChannelById(Config.getInstance().getChannel().getBumpChannel().getIdLong())).sendMessage("muted").queue();
-                return;
-            } else {
-                event.getGuild().addRoleToMember(event.getMember(), Objects.requireNonNull(event.getGuild().getRoleById(Config.getInstance().getRole().getWarnRole().getIdLong()))).queue();
-                Objects.requireNonNull(event.getGuild().getTextChannelById(Config.getInstance().getChannel().getBumpChannel().getIdLong())).sendMessage("warned").queue();
-            }
-
-
-        }
-
 
         boolean areThereToManyCreatedVoice = event.getGuild().getVoiceChannels().size() >= 10;
 
