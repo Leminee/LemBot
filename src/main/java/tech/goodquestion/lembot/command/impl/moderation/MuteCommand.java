@@ -22,7 +22,7 @@ public class MuteCommand extends UserBanishCommand {
 
         final List<Role> userRoles = Objects.requireNonNull(toBanish).getRoles();
 
-        for (final Role role : userRoles) {
+        for (Role role : userRoles) {
 
             toBanish.getGuild().removeRoleFromMember(sanction.userId, role).queue();
         }
@@ -32,7 +32,6 @@ public class MuteCommand extends UserBanishCommand {
         if (Objects.requireNonNull(toBanish.getVoiceState()).inVoiceChannel()) {
             toBanish.deafen(true).queue();
         }
-
 
 
         final EmbedBuilder confirmation = new EmbedBuilder();

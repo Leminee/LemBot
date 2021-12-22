@@ -120,7 +120,7 @@ public final class QueryHelper {
 
             if (resultSet.next()) {
 
-                int currentActiveUseRecord = resultSet.getInt(1);
+                final int currentActiveUseRecord = resultSet.getInt(1);
 
                 if (approximatePresentMember > currentActiveUseRecord) {
                     return true;
@@ -146,7 +146,7 @@ public final class QueryHelper {
 
             if (resultSet.next()) {
 
-                int amountResult = resultSet.getInt(1);
+                final int amountResult = resultSet.getInt(1);
 
                 if (amountResult >= 3) {
                     return true;
@@ -200,7 +200,7 @@ public final class QueryHelper {
 
             if (resultSet.next()) {
 
-                int amountResult = resultSet.getInt(1);
+               final int amountResult = resultSet.getInt(1);
 
                 if (amountResult >= 10) {
                     return true;
@@ -226,7 +226,7 @@ public final class QueryHelper {
 
             if (resultSet.next()) {
 
-                int amountHops = resultSet.getInt(1);
+                final int amountHops = resultSet.getInt(1);
 
                 if (amountHops >= 3) {
                     return true;

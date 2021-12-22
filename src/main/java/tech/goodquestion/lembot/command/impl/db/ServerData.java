@@ -21,7 +21,7 @@ public class ServerData implements IBotCommand {
         final EmbedBuilder botInfoEmbed = new EmbedBuilder();
 
         final List<Member> memberList = message.getGuild().getMembers();
-        long amountBots = memberList.stream()
+        final long amountBots = memberList.stream()
                 .filter(member -> member.getUser().isBot())
                 .count();
 

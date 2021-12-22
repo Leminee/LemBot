@@ -53,7 +53,7 @@ public class AttachmentStorage extends ListenerAdapter {
         }
     }
 
-    private void saveLocally(Message.Attachment attachment, long userId, Member member, Message message) {
+    private void saveLocally(final Message.Attachment attachment, final long userId, final Member member, final Message message) {
         attachment.downloadToFile("attachments/" + getFileSenderAsTag(member, userId, message) + "_" + Helper.getGermanDateTime() + "_" + attachment.getFileName())
                 .thenAccept(File::getName)
                 .exceptionally(t ->
@@ -64,7 +64,7 @@ public class AttachmentStorage extends ListenerAdapter {
     }
 
 
-    private String getFileSenderAsTag(Member member, long userId, Message message) {
+    private String getFileSenderAsTag(Member member, final long userId, final Message message) {
 
        final User user = CommandManager.getInstance().getJDA().retrieveUserById(userId, true).complete();
 

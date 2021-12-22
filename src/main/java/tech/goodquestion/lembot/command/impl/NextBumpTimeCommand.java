@@ -16,7 +16,7 @@ public class NextBumpTimeCommand implements IBotCommand {
 
         try {
 
-            String nextBumpTime = String.valueOf(QueryHelper.getNextBumpTime()).substring(0,5);
+            final String nextBumpTime = String.valueOf(QueryHelper.getNextBumpTime()).substring(0,5);
             int minutesBeforeNextBump = QueryHelper.getMinutesToNextBump() + 1;
 
             if (minutesBeforeNextBump < 0) {
@@ -24,9 +24,9 @@ public class NextBumpTimeCommand implements IBotCommand {
             }
 
             final String title = "Uhrzeit nächsten Bumps";
-            String description =  "Nächster Bump um **" + nextBumpTime
+            final String description =  "Nächster Bump um **" + nextBumpTime
                     + "** " + "Uhr " + "(in **" + minutesBeforeNextBump + "** Minuten) ";
-            EmbedBuilder embedBuilder = new EmbedBuilder();
+            final EmbedBuilder embedBuilder = new EmbedBuilder();
 
             Helper.createEmbed(embedBuilder,title,description, EmbedColorHelper.BUMP);
             channel.sendMessage(embedBuilder.build()).queue();

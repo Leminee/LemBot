@@ -26,20 +26,20 @@ public class UserMessageCounter extends ListenerAdapter {
         if (userMessageContent.isEmpty()) return;
 
         Connection connection = DatabaseConnector.openConnection();
-        String insertMessageData = "INSERT INTO user_message (id_discord, username, number_message) VALUES (?,?,?);";
+       final String insertMessageData = "INSERT INTO user_message (id_discord, username, number_message) VALUES (?,?,?);";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertMessageData)) {
             preparedStatement.setString(1, userId);
             preparedStatement.setString(2, userName);
             preparedStatement.setInt(3, numberMessage);
 
-            String isUserInDB = "SELECT id_discord FROM user_message WHERE id_discord = ? ";
+           final  String isUserInDB = "SELECT id_discord FROM user_message WHERE id_discord = ? ";
             PreparedStatement prepareStatementOne = connection.prepareStatement(isUserInDB);
             prepareStatementOne.setString(1, userId);
             ResultSet resultSet = prepareStatementOne.executeQuery();
 
             if (resultSet.next()) {
-                String currentNumberMessage = "UPDATE user_message SET number_message = (number_message +1) WHERE id_discord = ?";
+                final String currentNumberMessage = "UPDATE user_message SET number_message = (number_message +1) WHERE id_discord = ?";
                 PreparedStatement updatePStatement = connection.prepareStatement(currentNumberMessage);
                 updatePStatement.setString(1, userId);
                 updatePStatement.executeUpdate();
@@ -57,10 +57,10 @@ public class UserMessageCounter extends ListenerAdapter {
 
     }
 
-    public void insertData(String userMessage, String userId, String messageId) {
+    public void insertData(final String userMessage, final String userId, final String messageId) {
 
         Connection connection = DatabaseConnector.openConnection();
-        String userMessageData = "INSERT INTO user_message_content (id_message, id_discord, content) VALUES (?,?,?)";
+        final String userMessageData = "INSERT INTO user_message_content (id_message, id_discord, content) VALUES (?,?,?)";
 
         try (PreparedStatement insertPStatement = connection.prepareStatement(userMessageData)) {
 

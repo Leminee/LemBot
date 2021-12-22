@@ -10,9 +10,10 @@ public class UpdatingUsername extends ListenerAdapter {
     public void onGuildMemberUpdateNickname(GuildMemberUpdateNicknameEvent event) {
 
         long userId = event.getMember().getIdLong();
+        final String userTag = event.getMember().getUser().getAsTag();
+
         String oldUsername = event.getOldNickname();
         String newUsername = event.getNewNickname();
-        String userTag = event.getMember().getUser().getAsTag();
 
         if (oldUsername == null) {
             oldUsername = event.getMember().getUser().getName();

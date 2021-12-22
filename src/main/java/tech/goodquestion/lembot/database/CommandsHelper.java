@@ -38,7 +38,7 @@ public final class CommandsHelper {
 
     }
 
-    public static void logUserReaction(long messageId, long userId, String addedReaction) {
+    public static void logUserReaction(final long messageId, final long userId, final String addedReaction) {
 
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement statement = connection.prepareStatement(REACTION_LOG)) {
             statement.setLong(1, messageId);
@@ -53,7 +53,7 @@ public final class CommandsHelper {
         }
     }
 
-    public static void adjustUsername(String adjustingDateQuery, String newUsername, long userId) {
+    public static void adjustUsername(final String adjustingDateQuery, final String newUsername, final long userId) {
 
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(adjustingDateQuery)) {
 
@@ -68,7 +68,7 @@ public final class CommandsHelper {
         }
     }
 
-    public static void logMemberStatusChange(long userId, String userTag, OnlineStatus newStatus) {
+    public static void logMemberStatusChange(final long userId, final String userTag, final OnlineStatus newStatus) {
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement statement = connection.prepareStatement(INSERT_USER_STATUS)) {
             statement.setLong(1, userId);
             statement.setBlob(2, Helper.changeCharacterEncoding(statement, userTag));
@@ -81,7 +81,7 @@ public final class CommandsHelper {
         }
     }
 
-    public static void logUpdatedUsername(long userId, String userTag, String oldUsername, String newUsername) {
+    public static void logUpdatedUsername(final long userId, final String userTag, final String oldUsername, final String newUsername) {
 
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement statement = connection.prepareStatement(USERNAME_UPDATED_LOG)) {
             statement.setLong(1, userId);
@@ -97,7 +97,7 @@ public final class CommandsHelper {
         }
     }
 
-    public static void logActiveMemberCount(int memberCount) {
+    public static void logActiveMemberCount(final int memberCount) {
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(ACTIVE_MEMBER_LOG)) {
             preparedStatement.setLong(1, memberCount);
             preparedStatement.executeUpdate();
@@ -109,7 +109,7 @@ public final class CommandsHelper {
         }
     }
 
-    public static void logMemberAmount(Guild guild) {
+    public static void logMemberAmount(final Guild guild) {
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement statement = connection.prepareStatement(INSERT_MEMBER_AMOUNT)) {
             statement.setInt(1, guild.getMemberCount());
             statement.executeUpdate();
@@ -120,15 +120,15 @@ public final class CommandsHelper {
         }
     }
 
-    public static void logUserLeave(User user) {
+    public static void logUserLeave(final User user) {
         logMemberStatus(USER_LEAVE_LOG, user);
     }
 
-    public static void logUserJoin(User user) {
+    public static void logUserJoin(final User user) {
         logMemberStatus(USER_JOIN_LOG, user);
     }
 
-    private static void logSanction(String query, Sanction sanction) {
+    private static void logSanction(final String query, final Sanction sanction) {
 
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, sanction.userId);
@@ -146,7 +146,7 @@ public final class CommandsHelper {
         }
     }
 
-    public static void logMemberStatus(String query, User member) {
+    public static void logMemberStatus(final String query,final User member) {
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, member.getIdLong());
             preparedStatement.setString(2, member.getAsTag());
@@ -161,19 +161,19 @@ public final class CommandsHelper {
         }
     }
 
-    public static void logUserBan(Sanction sanction) {
+    public static void logUserBan(final Sanction sanction) {
         logSanction(USER_BAN_DATA, sanction);
     }
 
-    public static void logUserMute(Sanction sanction) {
+    public static void logUserMute(final Sanction sanction) {
         logSanction(USER_MUTE_DATA, sanction);
     }
 
-    public static void logUserWarn(Sanction sanction) {
+    public static void logUserWarn(final Sanction sanction) {
         logSanction(USER_WARN_DATA, sanction);
     }
 
-    public static void logException(OccurredException occurredException) {
+    public static void logException(final OccurredException occurredException) {
 
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(EXCEPTION_LOG)) {
             preparedStatement.setString(1, occurredException.occurredIn);
@@ -188,7 +188,7 @@ public final class CommandsHelper {
         }
     }
 
-    public static void insertVoiceChannelData(String insertQuery, VoiceChannel voiceChannel) {
+    public static void insertVoiceChannelData(final String insertQuery, final VoiceChannel voiceChannel) {
 
         Connection connection = DatabaseConnector.openConnection();
 
@@ -207,7 +207,7 @@ public final class CommandsHelper {
         }
     }
 
-    public static void logInviteLinkTracking(InviteTrackingData inviteTrackingData){
+    public static void logInviteLinkTracking(final InviteTrackingData inviteTrackingData){
 
 
         Connection connection = DatabaseConnector.openConnection();

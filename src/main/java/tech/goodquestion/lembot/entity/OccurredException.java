@@ -6,7 +6,7 @@ public class OccurredException {
     public String type;
     public String details;
 
-    public static OccurredException getOccurredExceptionData(Exception exception, String className) {
+    public static OccurredException getOccurredExceptionData(final Exception exception, final String className) {
 
         OccurredException occurredException = new OccurredException();
 
