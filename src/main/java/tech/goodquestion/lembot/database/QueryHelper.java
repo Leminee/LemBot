@@ -223,7 +223,7 @@ public final class QueryHelper {
     }
 
 
-    static List<Long> getIdsLastMessages(final long userId) {
+    public static void getIdsLastMessages(final long userId) {
 
 
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(LAST_MESSAGES_IDs)) {
@@ -244,7 +244,6 @@ public final class QueryHelper {
 
             CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
         }
-        return messagesIds;
     }
     public static boolean isHopper(final long userId) {
 

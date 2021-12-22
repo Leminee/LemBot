@@ -74,7 +74,7 @@ public class InviteTracking extends ListenerAdapter {
                         .setDescription("")
                         .addField("Einladender", invitedBy, true)
                         .addField("Eingeladener", usedBy, true)
-                        .addField("Genutzt", String.valueOf(uses), true)
+                        .addField("Verwendungen", String.valueOf(uses), true)
                         .addField("URL", url, true);
 
                 InviteTrackingData inviteTrackingData = new InviteTrackingData();

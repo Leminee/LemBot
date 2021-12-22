@@ -9,17 +9,11 @@ import org.jetbrains.annotations.NotNull;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.database.QueryHelper;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.Random;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class VoiceCreation extends ListenerAdapter {
 
-    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     public static final String[] LEFT = {
             "admiring",
@@ -263,7 +257,6 @@ public class VoiceCreation extends ListenerAdapter {
     public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
 
 
-
         if (QueryHelper.isHopper(event.getMember().getIdLong())) {
 
             for (int i = 0; i < event.getMember().getRoles().size(); i++) {
@@ -274,15 +267,13 @@ public class VoiceCreation extends ListenerAdapter {
                     event.getGuild().removeRoleFromMember(event.getMember(),Objects.requireNonNull(event.getGuild().getRoleById(event.getMember().getRoles().get(i).getIdLong()))).queue();
 
                     event.getGuild().addRoleToMember(event.getMember(), Objects.requireNonNull(event.getGuild().getRoleById(Config.getInstance().getRole().getMuteRole().getIdLong()))).queue();
-                    event.getGuild().getTextChannelById(Config.getInstance().getChannel().getBumpChannel().getIdLong()).sendMessage("muted").queue();
+                    Objects.requireNonNull(event.getGuild().getTextChannelById(Config.getInstance().getChannel().getBumpChannel().getIdLong())).sendMessage("muted").queue();
                     return;
-
-
                 }
 
                 else {
                     event.getGuild().addRoleToMember(event.getMember(), Objects.requireNonNull(event.getGuild().getRoleById(Config.getInstance().getRole().getWarnRole().getIdLong()))).queue();
-                    event.getGuild().getTextChannelById(Config.getInstance().getChannel().getBumpChannel().getIdLong()).sendMessage("warned").queue();
+                    Objects.requireNonNull(event.getGuild().getTextChannelById(Config.getInstance().getChannel().getBumpChannel().getIdLong())).sendMessage("warned").queue();
                 }
 
             }
@@ -350,34 +341,6 @@ public class VoiceCreation extends ListenerAdapter {
             event.getGuild().createVoiceChannel(randomlyCombinedVoiceName, voiceFunCategory).queue();
         }
 
-    }
-
-    private void garbageCollect(GuildVoiceMoveEvent event) {
-
-        int emptyVoices = 0;
-
-        final long voiceFunCategoryId = 779105998420967465L;
-
-        final List<Integer> indices = new ArrayList<>();
-
-        for (int i = 0; i < Objects.requireNonNull(Config.getInstance().getCategory().getVoiceFunCategory()).getVoiceChannels().size(); i++) {
-
-            if (Objects.requireNonNull(event.getGuild().getCategoryById(voiceFunCategoryId)).getVoiceChannels().get(i).getMembers().size() == 0) {
-                emptyVoices++;
-                indices.add(i);
-            }
-        }
-
-        if (emptyVoices >= 2) {
-
-            for (final int index : indices) {
-
-                final Runnable delete = () -> Objects.requireNonNull(event.getGuild().getCategoryById(voiceFunCategoryId)).getVoiceChannels().get(index).delete().queue();
-
-                int delay = 1;
-                scheduler.schedule(delete, delay, TimeUnit.MINUTES);
-            }
-        }
     }
 
 }

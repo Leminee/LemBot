@@ -29,7 +29,7 @@ public class MuteCommand extends UserBanishCommand {
 
         toBanish.getGuild().addRoleToMember(sanction.userId, Config.getInstance().getRole().getMuteRole()).queue();
 
-        if (toBanish.getVoiceState().inVoiceChannel()) {
+        if (Objects.requireNonNull(toBanish.getVoiceState()).inVoiceChannel()) {
             toBanish.getGuild().kickVoiceMember(toBanish).queue();
         }
 
@@ -45,7 +45,7 @@ public class MuteCommand extends UserBanishCommand {
 
         final String performedSanction = "gemutet";
         final SanctionType sanctionType = SanctionType.MUTE;
-        sendSanctionReason(toBanish.getUser(),sanctionType, performedSanction, sanction.reason, toBanish.getAsMention());
+        sendSanctionReason(toBanish.getUser(),sanctionType, performedSanction, sanction.reason);
     }
 
     @Override

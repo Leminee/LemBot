@@ -61,6 +61,10 @@ public class SpamDetection extends ListenerAdapter {
             CommandHelper.logUserMute(sanction);
             event.getChannel().sendMessage("Du wurdest aufgrund verdächtigem Verhalten durch den Bot **gemutet** " + userAsMention + ".").queue();
 
+            Objects.requireNonNull(event.getGuild().getTextChannelById(Config.getInstance().getChannel().getLogChannel().getIdLong()))
+                    .sendMessage("User " + event.getMember().getAsMention() + " wurde wegen Spam **gemutet**! " + "\n**(3 inhaltich identische Nachrichten in weniger als 30 Sekunden in mehrere Kanäle gespostet**)")
+                    .queue();
+
 
         }
 
@@ -82,15 +86,18 @@ public class SpamDetection extends ListenerAdapter {
             CommandHelper.logUserMute(sanction);
 
             event.getChannel().sendMessage("Du wurdest aufgrund verdächtigem Verhalten durch den Bot **gemutet** " + userAsMention + ".").queue();
+
+            Objects.requireNonNull(event.getGuild().getTextChannelById(Config.getInstance().getChannel().getLogChannel().getIdLong()))
+                    .sendMessage("User " + Objects.requireNonNull(event.getMember()).getAsMention() + "wurde wegen Spam **gemutet** " + "\n**(10 Nachrichten in weniger als 30 Sekunden in " + event.getChannel() + " gespammt)**")
+                    .queue();
         }
 
 
     }
 
-
     private void disconnect(Member member) {
 
-        if (member.getVoiceState().inVoiceChannel()) {
+        if (Objects.requireNonNull(member.getVoiceState()).inVoiceChannel()) {
             member.getGuild().kickVoiceMember(member).queue();
         }
     }

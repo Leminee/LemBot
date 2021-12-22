@@ -13,6 +13,7 @@ import tech.goodquestion.lembot.lib.Helper;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public final class CommandHelper {
 
@@ -30,7 +31,6 @@ public final class CommandHelper {
     public static final String ADJUSTING_NEW_USERNAME_IN_BUMPER = "UPDATE user_bump SET username = ? WHERE id_discord = ?;";
     public static final String ADJUSTING_NEW_USERNAME_IN_MESSAGE = "UPDATE user_message SET username = ? WHERE id_discord = ?;";
     public static final String USERNAME_UPDATED_LOG = "INSERT INTO updated_username (id, id_discord, user_tag, old_username, new_username) VALUES (NULL,?,?,?,?);";
-    public static final String REACTION_LOG = "INSERT INTO user_reaction (id, id_message, id_discord, reaction) VALUES (NULL,?,?,?);";
     public static final String EXCEPTION_LOG = "INSERT INTO exception (id_exception, occurred_in, type, details) VALUES (NULL,?,?,?);";
     public static final String INVITE_TRACKING_LOG = "INSERT INTO invite_tracking (id, url, used_by, invited_by, amount) VALUES (NULL,?,?,?,?);";
     private static final String CLASS_NAME = CommandHelper.class.getName();
@@ -39,20 +39,6 @@ public final class CommandHelper {
 
     }
 
-    public static void logUserReaction(final long messageId, final long userId, final String addedReaction) {
-
-        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement statement = connection.prepareStatement(REACTION_LOG)) {
-            statement.setLong(1, messageId);
-            statement.setLong(2, userId);
-            statement.setString(3, addedReaction);
-            statement.executeUpdate();
-
-        } catch (SQLException sqlException) {
-            System.out.println(sqlException.getMessage());
-
-            logException(OccurredException.getOccurredExceptionData(sqlException,CLASS_NAME));
-        }
-    }
 
     public static void adjustUsername(final String adjustingDateQuery, final String newUsername, final long userId) {
 
@@ -237,7 +223,7 @@ public final class CommandHelper {
 
             final long channelId = event.getChannel().getIdLong();
 
-            event.getGuild().getTextChannelById(channelId)
+            Objects.requireNonNull(event.getGuild().getTextChannelById(channelId))
                     .deleteMessageById(messageId)
                     .complete();
         }

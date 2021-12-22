@@ -53,7 +53,7 @@ public abstract class UserBanishCommand implements IBotCommand {
         } catch (ErrorResponseException errorResponseException) {
 
             final EmbedBuilder embedError = new EmbedBuilder();
-            final String embedDescription = "User ist nicht auf dem Server!";
+            final String embedDescription = ":x: User ist nicht auf dem Server!";
             Helper.createEmbed(embedError, "Fehler", embedDescription, EmbedColorHelper.ERROR);
             channel.sendMessage(embedError.build()).queue();
             return;
@@ -63,7 +63,7 @@ public abstract class UserBanishCommand implements IBotCommand {
         assert member != null;
         if (member.hasPermission(Permission.ADMINISTRATOR)) {
             final EmbedBuilder embedError = new EmbedBuilder();
-            final String embedDescription = "Admins/Moderatoren können nicht gekickt oder gebannt werden!";
+            final String embedDescription = ":x: Admins/Moderatoren können nicht gekickt oder gebannt werden!";
             Helper.createEmbed(embedError, "Fehler", embedDescription, EmbedColorHelper.ERROR);
             channel.sendMessage(embedError.build()).queue();
             return;
@@ -86,7 +86,7 @@ public abstract class UserBanishCommand implements IBotCommand {
 
         if (requiresAdmin() && !Objects.requireNonNull(message.getMember()).hasPermission(Permission.MANAGE_ROLES)) {
             final EmbedBuilder embedError = new EmbedBuilder();
-            final String embedDescription = ":x: Verweigert";
+            final String embedDescription = ":x: Permission denied";
             Helper.createEmbed(embedError, "", embedDescription, EmbedColorHelper.ERROR);
             channel.sendMessage(embedError.build()).queue();
             return;
@@ -121,10 +121,10 @@ public abstract class UserBanishCommand implements IBotCommand {
         return "staff";
     }
 
-    public static void sendSanctionReason(User sanctionedUser,SanctionType sanctionType, String performedSanction, String reason, String banAuthor) {
+    public static void sendSanctionReason(User sanctionedUser,SanctionType sanctionType, String performedSanction, String reason) {
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         try {
-            Helper.createEmbed(embedBuilder, String.valueOf(sanctionType), "Du wurdest aus dem folgenden Grund auf **GoodQuestion** durch " + banAuthor + " **" + performedSanction + "**" + "\n Angegebener Grund: " + reason, EmbedColorHelper.ERROR);
+            Helper.createEmbed(embedBuilder, String.valueOf(sanctionType), "Du wurdest auf **GoodQuestion** " + " **" + performedSanction + "**" + "\n Grund: " + reason, EmbedColorHelper.ERROR);
             sanctionedUser.openPrivateChannel()
                     .flatMap(channel -> channel.sendMessage(embedBuilder.build()))
                     .complete();

@@ -18,7 +18,7 @@ public class BanCommand extends UserBanishCommand {
 
         final String performedSanction = "gebannt";
         final SanctionType sanctionType = SanctionType.BAN;
-        sendSanctionReason(toBanish.getUser(),sanctionType, performedSanction, sanction.reason, "");
+        sendSanctionReason(toBanish.getUser(),sanctionType, performedSanction, sanction.reason);
 
         toBanish.ban(0, sanction.reason).complete();
 

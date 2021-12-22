@@ -30,7 +30,7 @@ public class WarnCommand extends UserBanishCommand {
 
         final String performedSanction = "verwarnt";
         final SanctionType sanctionType = SanctionType.VERWARNUNG;
-        sendSanctionReason(toBanish.getUser(), sanctionType, performedSanction, sanction.reason, toBanish.getAsMention());
+        sendSanctionReason(toBanish.getUser(), sanctionType, performedSanction, sanction.reason);
     }
 
     @Override

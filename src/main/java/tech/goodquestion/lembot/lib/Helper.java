@@ -149,7 +149,7 @@ public final class Helper {
         embedBuilder.setColor(Color.decode(embedColor));
     }
 
-    public static void addTopToEmbed(ResultSet resultSet,final EmbedBuilder embedBuilder, final String embedTitle, final String embedDescription, final String embedThumbnail, final String embedColor, final TextChannel channel, final String amountOf, Member member) {
+    public static void addTopToEmbed(ResultSet resultSet,final EmbedBuilder embedBuilder, final String embedTitle, final String embedDescription, final String embedThumbnail, final String embedColor, final TextChannel channel, final String amountOf) {
         createEmbed(embedBuilder, embedTitle, embedDescription, embedColor, embedThumbnail);
         addTopToEmbed(resultSet, embedBuilder, channel, amountOf);
     }
@@ -206,4 +206,5 @@ public final class Helper {
                 + "-" + LocalDateTime.now().getHour()
                 + ":" + LocalDateTime.now().getMinute();
     }
+
 }

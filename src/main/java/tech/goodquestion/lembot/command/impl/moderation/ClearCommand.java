@@ -25,7 +25,7 @@ public class ClearCommand implements IBotCommand {
 
                 final EmbedBuilder errorAmountOfMessagesEmbed = new EmbedBuilder();
 
-                Helper.createEmbed(errorAmountOfMessagesEmbed, "Fehler", "Lösche bitte nicht mehr als 30 Nachrichten auf einmal!", EmbedColorHelper.ERROR);
+                Helper.createEmbed(errorAmountOfMessagesEmbed, "Fehler", ":x: Lösche bitte nicht mehr als 30 Nachrichten auf einmal!", EmbedColorHelper.ERROR);
                 channel.sendMessage(errorAmountOfMessagesEmbed.build()).queue();
                 return;
             }
@@ -40,13 +40,13 @@ public class ClearCommand implements IBotCommand {
         } catch (IllegalArgumentException illegalArgumentException) {
             if (illegalArgumentException.getMessage().equals("Message retrieval")) {
                 final EmbedBuilder errorIAEEmbed = new EmbedBuilder();
-                Helper.createEmbed(errorIAEEmbed, "Fehler", "Mehr als 100 Nachrichten können nicht gelöscht werden!", EmbedColorHelper.ERROR);
+                Helper.createEmbed(errorIAEEmbed, "Fehler", ":x: Mehr als 100 Nachrichten können nicht gelöscht werden!", EmbedColorHelper.ERROR);
                 channel.sendMessage(errorIAEEmbed.build()).queue();
 
 
             } else if (illegalArgumentException instanceof NumberFormatException) {
                 final EmbedBuilder errorNFEEmbed = new EmbedBuilder();
-                Helper.createEmbed(errorNFEEmbed, "Fehler", "Bitte gib bitte eine gültige Zahl an!", EmbedColorHelper.ERROR);
+                Helper.createEmbed(errorNFEEmbed, "Fehler", ":x: Bitte gib bitte eine gültige Zahl an!", EmbedColorHelper.ERROR);
                 channel.sendMessage(errorNFEEmbed.build()).queue();
 
             }

@@ -29,6 +29,7 @@ public class UpdatedMessageStorage extends ListenerAdapter {
             preparedStatement.setBlob(4, Helper.changeCharacterEncoding(preparedStatement, updatedMessageContent));
 
             preparedStatement.executeUpdate();
+
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
 
