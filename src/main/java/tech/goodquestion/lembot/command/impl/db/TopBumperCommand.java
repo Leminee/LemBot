@@ -24,7 +24,6 @@ public class TopBumperCommand implements IBotCommand {
 
         Connection connection = DatabaseConnector.openConnection();
 
-
         try (Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(QueryHelper.TOP_BUMPER)) {
 
             final EmbedBuilder topBumperEmbed = new EmbedBuilder();
@@ -34,7 +33,7 @@ public class TopBumperCommand implements IBotCommand {
             final String embedThumbnail = "https://cdn.discordapp.com/attachments/819694809765380146/869248076446052402/Bildschirmfoto_2021-07-26_um_17.48.08.png";
             final String amountOf = "Bumps";
 
-            Helper.addTopToEmbed(resultSet, topBumperEmbed, embedTitle, embedDescription, embedThumbnail, EmbedColorHelper.BUMP, channel,amountOf);
+            Helper.addTopToEmbed(resultSet, topBumperEmbed, embedTitle, embedDescription, embedThumbnail, EmbedColorHelper.BUMP, channel,amountOf, sender);
 
         } catch (SQLException sqlException) {
 

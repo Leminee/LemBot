@@ -16,6 +16,9 @@ public class BanCommand extends UserBanishCommand {
     @Override
     public void banishUser(Member toBanish, Sanction sanction, Message originMessage) {
 
+        final String performedSanction = "gebannt";
+        final SanctionType sanctionType = SanctionType.BAN;
+        sendSanctionReason(toBanish.getUser(),sanctionType, performedSanction, sanction.reason, "");
 
         toBanish.ban(0, sanction.reason).complete();
 
@@ -23,13 +26,12 @@ public class BanCommand extends UserBanishCommand {
         confirmation.setColor(Color.decode(EmbedColorHelper.SUCCESS));
         confirmation.setTitle("Bestätigung");
         confirmation.setDescription("User " + toBanish.getAsMention() + " wurde durch " + originMessage.getAuthor().getAsMention() + "**" + " gebannt." + "**" + "\n Angegebener Grund: " + sanction.reason);
+
+
         originMessage.getChannel().sendMessage(confirmation.build()).queue();
 
         CommandsHelper.logUserBan(sanction);
 
-        final String performedSanction = "gebannt";
-        final SanctionType sanctionType = SanctionType.BAN;
-        sendSanctionReason(toBanish.getUser(),sanctionType, performedSanction, sanction.reason, "");
     }
 
     @Override

@@ -25,7 +25,7 @@ public class BotDataCommand implements IBotCommand {
                 .addField("Geschrieben in", "Java (JDA)", true)
                 .addField("Geschrieben von", Objects.requireNonNull(Config.getInstance().getGuild().getOwner()).getAsMention(), true)
                 .addField("Akutelle Version", "3.0", true)
-                .addField("Mitwirkende", Helper.getLemBotContributorsCount(), true)
+                .addField("Mitwirkende", Helper.getAmountLemBotContributors(), true)
                 .addField("Source Code", "https://github.com/Leminee/LemBot", true);
 
 

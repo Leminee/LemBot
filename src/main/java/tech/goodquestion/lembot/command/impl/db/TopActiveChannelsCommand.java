@@ -18,10 +18,11 @@ public class TopActiveChannelsCommand implements IBotCommand {
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
 
+
         try {
-            MessageEmbed activeChannelEmbed = QueryHelper.getTopActiveChannels()
+            MessageEmbed activeChannelEmbed = QueryHelper.getTopChannels()
                     .setColor(Color.decode(EmbedColorHelper.TOP_CHANNELS))
-                    .setTitle("Die aktivsten Channels")
+                    .setTitle("Die 5 aktivsten Channels")
                     .setThumbnail("https://cdn.discordapp.com/attachments/819694809765380146/872673996280303616/Bildschirmfoto_2021-08-05_um_04.54.26.png")
                     .build();
             channel.sendMessage(activeChannelEmbed).queue();
@@ -40,6 +41,6 @@ public class TopActiveChannelsCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?topc`: Die aktivsten Channels";
+        return "`?topc`: Die 5 aktivsten Channels";
     }
 }

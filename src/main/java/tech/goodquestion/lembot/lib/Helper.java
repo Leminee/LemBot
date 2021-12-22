@@ -1,9 +1,7 @@
 package tech.goodquestion.lembot.lib;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -29,7 +27,6 @@ import java.util.concurrent.TimeUnit;
 public final class Helper {
 
     public static final String PREFIX = "?";
-
 
     public static boolean isNotSuccessfulBump(final List<MessageEmbed> messages, final User embedAuthor) {
 
@@ -152,18 +149,18 @@ public final class Helper {
         embedBuilder.setColor(Color.decode(embedColor));
     }
 
-
-
-    public static void addTopToEmbed(ResultSet resultSet,final EmbedBuilder embedBuilder, final String embedTitle, final String embedDescription, final String embedThumbnail, final String embedColor, final TextChannel channel, final String amountOf) {
+    public static void addTopToEmbed(ResultSet resultSet,final EmbedBuilder embedBuilder, final String embedTitle, final String embedDescription, final String embedThumbnail, final String embedColor, final TextChannel channel, final String amountOf, Member member) {
         createEmbed(embedBuilder, embedTitle, embedDescription, embedColor, embedThumbnail);
         addTopToEmbed(resultSet, embedBuilder, channel, amountOf);
     }
 
     public static void addTopToEmbed(ResultSet resultSet, final EmbedBuilder embedBuilder, final TextChannel channel, final String amountOf) {
         int top = 1;
+
         try {
             while (resultSet.next()) {
-                embedBuilder.addField("TOP " + top, resultSet.getString(1) + " **(" + resultSet.getString(2) + " " + amountOf + ")**", false);
+
+                embedBuilder.addField("TOP " + top,  "<@" +resultSet.getString(1) +"> " + "**(" + resultSet.getString(2) + " " + amountOf + ")**", false);
                 top++;
             }
 
@@ -183,7 +180,7 @@ public final class Helper {
     }
 
 
-    public static String getLemBotContributorsCount() {
+    public static String getAmountLemBotContributors() {
 
         final String base_url = "https://github.com/Leminee/LemBot";
 

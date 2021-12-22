@@ -22,6 +22,8 @@ public class ActiveUserRecordCommand implements IBotCommand {
         Helper.createEmbed(embedBuilder, title, description, EmbedColorHelper.RECORD);
 
         channel.sendMessage(embedBuilder.build()).queue();
+
+
     }
 
     @Override
