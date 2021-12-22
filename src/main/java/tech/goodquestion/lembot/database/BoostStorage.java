@@ -10,15 +10,15 @@ import javax.annotation.Nonnull;
 public class BoostStorage extends ListenerAdapter {
 
     @Override
-    public void onGuildUpdateBoostTier(@Nonnull GuildUpdateBoostTierEvent event) {
+    public void onGuildUpdateBoostTier(@Nonnull final GuildUpdateBoostTierEvent event) {
 
     }
     @Override
-    public void onGuildUpdateBoostCount(@Nonnull GuildUpdateBoostCountEvent event) {
+    public void onGuildUpdateBoostCount(@Nonnull final GuildUpdateBoostCountEvent event) {
 
     }
     @Override
-    public void onGuildMemberUpdateBoostTime(@Nonnull GuildMemberUpdateBoostTimeEvent event) {
+    public void onGuildMemberUpdateBoostTime(@Nonnull final GuildMemberUpdateBoostTimeEvent event) {
 
     }
 }

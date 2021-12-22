@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 public class BumpCounter extends ListenerAdapter {
 
     @Override
-    public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
+    public void onGuildMessageReceived(final GuildMessageReceivedEvent event) {
 
         final List<MessageEmbed> disBoardEmbed = event.getMessage().getEmbeds();
         final User embedAuthor = event.getAuthor();

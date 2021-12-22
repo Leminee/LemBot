@@ -9,7 +9,7 @@ import tech.goodquestion.lembot.config.Config;
 public class LinkDeletion extends ListenerAdapter {
 
     @Override
-    public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
+    public void onGuildMessageReceived(final GuildMessageReceivedEvent event) {
 
         final String userMessage = event.getMessage().getContentRaw();
 

@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 public class Reminder extends ListenerAdapter {
 
     @Override
-    public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
+    public void onGuildMessageReceived(@NotNull final GuildMessageReceivedEvent event) {
 
         final List<MessageEmbed> disBoardEmbed = event.getMessage().getEmbeds();
         final User embedAuthor = event.getAuthor();

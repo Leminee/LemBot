@@ -12,7 +12,7 @@ import java.sql.SQLException;
 
 public class UpdatedMessageStorage extends ListenerAdapter {
     @Override
-    public void onGuildMessageUpdate(@Nonnull GuildMessageUpdateEvent event) {
+    public void onGuildMessageUpdate(@Nonnull final GuildMessageUpdateEvent event) {
 
         final long idUpdatedMessage = event.getMessageIdLong();
         final long authorId = event.getAuthor().getIdLong();

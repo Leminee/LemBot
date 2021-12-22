@@ -14,7 +14,7 @@ import java.util.Objects;
 public class UserMessageCounter extends ListenerAdapter {
 
     @Override
-    public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
+    public void onGuildMessageReceived(final GuildMessageReceivedEvent event) {
 
         final String userMessageContent = event.getMessage().getContentRaw();
         final String userId = Objects.requireNonNull(event.getMember()).getId();

@@ -13,7 +13,7 @@ import java.util.Objects;
 
 public class ActiveUsers extends ListenerAdapter {
 
-    public void onUserUpdateOnlineStatus(@Nonnull UserUpdateOnlineStatusEvent event) {
+    public void onUserUpdateOnlineStatus(@Nonnull final UserUpdateOnlineStatusEvent event) {
 
         final OnlineStatus newStatus = event.getNewOnlineStatus();
         final String userTag = event.getMember().getUser().getAsTag();

@@ -17,7 +17,7 @@ import java.util.Objects;
 public class SpamDetection extends ListenerAdapter {
 
     @Override
-    public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
+    public void onGuildMessageReceived(final GuildMessageReceivedEvent event) {
 
 
         final long userId = event.getMessage().getAuthor().getIdLong();

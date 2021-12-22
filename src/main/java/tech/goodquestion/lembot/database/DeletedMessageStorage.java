@@ -13,7 +13,7 @@ import java.sql.SQLException;
 public class DeletedMessageStorage extends ListenerAdapter {
 
     @Override
-    public void onGuildMessageDelete(@Nonnull GuildMessageDeleteEvent event) {
+    public void onGuildMessageDelete(@Nonnull final GuildMessageDeleteEvent event) {
        final long idDeletedMessage = event.getMessageIdLong();
 
         Connection connection = DatabaseConnector.openConnection();

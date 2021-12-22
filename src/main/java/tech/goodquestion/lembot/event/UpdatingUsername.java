@@ -7,7 +7,7 @@ import tech.goodquestion.lembot.database.CommandsHelper;
 public class UpdatingUsername extends ListenerAdapter {
 
     @Override
-    public void onGuildMemberUpdateNickname(GuildMemberUpdateNicknameEvent event) {
+    public void onGuildMemberUpdateNickname(final GuildMemberUpdateNicknameEvent event) {
 
         long userId = event.getMember().getIdLong();
         final String userTag = event.getMember().getUser().getAsTag();

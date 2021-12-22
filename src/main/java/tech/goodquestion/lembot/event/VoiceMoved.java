@@ -11,7 +11,7 @@ import tech.goodquestion.lembot.lib.Helper;
 public class VoiceMoved extends ListenerAdapter {
 
     @Override
-    public void onGuildVoiceMove(@NotNull GuildVoiceMoveEvent event) {
+    public void onGuildVoiceMove(@NotNull final GuildVoiceMoveEvent event) {
 
         final String userMentioned = event.getMember().getAsMention();
         final String voiceChannelLeft = event.getChannelLeft().getName();

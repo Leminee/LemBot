@@ -9,7 +9,7 @@ import tech.goodquestion.lembot.config.Config;
 public class WelcomingMemberJoin extends ListenerAdapter {
 
     @Override
-    public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
+    public void onGuildMemberJoin(@NotNull final GuildMemberJoinEvent event) {
 
         if (event.getUser().isBot()) return;
 

@@ -6,7 +6,6 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
-import tech.goodquestion.lembot.command.AutoAnswering;
 import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.command.impl.*;
 import tech.goodquestion.lembot.command.impl.db.*;
@@ -84,14 +83,12 @@ public class BotMain {
         jda.addEventListener(new ReminderReactivation());
         jda.addEventListener(new UpdatingUsername());
         jda.addEventListener(new MemberLeftStorage());
-        jda.addEventListener(new AutoAnswering());
         jda.addEventListener(new AddingRole());
         jda.addEventListener(new SpamDetection());
         jda.addEventListener(new VoiceCreation());
         jda.addEventListener(new AttachmentStorage());
         jda.addEventListener(new RoleEvents());
         jda.addEventListener(new BoostStorage());
-        jda.addEventListener(new ReactionStorage());
         jda.addEventListener(new InviteTracking());
 
         setupReactionRoles();

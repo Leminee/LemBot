@@ -20,7 +20,7 @@ public class AddingRole extends ListenerAdapter {
     public final Map<Long, ScheduledFuture<?>> tasks = new HashMap<>();
 
     @Override
-    public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
+    public void onGuildMemberJoin(@NotNull final GuildMemberJoinEvent event) {
 
         final Member member = event.getMember();
         final Guild guild = member.getGuild();
@@ -34,7 +34,7 @@ public class AddingRole extends ListenerAdapter {
     }
 
     @Override
-    public void onGuildMemberRoleAdd(GuildMemberRoleAddEvent event) {
+    public void onGuildMemberRoleAdd(final GuildMemberRoleAddEvent event) {
 
         final Member member = event.getMember();
         final Guild guild = member.getGuild();

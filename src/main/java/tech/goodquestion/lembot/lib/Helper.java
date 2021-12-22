@@ -94,7 +94,7 @@ public final class Helper {
 
     public static void sendAmount(final UserData userData,final String embedColor, final String amountOf, final TextChannel channel, final String embedTitle) {
 
-        String authorMention = "<@" + userData.userId + ">";
+        final String authorMention = "<@" + userData.userId + ">";
 
         if (!userData.hasBump()) {
             channel.sendMessage("Du hast leider noch keinen erfolgreichen Bump " + authorMention).queue();
@@ -106,7 +106,7 @@ public final class Helper {
             return;
         }
 
-        String mentionedUser = CommandManager.getInstance().getJDA().retrieveUserById(userData.nextHigherUserId).complete().getAsMention();
+       final String mentionedUser = CommandManager.getInstance().getJDA().retrieveUserById(userData.nextHigherUserId).complete().getAsMention();
 
         final EmbedBuilder numberInfo = new EmbedBuilder();
         numberInfo.setColor(Color.decode(embedColor));

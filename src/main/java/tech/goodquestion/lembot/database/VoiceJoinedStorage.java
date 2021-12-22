@@ -12,7 +12,7 @@ import tech.goodquestion.lembot.lib.Helper;
 public class VoiceJoinedStorage extends ListenerAdapter {
 
     @Override
-    public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
+    public void onGuildVoiceJoin(@NotNull final GuildVoiceJoinEvent event) {
 
         final String insertQuery = "INSERT INTO voice_join (id_discord, user_tag, username, name) VALUES (?,?,?,?);";
 

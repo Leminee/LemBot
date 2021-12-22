@@ -13,7 +13,7 @@ import java.util.Objects;
 public class ChannelMessageCounter extends ListenerAdapter {
 
     @Override
-    public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
+    public void onGuildMessageReceived(@NotNull final GuildMessageReceivedEvent event) {
         final String userMessage = event.getMessage().getContentRaw();
         final String channelId = event.getChannel().getId();
         final String channelName = Objects.requireNonNull(event.getJDA().getTextChannelById(channelId)).getName();

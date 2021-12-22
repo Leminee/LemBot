@@ -16,7 +16,7 @@ import java.sql.SQLException;
 public class UserAuthorization extends ListenerAdapter {
 
     @Override
-    public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
+    public void onGuildMemberJoin(@NotNull final GuildMemberJoinEvent event) {
 
         final long joinedUserId = event.getMember().getIdLong();
 

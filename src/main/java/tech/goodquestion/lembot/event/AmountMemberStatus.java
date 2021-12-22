@@ -9,7 +9,7 @@ import tech.goodquestion.lembot.config.Config;
 public class AmountMemberStatus extends ListenerAdapter {
 
     @Override
-    public void onGuildMemberJoin(GuildMemberJoinEvent event) {
+    public void onGuildMemberJoin(final GuildMemberJoinEvent event) {
 
         Config.getInstance().getChannel().getMemberCountChannel().getManager()
                 .setName("Members: " + event.getGuild().getMemberCount())
@@ -17,7 +17,7 @@ public class AmountMemberStatus extends ListenerAdapter {
     }
 
     @Override
-    public void onGuildMemberRemove(@NotNull GuildMemberRemoveEvent event) {
+    public void onGuildMemberRemove(@NotNull final GuildMemberRemoveEvent event) {
 
         Config.getInstance().getChannel().getMemberCountChannel().getManager()
                 .setName("Members: " + event.getGuild().getMemberCount())

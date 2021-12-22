@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 public class TopMonthlyNotifier extends ListenerAdapter {
 
     @Override
-    public void onReady(@NotNull ReadyEvent event) {
+    public void onReady(@NotNull final ReadyEvent event) {
 
         final int dayOfCurrentMonth = LocalDate.now().getDayOfMonth();
         final int daysBeforeNextMonth = LocalDate.now().getMonth().maxLength() - dayOfCurrentMonth;

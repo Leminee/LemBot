@@ -9,7 +9,7 @@ import tech.goodquestion.lembot.config.Config;
 public class InviteLinkDeletion extends ListenerAdapter {
 
     @Override
-    public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
+    public void onGuildMessageReceived(final GuildMessageReceivedEvent event) {
        final String userMessage = event.getMessage().getContentRaw();
 
         if (!userMessage.contains("https://discord.gg") || !userMessage.contains("https://discord.com/invite/") || !userMessage.contains("https://discord.io/")) return;

@@ -12,7 +12,7 @@ import java.util.Objects;
 public class RoleEvents extends ListenerAdapter {
 
     @Override
-    public void onRoleCreate(@Nonnull RoleCreateEvent event) {
+    public void onRoleCreate(@Nonnull final RoleCreateEvent event) {
 
        final String newCreatedRole =  event.getRole().getAsMention();
        Objects.requireNonNull(event.getGuild()
@@ -20,7 +20,7 @@ public class RoleEvents extends ListenerAdapter {
                .sendMessage(String.format("Es wurde soeben folgende Rolle **erstellt** %s", newCreatedRole)).queue();
     }
     @Override
-    public void onRoleDelete(@Nonnull RoleDeleteEvent event) {
+    public void onRoleDelete(@Nonnull final RoleDeleteEvent event) {
 
         final String deletedRole =  event.getRole().getName();
         Objects.requireNonNull(event.getGuild()
@@ -28,7 +28,7 @@ public class RoleEvents extends ListenerAdapter {
                 .sendMessage(String.format("Es wurde soeben folgende Rolle **entfernt** `@%s`", deletedRole)).queue();
     }
 
-    public void onRoleUpdateName(@Nonnull RoleUpdateNameEvent event) {
+    public void onRoleUpdateName(@Nonnull final RoleUpdateNameEvent event) {
 
         final String oldName =  event.getOldName();
         final String newName = event.getNewName();

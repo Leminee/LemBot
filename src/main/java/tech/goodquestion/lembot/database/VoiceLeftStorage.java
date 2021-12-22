@@ -12,7 +12,7 @@ import tech.goodquestion.lembot.lib.Helper;
 public class VoiceLeftStorage extends ListenerAdapter {
 
     @Override
-    public void onGuildVoiceLeave(@NotNull GuildVoiceLeaveEvent event) {
+    public void onGuildVoiceLeave(@NotNull final GuildVoiceLeaveEvent event) {
 
         final String insertQuery = "INSERT INTO voice_leave (id_discord, user_tag, username, name) VALUES (?,?,?,?);";
 
