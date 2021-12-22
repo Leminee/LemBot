@@ -22,7 +22,7 @@ public class CodeBlockHelpCommand implements IBotCommand {
         Helper.createEmbed(embedBuilder, title,
                 description,
                 EmbedColorHelper.HIGHLIGHTED_CODE_BLOCK);
-        embedBuilder.setImage("https://cdn.discordapp.com/attachments/919074434915135532/921175814735810560/Bildschirmfoto_2021-12-17_um_00.03.43.png");
+        embedBuilder.setImage("https://cdn.discordapp.com/attachments/919074434021736507/923287641087176734/Bildschirmfoto_2021-12-22_um_19.55.21.png");
 
         channel.sendMessage(embedBuilder.build()).queue();
     }

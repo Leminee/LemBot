@@ -1,10 +1,10 @@
 package tech.goodquestion.lembot.event;
 
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import tech.goodquestion.lembot.config.Config;
+import tech.goodquestion.lembot.lib.Helper;
 
 
 public class WelcomingMemberJoin extends ListenerAdapter {
@@ -28,14 +28,9 @@ public class WelcomingMemberJoin extends ListenerAdapter {
                 .replace("[channel]", Config.getInstance().getChannel().getSelfRolesChannel().getAsMention());
 
         Config.getInstance().getChannel().getNewArrivalsChannel().sendMessage(output).queue();
-        Config.getInstance().getChannel().getNewArrivalsChannel().sendMessage(avatarUrl).queue();
 
-        EmbedBuilder embedBuilder = new EmbedBuilder();
-        embedBuilder.setTitle("Neuer User gejoint").
-                addField("Nickname",event.getMember().getAsMention(),true)
-                .setImage(event.getMember().getUser().getAvatarUrl());
-
-        Config.getInstance().getChannel().getLogChannel().sendMessage(embedBuilder.build()).queue();
+        Config.getInstance().getChannel().getLogChannel().sendMessage("---> User " + newMember + " ist am " + Helper.getGermanDateTime() + " **gejoint**").queue();
+        Config.getInstance().getChannel().getLogChannel().sendMessage(avatarUrl).queue();
 
     }
 }

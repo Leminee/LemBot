@@ -3,6 +3,10 @@ package tech.goodquestion.lembot.database;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
+import tech.goodquestion.lembot.config.Config;
+import tech.goodquestion.lembot.lib.Helper;
+
+import java.util.Objects;
 
 public class MemberLeftStorage extends ListenerAdapter {
 
@@ -12,5 +16,8 @@ public class MemberLeftStorage extends ListenerAdapter {
         CommandHelper.logMemberAmount(event.getGuild());
 
 
+        Objects.requireNonNull(event.getGuild().getTextChannelById(Config.getInstance().getChannel().getLogChannel().getIdLong()))
+                .sendMessage(" ---> User " + event.getUser().getAsTag() + " hat den Server am " + Helper.getGermanDateTime()+" **verlassen**")
+                .queue();
     }
 }

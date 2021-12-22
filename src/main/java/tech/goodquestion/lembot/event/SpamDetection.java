@@ -52,7 +52,6 @@ public class SpamDetection extends ListenerAdapter {
             }
 
 
-
             final Role mutedRole = Config.getInstance().getRole().getMuteRole();
 
             assert mutedRole != null;
@@ -62,7 +61,7 @@ public class SpamDetection extends ListenerAdapter {
             event.getChannel().sendMessage("Du wurdest aufgrund verdächtigem Verhalten durch den Bot **gemutet** " + userAsMention + ".").queue();
 
             Objects.requireNonNull(event.getGuild().getTextChannelById(Config.getInstance().getChannel().getLogChannel().getIdLong()))
-                    .sendMessage("User " + event.getMember().getAsMention() + " wurde wegen Spam **gemutet**! " + "\n**(3 inhaltich identische Nachrichten in weniger als 30 Sekunden in mehrere Kanäle gespostet**)")
+                    .sendMessage("User " + Objects.requireNonNull(event.getMember()).getAsMention() + " wurde wegen Spam **gemutet** " + "\n(3 inhaltich identische Nachrichten in weniger als 30 Sekunden in mehrere Kanäle gespostet)")
                     .queue();
 
 
@@ -82,14 +81,16 @@ public class SpamDetection extends ListenerAdapter {
             assert mutedRole != null;
             event.getGuild().addRoleToMember(userId, mutedRole).queue();
 
-            CommandHelper.deleteSpammerMessages(event,userId);
+
             CommandHelper.logUserMute(sanction);
 
             event.getChannel().sendMessage("Du wurdest aufgrund verdächtigem Verhalten durch den Bot **gemutet** " + userAsMention + ".").queue();
 
             Objects.requireNonNull(event.getGuild().getTextChannelById(Config.getInstance().getChannel().getLogChannel().getIdLong()))
-                    .sendMessage("User " + Objects.requireNonNull(event.getMember()).getAsMention() + "wurde wegen Spam **gemutet** " + "\n**(10 Nachrichten in weniger als 30 Sekunden in " + event.getChannel() + " gespammt)**")
+                    .sendMessage("User " + Objects.requireNonNull(event.getMember()).getAsMention() + "wurde wegen Spam **gemutet** " + "\n(10 inhaltlich identische Nachrichten in weniger als 30 Sekunden in " + event.getChannel().getAsMention() + " gespamt)")
                     .queue();
+
+            CommandHelper.deleteSpammerMessages(event,userId);
         }
 
 
