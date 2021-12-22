@@ -5,9 +5,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import tech.goodquestion.lembot.entity.OccurredException;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public final class QueryHelper {
 
@@ -33,6 +31,8 @@ public final class QueryHelper {
     public static final String NEXT_HIGHER_USER_AMOUNT_BUMPS = "SELECT id_discord, number_bumps FROM user_bump WHERE number_bumps > ? ORDER BY number_bumps, username LIMIT 1";
     public static final List<String> adminsAsMention = new ArrayList<>();
     public static final List<String> moderatorsAsMention = new ArrayList<>();
+    public static final List<Long> messagesIds = new ArrayList<>();
+    public static String LAST_MESSAGES_IDs = "SELECT id_channel, channel.id_message FROM `channel` INNER JOIN user_message_content ON channel.id_message = user_message_content.id_message WHERE user_message_content.id_discord = ? AND posted_at >= NOW() - INTERVAL 1 MINUTE ORDER BY posted_at LIMIT 10;";
 
     private QueryHelper() {
 
@@ -89,7 +89,7 @@ public final class QueryHelper {
             }
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
-            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
         }
 
         return nextBumpTime;
@@ -108,7 +108,7 @@ public final class QueryHelper {
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
 
-            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
         }
 
         return minutesBeforeBump;
@@ -120,7 +120,7 @@ public final class QueryHelper {
     }
 
 
-    public static boolean isActiveUserRecord(int approximatePresentMember) {
+    public static boolean isActiveUserRecord(final int approximatePresentMember) {
 
 
         try (Connection connection = DatabaseConnector.openConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(ACTIVE_USER_RECORD)) {
@@ -138,12 +138,12 @@ public final class QueryHelper {
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
 
-            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
         }
         return false;
     }
 
-    public static boolean isSpammer(long userId, String messageContent) {
+    public static boolean isSpammer(final long userId, final String messageContent) {
 
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(SPAM_VERIFICATION)) {
 
@@ -168,7 +168,7 @@ public final class QueryHelper {
     }
 
 
-    public static void deleteSpammerMessages(GuildMessageReceivedEvent event, long userId, String messageContent) {
+    public static void deleteScammerMessages(final GuildMessageReceivedEvent event, final long userId, final String messageContent) {
 
 
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(SPAM_DATA)) {
@@ -191,13 +191,12 @@ public final class QueryHelper {
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
 
-            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
         }
 
-        event.getMessage().delete().queue();
     }
 
-    public static boolean areToManyMessages(long userId, String messageContent) {
+    public static boolean areToManyMessages(final long userId, final String messageContent) {
 
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(AMOUNT_SPAM_MESSAGES)) {
 
@@ -218,12 +217,36 @@ public final class QueryHelper {
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
 
-            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
         }
         return false;
     }
 
-    public static boolean isHopper(long userId) {
+
+    static List<Long> getIdsLastMessages(final long userId) {
+
+
+        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(LAST_MESSAGES_IDs)) {
+
+            preparedStatement.setLong(1, userId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                messagesIds.add(resultSet.getLong(2));
+
+
+            }
+
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
+
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
+        }
+        return messagesIds;
+    }
+    public static boolean isHopper(final long userId) {
 
 
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(HOPPING_CHECK)) {
@@ -244,7 +267,7 @@ public final class QueryHelper {
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
 
-            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
         }
         return false;
 
@@ -268,7 +291,7 @@ public final class QueryHelper {
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
 
-            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
         }
         return 0;
     }
@@ -281,7 +304,7 @@ public final class QueryHelper {
 
     }
 
-    public static List<String> getStaffAsMention(String adminIds, List<String> adminsAsMention) {
+    public static List<String> getStaffAsMention(final String adminIds, final List<String> adminsAsMention) {
         try (Connection connection = DatabaseConnector.openConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(adminIds)) {
 
 
@@ -294,7 +317,7 @@ public final class QueryHelper {
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
 
-            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
         }
 
         return adminsAsMention;

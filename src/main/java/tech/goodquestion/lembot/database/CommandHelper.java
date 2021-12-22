@@ -3,6 +3,7 @@ package tech.goodquestion.lembot.database;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import tech.goodquestion.lembot.entity.InviteTrackingData;
 import tech.goodquestion.lembot.entity.OccurredException;
 import tech.goodquestion.lembot.entity.Sanction;
@@ -13,7 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public final class CommandsHelper {
+public final class CommandHelper {
 
     private static final String INSERT_USER_STATUS = "INSERT INTO user_status (id_discord, user_tag, status) VALUES (?,?,?);";
     private static final String INSERT_MEMBER_AMOUNT = "INSERT INTO number_member (total_member) VALUES (?);";
@@ -32,9 +33,9 @@ public final class CommandsHelper {
     public static final String REACTION_LOG = "INSERT INTO user_reaction (id, id_message, id_discord, reaction) VALUES (NULL,?,?,?);";
     public static final String EXCEPTION_LOG = "INSERT INTO exception (id_exception, occurred_in, type, details) VALUES (NULL,?,?,?);";
     public static final String INVITE_TRACKING_LOG = "INSERT INTO invite_tracking (id, url, used_by, invited_by, amount) VALUES (NULL,?,?,?,?);";
-    private static final String CLASS_NAME = CommandsHelper.class.getName();
+    private static final String CLASS_NAME = CommandHelper.class.getName();
 
-    private CommandsHelper(){
+    private CommandHelper(){
 
     }
 
@@ -64,7 +65,7 @@ public final class CommandsHelper {
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
 
-            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
         }
     }
 
@@ -203,7 +204,7 @@ public final class CommandsHelper {
 
             System.out.println(sqlException.getMessage());
 
-            logException(OccurredException.getOccurredExceptionData(sqlException,CommandsHelper.class.getName()));
+            logException(OccurredException.getOccurredExceptionData(sqlException, CommandHelper.class.getName()));
         }
     }
 
@@ -223,7 +224,22 @@ public final class CommandsHelper {
 
             System.out.println(sqlException.getMessage());
 
-            logException(OccurredException.getOccurredExceptionData(sqlException,CommandsHelper.class.getName()));
+            logException(OccurredException.getOccurredExceptionData(sqlException, CommandHelper.class.getName()));
+        }
+
+    }
+
+    public static void deleteSpammerMessages(final GuildMessageReceivedEvent event, final long userId) {
+
+        QueryHelper.getIdsLastMessages(userId);
+
+        for (long messageId : QueryHelper.messagesIds) {
+
+            final long channelId = event.getChannel().getIdLong();
+
+            event.getGuild().getTextChannelById(channelId)
+                    .deleteMessageById(messageId)
+                    .complete();
         }
 
     }

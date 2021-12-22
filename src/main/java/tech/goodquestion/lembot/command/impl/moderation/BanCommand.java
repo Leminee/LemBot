@@ -3,7 +3,7 @@ package tech.goodquestion.lembot.command.impl.moderation;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
-import tech.goodquestion.lembot.database.CommandsHelper;
+import tech.goodquestion.lembot.database.CommandHelper;
 import tech.goodquestion.lembot.entity.Sanction;
 import tech.goodquestion.lembot.entity.SanctionType;
 import tech.goodquestion.lembot.lib.EmbedColorHelper;
@@ -30,7 +30,7 @@ public class BanCommand extends UserBanishCommand {
 
         originMessage.getChannel().sendMessage(confirmation.build()).queue();
 
-        CommandsHelper.logUserBan(sanction);
+        CommandHelper.logUserBan(sanction);
 
     }
 

@@ -2,12 +2,11 @@ package tech.goodquestion.lembot.event;
 
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import tech.goodquestion.lembot.config.Config;
-import tech.goodquestion.lembot.database.CommandsHelper;
+import tech.goodquestion.lembot.database.CommandHelper;
 import tech.goodquestion.lembot.database.QueryHelper;
 import tech.goodquestion.lembot.entity.Sanction;
 
@@ -42,19 +41,24 @@ public class SpamDetection extends ListenerAdapter {
 
         if (QueryHelper.isSpammer(userId, messageContent)) {
 
-            QueryHelper.deleteSpammerMessages(event, userId, messageContent);
+            disconnect(member);
+
+            QueryHelper.deleteScammerMessages(event, userId, messageContent);
+
 
             for (final Role role : userRoles) {
 
                 event.getGuild().removeRoleFromMember(userId, role).queue();
             }
 
+
+
             final Role mutedRole = Config.getInstance().getRole().getMuteRole();
 
             assert mutedRole != null;
             event.getGuild().addRoleToMember(userId, mutedRole).queue();
 
-            CommandsHelper.logUserMute(sanction);
+            CommandHelper.logUserMute(sanction);
             event.getChannel().sendMessage("Du wurdest aufgrund verdächtigem Verhalten durch den Bot **gemutet** " + userAsMention + ".").queue();
 
 
@@ -62,6 +66,8 @@ public class SpamDetection extends ListenerAdapter {
 
         if (QueryHelper.areToManyMessages(userId, messageContent)) {
 
+            disconnect(member);
+
             for (final Role role : userRoles) {
 
                 event.getGuild().removeRoleFromMember(userId, role).queue();
@@ -71,13 +77,21 @@ public class SpamDetection extends ListenerAdapter {
 
             assert mutedRole != null;
             event.getGuild().addRoleToMember(userId, mutedRole).queue();
-            final List<Message> messagesToDelete = event.getMessage().getChannel().getHistory().retrievePast(10).complete();
 
-            CommandsHelper.logUserMute(sanction);
+            CommandHelper.deleteSpammerMessages(event,userId);
+            CommandHelper.logUserMute(sanction);
 
-            event.getChannel().deleteMessages(messagesToDelete).queue();
             event.getChannel().sendMessage("Du wurdest aufgrund verdächtigem Verhalten durch den Bot **gemutet** " + userAsMention + ".").queue();
         }
 
+
+    }
+
+
+    private void disconnect(Member member) {
+
+        if (member.getVoiceState().inVoiceChannel()) {
+            member.getGuild().kickVoiceMember(member).queue();
+        }
     }
 }

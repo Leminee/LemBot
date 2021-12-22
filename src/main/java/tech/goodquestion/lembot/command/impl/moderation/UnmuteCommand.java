@@ -7,7 +7,7 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.config.Config;
-import tech.goodquestion.lembot.database.CommandsHelper;
+import tech.goodquestion.lembot.database.CommandHelper;
 import tech.goodquestion.lembot.database.DatabaseConnector;
 import tech.goodquestion.lembot.entity.OccurredException;
 import tech.goodquestion.lembot.lib.EmbedColorHelper;
@@ -75,7 +75,7 @@ public class UnmuteCommand implements IBotCommand {
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
 
-            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, this.getClass().getName()));
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, this.getClass().getName()));
         }
 
     }

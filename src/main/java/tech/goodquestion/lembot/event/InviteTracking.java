@@ -14,7 +14,7 @@ import net.dv8tion.jda.api.events.guild.invite.GuildInviteDeleteEvent;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import tech.goodquestion.lembot.config.Config;
-import tech.goodquestion.lembot.database.CommandsHelper;
+import tech.goodquestion.lembot.database.CommandHelper;
 import tech.goodquestion.lembot.entity.InviteData;
 import tech.goodquestion.lembot.entity.InviteTrackingData;
 import tech.goodquestion.lembot.lib.EmbedColorHelper;
@@ -88,7 +88,7 @@ public class InviteTracking extends ListenerAdapter {
                         .sendMessage(embedBuilder.build())
                         .queue();
 
-                CommandsHelper.logInviteLinkTracking(inviteTrackingData);
+                CommandHelper.logInviteLinkTracking(inviteTrackingData);
                 break;
             }
         });

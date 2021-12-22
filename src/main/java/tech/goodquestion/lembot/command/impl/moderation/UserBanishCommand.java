@@ -10,7 +10,7 @@ import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.config.Config;
-import tech.goodquestion.lembot.database.CommandsHelper;
+import tech.goodquestion.lembot.database.CommandHelper;
 import tech.goodquestion.lembot.entity.OccurredException;
 import tech.goodquestion.lembot.entity.Sanction;
 import tech.goodquestion.lembot.entity.SanctionType;
@@ -130,7 +130,7 @@ public abstract class UserBanishCommand implements IBotCommand {
                     .complete();
         }catch (ErrorResponseException errorResponseException) {
             System.out.println(errorResponseException.getMessage());
-            CommandsHelper.logException(OccurredException.getOccurredExceptionData(errorResponseException,UserBanishCommand.class.getName()));
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(errorResponseException,UserBanishCommand.class.getName()));
         }
     }
 }

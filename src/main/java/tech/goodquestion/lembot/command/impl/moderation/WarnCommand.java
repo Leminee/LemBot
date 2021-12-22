@@ -4,7 +4,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import tech.goodquestion.lembot.config.Config;
-import tech.goodquestion.lembot.database.CommandsHelper;
+import tech.goodquestion.lembot.database.CommandHelper;
 import tech.goodquestion.lembot.entity.Sanction;
 import tech.goodquestion.lembot.entity.SanctionType;
 import tech.goodquestion.lembot.lib.EmbedColorHelper;
@@ -26,7 +26,7 @@ public class WarnCommand extends UserBanishCommand {
                 "**" + " verwarnt." + "**" + "\n Angegebener Grund: " + sanction.reason);
         originMsg.getChannel().sendMessage(confirmation.build()).queue();
 
-        CommandsHelper.logUserWarn(sanction);
+        CommandHelper.logUserWarn(sanction);
 
         final String performedSanction = "verwarnt";
         final SanctionType sanctionType = SanctionType.VERWARNUNG;

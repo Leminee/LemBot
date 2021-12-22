@@ -8,7 +8,7 @@ public class MemberLeftStorage extends ListenerAdapter {
 
     @Override
     public void onGuildMemberRemove(@NotNull GuildMemberRemoveEvent event) {
-        CommandsHelper.logUserLeave(event.getUser());
-        CommandsHelper.logMemberAmount(event.getGuild());
+        CommandHelper.logUserLeave(event.getUser());
+        CommandHelper.logMemberAmount(event.getGuild());
     }
 }

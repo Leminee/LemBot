@@ -5,7 +5,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.Role;
 import tech.goodquestion.lembot.config.Config;
-import tech.goodquestion.lembot.database.CommandsHelper;
+import tech.goodquestion.lembot.database.CommandHelper;
 import tech.goodquestion.lembot.entity.Sanction;
 import tech.goodquestion.lembot.entity.SanctionType;
 import tech.goodquestion.lembot.lib.EmbedColorHelper;
@@ -29,8 +29,8 @@ public class MuteCommand extends UserBanishCommand {
 
         toBanish.getGuild().addRoleToMember(sanction.userId, Config.getInstance().getRole().getMuteRole()).queue();
 
-        if (Objects.requireNonNull(toBanish.getVoiceState()).inVoiceChannel()) {
-            toBanish.deafen(true).queue();
+        if (toBanish.getVoiceState().inVoiceChannel()) {
+            toBanish.getGuild().kickVoiceMember(toBanish).queue();
         }
 
 
@@ -41,7 +41,7 @@ public class MuteCommand extends UserBanishCommand {
                 + "**" + " gemutet." + "**" + "\n Angegebener Grund: " + sanction.reason);
         originMsg.getChannel().sendMessage(confirmation.build()).queue();
 
-        CommandsHelper.logUserMute(sanction);
+        CommandHelper.logUserMute(sanction);
 
         final String performedSanction = "gemutet";
         final SanctionType sanctionType = SanctionType.MUTE;

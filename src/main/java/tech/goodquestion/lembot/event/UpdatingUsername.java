@@ -2,7 +2,7 @@ package tech.goodquestion.lembot.event;
 
 import net.dv8tion.jda.api.events.guild.member.update.GuildMemberUpdateNicknameEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import tech.goodquestion.lembot.database.CommandsHelper;
+import tech.goodquestion.lembot.database.CommandHelper;
 
 public class UpdatingUsername extends ListenerAdapter {
 
@@ -23,9 +23,9 @@ public class UpdatingUsername extends ListenerAdapter {
             newUsername = event.getMember().getUser().getName();
         }
 
-        CommandsHelper.logUpdatedUsername(userId, userTag, oldUsername, newUsername);
-        CommandsHelper.adjustUsername(CommandsHelper.ADJUSTING_NEW_USERNAME_IN_BUMPER,newUsername,userId);
-        CommandsHelper.adjustUsername(CommandsHelper.ADJUSTING_NEW_USERNAME_IN_MESSAGE,newUsername,userId);
+        CommandHelper.logUpdatedUsername(userId, userTag, oldUsername, newUsername);
+        CommandHelper.adjustUsername(CommandHelper.ADJUSTING_NEW_USERNAME_IN_BUMPER,newUsername,userId);
+        CommandHelper.adjustUsername(CommandHelper.ADJUSTING_NEW_USERNAME_IN_MESSAGE,newUsername,userId);
 
     }
 }

@@ -19,7 +19,7 @@ public class ActiveUsers extends ListenerAdapter {
         final String userTag = event.getMember().getUser().getAsTag();
         final long userId = event.getUser().getIdLong();
 
-        CommandsHelper.logMemberStatusChange(userId, userTag, newStatus);
+        CommandHelper.logMemberStatusChange(userId, userTag, newStatus);
 
         final int approximatePresentMember = event.getGuild().retrieveMetaData().complete().getApproximatePresences();
 
@@ -32,6 +32,6 @@ public class ActiveUsers extends ListenerAdapter {
 
         }
 
-        CommandsHelper.logActiveMemberCount(approximatePresentMember);
+        CommandHelper.logActiveMemberCount(approximatePresentMember);
     }
 }

@@ -8,7 +8,7 @@ import org.jsoup.select.Elements;
 import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.config.Config;
-import tech.goodquestion.lembot.database.CommandsHelper;
+import tech.goodquestion.lembot.database.CommandHelper;
 import tech.goodquestion.lembot.database.DatabaseConnector;
 import tech.goodquestion.lembot.entity.OccurredException;
 import tech.goodquestion.lembot.entity.UserData;
@@ -84,7 +84,7 @@ public final class Helper {
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
 
-            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, Helper.class.getName()));
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, Helper.class.getName()));
         }
 
     }
@@ -169,7 +169,7 @@ public final class Helper {
         } catch (SQLException sqlException) {
 
             System.out.println(sqlException.getMessage());
-            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, Helper.class.getName()));
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, Helper.class.getName()));
         }
     }
 

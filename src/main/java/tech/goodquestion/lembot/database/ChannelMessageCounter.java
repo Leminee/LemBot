@@ -34,7 +34,7 @@ public class ChannelMessageCounter extends ListenerAdapter {
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
-            CommandsHelper.logException(OccurredException.getOccurredExceptionData(sqlException, this.getClass().getName()));
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, this.getClass().getName()));
         }
     }
 
