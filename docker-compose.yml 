@@ -5,10 +5,9 @@ services:
     image: lem/lembot
     restart: always
     tty: true
-    config_file: lembot.config.yml
+    config_file: example.config.yml
     depends_on:
       - db
-      - redis
     networks:
       - lembot
 
@@ -19,12 +18,5 @@ services:
       - ./data/mariadb:/var/lib/mysql
     networks:
       - lembot
-
-  redis:
-    image: redis:alpine
-    restart: always
-    networks:
-      - lembot
-
 networks:
   lembot:
