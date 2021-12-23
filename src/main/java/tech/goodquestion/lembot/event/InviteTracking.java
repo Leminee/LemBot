@@ -62,7 +62,7 @@ public class InviteTracking extends ListenerAdapter {
                 cachedInvite.incrementUses();
 
                 EmbedBuilder embedBuilder = new EmbedBuilder();
-                String title = "Einladungslinks-Tracking";
+                String title = "Einladungslink-Tracking";
 
                 final String usedBy = user.getAsTag();
                 final String url = retrievedInvite.getUrl();

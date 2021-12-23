@@ -21,15 +21,15 @@ public class WelcomingMemberJoin extends ListenerAdapter {
 
                 """;
         final String avatarUrl = event.getUser().getEffectiveAvatarUrl();
-        final String newMember = event.getMember().getAsMention();
+        final String newMemberAsMention = event.getMember().getAsMention();
 
         final String output = welcomeMessage
-                .replace("[member]", newMember)
+                .replace("[member]", newMemberAsMention)
                 .replace("[channel]", Config.getInstance().getChannel().getSelfRolesChannel().getAsMention());
 
         Config.getInstance().getChannel().getNewArrivalsChannel().sendMessage(output).queue();
 
-        Config.getInstance().getChannel().getLogChannel().sendMessage("---> User " + newMember + " ist am " + Helper.getGermanDateTime() + " **gejoint**").queue();
+        Config.getInstance().getChannel().getLogChannel().sendMessage(":arrow_up: User " + newMemberAsMention + " ist am " + Helper.getGermanDateTime() + " **gejoint**").queue();
         Config.getInstance().getChannel().getLogChannel().sendMessage(avatarUrl).queue();
 
     }

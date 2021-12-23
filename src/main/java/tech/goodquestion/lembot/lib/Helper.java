@@ -203,7 +203,7 @@ public final class Helper {
         return LocalDateTime.now().getDayOfMonth()
                 + "-" + LocalDateTime.now().getMonth().getValue()
                 + "-" + LocalDateTime.now().getYear()
-                + "-" + LocalDateTime.now().getHour()
+                + "_" + LocalDateTime.now().getHour()
                 + ":" + LocalDateTime.now().getMinute();
     }
 
