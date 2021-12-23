@@ -13,9 +13,10 @@ public class InviteLinkDeletion extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReceived(final GuildMessageReceivedEvent event) {
+
        final String userMessage = event.getMessage().getContentRaw();
 
-        if (!userMessage.contains("https://discord.gg") || !userMessage.contains("https://discord.com/invite/") || !userMessage.contains("https://discord.io/")) return;
+        if (!(userMessage.contains("https://discord.gg") || userMessage.contains("https://discord.com/invite/") || userMessage.contains("https://discord.io/"))) return;
 
         final long authorId = event.getAuthor().getIdLong();
         final long channelId = event.getChannel().getIdLong();

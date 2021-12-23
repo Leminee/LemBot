@@ -30,7 +30,7 @@ public class ServerData implements IBotCommand {
                 .setColor(Color.decode(EmbedColorHelper.GOOD_QUESTION))
                 .setDescription("Informationen zu **GoodQuestion**")
                 .setThumbnail("https://cdn.discordapp.com/attachments/919074434021736507/920552764784914472/logoqg1_1.gif")
-                .addField("Servermitglieder", String.valueOf(Config.getInstance().getGuild().getMembers().size()), true)
+                .addField("Servermitglieder", String.valueOf(Config.getInstance().getGuild().getMemberCount()), true)
                 .addField("Erstellungsdatum", getTimeCreated(), true)
                 .addField("Nachrichten", String.valueOf(QueryHelper.getMessagesCount()), true)
                 .addField("Boosts", String.valueOf(Config.getInstance().getGuild().getBoostCount()), true)
