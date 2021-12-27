@@ -64,10 +64,10 @@ public class InviteTracking extends ListenerAdapter {
                 EmbedBuilder embedBuilder = new EmbedBuilder();
                 String title = "Einladungslinks-Tracking";
 
-                final String usedBy = user.getAsTag();
                 final String url = retrievedInvite.getUrl();
                 final int uses = retrievedInvite.getUses();
-                final String invitedBy = Objects.requireNonNull(retrievedInvite.getInviter()).getAsTag();
+                final String invitedBy = Objects.requireNonNull(retrievedInvite.getInviter()).getAsMention();
+                final String usedBy = user.getAsMention();
 
                 embedBuilder.setTitle(title)
                         .setColor(Color.decode(EmbedColorHelper.INVITE_TRACKING))

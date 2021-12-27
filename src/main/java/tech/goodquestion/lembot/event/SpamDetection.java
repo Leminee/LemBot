@@ -58,7 +58,7 @@ public class SpamDetection extends ListenerAdapter {
             event.getGuild().addRoleToMember(userId, mutedRole).queue();
 
             CommandHelper.logUserMute(sanction);
-            event.getChannel().sendMessage("Du wurdest aufgrund verdächtigem Verhalten durch den Bot **gemutet** " + userAsMention + ".").queue();
+            event.getChannel().sendMessage(":mute: Du wurdest aufgrund verdächtigem Verhalten durch den Bot **gemutet** " + userAsMention + ".").queue();
 
             Objects.requireNonNull(event.getGuild().getTextChannelById(Config.getInstance().getChannel().getLogChannel().getIdLong()))
                     .sendMessage(":mute: User " + Objects.requireNonNull(event.getMember()).getAsMention() + " wurde wegen Spam **gemutet** " + "\n(3 inhaltich identische Nachrichten in weniger als 30 Sekunden in mehrere Kanäle gespostet)")
@@ -84,7 +84,7 @@ public class SpamDetection extends ListenerAdapter {
 
             CommandHelper.logUserMute(sanction);
 
-            event.getChannel().sendMessage("Du wurdest aufgrund verdächtigem Verhalten durch den Bot **gemutet** " + userAsMention + ".").queue();
+            event.getChannel().sendMessage(":mute: Du wurdest aufgrund verdächtigem Verhalten durch den Bot **gemutet** " + userAsMention + ".").queue();
 
             Objects.requireNonNull(event.getGuild().getTextChannelById(Config.getInstance().getChannel().getLogChannel().getIdLong()))
                     .sendMessage(":mute: User " + Objects.requireNonNull(event.getMember()).getAsMention() + "wurde wegen Spam **gemutet** " + "\n(10 inhaltlich identische Nachrichten in weniger als 30 Sekunden in " + event.getChannel().getAsMention() + " gespamt)")
@@ -92,8 +92,6 @@ public class SpamDetection extends ListenerAdapter {
 
             CommandHelper.deleteSpammerMessages(event,userId);
         }
-
-
     }
 
     private void disconnect(Member member) {

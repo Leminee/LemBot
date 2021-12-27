@@ -39,8 +39,8 @@ public class Reminder extends ListenerAdapter {
 
         final String[] pingContent = {
                 "Jetzt kann wieder gebumpt werden " + bumperRole + " :grin:",
-                "Es ist wieder Zeit zu bumpen " + bumperRole + " :grin:",
-                "Bumpe den Server jetzt " + bumperRole + " :grin:"};
+                "Es ist wieder Zeit zu bumpen " + bumperRole + " :timer:",
+                "Bumpe den Server jetzt " + bumperRole + " :grinning:"};
 
        final Random random = new Random();
 

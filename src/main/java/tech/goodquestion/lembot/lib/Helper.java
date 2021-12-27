@@ -1,7 +1,9 @@
 package tech.goodquestion.lembot.lib;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -16,9 +18,12 @@ import tech.goodquestion.lembot.entity.UserData;
 import java.awt.*;
 import java.io.IOException;
 import java.sql.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -200,11 +205,13 @@ public final class Helper {
 
     public static String getGermanDateTime() {
 
-        return LocalDateTime.now().getDayOfMonth()
-                + "-" + LocalDateTime.now().getMonth().getValue()
-                + "-" + LocalDateTime.now().getYear()
-                + "_" + LocalDateTime.now().getHour()
-                + ":" + LocalDateTime.now().getMinute();
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy").withLocale(Locale.GERMAN);
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm").withLocale(Locale.GERMAN);
+        String dateNow = LocalDate.now().format(dateFormatter);
+        String timeNow = LocalTime.now().format(timeFormatter);
+
+        return dateNow + " um " + timeNow;
+
     }
 
 }

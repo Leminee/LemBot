@@ -7,12 +7,12 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.entity.OccurredException;
-import tech.goodquestion.lembot.lib.Helper;
 
 import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 public class AttachmentStorage extends ListenerAdapter {
 
@@ -54,7 +54,7 @@ public class AttachmentStorage extends ListenerAdapter {
     }
 
     private void saveLocally(final Message.Attachment attachment, final long userId, final Member member, final Message message) {
-        attachment.downloadToFile("attachments/" + getFileSenderAsTag(member, userId, message) + "_" + Helper.getGermanDateTime() + "_" + attachment.getFileName())
+        attachment.downloadToFile("attachments/" + getFileSenderAsTag(member, userId, message) + "_" + getGermanDateTimeForFileName() + "_" + attachment.getFileName())
                 .thenAccept(File::getName)
                 .exceptionally(t ->
                 {
@@ -73,5 +73,14 @@ public class AttachmentStorage extends ListenerAdapter {
         }
 
         return member.getUser().getAsTag();
+    }
+
+    private String getGermanDateTimeForFileName() {
+
+        return LocalDateTime.now().getDayOfMonth()
+                + "-" + LocalDateTime.now().getMonth().getValue()
+                + "-" + LocalDateTime.now().getYear()
+                + "_" + LocalDateTime.now().getHour()
+                + ":" + LocalDateTime.now().getMinute();
     }
 }
