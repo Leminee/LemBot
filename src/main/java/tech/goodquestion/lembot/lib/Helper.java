@@ -118,11 +118,11 @@ public final class Helper {
         channel.sendMessage(numberInfo.build()).queue();
     }
 
-    public static void scheduleCommand(final String command,final int delay, final long period, final TimeUnit timeUnit) {
+    public static void scheduleCommand(final String command,final long delay, final long period, final TimeUnit timeUnit) {
         scheduleCommand(command, delay, period, timeUnit, new String[0]);
     }
 
-    public static void scheduleCommand(final String command, final int delay, final long period, final TimeUnit timeUnit, final String[] args) {
+    public static void scheduleCommand(final String command, final long delay, final long period, final TimeUnit timeUnit, final String[] args) {
 
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
@@ -213,5 +213,7 @@ public final class Helper {
         return dateNow + " um " + timeNow;
 
     }
+
+
 
 }

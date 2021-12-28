@@ -6,7 +6,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import tech.goodquestion.lembot.lib.Helper;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
 
@@ -15,14 +15,15 @@ public class TopMonthlyNotifier extends ListenerAdapter {
     @Override
     public void onReady(@NotNull final ReadyEvent event) {
 
-        final int dayOfCurrentMonth = LocalDate.now().getDayOfMonth();
-        final int daysBeforeNextMonth = LocalDate.now().getMonth().maxLength() - dayOfCurrentMonth;
+        final int dayOfCurrentMonth = LocalDateTime.now().getDayOfMonth();
+        final int daysBeforeNextMonth = LocalDateTime.now().getMonth().maxLength() - dayOfCurrentMonth;
+        final long daysBeforeNextMonthInSeconds = daysBeforeNextMonth * 86400;
 
-        final LocalDate firstDayThisMonth = LocalDate.now().withDayOfMonth(1);
-        final LocalDate firstDayNextMonth = firstDayThisMonth.plusMonths(1);
-        final long period = ChronoUnit.DAYS.between(firstDayThisMonth, firstDayNextMonth);
+        final LocalDateTime firstDayThisMonth = LocalDateTime.now();
+        final LocalDateTime firstDayNextMonth = firstDayThisMonth.plusMonths(1);
+        final long period = ChronoUnit.SECONDS.between(firstDayThisMonth, firstDayNextMonth);
 
-        Helper.scheduleCommand("topmb", daysBeforeNextMonth, period, TimeUnit.DAYS);
-        Helper.scheduleCommand("topmf", daysBeforeNextMonth, period, TimeUnit.DAYS);
+        Helper.scheduleCommand("topmb", daysBeforeNextMonthInSeconds, period, TimeUnit.SECONDS);
+        Helper.scheduleCommand("topmf", daysBeforeNextMonthInSeconds, period, TimeUnit.SECONDS);
     }
 }
