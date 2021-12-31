@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Erstellungszeit: 22. Dez 2021 um 21:44
+-- Erstellungszeit: 01. Jan 2022 um 00:18
 -- Server-Version: 10.3.31-MariaDB-0+deb10u1
 -- PHP-Version: 7.4.26
 
@@ -170,7 +170,7 @@ CREATE TABLE `updated_message` (
 CREATE TABLE `updated_username` (
   `id` bigint(20) NOT NULL,
   `id_discord` bigint(20) NOT NULL,
-  `user_tag` varchar(255) NOT NULL,
+  `user_tag` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `old_username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `new_username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -254,7 +254,7 @@ CREATE TABLE `user_leave` (
 
 CREATE TABLE `user_message` (
   `id_discord` bigint(20) NOT NULL,
-  `username` varchar(50) NOT NULL,
+  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `number_message` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

@@ -1,6 +1,6 @@
 package tech.goodquestion.lembot.event;
 
-import net.dv8tion.jda.api.events.user.update.UserUpdateOnlineStatusEvent;
+import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import tech.goodquestion.lembot.config.Config;
@@ -16,7 +16,8 @@ public class HappyNewYear extends ListenerAdapter {
 
     public static final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
 
-    public void onUserUpdateOnlineStatus(final @NotNull UserUpdateOnlineStatusEvent event) {
+    @Override
+    public void onReady(final @NotNull ReadyEvent event) {
 
 
         final boolean isSylvester = LocalDateTime.now().getMonth().getValue() == 12 && LocalDateTime.now().getDayOfMonth() == 31;
@@ -24,7 +25,7 @@ public class HappyNewYear extends ListenerAdapter {
         if (!isSylvester) return;
 
         final LocalDateTime localDateTimeNow = LocalDateTime.now();
-        final LocalDateTime localDateTimeNextYear = LocalDateTime.of(2022, 1, 1, 0, 0, 0);
+        final LocalDateTime localDateTimeNextYear = LocalDateTime.of(2021, 12, 31, 23, 59, 49);
         final long delay = ChronoUnit.SECONDS.between(localDateTimeNow, localDateTimeNextYear);
 
         final Runnable runnable = () -> {
@@ -38,7 +39,11 @@ public class HappyNewYear extends ListenerAdapter {
                 }
                 Objects.requireNonNull(Config.getInstance().getChannel().getGeneralChannel()).sendMessage(String.valueOf(i)).queue();
             }
-            Objects.requireNonNull(Config.getInstance().getChannel().getGeneralChannel()).sendMessage("https://happynewyear2021status.com/wp-content/uploads/2021/11/new-year-gifs-2022-1.gif").queue();
+
+            final String gif = "https://happynewyear2021status.com/wp-content/uploads/2021/11/new-year-gifs-2022-1.gif";
+            Objects.requireNonNull(Config.getInstance().getChannel().getGeneralChannel())
+                    .sendMessage(gif)
+                    .queue();
         };
 
         scheduledExecutorService.schedule(runnable, delay, TimeUnit.SECONDS);
