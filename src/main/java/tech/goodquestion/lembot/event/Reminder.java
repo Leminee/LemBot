@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.lib.Helper;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Executors;
@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Reminder extends ListenerAdapter {
 
-    private static final List<ScheduledFuture<?>> tasks = new LinkedList<>();
+    private static final List<ScheduledFuture<?>> tasks = new ArrayList<>();
 
     @Override
     public void onGuildMessageReceived(@NotNull final GuildMessageReceivedEvent event) {

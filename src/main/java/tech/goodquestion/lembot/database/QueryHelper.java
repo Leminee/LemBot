@@ -33,6 +33,8 @@ public final class QueryHelper {
     public static final List<String> moderatorsAsMention = new ArrayList<>();
     public static final List<Long> messagesIds = new ArrayList<>();
     public static String LAST_MESSAGES_IDs = "SELECT id_channel, channel.id_message FROM `channel` INNER JOIN user_message_content ON channel.id_message = user_message_content.id_message WHERE user_message_content.id_discord = ? AND posted_at >= NOW() - INTERVAL 1 MINUTE ORDER BY posted_at LIMIT 10;";
+    public static String FIRST_CONTENT_AFTER_UPDATING_MESSAGE = "SELECT content FROM user_message_content WHERE id_message = ? ";
+    public static String UPDATED_MESSAGE_LAST_CONTENT = "SELECT content FROM updated_message WHERE id_message = ? ORDER BY updated_at DESC LIMIT 1 ";
 
     private QueryHelper() {
 
@@ -279,6 +281,7 @@ public final class QueryHelper {
     }
 
     public static int getServerData(String serverData) {
+
         try (Connection connection = DatabaseConnector.openConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(serverData)) {
 
             if (resultSet.next()) {
@@ -328,5 +331,36 @@ public final class QueryHelper {
 
         return getStaffAsMention(MODERATORS_MENTIONED, moderatorsAsMention);
 
+    }
+
+    public static String getUpdatedMessageOldContent(final long updatedMessageId, String query) {
+
+        String oldContent = "";
+
+        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setLong(1, updatedMessageId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+           if (resultSet.next()) {
+
+                oldContent = resultSet.getString(1);
+
+            }
+
+           else {
+
+               return getUpdatedMessageOldContent(updatedMessageId, FIRST_CONTENT_AFTER_UPDATING_MESSAGE);
+           }
+
+
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
+
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
+        }
+
+        return oldContent;
     }
 }

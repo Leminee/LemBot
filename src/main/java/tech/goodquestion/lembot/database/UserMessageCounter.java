@@ -23,7 +23,7 @@ public class UserMessageCounter extends ListenerAdapter {
 
         int numberMessage = 1;
 
-        if (userMessageContent.isEmpty()) return;
+        if (userMessageContent.isEmpty() || event.getAuthor().isBot()) return;
 
         Connection connection = DatabaseConnector.openConnection();
        final String insertMessageData = "INSERT INTO user_message (id_discord, username, number_message) VALUES (?,?,?);";

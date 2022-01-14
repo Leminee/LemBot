@@ -19,6 +19,7 @@ public final class EmbedColorHelper {
     public static final String TOP_CHANNELS = "0x808080";
     public static final String INVITE_TRACKING = "0x2e493d";
     public static final String DELETED= "0xa22d2c";
+    public static final String UPDATED = "0x968b0e";
 
 
     private EmbedColorHelper(){
