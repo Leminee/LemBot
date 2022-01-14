@@ -85,7 +85,7 @@ public class BotMain {
         jda.addEventListener(new MemberLeftStorage());
         jda.addEventListener(new AddingRole());
         jda.addEventListener(new SpamDetection());
-        jda.addEventListener(new VoiceCreation());
+        jda.addEventListener(new VoiceAutoCreation());
         jda.addEventListener(new AttachmentStorage());
         jda.addEventListener(new RoleEvents());
         jda.addEventListener(new InviteTracking());

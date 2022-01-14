@@ -12,8 +12,6 @@ public class WelcomingMemberJoin extends ListenerAdapter {
     @Override
     public void onGuildMemberJoin(@NotNull final GuildMemberJoinEvent event) {
 
-        if (event.getUser().isBot()) return;
-
         final String welcomeMessage = """
                 Hallo [member], Willkommen auf **GoodQuestion (GQ)**!
 
@@ -23,11 +21,11 @@ public class WelcomingMemberJoin extends ListenerAdapter {
         final String avatarUrl = event.getUser().getEffectiveAvatarUrl();
         final String newMemberAsMention = event.getMember().getAsMention();
 
-        final String output = welcomeMessage
+        final String personalizedWelcomeMessage = welcomeMessage
                 .replace("[member]", newMemberAsMention)
                 .replace("[channel]", Config.getInstance().getChannel().getSelfRolesChannel().getAsMention());
 
-        Config.getInstance().getChannel().getNewArrivalsChannel().sendMessage(output).queue();
+        Config.getInstance().getChannel().getNewArrivalsChannel().sendMessage(personalizedWelcomeMessage).queue();
 
         Config.getInstance().getChannel().getLogChannel().sendMessage(":arrow_right: User " + newMemberAsMention + " ist am " + Helper.getGermanDateTime() + " **gejoint**").queue();
         Config.getInstance().getChannel().getLogChannel().sendMessage(avatarUrl).queue();

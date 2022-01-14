@@ -8,13 +8,17 @@ import org.jetbrains.annotations.NotNull;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.lib.Helper;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 public class Reminder extends ListenerAdapter {
+
+    private static final List<ScheduledFuture<?>> tasks = new LinkedList<>();
 
     @Override
     public void onGuildMessageReceived(@NotNull final GuildMessageReceivedEvent event) {
@@ -22,33 +26,44 @@ public class Reminder extends ListenerAdapter {
         final List<MessageEmbed> disBoardEmbed = event.getMessage().getEmbeds();
         final User embedAuthor = event.getAuthor();
 
-        if (Helper.isNotSuccessfulBump(disBoardEmbed, embedAuthor)) return;
+        if (Helper.isNotSuccessfulBump(disBoardEmbed,embedAuthor)) return;
 
         scheduleReminder();
+
+        if (tasks.size() > 1) {
+            for (int i = 1; i < tasks.size(); i++) {
+                tasks.get(i).cancel(false);
+            }
+        }
     }
 
-    public static void scheduleReminder() {
-        scheduleReminder(2, TimeUnit.HOURS);
+    private void scheduleReminder() {
+        final int reminderDelay = 2;
+        scheduleReminder(reminderDelay, TimeUnit.HOURS);
     }
 
-    public static void scheduleReminder(int delay, TimeUnit timeUnit) {
+    public static void scheduleReminder(final int delay, final TimeUnit timeUnit) {
 
         final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-        final String bumperRole = "<@&" + Config.getInstance().getRole().getBumpRoleId() + ">";
+        final String bumperRoleAsMention = "<@&" + Config.getInstance().getRole().getBumpRoleId() + ">";
 
         final String[] pingContent = {
-                "Jetzt kann wieder gebumpt werden " + bumperRole + " :grin:",
-                "Es ist wieder Zeit zu bumpen " + bumperRole + " :timer:",
-                "Bumpe den Server jetzt " + bumperRole + " :grinning:"};
+                "Jetzt kann wieder gebumpt werden " + bumperRoleAsMention + " :grin:",
+                "Es ist wieder Zeit zu bumpen " + bumperRoleAsMention + " :timer:",
+                "Bumpe den Server jetzt " + bumperRoleAsMention + " :grinning:"
+        };
 
-       final Random random = new Random();
+        final Random random = new Random();
 
         final Runnable ping = () -> {
             int randomNumber = random.nextInt(pingContent.length);
             Config.getInstance().getChannel().getBumpChannel().sendMessage(pingContent[randomNumber]).queue();
+            tasks.clear();
         };
 
-        scheduler.schedule(ping, delay, timeUnit);
+        ScheduledFuture<?> scheduledFuture = scheduler.schedule(ping, delay, timeUnit);
+        tasks.add(scheduledFuture);
+
     }
 }

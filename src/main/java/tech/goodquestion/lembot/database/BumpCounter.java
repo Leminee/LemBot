@@ -30,16 +30,16 @@ public class BumpCounter extends ListenerAdapter {
         if (Helper.isNotSuccessfulBump(disBoardEmbed, embedAuthor)) return;
 
         final String embedContent = message.getEmbeds().get(0).getDescription();
-        final Pattern p = Pattern.compile(pingedUser);
-        final Matcher matcher = p.matcher(Objects.requireNonNull(embedContent));
+        final Pattern pattern = Pattern.compile(pingedUser);
+        final Matcher matcher = pattern.matcher(Objects.requireNonNull(embedContent));
 
         if (!matcher.find()) return;
 
-        int bump = 1;
+        final int firstBump = 1;
         final String idPingedUser = matcher.group(1);
         final String pingedUserName = event.getJDA().retrieveUserById(idPingedUser).complete().getName();
 
-        Connection connection = DatabaseConnector.openConnection();
+        final Connection connection = DatabaseConnector.openConnection();
         final String userExists = "SELECT id_discord FROM user_bump WHERE id_discord = ? ";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(userExists)) {
@@ -62,7 +62,7 @@ public class BumpCounter extends ListenerAdapter {
                 PreparedStatement prepareStatementThree = connection.prepareStatement(bumpData);
                 prepareStatementThree.setString(1, idPingedUser);
                 prepareStatementThree.setString(2, pingedUserName);
-                prepareStatementThree.setInt(3, bump);
+                prepareStatementThree.setInt(3, firstBump);
                 prepareStatementThree.executeUpdate();
 
                 final String bumpTime = "INSERT INTO user_bump_time (id_user_bump_time, id_discord) VALUES (NULL,?)";

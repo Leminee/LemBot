@@ -10,10 +10,10 @@ import tech.goodquestion.lembot.config.Config;
 
 import java.util.Random;
 
-public class VoiceCreation extends ListenerAdapter {
+public class VoiceAutoCreation extends ListenerAdapter {
 
 
-    public static final String[] LEFT = {
+    private static final String[] LEFT = {
             "admiring",
             "adoring",
             "affectionate",
@@ -92,7 +92,7 @@ public class VoiceCreation extends ListenerAdapter {
             "zen",
     };
 
-    public static final String[] RIGHT = {
+    private static final String[] RIGHT = {
 
             // Muhammad ibn Jābir al-Ḥarrānī al-Battānī was a founding father of astronomy. https://en.wikipedia.org/wiki/Mu%E1%B8%A5ammad_ibn_J%C4%81bir_al-%E1%B8%A4arr%C4%81n%C4%AB_al-Batt%C4%81n%C4%AB
             "albattani",
@@ -252,9 +252,9 @@ public class VoiceCreation extends ListenerAdapter {
     final Random random = new Random();
 
     @Override
-    public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
+    public void onGuildVoiceJoin(@NotNull final GuildVoiceJoinEvent event) {
 
-        boolean areThereToManyCreatedVoice = event.getGuild().getVoiceChannels().size() >= 10;
+        final boolean areThereToManyCreatedVoice = event.getGuild().getVoiceChannels().size() >= 10;
 
         if (areThereToManyCreatedVoice) {
             return;
@@ -272,7 +272,7 @@ public class VoiceCreation extends ListenerAdapter {
     }
 
     @Override
-    public void onGuildVoiceLeave(@NotNull GuildVoiceLeaveEvent event) {
+    public void onGuildVoiceLeave(@NotNull final GuildVoiceLeaveEvent event) {
 
         final boolean isVoiceLeftEmpty = event.getChannelLeft().getMembers().size() == 0;
 
@@ -290,8 +290,8 @@ public class VoiceCreation extends ListenerAdapter {
             return;
         }
 
-        String randomlyCombinedVoiceName = LEFT[random.nextInt(LEFT.length)] + "_" + RIGHT[random.nextInt(RIGHT.length)];
-        Category voiceFunCategory = Config.getInstance().getCategory().getVoiceFunCategory();
+        final String randomlyCombinedVoiceName = LEFT[random.nextInt(LEFT.length)] + "_" + RIGHT[random.nextInt(RIGHT.length)];
+        final Category voiceFunCategory = Config.getInstance().getCategory().getVoiceFunCategory();
 
         final boolean isVoiceLeftEmpty = event.getChannelLeft().getMembers().size() == 0;
         final boolean wasVoiceJoinedEmpty = event.getChannelJoined().getMembers().size() == 1;
@@ -302,7 +302,7 @@ public class VoiceCreation extends ListenerAdapter {
             return;
         }
 
-        boolean wasVoiceJoinedNotEmpty = event.getChannelJoined().getMembers().size() >= 2;
+        final boolean wasVoiceJoinedNotEmpty = event.getChannelJoined().getMembers().size() >= 2;
 
         if (isVoiceLeftEmpty && wasVoiceJoinedNotEmpty) {
             event.getChannelLeft().delete().queue();

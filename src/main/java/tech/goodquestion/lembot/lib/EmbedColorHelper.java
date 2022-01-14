@@ -18,6 +18,7 @@ public final class EmbedColorHelper {
     public static final String FLOOD = "0x682d55";
     public static final String TOP_CHANNELS = "0x808080";
     public static final String INVITE_TRACKING = "0x2e493d";
+    public static final String DELETED= "0xa22d2c";
 
 
     private EmbedColorHelper(){

@@ -9,7 +9,7 @@ public class UpdatingUsername extends ListenerAdapter {
     @Override
     public void onGuildMemberUpdateNickname(final GuildMemberUpdateNicknameEvent event) {
 
-        long userId = event.getMember().getIdLong();
+        final long userId = event.getMember().getIdLong();
         final String userTag = event.getMember().getUser().getAsTag();
 
         String oldUsername = event.getOldNickname();

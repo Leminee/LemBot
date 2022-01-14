@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit;
 public final class Helper {
 
     public static final String PREFIX = "?";
-
+    public static final String HAPPY_NEW_YEAR_GIF_URL = "https://happynewyear2021status.com/wp-content/uploads/2021/11/new-year-gifs-2022-1.gif";
     public static boolean isNotSuccessfulBump(final List<MessageEmbed> messages, final User embedAuthor) {
 
         final long disBoardId = Config.getInstance().getUser().getDisboardId();
@@ -187,10 +187,10 @@ public final class Helper {
 
     public static String getAmountLemBotContributors() {
 
-        final String base_url = "https://github.com/Leminee/LemBot";
+        final String repositoryUrl = "https://github.com/Leminee/LemBot";
 
         try {
-           final Document document = Jsoup.connect(base_url)
+           final Document document = Jsoup.connect(repositoryUrl)
                     .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36")
                     .get();
            final Elements element = document.getElementsByClass("Counter");
