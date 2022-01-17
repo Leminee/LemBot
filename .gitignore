@@ -7,7 +7,6 @@
 META-INF
 *.class
 note.txt
-*.jar
 ./test.config.yml
 
 # IntelliJ
@@ -110,7 +109,6 @@ modules.xml
 # End of https://www.toptal.com/developers/gitignore/api/intellij+all
 
 # Maven Ignore Files
-target/
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup

@@ -1,0 +1,10 @@
+tech/goodquestion/lembot/command/impl/db/TopMonthlyBumperCommand.class
+tech/goodquestion/lembot/library/EmbedColorHelper.class
+tech/goodquestion/lembot/command/impl/db/TopMonthlyFlooderCommand.class
+tech/goodquestion/lembot/library/ReactionManager$ReactionListener.class
+tech/goodquestion/lembot/library/ReactionManager$ReactionMessage.class
+tech/goodquestion/lembot/event/AddingRole.class
+tech/goodquestion/lembot/library/ReactionManager.class
+tech/goodquestion/lembot/command/impl/db/JoiningDateCommand.class
+tech/goodquestion/lembot/library/Helper.class
+tech/goodquestion/lembot/event/SpamDetection.class
