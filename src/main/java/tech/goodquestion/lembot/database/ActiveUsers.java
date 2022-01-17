@@ -5,8 +5,8 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.events.user.update.UserUpdateOnlineStatusEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import tech.goodquestion.lembot.config.Config;
-import tech.goodquestion.lembot.lib.EmbedColorHelper;
-import tech.goodquestion.lembot.lib.Helper;
+import tech.goodquestion.lembot.library.EmbedColorHelper;
+import tech.goodquestion.lembot.library.Helper;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;

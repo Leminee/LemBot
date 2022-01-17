@@ -4,7 +4,7 @@ import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import tech.goodquestion.lembot.config.Config;
-import tech.goodquestion.lembot.lib.Helper;
+import tech.goodquestion.lembot.library.Helper;
 
 import java.util.Objects;
 

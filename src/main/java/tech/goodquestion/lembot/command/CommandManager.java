@@ -6,15 +6,15 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
-import tech.goodquestion.lembot.lib.EmbedColorHelper;
-import tech.goodquestion.lembot.lib.Helper;
+import tech.goodquestion.lembot.library.EmbedColorHelper;
+import tech.goodquestion.lembot.library.Helper;
 
 import java.io.IOException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static tech.goodquestion.lembot.lib.Helper.PREFIX;
+import static tech.goodquestion.lembot.library.Helper.PREFIX;
 
 public class CommandManager extends ListenerAdapter {
 

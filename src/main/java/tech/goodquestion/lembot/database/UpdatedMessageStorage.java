@@ -5,8 +5,8 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageUpdateEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.entity.OccurredException;
-import tech.goodquestion.lembot.lib.EmbedColorHelper;
-import tech.goodquestion.lembot.lib.Helper;
+import tech.goodquestion.lembot.library.EmbedColorHelper;
+import tech.goodquestion.lembot.library.Helper;
 
 import javax.annotation.Nonnull;
 import java.awt.*;
@@ -35,7 +35,7 @@ public class UpdatedMessageStorage extends ListenerAdapter {
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle("Bearbeitete Nachricht")
                 .setColor(Color.decode(EmbedColorHelper.UPDATED))
-                .addField("Mitglieder", updatedMessageAuthorAsMention,true)
+                .addField("Member", updatedMessageAuthorAsMention,true)
                 .addField("Kanal",channelAsMention,true)
                 .addField("Alter Inhalt",QueryHelper.getUpdatedMessageOldContent(updatedMessageId, QueryHelper.UPDATED_MESSAGE_LAST_CONTENT),false)
                 .addField("Neuer Inhalt", newContent,false)

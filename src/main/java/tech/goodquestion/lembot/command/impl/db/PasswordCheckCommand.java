@@ -8,8 +8,8 @@ import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.database.CommandHelper;
 import tech.goodquestion.lembot.database.DatabaseConnector;
 import tech.goodquestion.lembot.entity.OccurredException;
-import tech.goodquestion.lembot.lib.EmbedColorHelper;
-import tech.goodquestion.lembot.lib.Helper;
+import tech.goodquestion.lembot.library.EmbedColorHelper;
+import tech.goodquestion.lembot.library.Helper;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

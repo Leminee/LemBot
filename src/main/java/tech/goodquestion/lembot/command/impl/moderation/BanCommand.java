@@ -6,7 +6,7 @@ import net.dv8tion.jda.api.entities.Message;
 import tech.goodquestion.lembot.database.CommandHelper;
 import tech.goodquestion.lembot.entity.Sanction;
 import tech.goodquestion.lembot.entity.SanctionType;
-import tech.goodquestion.lembot.lib.EmbedColorHelper;
+import tech.goodquestion.lembot.library.EmbedColorHelper;
 
 import java.awt.*;
 

@@ -1,4 +1,4 @@
-package tech.goodquestion.lembot.lib;
+package tech.goodquestion.lembot.library;
 
 public final class EmbedColorHelper {
 

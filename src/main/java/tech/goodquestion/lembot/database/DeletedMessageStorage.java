@@ -5,8 +5,8 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageDeleteEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.entity.OccurredException;
-import tech.goodquestion.lembot.lib.EmbedColorHelper;
-import tech.goodquestion.lembot.lib.Helper;
+import tech.goodquestion.lembot.library.EmbedColorHelper;
+import tech.goodquestion.lembot.library.Helper;
 
 import javax.annotation.Nonnull;
 import java.awt.*;
@@ -43,7 +43,7 @@ public class DeletedMessageStorage extends ListenerAdapter {
                 final EmbedBuilder embedBuilder = new EmbedBuilder();
                 embedBuilder.setTitle("Gelöschte Nachricht")
                         .setColor(Color.decode(EmbedColorHelper.DELETED))
-                        .addField("Mitglieder", deletedMessageAuthorAsMention,true)
+                        .addField("User", deletedMessageAuthorAsMention,true)
                         .addField("Kanal",channelAsMention,true)
                         .addField("Inhalt", deletedMessageContent,false)
                         .addField("Datum", Helper.getGermanDateTime(), false);

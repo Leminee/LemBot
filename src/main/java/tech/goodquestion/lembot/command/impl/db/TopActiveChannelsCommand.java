@@ -8,7 +8,7 @@ import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.database.CommandHelper;
 import tech.goodquestion.lembot.database.QueryHelper;
 import tech.goodquestion.lembot.entity.OccurredException;
-import tech.goodquestion.lembot.lib.EmbedColorHelper;
+import tech.goodquestion.lembot.library.EmbedColorHelper;
 
 import java.awt.*;
 import java.sql.SQLException;

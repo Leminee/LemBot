@@ -77,8 +77,6 @@ public final class QueryHelper {
     }
 
 
-
-
     public static Time getNextBumpTime() {
 
         Time nextBumpTime = null;

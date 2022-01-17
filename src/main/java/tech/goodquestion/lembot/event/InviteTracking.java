@@ -17,7 +17,7 @@ import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.database.CommandHelper;
 import tech.goodquestion.lembot.entity.InviteData;
 import tech.goodquestion.lembot.entity.InviteTrackingData;
-import tech.goodquestion.lembot.lib.EmbedColorHelper;
+import tech.goodquestion.lembot.library.EmbedColorHelper;
 
 import java.awt.*;
 import java.util.Map;

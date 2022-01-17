@@ -14,7 +14,7 @@ import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.config.ReactionRoleMessage;
 import tech.goodquestion.lembot.database.*;
 import tech.goodquestion.lembot.event.*;
-import tech.goodquestion.lembot.lib.ReactionManager;
+import tech.goodquestion.lembot.library.ReactionManager;
 
 import javax.security.auth.login.LoginException;
 
@@ -23,6 +23,7 @@ public class BotMain {
     public static JDA jda;
 
     public static void main(String[] args) {
+
         try {
 
             jda = JDABuilder
@@ -31,6 +32,7 @@ public class BotMain {
                     .setMemberCachePolicy(MemberCachePolicy.ALL)
                     .enableIntents(GatewayIntent.GUILD_PRESENCES)
                     .build();
+
 
         } catch (LoginException loginException) {
             System.out.println(loginException.getMessage());

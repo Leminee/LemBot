@@ -7,7 +7,7 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.database.QueryHelper;
-import tech.goodquestion.lembot.lib.EmbedColorHelper;
+import tech.goodquestion.lembot.library.EmbedColorHelper;
 
 import java.awt.*;
 import java.util.List;
@@ -18,7 +18,7 @@ public class ServerData implements IBotCommand {
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
 
-        final EmbedBuilder botInfoEmbed = new EmbedBuilder();
+        final EmbedBuilder embedBuilder = new EmbedBuilder();
 
         final List<Member> memberList = message.getGuild().getMembers();
         final long amountBots = memberList.stream()
@@ -26,7 +26,7 @@ public class ServerData implements IBotCommand {
                 .count();
 
 
-        botInfoEmbed.setTitle("Informationen zum Server")
+        embedBuilder.setTitle("Informationen zum Server")
                 .setColor(Color.decode(EmbedColorHelper.GOOD_QUESTION))
                 .setDescription("Informationen zu **GoodQuestion**")
                 .setThumbnail("https://cdn.discordapp.com/attachments/919074434021736507/920552764784914472/logoqg1_1.gif")
@@ -50,7 +50,7 @@ public class ServerData implements IBotCommand {
                         .replace(",", "\n"), true);
 
 
-        channel.sendMessage(botInfoEmbed.build()).queue();
+        channel.sendMessage(embedBuilder.build()).queue();
 
 
     }

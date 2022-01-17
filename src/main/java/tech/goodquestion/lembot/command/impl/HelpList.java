@@ -6,13 +6,13 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.command.IBotCommand;
-import tech.goodquestion.lembot.lib.EmbedColorHelper;
+import tech.goodquestion.lembot.library.EmbedColorHelper;
 
 import java.awt.*;
 import java.util.List;
 import java.util.*;
 
-import static tech.goodquestion.lembot.lib.Helper.PREFIX;
+import static tech.goodquestion.lembot.library.Helper.PREFIX;
 
 public class HelpList implements IBotCommand {
 

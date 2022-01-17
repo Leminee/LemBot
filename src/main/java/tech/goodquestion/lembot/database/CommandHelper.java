@@ -8,7 +8,7 @@ import tech.goodquestion.lembot.entity.InviteTrackingData;
 import tech.goodquestion.lembot.entity.OccurredException;
 import tech.goodquestion.lembot.entity.Sanction;
 import tech.goodquestion.lembot.entity.VoiceChannel;
-import tech.goodquestion.lembot.lib.Helper;
+import tech.goodquestion.lembot.library.Helper;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

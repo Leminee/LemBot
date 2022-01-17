@@ -6,7 +6,7 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import tech.goodquestion.lembot.entity.OccurredException;
-import tech.goodquestion.lembot.lib.Helper;
+import tech.goodquestion.lembot.library.Helper;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

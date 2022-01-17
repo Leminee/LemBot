@@ -1,4 +1,4 @@
-package tech.goodquestion.lembot.lib;
+package tech.goodquestion.lembot.library;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -33,6 +33,8 @@ public final class Helper {
 
     public static final String PREFIX = "?";
     public static final String HAPPY_NEW_YEAR_GIF_URL = "https://happynewyear2021status.com/wp-content/uploads/2021/11/new-year-gifs-2022-1.gif";
+    public static final String BOT_VERSION = "v.3.0";
+
     public static boolean isNotSuccessfulBump(final List<MessageEmbed> messages, final User embedAuthor) {
 
         final long disBoardId = Config.getInstance().getUser().getDisboardId();

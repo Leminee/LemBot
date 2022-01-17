@@ -1,4 +1,4 @@
-package tech.goodquestion.lembot.lib;
+package tech.goodquestion.lembot.library;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Emote;

@@ -4,7 +4,7 @@ package tech.goodquestion.lembot.event;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
-import tech.goodquestion.lembot.lib.Helper;
+import tech.goodquestion.lembot.library.Helper;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;

@@ -1,0 +1,23 @@
+version: "3.0"
+
+services:
+  lembot:
+    container_name: lembot
+    build: .
+    restart: always
+    depends_on:
+      - database
+
+  database:
+    container_name: database
+    image: mariadb:latest
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+        MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: "yes"
+        MYSQL_DATABASE: lembot
+        MYSQL_USER: lembot
+        MYSQL_PASSWORD: lembot
+    volumes:
+      - ./lembot.sql:/docker-entrypoint-initdb.d/lembot.sql

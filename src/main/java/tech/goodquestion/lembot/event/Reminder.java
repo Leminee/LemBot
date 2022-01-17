@@ -6,7 +6,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import tech.goodquestion.lembot.config.Config;
-import tech.goodquestion.lembot.lib.Helper;
+import tech.goodquestion.lembot.library.Helper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,8 @@ public class Reminder extends ListenerAdapter {
 
         scheduleReminder();
 
-        if (tasks.size() > 1) {
+        final boolean isRedundantTask = tasks.size() > 1;
+        if (isRedundantTask) {
             for (int i = 1; i < tasks.size(); i++) {
                 tasks.get(i).cancel(false);
             }
@@ -62,8 +63,8 @@ public class Reminder extends ListenerAdapter {
             tasks.clear();
         };
 
-        ScheduledFuture<?> scheduledFuture = scheduler.schedule(ping, delay, timeUnit);
-        tasks.add(scheduledFuture);
+        ScheduledFuture<?> task = scheduler.schedule(ping, delay, timeUnit);
+        tasks.add(task);
 
     }
 }

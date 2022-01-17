@@ -37,6 +37,7 @@ public class UserAuthorization extends ListenerAdapter {
                final boolean isMuted = resultSet.getInt(1) == 1;
 
                 if (isMuted) {
+
                     event.getGuild().addRoleToMember(userId, Config.getInstance().getRole().getMuteRole()).queue();
                 }
             }
