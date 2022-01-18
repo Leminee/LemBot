@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import tech.goodquestion.lembot.command.CommandManager;
+import tech.goodquestion.lembot.command.KillSwitch;
 import tech.goodquestion.lembot.command.impl.*;
 import tech.goodquestion.lembot.command.impl.db.*;
 import tech.goodquestion.lembot.command.impl.moderation.*;
@@ -64,6 +65,7 @@ public class BotMain {
         commandManager.registerCommand(new TopMonthlyBumperCommand());
         commandManager.registerCommand(new TopMonthlyFlooderCommand());
         commandManager.registerCommand(new ServerData());
+        commandManager.registerCommand(new KillSwitch());
 
         jda.addEventListener(new Reminder());
         jda.addEventListener(new WelcomingMemberJoin());

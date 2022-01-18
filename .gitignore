@@ -123,3 +123,7 @@ lembot.config.yml
 .gitattributes
 attachments
 *.png
+target/generated-sources
+target/maven-archiver
+target/maven-status
+
