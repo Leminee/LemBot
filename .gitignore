@@ -123,5 +123,4 @@ lembot.config.yml
 .gitattributes
 attachments
 *.png
-target/
-
+/target/
