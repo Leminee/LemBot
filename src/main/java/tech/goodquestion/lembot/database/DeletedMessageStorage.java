@@ -1,12 +1,12 @@
 package tech.goodquestion.lembot.database;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageDeleteEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.entity.OccurredException;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
-import tech.goodquestion.lembot.library.Helper;
 
 import javax.annotation.Nonnull;
 import java.awt.*;
@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.Instant;
 
 public class DeletedMessageStorage extends ListenerAdapter {
 
@@ -39,17 +40,28 @@ public class DeletedMessageStorage extends ListenerAdapter {
                 final String deletedMessageContent = resultSet.getString(3);
                 final String channelAsMention = "<#" + event.getChannel().getIdLong() +">";
 
+                final User authorDeletedMessage = event.getGuild().getMemberById(resultSet.getString(2)).getUser();
+
+                final String authorDeletedMessageAsTag = authorDeletedMessage.getAsTag();
+                final String authorDeletedMessageAvatarUrl = authorDeletedMessage.getEffectiveAvatarUrl();
+                final long authorDeletedMessageIdLong = authorDeletedMessage.getIdLong();
+
 
                 final EmbedBuilder embedBuilder = new EmbedBuilder();
+
                 embedBuilder.setTitle("Gelöschte Nachricht")
+                        .setAuthor(authorDeletedMessageAsTag,null,authorDeletedMessageAvatarUrl)
                         .setColor(Color.decode(EmbedColorHelper.DELETED))
-                        .addField("User", deletedMessageAuthorAsMention,true)
+                        .addField("Member", deletedMessageAuthorAsMention,true)
+                        .addField("Member ID", String.valueOf(authorDeletedMessageIdLong),true)
                         .addField("Kanal",channelAsMention,true)
                         .addField("Inhalt", deletedMessageContent,false)
-                        .addField("Datum", Helper.getGermanDateTime(), false);
+                        .setTimestamp(Instant.now());
 
-                Config.getInstance().getChannel().getLogChannel().sendMessage(embedBuilder.build()).queue();
 
+
+
+                Config.getInstance().getChannel().getUpdatedDeletedChannel().sendMessage(embedBuilder.build()).queue();
 
                 PreparedStatement preparedStatementOne = connection.prepareStatement(deletedMessage);
                 preparedStatementOne.setLong(1, idDeletedMessage);

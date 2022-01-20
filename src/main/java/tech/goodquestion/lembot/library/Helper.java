@@ -12,12 +12,14 @@ import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.database.CommandHelper;
 import tech.goodquestion.lembot.database.DatabaseConnector;
+import tech.goodquestion.lembot.entity.LoggingEmbedDetails;
 import tech.goodquestion.lembot.entity.OccurredException;
 import tech.goodquestion.lembot.entity.UserData;
 
 import java.awt.*;
 import java.io.IOException;
 import java.sql.*;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -34,6 +36,11 @@ public final class Helper {
     public static final String PREFIX = "?";
     public static final String HAPPY_NEW_YEAR_GIF_URL = "https://happynewyear2021status.com/wp-content/uploads/2021/11/new-year-gifs-2022-1.gif";
     public static final String BOT_VERSION = "v.3.0";
+
+
+    private Helper(){
+
+    }
 
     public static boolean isNotSuccessfulBump(final List<MessageEmbed> messages, final User embedAuthor) {
 
@@ -213,6 +220,20 @@ public final class Helper {
         String timeNow = LocalTime.now().format(timeFormatter);
 
         return dateNow + " um " + timeNow;
+
+    }
+
+    public static void createLoggingEmbed(final EmbedBuilder embedBuilder, final LoggingEmbedDetails loggingEmbedDetails) {
+
+        embedBuilder.setTitle(loggingEmbedDetails.title);
+        embedBuilder.setDescription(loggingEmbedDetails.description);
+        embedBuilder.setAuthor(loggingEmbedDetails.member.memberAsTag,null,loggingEmbedDetails.member.memberAvatarUrl);
+        embedBuilder.setColor(Color.decode(loggingEmbedDetails.color));
+        embedBuilder.addField(loggingEmbedDetails.fields.memberAsMention,loggingEmbedDetails.values.memberAsMention,true);
+        embedBuilder.addField(loggingEmbedDetails.fields.memberId,loggingEmbedDetails.values.memberId,true);
+        embedBuilder.addField(loggingEmbedDetails.fields.channel,loggingEmbedDetails.values.channel,true);
+        embedBuilder.addField(loggingEmbedDetails.fields.content,loggingEmbedDetails.values.content,false);
+        embedBuilder.setTimestamp(Instant.now());
 
     }
 }

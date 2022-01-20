@@ -6,15 +6,13 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.database.CommandHelper;
-import tech.goodquestion.lembot.database.DatabaseConnector;
 import tech.goodquestion.lembot.entity.OccurredException;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
 import tech.goodquestion.lembot.library.Helper;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class PasswordCheckCommand implements IBotCommand {
 
@@ -28,6 +26,7 @@ public class PasswordCheckCommand implements IBotCommand {
         }
 
         message.delete().queue();
+        
         final String userPassword = args[0];
         final String embedTitle = "Passwort-Sicherheitsüberprüfung";
 
@@ -35,8 +34,8 @@ public class PasswordCheckCommand implements IBotCommand {
 
             String description = ":red_circle: Passwort wurde leider gefunden " + message.getAuthor().getAsMention();
 
-
             Helper.createEmbed(embedBuilder, embedTitle, description, EmbedColorHelper.ERROR);
+
         } else {
 
             String description = ":green_circle: Nicht gefunden " +message.getAuthor().getAsMention();
@@ -53,22 +52,27 @@ public class PasswordCheckCommand implements IBotCommand {
             return true;
         }
 
-        Connection connection = DatabaseConnector.openConnection();
 
-        final String passwordCheck = "SELECT pass FROM leaked_password WHERE pass = ?";
+        final String bRockYouApiUrl = " https://goodquestion.tech:8443/brockyou/api/v2/" + userPassword;
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(passwordCheck)) {
+        try {
 
-            preparedStatement.setString(1, userPassword);
+            final URL url = new URL(bRockYouApiUrl);
 
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                return resultSet.next();
-            }
-        } catch (SQLException sqlException) {
-            System.out.println(sqlException.getMessage());
+            final HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setRequestMethod("GET");
+            httpURLConnection.connect();
 
-            CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, this.getClass().getName()));
+
+            return true;
+
+
+        } catch (IOException ioException) {
+
+            System.out.println(ioException.getMessage());
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(ioException, this.getClass().getName()));
         }
+
         return false;
     }
 

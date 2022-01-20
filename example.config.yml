@@ -1,5 +1,6 @@
-token: "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.hUn66gybzzACW9VNJh4vkiRbcCA"
+token: ""
 guild: 919074433505841172
+
 reactionRoles:
   - channel: 779107472622223400 # self-roles
     message: 821186181903024179
@@ -16,13 +17,17 @@ reactionRoles:
       821168328961163266: 808779520286654554
       846816752867868742: 846812921375359027
       846854659104833566: 846856698979418152
+
 commandRoles:
   - abbr: bumper
     role: 815922232106156033
+
 database:
-  uri: "jdbc:mysql://localhost:3306/discordbot?autoReconnect=true&serverTimezone=UTC"
-  username: mel
-  password: 36177436
+  # "database" instead of "localhost" if both services (bot and database) should each run in a Docker container
+  uri: "jdbc:mysql://localhost:3306/lembot?autoReconnect=true&serverTimezone=UTC"
+  username: lembot
+  password: lembot
+
 channel:
   sanction: 919074434021736502
   newArrivals: 919074434021736503
@@ -32,8 +37,11 @@ channel:
   memberCount: 919074435951116352 # voice channel
   selfRoles: 919074434021736500
   staff: 919074435951116350
-  log: 922956243600044122
   general: 919074434021736506
+  autoModeration: 933543435913269309
+  joinLeft: 933543494000189482
+  updatedDeleted: 933543560681230396
+
 role:
   bump: 919074433556160536
   mute: 919074433505841174
@@ -46,3 +54,4 @@ category:
 
 user:
   disboard: 302050872383242240
+  lemBot: 820468009764257792

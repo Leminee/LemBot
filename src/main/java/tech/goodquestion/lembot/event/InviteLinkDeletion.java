@@ -32,7 +32,7 @@ public class InviteLinkDeletion extends ListenerAdapter {
         event.getMessage().delete().queue();
 
         final String authorAsMention =  event.getAuthor().getAsMention();
-        final long logChannelId = Config.getInstance().getChannel().getLogChannel().getIdLong();
+        final long logChannelId = Config.getInstance().getChannel().getJoinLeftChannel().getIdLong();
         final String channelAsMention = event.getChannel().getAsMention();
         event.getChannel().sendMessage(":x: Hier dürfen keine Invitelinks gepostet werden " + authorAsMention + "!").queue();
         Objects.requireNonNull(event.getGuild().getTextChannelById(logChannelId))

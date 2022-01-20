@@ -53,7 +53,6 @@ public class BotMain {
         commandManager.registerCommand(new BanCommand());
         commandManager.registerCommand(new UnmuteCommand());
         commandManager.registerCommand(new NextBumpTimeCommand());
-        commandManager.registerCommand(new PasswordCheckCommand());
         commandManager.registerCommand(new ServerRoleListCommand());
         commandManager.registerCommand(new ActiveUserRecordCommand());
         commandManager.registerCommand(new BumpCountCommand());

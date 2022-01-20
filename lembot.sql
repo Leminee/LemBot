@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Erstellungszeit: 01. Jan 2022 um 00:18
+-- Erstellungszeit: 20. Jan 2022 um 00:22
 -- Server-Version: 10.3.31-MariaDB-0+deb10u1
--- PHP-Version: 7.4.26
+-- PHP-Version: 7.4.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -90,18 +90,6 @@ CREATE TABLE `invite_tracking` (
   `amount` int(11) NOT NULL,
   `used_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `leaked_password`
---
-
-CREATE TABLE `leaked_password` (
-  `id_pass` bigint(20) NOT NULL,
-  `pass` varchar(500) NOT NULL,
-  `id` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -377,13 +365,6 @@ ALTER TABLE `invite_tracking`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `leaked_password`
---
-ALTER TABLE `leaked_password`
-  ADD PRIMARY KEY (`id_pass`),
-  ADD KEY `pass` (`pass`);
-
---
 -- Indizes für die Tabelle `muted_user`
 --
 ALTER TABLE `muted_user`
@@ -501,12 +482,6 @@ ALTER TABLE `exception`
 --
 ALTER TABLE `invite_tracking`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT für Tabelle `leaked_password`
---
-ALTER TABLE `leaked_password`
-  MODIFY `id_pass` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT für Tabelle `muted_user`

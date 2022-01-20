@@ -13,8 +13,10 @@ public class ChannelConfig {
     private long memberCount;
     private long selfRoles;
     private long staff;
-    private long log;
     private long general;
+    private long autoModeration;
+    private long joinLeft;
+    private long updatedDeleted;
 
 
     public TextChannel getSanctionChannel() {
@@ -49,12 +51,21 @@ public class ChannelConfig {
         return Config.getInstance().getGuild().getTextChannelById(staff);
     }
 
-    public TextChannel getLogChannel() {
-        return Config.getInstance().getGuild().getTextChannelById(log);
-    }
 
     public TextChannel getGeneralChannel(){
         return Config.getInstance().getGuild().getTextChannelById(general);
+    }
+
+    public TextChannel getAutoModerationChannel() {
+        return Config.getInstance().getGuild().getTextChannelById(autoModeration);
+    }
+
+    public TextChannel getJoinLeftChannel() {
+        return Config.getInstance().getGuild().getTextChannelById(joinLeft);
+    }
+
+    public TextChannel getUpdatedDeletedChannel() {
+        return Config.getInstance().getGuild().getTextChannelById(updatedDeleted);
     }
 
 

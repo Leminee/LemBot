@@ -13,6 +13,7 @@ import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.Instant;
 
 public class UpdatedMessageStorage extends ListenerAdapter {
     @Override
@@ -20,7 +21,7 @@ public class UpdatedMessageStorage extends ListenerAdapter {
 
         final long updatedMessageId = event.getMessageIdLong();
         final long authorId = event.getAuthor().getIdLong();
-        final String authorUpdatedMessage = event.getAuthor().getAsTag();
+        final String authorUpdatedMessageAsTag = event.getAuthor().getAsTag();
         final String updatedMessageContent = event.getMessage().getContentRaw();
 
         Connection connection = DatabaseConnector.openConnection();
@@ -29,25 +30,27 @@ public class UpdatedMessageStorage extends ListenerAdapter {
         final String updatedMessageAuthorAsMention = "<@" + authorId+ ">" ;
         final String channelAsMention = "<#" + event.getChannel().getIdLong() +">";
         final String newContent = updatedMessageContent;
-
+        final String authorAvatarUrl = event.getAuthor().getEffectiveAvatarUrl();
 
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle("Bearbeitete Nachricht")
+                .setAuthor(authorUpdatedMessageAsTag, null,authorAvatarUrl)
                 .setColor(Color.decode(EmbedColorHelper.UPDATED))
                 .addField("Member", updatedMessageAuthorAsMention,true)
+                .addField("Member ID", String.valueOf(authorId),true)
                 .addField("Kanal",channelAsMention,true)
                 .addField("Alter Inhalt",QueryHelper.getUpdatedMessageOldContent(updatedMessageId, QueryHelper.UPDATED_MESSAGE_LAST_CONTENT),false)
                 .addField("Neuer Inhalt", newContent,false)
-                .addField("Datum", Helper.getGermanDateTime(), false);
+                .setTimestamp(Instant.now());
 
-        Config.getInstance().getChannel().getLogChannel().sendMessage(embedBuilder.build()).queue();
+        Config.getInstance().getChannel().getUpdatedDeletedChannel().sendMessage(embedBuilder.build()).queue();
 
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(updatedMessageData)) {
             preparedStatement.setLong(1, updatedMessageId);
             preparedStatement.setLong(2, authorId);
-            preparedStatement.setBlob(3, Helper.changeCharacterEncoding(preparedStatement, authorUpdatedMessage));
+            preparedStatement.setBlob(3, Helper.changeCharacterEncoding(preparedStatement, authorUpdatedMessageAsTag));
             preparedStatement.setBlob(4, Helper.changeCharacterEncoding(preparedStatement, updatedMessageContent));
 
             preparedStatement.executeUpdate();

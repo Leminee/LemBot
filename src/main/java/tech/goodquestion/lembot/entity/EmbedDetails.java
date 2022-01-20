@@ -1,6 +1,6 @@
 package tech.goodquestion.lembot.entity;
 
-public class EmbedDetail {
+public class EmbedDetails {
 
     String title;
     String description;
