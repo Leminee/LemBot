@@ -9,6 +9,7 @@ public class RoleConfig {
     private long warn;
     private long coding;
     private long hacking;
+    private long moderator;
 
     public long getBumpRoleId() {
         return bump;
@@ -30,4 +31,7 @@ public class RoleConfig {
         return Config.getInstance().getGuild().getRoleById(warn);
     }
 
+    public Role getModeratorRole(){
+        return Config.getInstance().getGuild().getRoleById(moderator);
+    }
 }

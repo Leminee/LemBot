@@ -18,7 +18,7 @@ public class WelcomingMemberJoin extends ListenerAdapter {
                 Du kannst Dir im Kanal [channel] Rollen zuweisen.
 
                 """;
-        final String avatarUrl = event.getUser().getEffectiveAvatarUrl();
+
         final String newMemberAsMention = event.getMember().getAsMention();
 
         final String personalizedWelcomeMessage = welcomeMessage
@@ -27,8 +27,9 @@ public class WelcomingMemberJoin extends ListenerAdapter {
 
         Config.getInstance().getChannel().getNewArrivalsChannel().sendMessage(personalizedWelcomeMessage).queue();
 
-        Config.getInstance().getChannel().getJoinLeftChannel().sendMessage(":arrow_right: User " + newMemberAsMention + " ist am " + Helper.getGermanDateTime() + " **gejoint**").queue();
-        Config.getInstance().getChannel().getJoinLeftChannel().sendMessage(avatarUrl).queue();
+        Config.getInstance().getChannel().getJoinLeftChannel()
+                .sendMessage(":arrow_right: User " + newMemberAsMention + " ist am " + Helper.getGermanDateTime() + " **gejoint**")
+                .queue();
 
     }
 }

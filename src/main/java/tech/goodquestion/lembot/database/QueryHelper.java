@@ -35,6 +35,7 @@ public final class QueryHelper {
     public static String LAST_MESSAGES_IDs = "SELECT id_channel, channel.id_message FROM `channel` INNER JOIN user_message_content ON channel.id_message = user_message_content.id_message WHERE user_message_content.id_discord = ? AND posted_at >= NOW() - INTERVAL 1 MINUTE ORDER BY posted_at LIMIT 10;";
     public static String FIRST_CONTENT_AFTER_UPDATING_MESSAGE = "SELECT content FROM user_message_content WHERE id_message = ? ";
     public static String UPDATED_MESSAGE_LAST_CONTENT = "SELECT content FROM updated_message WHERE id_message = ? ORDER BY updated_at DESC LIMIT 1 ";
+    public static String RAID_DETECTION = "SELECT COUNT(DISTINCT id_discord) FROM `user_join` WHERE joined_at >= NOW() - INTERVAL 30 SECOND";
 
     private QueryHelper() {
 
@@ -272,6 +273,30 @@ public final class QueryHelper {
 
     }
 
+    public static boolean isRaid() {
+
+
+        try (Connection connection = DatabaseConnector.openConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(RAID_DETECTION)) {
+
+
+            if (resultSet.next()) {
+
+                final int amountNewMember = resultSet.getInt(1);
+
+                if (amountNewMember >= 1) {
+                    return true;
+                }
+            }
+
+        } catch (SQLException sqlException) {
+
+            System.out.println(sqlException.getMessage());
+
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
+        }
+        return false;
+
+    }
 
     public static int getMessagesCount() {
 
@@ -331,7 +356,7 @@ public final class QueryHelper {
 
     }
 
-    public static String getUpdatedMessageOldContent(final long updatedMessageId, String query) {
+    public static String getUpdatedMessageOldContent(final long updatedMessageId, final String query) {
 
         String oldContent = "";
 

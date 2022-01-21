@@ -93,6 +93,7 @@ public class BotMain {
         jda.addEventListener(new RoleEvents());
         jda.addEventListener(new InviteTracking());
         jda.addEventListener(new HappyNewYear());
+        jda.addEventListener(new RaidDetection());
 
         setupReactionRoles();
     }

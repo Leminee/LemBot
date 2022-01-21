@@ -15,6 +15,7 @@ import java.util.Objects;
 
 public class SpamDetection extends ListenerAdapter {
 
+
     @Override
     public void onGuildMessageReceived(final GuildMessageReceivedEvent event) {
 
@@ -61,7 +62,7 @@ public class SpamDetection extends ListenerAdapter {
             event.getChannel().sendMessage(":mute: Du wurdest aufgrund verdächtigem Verhalten durch den Bot **gemutet** " + userAsMention + ".").queue();
 
             Objects.requireNonNull(event.getGuild().getTextChannelById(Config.getInstance().getChannel().getAutoModerationChannel().getIdLong()))
-                    .sendMessage(":mute: User " + Objects.requireNonNull(event.getMember()).getAsMention() + " wurde wegen Spam **gemutet** " + "\n(3 inhaltich identische Nachrichten in weniger als 30 Sekunden in mehrere Kanäle gepostet)")
+                    .sendMessage(":mute: User " + Objects.requireNonNull(event.getMember()).getAsMention() + " wurde wegen Spam **gemutet** " + "\n(3 inhaltich identische Nachrichten in weniger als 30 Sekunden in mehrere Kanäle gepostet)\nGelöschte Nachricht: " + messageContent)
                     .queue();
 
 
@@ -90,7 +91,6 @@ public class SpamDetection extends ListenerAdapter {
                     .sendMessage(":mute: User " + Objects.requireNonNull(event.getMember()).getAsMention() + "wurde wegen Spam **gemutet** " + "\n(10 inhaltlich identische Nachrichten in weniger als 30 Sekunden in " + event.getChannel().getAsMention() + " gespamt)")
                     .queue();
 
-            CommandHelper.deleteSpammerMessages(event,userId);
         }
     }
 
