@@ -50,7 +50,7 @@ public class ServerData implements IBotCommand {
                         .replace(",", "\n"), true);
 
 
-        channel.sendMessage(embedBuilder.build()).queue();
+        channel.sendMessageEmbeds(embedBuilder.build()).queue();
 
 
     }

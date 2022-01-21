@@ -86,7 +86,7 @@
         <dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
-            <version>4.2.0_249</version>
+            <version>5.0.0-alpha.4</version>
         </dependency>
         <dependency>
             <groupId>org.yaml</groupId>
@@ -105,6 +105,14 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.26</version>
         </dependency>
+
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.8</version>
+        </dependency>
+
 
     </dependencies>
 

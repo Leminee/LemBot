@@ -1,11 +1,13 @@
 package tech.goodquestion.lembot.database;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import tech.goodquestion.lembot.entity.OccurredException;
 
 import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public final class QueryHelper {
 
@@ -169,7 +171,7 @@ public final class QueryHelper {
     }
 
 
-    public static void deleteScammerMessages(final GuildMessageReceivedEvent event, final long userId, final String messageContent) {
+    public static void deleteScammerMessages(final MessageReceivedEvent event, final long userId, final String messageContent) {
 
 
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(SPAM_DATA)) {
@@ -283,7 +285,7 @@ public final class QueryHelper {
 
                 final int amountNewMember = resultSet.getInt(1);
 
-                if (amountNewMember >= 1) {
+                if (amountNewMember >= 10) {
                     return true;
                 }
             }

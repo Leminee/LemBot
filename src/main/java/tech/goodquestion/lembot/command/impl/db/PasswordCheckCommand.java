@@ -43,7 +43,7 @@ public class PasswordCheckCommand implements IBotCommand {
             Helper.createEmbed(embedBuilder, embedTitle,description, EmbedColorHelper.SUCCESS);
         }
 
-        channel.sendMessage(embedBuilder.build()).queue();
+        channel.sendMessageEmbeds(embedBuilder.build()).queue();
     }
 
     public boolean hasBeenLeaked(final String userPassword) {

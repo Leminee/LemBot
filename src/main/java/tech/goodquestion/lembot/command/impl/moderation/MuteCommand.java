@@ -37,16 +37,17 @@ public class MuteCommand extends UserBanishCommand {
 
         toBanish.getGuild().addRoleToMember(sanction.userId, Config.getInstance().getRole().getMuteRole()).queue();
 
-        if (Objects.requireNonNull(toBanish.getVoiceState()).inVoiceChannel()) {
+        if (Objects.requireNonNull(toBanish.getVoiceState()).inAudioChannel()) {
             toBanish.getGuild().kickVoiceMember(toBanish).queue();
         }
 
-        final EmbedBuilder confirmation = new EmbedBuilder();
-        confirmation.setColor(Color.decode(EmbedColorHelper.SUCCESS));
-        confirmation.setTitle("Bestätigung");
-        confirmation.setDescription("User " + toBanish.getAsMention() + " wurde durch " + originMsg.getAuthor().getAsMention()
+
+        final EmbedBuilder embedBuilder = new EmbedBuilder();
+        embedBuilder.setColor(Color.decode(EmbedColorHelper.SUCCESS));
+        embedBuilder.setTitle("Bestätigung");
+        embedBuilder.setDescription("User " + toBanish.getAsMention() + " wurde durch " + originMsg.getAuthor().getAsMention()
                 + "**" + " gemutet." + "**" + "\n Angegebener Grund: " + sanction.reason);
-        originMsg.getChannel().sendMessage(confirmation.build()).queue();
+        originMsg.getChannel().sendMessageEmbeds(embedBuilder.build()).queue();
 
         CommandHelper.logUserMute(sanction);
 

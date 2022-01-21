@@ -27,18 +27,18 @@ public abstract class UserBanishCommand implements IBotCommand {
 
 
         if (args.length < 2) {
-            final EmbedBuilder embedError = new EmbedBuilder();
+            final EmbedBuilder embedBuilder = new EmbedBuilder();
             final String embedDescription = ":x: Bitte gebe einen Grund an!";
-            Helper.createEmbed(embedError, "Fehler", embedDescription, EmbedColorHelper.ERROR);
-            channel.sendMessage(embedError.build()).queue();
+            Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
+            channel.sendMessageEmbeds(embedBuilder.build()).queue();
             return;
         }
 
         if (channel.getIdLong() != Config.getInstance().getChannel().getSanctionChannel().getIdLong()) {
-            final EmbedBuilder embedError = new EmbedBuilder();
+            final EmbedBuilder embedBuilder = new EmbedBuilder();
             final String embedDescription = ":x: Dieser Befehl kann nur in [channel] ausgeführt werden!".replace("[channel]",Config.getInstance().getChannel().getSanctionChannel().getAsMention());
-            Helper.createEmbed(embedError, "Fehler", embedDescription, EmbedColorHelper.ERROR);
-            channel.sendMessage(embedError.build()).queue();
+            Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
+            channel.sendMessageEmbeds(embedBuilder.build()).queue();
             return;
         }
 
@@ -52,20 +52,20 @@ public abstract class UserBanishCommand implements IBotCommand {
 
         } catch (ErrorResponseException errorResponseException) {
 
-            final EmbedBuilder embedError = new EmbedBuilder();
+            final EmbedBuilder embedBuilder = new EmbedBuilder();
             final String embedDescription = ":x: User ist nicht auf dem Server!";
-            Helper.createEmbed(embedError, "Fehler", embedDescription, EmbedColorHelper.ERROR);
-            channel.sendMessage(embedError.build()).queue();
+            Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
+            channel.sendMessageEmbeds(embedBuilder.build()).queue();
             return;
 
         }
 
         assert member != null;
         if (member.hasPermission(Permission.ADMINISTRATOR)) {
-            final EmbedBuilder embedError = new EmbedBuilder();
+            final EmbedBuilder embedBuilder = new EmbedBuilder();
             final String embedDescription = ":x: Admins/Moderatoren können nicht gekickt oder gebannt werden!";
-            Helper.createEmbed(embedError, "Fehler", embedDescription, EmbedColorHelper.ERROR);
-            channel.sendMessage(embedError.build()).queue();
+            Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
+            channel.sendMessageEmbeds(embedBuilder.build()).queue();
             return;
         }
 
@@ -85,10 +85,10 @@ public abstract class UserBanishCommand implements IBotCommand {
         sanction.channelName = channel.getName();
 
         if (requiresAdmin() && !Objects.requireNonNull(message.getMember()).hasPermission(Permission.MANAGE_ROLES)) {
-            final EmbedBuilder embedError = new EmbedBuilder();
+            final EmbedBuilder embedBuilder = new EmbedBuilder();
             final String embedDescription = ":x: Permission denied";
-            Helper.createEmbed(embedError, "", embedDescription, EmbedColorHelper.ERROR);
-            channel.sendMessage(embedError.build()).queue();
+            Helper.createEmbed(embedBuilder, "", embedDescription, EmbedColorHelper.ERROR);
+            channel.sendMessageEmbeds(embedBuilder.build()).queue();
             return;
         }
 
@@ -126,7 +126,7 @@ public abstract class UserBanishCommand implements IBotCommand {
         try {
             Helper.createEmbed(embedBuilder, String.valueOf(sanctionType), "Du wurdest auf **GoodQuestion** " + " **" + performedSanction + "**" + "\n Grund: " + reason, EmbedColorHelper.ERROR);
             sanctionedUser.openPrivateChannel()
-                    .flatMap(channel -> channel.sendMessage(embedBuilder.build()))
+                    .flatMap(channel -> channel.sendMessageEmbeds(embedBuilder.build()))
                     .complete();
         }catch (ErrorResponseException errorResponseException) {
             System.out.println(errorResponseException.getMessage());

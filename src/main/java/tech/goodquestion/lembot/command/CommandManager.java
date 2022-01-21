@@ -3,7 +3,8 @@ package tech.goodquestion.lembot.command;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
@@ -48,7 +49,7 @@ public class CommandManager extends ListenerAdapter {
     }
 
     @Override
-    public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
+    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
 
         final Message message = event.getMessage();
 
@@ -75,15 +76,15 @@ public class CommandManager extends ListenerAdapter {
         IBotCommand executor = commands.get(command);
 
         if (!executor.isPermitted(message.getMember())) {
-            EmbedBuilder embedError = new EmbedBuilder();
+            EmbedBuilder embedBuilder = new EmbedBuilder();
             String embedDescription = ":x: Permission Denied";
-            Helper.createEmbed(embedError, "Error", embedDescription, EmbedColorHelper.ERROR);
-            message.getChannel().sendMessage(embedError.build()).queue();
+            Helper.createEmbed(embedBuilder, "Error", embedDescription, EmbedColorHelper.ERROR);
+            message.getChannel().sendMessageEmbeds(embedBuilder.build()).queue();
             return;
         }
 
         try {
-            executor.dispatch(message, event.getChannel(), event.getMember(), args);
+            executor.dispatch(message, (TextChannel) event.getChannel(), event.getMember(), args);
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }

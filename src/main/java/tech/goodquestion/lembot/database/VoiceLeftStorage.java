@@ -24,12 +24,12 @@ public class VoiceLeftStorage extends ListenerAdapter {
 
         final String userMentioned = event.getMember().getAsMention();
 
-        final EmbedBuilder leftEmbed = new EmbedBuilder();
+        final EmbedBuilder embedBuilder= new EmbedBuilder();
 
         final String embedDescription = userMentioned + " hat " + "**" + voiceChannel.name + "**" + " um " + Helper.getCurrentDateTime() + " Uhr **verlassen**.";
 
-        Helper.createEmbed(leftEmbed,"Voice verlassen ",embedDescription, EmbedColorHelper.VOICE_LEFT, "https://cdn.discordapp.com/attachments/819694809765380146/880646674366754856/Bildschirmfoto_2021-08-27_um_04.55.07.png");
-        Config.getInstance().getChannel().getVoiceChatChannel().sendMessage(leftEmbed.build()).queue();
+        Helper.createEmbed(embedBuilder,"Voice verlassen ",embedDescription, EmbedColorHelper.VOICE_LEFT, "https://cdn.discordapp.com/attachments/819694809765380146/880646674366754856/Bildschirmfoto_2021-08-27_um_04.55.07.png");
+        Config.getInstance().getChannel().getVoiceChatChannel().sendMessageEmbeds(embedBuilder.build()).queue();
 
         CommandHelper.insertVoiceChannelData(insertQuery,voiceChannel);
     }

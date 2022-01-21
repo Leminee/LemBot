@@ -28,7 +28,7 @@ public class ActiveUsers extends ListenerAdapter {
             final EmbedBuilder embedBuilder = new EmbedBuilder();
 
             Helper.createEmbed(embedBuilder,"Neuer Record", "Der neue Record an gleichzeitig aktiven Usern liegt bei: " + "**" + approximatePresentMember + "** :tada:  ", EmbedColorHelper.RECORD);
-            Objects.requireNonNull(event.getJDA().getTextChannelById(Config.getInstance().getChannel().getBumpChannel().getIdLong())).sendMessage(embedBuilder.build()).queue();
+            Objects.requireNonNull(event.getJDA().getTextChannelById(Config.getInstance().getChannel().getBumpChannel().getIdLong())).sendMessageEmbeds(embedBuilder.build()).queue();
 
         }
 

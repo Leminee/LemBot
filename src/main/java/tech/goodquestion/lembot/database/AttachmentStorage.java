@@ -3,7 +3,7 @@ package tech.goodquestion.lembot.database;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.entity.OccurredException;
@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class AttachmentStorage extends ListenerAdapter {
 
     @Override
-    public void onGuildMessageReceived(final GuildMessageReceivedEvent event) {
+    public void onMessageReceived(final MessageReceivedEvent event) {
 
         final long userId = event.getMessage().getAuthor().getIdLong();
 

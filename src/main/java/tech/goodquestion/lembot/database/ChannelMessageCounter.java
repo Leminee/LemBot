@@ -1,6 +1,6 @@
 package tech.goodquestion.lembot.database;
 
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import tech.goodquestion.lembot.entity.OccurredException;
@@ -13,7 +13,7 @@ import java.util.Objects;
 public class ChannelMessageCounter extends ListenerAdapter {
 
     @Override
-    public void onGuildMessageReceived(@NotNull final GuildMessageReceivedEvent event) {
+    public void onMessageReceived(@NotNull final MessageReceivedEvent event) {
 
         final String userMessage = event.getMessage().getContentRaw();
         final String channelId = event.getChannel().getId();

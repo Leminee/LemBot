@@ -34,20 +34,20 @@ public class UnmuteCommand implements IBotCommand {
         member = UserBanishCommand.getMember(msg, args, mentionedMembers, null);
 
         if (member == null) {
-            EmbedBuilder embedError = new EmbedBuilder();
+            EmbedBuilder embedBuilder = new EmbedBuilder();
             final String embedDescription = ":x: User ist nicht auf dem Server!";
-            Helper.createEmbed(embedError, "Fehler", embedDescription, EmbedColorHelper.ERROR);
-            channel.sendMessage(embedError.build()).queue();
+            Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
+            channel.sendMessageEmbeds(embedBuilder.build()).queue();
             return;
         }
 
         member.getGuild().removeRoleFromMember(member.getIdLong(), Config.getInstance().getRole().getMuteRole()).queue();
 
-        final EmbedBuilder confirmation = new EmbedBuilder();
-        confirmation.setColor(Color.decode(EmbedColorHelper.SUCCESS));
-        confirmation.setTitle("Bestätigung");
-        confirmation.setDescription("User " + member.getAsMention() + " wurde durch " + msg.getAuthor().getAsMention() + " erfolgreich **" + " ungemutet." + "**");
-        channel.sendMessage(confirmation.build()).queue();
+        final EmbedBuilder embedBuilder= new EmbedBuilder();
+        embedBuilder.setColor(Color.decode(EmbedColorHelper.SUCCESS));
+        embedBuilder.setTitle("Bestätigung");
+        embedBuilder.setDescription("User " + member.getAsMention() + " wurde durch " + msg.getAuthor().getAsMention() + " erfolgreich **" + " ungemutet." + "**");
+        channel.sendMessageEmbeds(embedBuilder.build()).queue();
 
         Connection connection = DatabaseConnector.openConnection();
 

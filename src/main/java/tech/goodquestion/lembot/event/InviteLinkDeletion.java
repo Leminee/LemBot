@@ -2,7 +2,7 @@ package tech.goodquestion.lembot.event;
 
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.library.Helper;
@@ -12,7 +12,7 @@ import java.util.Objects;
 public class InviteLinkDeletion extends ListenerAdapter {
 
     @Override
-    public void onGuildMessageReceived(final GuildMessageReceivedEvent event) {
+    public void onMessageReceived(final MessageReceivedEvent event) {
 
        final String userMessage = event.getMessage().getContentRaw();
 

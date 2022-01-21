@@ -4,9 +4,9 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.MessageReaction;
-import net.dv8tion.jda.api.events.message.guild.react.GenericGuildMessageReactionEvent;
-import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
-import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionRemoveEvent;
+import net.dv8tion.jda.api.events.message.react.GenericMessageReactionEvent;
+import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
+import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.internal.utils.Helpers;
 import org.jetbrains.annotations.NotNull;
@@ -56,7 +56,7 @@ public class ReactionManager {
      * @param e Das ReactionEvent, nach dem gefiltert werden soll
      * @return Ein {@link Optional}, dass potenziell die zum Event passende ReactionMessage enthält
      */
-    private Optional<ReactionMessage> getByEvent(GenericGuildMessageReactionEvent e) {
+    private Optional<ReactionMessage> getByEvent(GenericMessageReactionEvent e) {
         return reactionMessages.stream().filter(r -> r.check(e.getChannel().getId(), e.getMessageId(), e.getReactionEmote().isEmote() ? e.getReactionEmote().getId() : e.getReactionEmote().getAsCodepoints())).findFirst();
     }
 
@@ -96,13 +96,13 @@ public class ReactionManager {
 
     private class ReactionListener extends ListenerAdapter {
         @Override
-        public void onGuildMessageReactionAdd(@NotNull GuildMessageReactionAddEvent e) {
+        public void onMessageReactionAdd(@NotNull MessageReactionAddEvent e) {
             if (e.getUserId().equals(e.getJDA().getSelfUser().getId())) return;
             getByEvent(e).ifPresent(r -> e.getGuild().addRoleToMember(e.getUserId(), e.getGuild().getRoleById(r.getRoleId())).queue());
         }
 
         @Override
-        public void onGuildMessageReactionRemove(@NotNull GuildMessageReactionRemoveEvent e) {
+        public void onMessageReactionRemove(@NotNull MessageReactionRemoveEvent e) {
             if (e.getUserId().equals(e.getJDA().getSelfUser().getId())) return;
             getByEvent(e).ifPresent(r -> e.getGuild().removeRoleFromMember(e.getUserId(), e.getGuild().getRoleById(r.getRoleId())).queue());
         }

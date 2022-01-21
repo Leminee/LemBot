@@ -23,31 +23,31 @@ public class ClearCommand implements IBotCommand {
 
             if (messageAmountToDelete > 30) {
 
-                final EmbedBuilder errorAmountOfMessagesEmbed = new EmbedBuilder();
+                final EmbedBuilder embedBuilder = new EmbedBuilder();
 
-                Helper.createEmbed(errorAmountOfMessagesEmbed, "Fehler", ":x: Lösche bitte nicht mehr als 30 Nachrichten auf einmal!", EmbedColorHelper.ERROR);
-                channel.sendMessage(errorAmountOfMessagesEmbed.build()).queue();
+                Helper.createEmbed(embedBuilder, "Fehler", ":x: Lösche bitte nicht mehr als 30 Nachrichten auf einmal!", EmbedColorHelper.ERROR);
+                channel.sendMessageEmbeds(embedBuilder.build()).queue();
                 return;
             }
 
             channel.deleteMessages(messagesToDelete).queue();
 
-            final EmbedBuilder confirmationEmbed = new EmbedBuilder();
+            final EmbedBuilder embedBuilder = new EmbedBuilder();
 
-            Helper.createEmbed(confirmationEmbed, "Bestätigung", "Es wurden " + (messageAmountToDelete - 1) + " Nachrichten durch " + message.getAuthor().getAsMention() + " erfolgreich gelöscht!", EmbedColorHelper.SUCCESS);
-            channel.sendMessage(confirmationEmbed.build()).queue();
+            Helper.createEmbed(embedBuilder, "Bestätigung", "Es wurden " + (messageAmountToDelete - 1) + " Nachrichten durch " + message.getAuthor().getAsMention() + " erfolgreich gelöscht!", EmbedColorHelper.SUCCESS);
+            channel.sendMessageEmbeds(embedBuilder.build()).queue();
 
         } catch (IllegalArgumentException illegalArgumentException) {
             if (illegalArgumentException.getMessage().equals("Message retrieval")) {
-                final EmbedBuilder errorIAEEmbed = new EmbedBuilder();
-                Helper.createEmbed(errorIAEEmbed, "Fehler", ":x: Mehr als 100 Nachrichten können nicht gelöscht werden!", EmbedColorHelper.ERROR);
-                channel.sendMessage(errorIAEEmbed.build()).queue();
+                final EmbedBuilder embedBuilder = new EmbedBuilder();
+                Helper.createEmbed(embedBuilder, "Fehler", ":x: Mehr als 100 Nachrichten können nicht gelöscht werden!", EmbedColorHelper.ERROR);
+                channel.sendMessageEmbeds(embedBuilder.build()).queue();
 
 
             } else if (illegalArgumentException instanceof NumberFormatException) {
-                final EmbedBuilder errorNFEEmbed = new EmbedBuilder();
-                Helper.createEmbed(errorNFEEmbed, "Fehler", ":x: Bitte gib bitte eine gültige Zahl an!", EmbedColorHelper.ERROR);
-                channel.sendMessage(errorNFEEmbed.build()).queue();
+                final EmbedBuilder embedBuilder = new EmbedBuilder();
+                Helper.createEmbed(embedBuilder, "Fehler", ":x: Bitte gib bitte eine gültige Zahl an!", EmbedColorHelper.ERROR);
+                channel.sendMessageEmbeds(embedBuilder.build()).queue();
 
             }
         }

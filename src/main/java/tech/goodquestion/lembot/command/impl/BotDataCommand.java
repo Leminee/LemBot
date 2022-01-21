@@ -22,7 +22,7 @@ public class BotDataCommand implements IBotCommand {
         final String gitHubRepositoryUrl = "https://github.com/Leminee/LemBot";
         final String botIconUrl = Config.getInstance().getGuild().getMemberById(Config.getInstance().getUser().getLemBotId()).getUser().getEffectiveAvatarUrl();
 
-        final EmbedBuilder botInfoEmbed = new EmbedBuilder()
+        final EmbedBuilder embedBuilder = new EmbedBuilder()
                 .setAuthor(bot, gitHubRepositoryUrl, botIconUrl)
                 .setTitle("Informationen zum LemBot")
                 .setColor(Color.decode(EmbedColorHelper.GOOD_QUESTION))
@@ -34,7 +34,7 @@ public class BotDataCommand implements IBotCommand {
                 .addField("Source Code", gitHubRepositoryUrl, true);
 
 
-        channel.sendMessage(botInfoEmbed.build()).queue();
+        channel.sendMessageEmbeds(embedBuilder.build()).queue();
     }
 
     @Override

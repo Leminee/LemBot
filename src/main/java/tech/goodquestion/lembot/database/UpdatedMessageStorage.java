@@ -1,7 +1,7 @@
 package tech.goodquestion.lembot.database;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageUpdateEvent;
+import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.entity.OccurredException;
@@ -17,7 +17,7 @@ import java.time.Instant;
 
 public class UpdatedMessageStorage extends ListenerAdapter {
     @Override
-    public void onGuildMessageUpdate(@Nonnull final GuildMessageUpdateEvent event) {
+    public void onMessageUpdate(@Nonnull final MessageUpdateEvent event) {
 
         final long updatedMessageId = event.getMessageIdLong();
         final long authorId = event.getAuthor().getIdLong();
@@ -44,7 +44,7 @@ public class UpdatedMessageStorage extends ListenerAdapter {
                 .addField("Neuer Inhalt", newContent,false)
                 .setTimestamp(Instant.now());
 
-        Config.getInstance().getChannel().getUpdatedDeletedChannel().sendMessage(embedBuilder.build()).queue();
+        Config.getInstance().getChannel().getUpdatedDeletedChannel().sendMessageEmbeds(embedBuilder.build()).queue();
 
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(updatedMessageData)) {

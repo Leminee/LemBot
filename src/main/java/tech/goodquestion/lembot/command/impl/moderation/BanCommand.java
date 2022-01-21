@@ -22,13 +22,13 @@ public class BanCommand extends UserBanishCommand {
 
         toBanish.ban(0, sanction.reason).complete();
 
-        final EmbedBuilder confirmation = new EmbedBuilder();
-        confirmation.setColor(Color.decode(EmbedColorHelper.SUCCESS));
-        confirmation.setTitle("Bestätigung");
-        confirmation.setDescription("User " + toBanish.getAsMention() + " wurde durch " + originMessage.getAuthor().getAsMention() + "**" + " gebannt." + "**" + "\n Angegebener Grund: " + sanction.reason);
+        final EmbedBuilder embedBuilder = new EmbedBuilder();
+        embedBuilder.setColor(Color.decode(EmbedColorHelper.SUCCESS));
+        embedBuilder.setTitle("Bestätigung");
+        embedBuilder.setDescription("User " + toBanish.getAsMention() + " wurde durch " + originMessage.getAuthor().getAsMention() + "**" + " gebannt." + "**" + "\n Angegebener Grund: " + sanction.reason);
 
 
-        originMessage.getChannel().sendMessage(confirmation.build()).queue();
+        originMessage.getChannel().sendMessageEmbeds(embedBuilder.build()).queue();
 
         CommandHelper.logUserBan(sanction);
 

@@ -2,7 +2,7 @@ package tech.goodquestion.lembot.database;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageDeleteEvent;
+import net.dv8tion.jda.api.events.message.MessageDeleteEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.entity.OccurredException;
@@ -19,7 +19,7 @@ import java.time.Instant;
 public class DeletedMessageStorage extends ListenerAdapter {
 
     @Override
-    public void onGuildMessageDelete(@Nonnull final GuildMessageDeleteEvent event) {
+    public void onMessageDelete(@Nonnull final MessageDeleteEvent event) {
 
         Connection connection = DatabaseConnector.openConnection();
 
@@ -61,7 +61,7 @@ public class DeletedMessageStorage extends ListenerAdapter {
 
 
 
-                Config.getInstance().getChannel().getUpdatedDeletedChannel().sendMessage(embedBuilder.build()).queue();
+                Config.getInstance().getChannel().getUpdatedDeletedChannel().sendMessageEmbeds(embedBuilder.build()).queue();
 
                 PreparedStatement preparedStatementOne = connection.prepareStatement(deletedMessage);
                 preparedStatementOne.setLong(1, idDeletedMessage);

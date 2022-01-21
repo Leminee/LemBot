@@ -2,7 +2,7 @@ package tech.goodquestion.lembot.event;
 
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import tech.goodquestion.lembot.config.Config;
@@ -21,7 +21,7 @@ public class Reminder extends ListenerAdapter {
     private static final List<ScheduledFuture<?>> tasks = new ArrayList<>();
 
     @Override
-    public void onGuildMessageReceived(@NotNull final GuildMessageReceivedEvent event) {
+    public void onMessageReceived(@NotNull final MessageReceivedEvent event) {
 
         final List<MessageEmbed> disBoardEmbed = event.getMessage().getEmbeds();
         final User embedAuthor = event.getAuthor();

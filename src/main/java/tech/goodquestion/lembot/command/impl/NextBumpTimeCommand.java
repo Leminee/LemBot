@@ -29,7 +29,7 @@ public class NextBumpTimeCommand implements IBotCommand {
             final EmbedBuilder embedBuilder = new EmbedBuilder();
 
             Helper.createEmbed(embedBuilder,title,description, EmbedColorHelper.BUMP);
-            channel.sendMessage(embedBuilder.build()).queue();
+            channel.sendMessageEmbeds(embedBuilder.build()).queue();
 
         } catch (StringIndexOutOfBoundsException stringIndexOutOfBoundsException) {
 

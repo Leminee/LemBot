@@ -119,12 +119,12 @@ public final class Helper {
 
        final String mentionedUser = CommandManager.getInstance().getJDA().retrieveUserById(userData.nextHigherUserId).complete().getAsMention();
 
-        final EmbedBuilder numberInfo = new EmbedBuilder();
-        numberInfo.setColor(Color.decode(embedColor));
-        numberInfo.setTitle(embedTitle);
-        numberInfo.setDescription("Anzahl deiner " + amountOf + " **" + userData.amountOf + "**" + " " + authorMention + "\n" + "Du bist hinter dem User " + mentionedUser + " **(" + userData.nextHigherUserAmountOf + " " + amountOf + ")**");
+        final EmbedBuilder embedBuilder = new EmbedBuilder();
+        embedBuilder.setColor(Color.decode(embedColor));
+        embedBuilder.setTitle(embedTitle);
+        embedBuilder.setDescription("Anzahl deiner " + amountOf + " **" + userData.amountOf + "**" + " " + authorMention + "\n" + "Du bist hinter dem User " + mentionedUser + " **(" + userData.nextHigherUserAmountOf + " " + amountOf + ")**");
 
-        channel.sendMessage(numberInfo.build()).queue();
+        channel.sendMessageEmbeds(embedBuilder.build()).queue();
     }
 
     public static void scheduleCommand(final String command,final long delay, final long period, final TimeUnit timeUnit) {
@@ -178,7 +178,7 @@ public final class Helper {
                 top++;
             }
 
-            channel.sendMessage(embedBuilder.build()).queue();
+            channel.sendMessageEmbeds(embedBuilder.build()).queue();
 
         } catch (SQLException sqlException) {
 

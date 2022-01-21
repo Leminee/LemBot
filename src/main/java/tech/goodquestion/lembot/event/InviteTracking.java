@@ -62,8 +62,8 @@ public class InviteTracking extends ListenerAdapter {
                     continue;
                 cachedInvite.incrementUses();
 
-                EmbedBuilder embedBuilder = new EmbedBuilder();
-                String title = "Einladungslink-Tracking";
+                final EmbedBuilder embedBuilder = new EmbedBuilder();
+                final String title = "Einladungslink-Tracking";
 
                 final String url = retrievedInvite.getUrl();
                 final int uses = retrievedInvite.getUses();
@@ -88,7 +88,7 @@ public class InviteTracking extends ListenerAdapter {
 
                 Objects.requireNonNull(event.getGuild().getTextChannelById(Config.getInstance()
                         .getChannel().getJoinLeftChannel().getIdLong()))
-                        .sendMessage(embedBuilder.build())
+                        .sendMessageEmbeds(embedBuilder.build())
                         .queue();
 
                 CommandHelper.logInviteLinkTracking(inviteTrackingData);

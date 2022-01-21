@@ -32,10 +32,10 @@ public class HelpList implements IBotCommand {
         }
 
         if (queriedHelpList.equals("-")) {
-            EmbedBuilder e = new EmbedBuilder().setColor(Color.decode(EmbedColorHelper.HELP))
+            EmbedBuilder embedBuilder1 = new EmbedBuilder().setColor(Color.decode(EmbedColorHelper.HELP))
                     .setTitle("Verfügbare Help-Listen")
                     .setDescription(PREFIX+"help " + String.join("\n" +PREFIX+"help ",CommandManager.getInstance().getHelpLists()));
-            message.getChannel().sendMessage(e.build()).queue();
+            message.getChannel().sendMessageEmbeds(embedBuilder1.build()).queue();
             return;
         }
 
@@ -54,7 +54,7 @@ public class HelpList implements IBotCommand {
         commandsOnHelpList.forEach(c -> descriptionBuilder.append(c.getDescription()).append("\n"));
 
         embedBuilder.setDescription(descriptionBuilder.toString());
-        message.getChannel().sendMessage(embedBuilder.build()).queue();
+        message.getChannel().sendMessageEmbeds(embedBuilder.build()).queue();
     }
 
     @Override

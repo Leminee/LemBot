@@ -19,12 +19,12 @@ public class WarnCommand extends UserBanishCommand {
 
         toBanish.getGuild().addRoleToMember(sanction.userId, Config.getInstance().getRole().getWarnRole()).queue();
 
-        final EmbedBuilder confirmation = new EmbedBuilder();
-        confirmation.setColor(Color.decode(EmbedColorHelper.SUCCESS));
-        confirmation.setTitle("Bestätigung");
-        confirmation.setDescription("User " + toBanish.getAsMention() + " wurde durch " + originMsg.getAuthor().getAsMention() +
+        final EmbedBuilder embedBuilder = new EmbedBuilder();
+        embedBuilder.setColor(Color.decode(EmbedColorHelper.SUCCESS));
+        embedBuilder.setTitle("Bestätigung");
+        embedBuilder.setDescription("User " + toBanish.getAsMention() + " wurde durch " + originMsg.getAuthor().getAsMention() +
                 "**" + " verwarnt." + "**" + "\n Angegebener Grund: " + sanction.reason);
-        originMsg.getChannel().sendMessage(confirmation.build()).queue();
+        originMsg.getChannel().sendMessageEmbeds(embedBuilder.build()).queue();
 
         CommandHelper.logUserWarn(sanction);
 

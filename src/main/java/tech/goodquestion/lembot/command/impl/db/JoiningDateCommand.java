@@ -20,7 +20,7 @@ public class JoiningDateCommand implements IBotCommand {
 
         Helper.createEmbed(embedBuilder, title, description, EmbedColorHelper.JOIN_DATE);
 
-        channel.sendMessage(embedBuilder.build()).queue();
+        channel.sendMessageEmbeds(embedBuilder.build()).queue();
 
     }
 

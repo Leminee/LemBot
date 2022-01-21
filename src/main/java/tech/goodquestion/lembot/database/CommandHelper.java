@@ -3,7 +3,7 @@ package tech.goodquestion.lembot.database;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import tech.goodquestion.lembot.entity.InviteTrackingData;
 import tech.goodquestion.lembot.entity.OccurredException;
 import tech.goodquestion.lembot.entity.Sanction;
@@ -215,7 +215,7 @@ public final class CommandHelper {
 
     }
 
-    public static void deleteSpammerMessages(final GuildMessageReceivedEvent event, final long userId) {
+    public static void deleteSpammerMessages(final MessageReceivedEvent event, final long userId) {
 
         QueryHelper.getIdsLastMessages(userId);
 
