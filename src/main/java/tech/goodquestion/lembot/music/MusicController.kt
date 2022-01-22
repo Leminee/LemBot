@@ -1,4 +1,4 @@
-package tech.goodquestion.lembot.music.command
+package tech.goodquestion.lembot.music
 
 class MusicController {
 }
