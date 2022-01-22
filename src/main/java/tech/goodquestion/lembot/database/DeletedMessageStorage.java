@@ -40,8 +40,9 @@ public class DeletedMessageStorage extends ListenerAdapter {
                 final String deletedMessageContent = resultSet.getString(3);
                 final String channelAsMention = "<#" + event.getChannel().getIdLong() +">";
 
-                final User authorDeletedMessage = event.getGuild().getMemberById(resultSet.getString(2)).getUser();
+                final User authorDeletedMessage = event.getJDA().retrieveUserById(resultSet.getString(2)).complete();
 
+                assert authorDeletedMessage != null;
                 final String authorDeletedMessageAsTag = authorDeletedMessage.getAsTag();
                 final String authorDeletedMessageAvatarUrl = authorDeletedMessage.getEffectiveAvatarUrl();
                 final long authorDeletedMessageIdLong = authorDeletedMessage.getIdLong();
@@ -52,8 +53,8 @@ public class DeletedMessageStorage extends ListenerAdapter {
                 embedBuilder.setTitle("Gelöschte Nachricht")
                         .setAuthor(authorDeletedMessageAsTag,null,authorDeletedMessageAvatarUrl)
                         .setColor(Color.decode(EmbedColorHelper.DELETED))
-                        .addField("Member", deletedMessageAuthorAsMention,true)
-                        .addField("Member ID", String.valueOf(authorDeletedMessageIdLong),true)
+                        .addField("Author", deletedMessageAuthorAsMention,true)
+                        .addField("Author ID", String.valueOf(authorDeletedMessageIdLong),true)
                         .addField("Kanal",channelAsMention,true)
                         .addField("Inhalt", deletedMessageContent,false)
                         .setTimestamp(Instant.now());
