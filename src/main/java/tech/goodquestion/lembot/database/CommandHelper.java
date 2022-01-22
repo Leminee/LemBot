@@ -180,9 +180,9 @@ public final class CommandHelper {
         Connection connection = DatabaseConnector.openConnection();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
-            preparedStatement.setLong(1, voiceChannel.userId);
-            preparedStatement.setString(2, voiceChannel.userTag);
-            preparedStatement.setString(3, voiceChannel.userName);
+            preparedStatement.setLong(1, voiceChannel.memberId);
+            preparedStatement.setString(2, voiceChannel.memberTag);
+            preparedStatement.setString(3, voiceChannel.memberName);
             preparedStatement.setString(4, voiceChannel.name);
             preparedStatement.executeUpdate();
 

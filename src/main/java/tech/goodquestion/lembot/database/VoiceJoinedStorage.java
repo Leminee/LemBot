@@ -18,9 +18,9 @@ public class VoiceJoinedStorage extends ListenerAdapter {
 
         final VoiceChannel voiceChannel = new VoiceChannel();
 
-        voiceChannel.userId = event.getMember().getIdLong();
-        voiceChannel.userTag = event.getMember().getUser().getAsTag();
-        voiceChannel.userName = event.getMember().getUser().getName();
+        voiceChannel.memberId = event.getMember().getIdLong();
+        voiceChannel.memberTag = event.getMember().getUser().getAsTag();
+        voiceChannel.memberName = event.getMember().getUser().getName();
         voiceChannel.name = event.getChannelJoined().getName();
 
         final String userMentioned = event.getMember().getAsMention();

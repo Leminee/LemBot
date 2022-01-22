@@ -9,13 +9,14 @@ import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.command.KillSwitch;
 import tech.goodquestion.lembot.command.impl.*;
-import tech.goodquestion.lembot.command.impl.db.*;
+import tech.goodquestion.lembot.command.impl.database.*;
 import tech.goodquestion.lembot.command.impl.moderation.*;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.config.ReactionRoleMessage;
 import tech.goodquestion.lembot.database.*;
 import tech.goodquestion.lembot.event.*;
 import tech.goodquestion.lembot.library.ReactionManager;
+import tech.goodquestion.lembot.music.command.PlayCommand;
 
 import javax.security.auth.login.LoginException;
 
@@ -49,7 +50,7 @@ public class BotMain {
         commandManager.registerCommand(new CodeBlockHelpCommand());
         commandManager.registerCommand(new BotDataCommand());
         commandManager.registerCommand(new WarnCommand());
-        commandManager.registerCommand(new MuteCommand());
+       // commandManager.registerCommand(new MuteCommand());
         commandManager.registerCommand(new BanCommand());
         commandManager.registerCommand(new UnmuteCommand());
         commandManager.registerCommand(new NextBumpTimeCommand());
@@ -81,7 +82,7 @@ public class BotMain {
         jda.addEventListener(new VoiceLeftStorage());
         jda.addEventListener(new LinkDeletion());
         jda.addEventListener(new VoiceMoved());
-        jda.addEventListener(new UserAuthorization());
+        jda.addEventListener(new MemberAuthorization());
         jda.addEventListener(new AmountMemberStatus());
         jda.addEventListener(new ReminderReactivation());
         jda.addEventListener(new UpdatingUsername());
@@ -94,6 +95,7 @@ public class BotMain {
         jda.addEventListener(new InviteTracking());
         jda.addEventListener(new HappyNewYear());
         jda.addEventListener(new RaidDetection());
+        jda.addEventListener(new PlayCommand());
 
         setupReactionRoles();
     }

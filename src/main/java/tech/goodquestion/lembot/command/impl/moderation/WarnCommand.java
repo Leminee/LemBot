@@ -11,7 +11,7 @@ import tech.goodquestion.lembot.library.EmbedColorHelper;
 
 import java.awt.*;
 
-public class WarnCommand extends UserBanishCommand {
+public final class WarnCommand extends UserBanishCommand {
 
     @Override
     public void banishUser(Member toBanish, Sanction sanction, Message originMsg) {

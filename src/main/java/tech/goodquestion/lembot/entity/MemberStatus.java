@@ -2,9 +2,9 @@ package tech.goodquestion.lembot.entity;
 
 public class MemberStatus {
 
-    public Long userId;
-    public String userTag;
-    public String userName;
-    public String avatarUrl;
+    public Long Id;
+    public String tag;
+    public String name;
+    public String url;
 
 }

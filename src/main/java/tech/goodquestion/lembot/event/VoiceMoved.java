@@ -13,13 +13,13 @@ public class VoiceMoved extends ListenerAdapter {
     @Override
     public void onGuildVoiceMove(@NotNull final GuildVoiceMoveEvent event) {
 
-        final String userMentioned = event.getMember().getAsMention();
+        final String memberAsMention = event.getMember().getAsMention();
         final String voiceChannelLeft = event.getChannelLeft().getName();
         final String voiceChannelJoined = event.getChannelJoined().getName();
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
 
-        final String embedDescription = userMentioned + " ist von " + "**" + voiceChannelLeft + "**" + " in " + "**" + voiceChannelJoined + "**" + " um " + Helper.getCurrentDateTime() + " Uhr **gemovt**.";
+        final String embedDescription = memberAsMention + " ist von " + "**" + voiceChannelLeft + "**" + " in " + "**" + voiceChannelJoined + "**" + " um " + Helper.getCurrentDateTime() + " Uhr **gemovt**.";
 
         Helper.createEmbed(embedBuilder,
                 "Voice gewechselt ",

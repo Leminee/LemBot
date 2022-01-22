@@ -37,7 +37,7 @@ public class InviteLinkDeletion extends ListenerAdapter {
         event.getChannel().sendMessage(":x: Hier dürfen keine Invitelinks gepostet werden " + authorAsMention + "!").queue();
 
         Objects.requireNonNull(event.getGuild().getTextChannelById(logChannelId))
-                .sendMessage(":red_circle:  Einladungslink gelöscht \n" + userMessage + "\n(gesendet von " + authorAsMention + " in " + channelAsMention + " am " + Helper.getGermanDateTime() +")")
+                .sendMessage(":red_circle:  **Einladungslink gelöscht** \n" + userMessage + "\n**(gesendet von " + authorAsMention + " in " + channelAsMention + " am " + Helper.getGermanDateTime() +")**")
                 .queue();
     }
 }

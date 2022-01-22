@@ -21,14 +21,6 @@ public class ClearCommand implements IBotCommand {
 
             final List<Message> messagesToDelete = message.getChannel().getHistory().retrievePast(messageAmountToDelete).complete();
 
-            if (messageAmountToDelete > 30) {
-
-                final EmbedBuilder embedBuilder = new EmbedBuilder();
-
-                Helper.createEmbed(embedBuilder, "Fehler", ":x: Lösche bitte nicht mehr als 30 Nachrichten auf einmal!", EmbedColorHelper.ERROR);
-                channel.sendMessageEmbeds(embedBuilder.build()).queue();
-                return;
-            }
 
             channel.deleteMessages(messagesToDelete).queue();
 

@@ -10,7 +10,7 @@ import tech.goodquestion.lembot.library.EmbedColorHelper;
 
 import java.awt.*;
 
-public class BanCommand extends UserBanishCommand {
+public final class BanCommand extends UserBanishCommand {
 
 
     @Override

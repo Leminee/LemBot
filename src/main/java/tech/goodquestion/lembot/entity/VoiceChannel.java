@@ -2,9 +2,9 @@ package tech.goodquestion.lembot.entity;
 
 public class VoiceChannel {
 
-    public long userId;
-    public String userTag;
-    public String userName;
+    public long memberId;
+    public String memberTag;
+    public String memberName;
     public String name;
 
 }

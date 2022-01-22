@@ -17,9 +17,9 @@ public class VoiceLeftStorage extends ListenerAdapter {
         final String insertQuery = "INSERT INTO voice_leave (id_discord, user_tag, username, name) VALUES (?,?,?,?);";
 
         final VoiceChannel voiceChannel = new VoiceChannel();
-        voiceChannel.userId = event.getMember().getIdLong();
-        voiceChannel.userTag = event.getMember().getUser().getAsTag();
-        voiceChannel.userName = event.getMember().getUser().getName();
+        voiceChannel.memberId = event.getMember().getIdLong();
+        voiceChannel.memberTag = event.getMember().getUser().getAsTag();
+        voiceChannel.memberName = event.getMember().getUser().getName();
         voiceChannel.name = event.getChannelLeft().getName();
 
         final String userMentioned = event.getMember().getAsMention();

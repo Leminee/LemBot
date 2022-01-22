@@ -20,7 +20,7 @@ import tech.goodquestion.lembot.library.Helper;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class UserBanishCommand implements IBotCommand {
+public abstract sealed class UserBanishCommand implements IBotCommand permits BanCommand, WarnCommand {
 
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {

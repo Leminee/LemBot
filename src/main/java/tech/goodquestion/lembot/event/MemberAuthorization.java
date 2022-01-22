@@ -13,12 +13,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserAuthorization extends ListenerAdapter {
+public class MemberAuthorization extends ListenerAdapter {
 
     @Override
     public void onGuildMemberJoin(@NotNull final GuildMemberJoinEvent event) {
 
-        final long joinedUserId = event.getMember().getIdLong();
+        final long joinedMemberId = event.getMember().getIdLong();
 
         final String userVerificationCheck = "SELECT activ FROM muted_user WHERE id_discord = ? ORDER BY muted_at DESC LIMIT 1;";
 
@@ -26,7 +26,7 @@ public class UserAuthorization extends ListenerAdapter {
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(userVerificationCheck)) {
 
-            preparedStatement.setLong(1, joinedUserId);
+            preparedStatement.setLong(1, joinedMemberId);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 

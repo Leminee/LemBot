@@ -1,4 +1,4 @@
-package tech.goodquestion.lembot.command.impl.db;
+package tech.goodquestion.lembot.command.impl.database;
 
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
