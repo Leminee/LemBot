@@ -21,7 +21,7 @@ import java.util.Optional;
  * @author TecToast / Flo
  */
 @SuppressWarnings("ALL")
-public class ReactionManager {
+public final class ReactionManager {
     private static final ArrayList<ReactionManager> reactionManagers = new ArrayList<>();
     private final JDA jda;
     private final ArrayList<ReactionMessage> reactionMessages = new ArrayList<>();

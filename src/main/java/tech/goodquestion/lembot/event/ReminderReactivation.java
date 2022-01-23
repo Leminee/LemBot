@@ -9,10 +9,16 @@ import java.util.concurrent.TimeUnit;
 
 public class ReminderReactivation extends ListenerAdapter {
 
+    private final Reminder reminder;
+
+    public ReminderReactivation(Reminder reminder) {
+        this.reminder = reminder;
+    }
+
     @Override
     public void onReady(@NotNull final ReadyEvent event) {
 
-     Reminder.scheduleReminder(QueryHelper.getMinutesToNextBump() +1, TimeUnit.MINUTES);
+        reminder.scheduleReminder(QueryHelper.getMinutesToNextBump() + 1, TimeUnit.MINUTES);
 
     }
 }

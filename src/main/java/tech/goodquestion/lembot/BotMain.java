@@ -69,6 +69,8 @@ public class BotMain {
         commandManager.registerCommand(new PlayCommand());
         commandManager.registerCommand(new TopBoosterCommand());
 
+        Reminder reminder = new Reminder();
+
         jda.addEventListener(new Reminder());
         jda.addEventListener(new WelcomingMemberJoin());
         jda.addEventListener(new MemberJoinStorage());
@@ -86,7 +88,7 @@ public class BotMain {
         jda.addEventListener(new VoiceMoved());
         jda.addEventListener(new MemberAuthorization());
         jda.addEventListener(new AmountMemberStatus());
-        jda.addEventListener(new ReminderReactivation());
+        jda.addEventListener(new ReminderReactivation(reminder));
         jda.addEventListener(new UpdatingUsername());
         jda.addEventListener(new MemberLeftStorage());
         jda.addEventListener(new AddingRole());

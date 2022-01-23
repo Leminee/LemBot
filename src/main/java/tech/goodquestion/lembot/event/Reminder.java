@@ -15,10 +15,14 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class Reminder extends ListenerAdapter {
 
-    private static final List<ScheduledFuture<?>> tasks = new ArrayList<>();
+    private final List<ScheduledFuture<?>> tasks = new ArrayList<>();
+
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
 
     @Override
     public void onMessageReceived(@NotNull final MessageReceivedEvent event) {
@@ -31,10 +35,9 @@ public class Reminder extends ListenerAdapter {
         scheduleReminder();
 
         final boolean isRedundantTask = tasks.size() > 1;
+
         if (isRedundantTask) {
-            for (int i = 1; i < tasks.size(); i++) {
-                tasks.get(i).cancel(false);
-            }
+            cancelRedundantTasks();
         }
     }
 
@@ -43,9 +46,8 @@ public class Reminder extends ListenerAdapter {
         scheduleReminder(reminderDelay, TimeUnit.HOURS);
     }
 
-    public static void scheduleReminder(final int delay, final TimeUnit timeUnit) {
+    public void scheduleReminder(final int reminderDelay, final TimeUnit timeUnit) {
 
-        final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
         final String bumperRoleAsMention = "<@&" + Config.getInstance().getRole().getBumpRoleId() + ">";
 
@@ -57,14 +59,29 @@ public class Reminder extends ListenerAdapter {
 
         final Random random = new Random();
 
-        final Runnable ping = () -> {
-            int randomNumber = random.nextInt(pingContent.length);
+        final Runnable runnable = () -> {
+            final int randomNumber = random.nextInt(pingContent.length);
             Config.getInstance().getChannel().getBumpChannel().sendMessage(pingContent[randomNumber]).queue();
             tasks.clear();
         };
 
-        ScheduledFuture<?> task = scheduler.schedule(ping, delay, timeUnit);
+        final ScheduledFuture<?> task = scheduler.schedule(runnable, reminderDelay, timeUnit);
         tasks.add(task);
 
     }
+
+    private void cancelRedundantTasks() {
+
+        final List<ScheduledFuture<?>> runningTasks = tasks
+                .stream()
+                .filter(task -> !task.isCancelled())
+                .collect(Collectors.toList());
+
+        for (int i = 1; i < runningTasks.size(); i++) {
+
+            runningTasks.get(i).cancel(false);
+
+        }
+    }
+
 }
