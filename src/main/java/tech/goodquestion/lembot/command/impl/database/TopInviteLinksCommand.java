@@ -25,13 +25,5 @@ public class TopInviteLinksCommand implements IBotCommand {
         return "`?topbi`: User mit den meisten Invites";
     }
 
-    @Override
-    public boolean isPermitted(Member member) {
-        return IBotCommand.super.isPermitted(member);
-    }
 
-    @Override
-    public String getHelpList() {
-        return IBotCommand.super.getHelpList();
-    }
 }

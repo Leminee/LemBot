@@ -14,7 +14,7 @@ import java.util.*;
 
 import static tech.goodquestion.lembot.library.Helper.PREFIX;
 
-public class HelpList implements IBotCommand {
+public class HelpListCommand implements IBotCommand {
 
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {

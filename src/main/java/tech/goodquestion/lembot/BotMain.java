@@ -7,7 +7,7 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import tech.goodquestion.lembot.command.CommandManager;
-import tech.goodquestion.lembot.command.KillSwitch;
+import tech.goodquestion.lembot.command.KillSwitchCommand;
 import tech.goodquestion.lembot.command.impl.*;
 import tech.goodquestion.lembot.command.impl.database.*;
 import tech.goodquestion.lembot.command.impl.moderation.*;
@@ -45,12 +45,12 @@ public class BotMain {
 
         CommandManager commandManager = new CommandManager(jda);
 
-        commandManager.registerCommand(new HelpList());
+        commandManager.registerCommand(new HelpListCommand());
         commandManager.registerCommand(new ClearCommand());
         commandManager.registerCommand(new CodeBlockHelpCommand());
         commandManager.registerCommand(new BotDataCommand());
         commandManager.registerCommand(new WarnCommand());
-       // commandManager.registerCommand(new MuteCommand());
+        commandManager.registerCommand(new MuteCommand());
         commandManager.registerCommand(new BanCommand());
         commandManager.registerCommand(new UnmuteCommand());
         commandManager.registerCommand(new NextBumpTimeCommand());
@@ -64,8 +64,10 @@ public class BotMain {
         commandManager.registerCommand(new TopFlooderCommand());
         commandManager.registerCommand(new TopMonthlyBumperCommand());
         commandManager.registerCommand(new TopMonthlyFlooderCommand());
-        commandManager.registerCommand(new ServerData());
-        commandManager.registerCommand(new KillSwitch());
+        commandManager.registerCommand(new ServerDataCommand());
+        commandManager.registerCommand(new KillSwitchCommand());
+        commandManager.registerCommand(new PlayCommand());
+        commandManager.registerCommand(new TopBoosterCommand());
 
         jda.addEventListener(new Reminder());
         jda.addEventListener(new WelcomingMemberJoin());
@@ -95,7 +97,6 @@ public class BotMain {
         jda.addEventListener(new InviteTracking());
         jda.addEventListener(new HappyNewYear());
         jda.addEventListener(new RaidDetection());
-        jda.addEventListener(new PlayCommand());
 
         setupReactionRoles();
     }

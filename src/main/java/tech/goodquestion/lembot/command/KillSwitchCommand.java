@@ -7,7 +7,7 @@ import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.io.IOException;
 
-public class KillSwitch implements IBotCommand {
+public class KillSwitchCommand implements IBotCommand {
 
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) throws IOException {
@@ -16,17 +16,21 @@ public class KillSwitch implements IBotCommand {
 
         if (!hasPermission) return;
 
-            System.exit(0);
+        System.exit(0);
     }
 
     @Override
     public String getName() {
-        return "kill";
+        return "ks";
     }
 
     @Override
     public String getDescription() {
-        return null;
+        return "`?ks`: killt den Bot";
     }
 
+    @Override
+    public String getHelpList() {
+        return "staff";
+    }
 }

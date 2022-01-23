@@ -17,21 +17,12 @@ public class AdvertisingCommand implements IBotCommand {
 
     @Override
     public String getName() {
-        return null;
+        return "";
     }
 
     @Override
     public String getDescription() {
-        return null;
+        return "";
     }
 
-    @Override
-    public boolean isPermitted(Member member) {
-        return IBotCommand.super.isPermitted(member);
-    }
-
-    @Override
-    public String getHelpList() {
-        return IBotCommand.super.getHelpList();
-    }
 }

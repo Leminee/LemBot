@@ -13,7 +13,7 @@ import java.awt.*;
 import java.util.List;
 import java.util.Objects;
 
-public class ServerData implements IBotCommand {
+public class ServerDataCommand implements IBotCommand {
 
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {

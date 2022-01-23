@@ -23,13 +23,5 @@ public class TopBoosterCommand implements IBotCommand {
         return "`?topbo`: User mit den meisten Boosts";
     }
 
-    @Override
-    public boolean isPermitted(Member member) {
-        return IBotCommand.super.isPermitted(member);
-    }
 
-    @Override
-    public String getHelpList() {
-        return IBotCommand.super.getHelpList();
-    }
 }

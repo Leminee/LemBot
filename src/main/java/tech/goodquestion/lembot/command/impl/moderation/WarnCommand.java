@@ -35,7 +35,7 @@ public final class WarnCommand extends UserBanishCommand {
 
     @Override
     public boolean requiresAdmin() {
-        return false;
+        return true;
     }
 
     @Override

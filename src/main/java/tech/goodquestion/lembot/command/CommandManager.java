@@ -86,7 +86,7 @@ public class CommandManager extends ListenerAdapter {
         try {
             executor.dispatch(message, (TextChannel) event.getChannel(), event.getMember(), args);
         } catch (IOException ioException) {
-            ioException.printStackTrace();
+            System.out.println(ioException.getMessage());
         }
     }
 

@@ -25,7 +25,6 @@ public class DatabaseConnector {
             if (dataSource == null) {
                 setupDataSource();
             }
-
             return dataSource.getConnection();
         } catch (SQLException sqlException) {
             CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, MysqlConnectionPoolDataSource.class.getName()));

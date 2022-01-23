@@ -1,4 +1,4 @@
-token: ""
+token: "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.FCYTYsnDqYXoWvZ_DyDCz6ElLu4"
 guild: 919074433505841172
 
 reactionRoles:
@@ -23,7 +23,6 @@ commandRoles:
     role: 815922232106156033
 
 database:
-  # "database" instead of "localhost" if both services (bot and database) should each run in a Docker container
   uri: "jdbc:mysql://localhost:3306/lembot?autoReconnect=true&serverTimezone=UTC"
   username: lembot
   password: lembot
@@ -51,7 +50,7 @@ role:
   moderator: 919074433556160538
 
 category:
-  voiceFun: 779105998420967465
+  voiceFun: 919074435410042924
 
 user:
   disboard: 302050872383242240

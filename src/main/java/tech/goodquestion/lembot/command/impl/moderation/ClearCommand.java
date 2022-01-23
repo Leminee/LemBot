@@ -17,16 +17,16 @@ public class ClearCommand implements IBotCommand {
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
 
         try {
-            final int messageAmountToDelete = Integer.parseInt(args[0]) + 1;
+            final int amountMessagesToDelete = Integer.parseInt(args[0]) + 1;
 
-            final List<Message> messagesToDelete = message.getChannel().getHistory().retrievePast(messageAmountToDelete).complete();
+            final List<Message> messagesToDelete = message.getChannel().getHistory().retrievePast(amountMessagesToDelete).complete();
 
 
             channel.deleteMessages(messagesToDelete).queue();
 
             final EmbedBuilder embedBuilder = new EmbedBuilder();
 
-            Helper.createEmbed(embedBuilder, "Bestätigung", "Es wurden " + (messageAmountToDelete - 1) + " Nachrichten durch " + message.getAuthor().getAsMention() + " erfolgreich gelöscht!", EmbedColorHelper.SUCCESS);
+            Helper.createEmbed(embedBuilder, "Bestätigung", "Es wurden " + (amountMessagesToDelete - 1) + " Nachrichten durch " + message.getAuthor().getAsMention() + " erfolgreich gelöscht!", EmbedColorHelper.SUCCESS);
             channel.sendMessageEmbeds(embedBuilder.build()).queue();
 
         } catch (IllegalArgumentException illegalArgumentException) {
