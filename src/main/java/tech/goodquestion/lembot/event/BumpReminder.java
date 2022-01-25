@@ -20,9 +20,7 @@ import java.util.stream.Collectors;
 public class Reminder extends ListenerAdapter {
 
     private final List<ScheduledFuture<?>> tasks = new ArrayList<>();
-
-    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-
+    private final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
 
     @Override
     public void onMessageReceived(@NotNull final MessageReceivedEvent event) {
@@ -36,9 +34,8 @@ public class Reminder extends ListenerAdapter {
 
         final boolean isRedundantTask = tasks.size() > 1;
 
-        if (isRedundantTask) {
-            cancelRedundantTasks();
-        }
+        if (isRedundantTask) cancelRedundantTask();
+
     }
 
     private void scheduleReminder() {
@@ -47,7 +44,6 @@ public class Reminder extends ListenerAdapter {
     }
 
     public void scheduleReminder(final int reminderDelay, final TimeUnit timeUnit) {
-
 
         final String bumperRoleAsMention = "<@&" + Config.getInstance().getRole().getBumpRoleId() + ">";
 
@@ -65,23 +61,20 @@ public class Reminder extends ListenerAdapter {
             tasks.clear();
         };
 
-        final ScheduledFuture<?> task = scheduler.schedule(runnable, reminderDelay, timeUnit);
+        final ScheduledFuture<?> task = scheduledExecutorService.schedule(runnable, reminderDelay, timeUnit);
         tasks.add(task);
 
     }
 
-    private void cancelRedundantTasks() {
+    private void cancelRedundantTask() {
 
         final List<ScheduledFuture<?>> runningTasks = tasks
                 .stream()
                 .filter(task -> !task.isCancelled())
                 .collect(Collectors.toList());
 
-        for (int i = 1; i < runningTasks.size(); i++) {
+        runningTasks.get(1).cancel(false);
 
-            runningTasks.get(i).cancel(false);
-
-        }
     }
 
 }
