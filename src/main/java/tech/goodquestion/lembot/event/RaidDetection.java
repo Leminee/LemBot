@@ -14,19 +14,19 @@ import java.util.concurrent.TimeUnit;
 
 public class RaidDetection extends ListenerAdapter {
 
-    private static boolean isSameRaid = false;
+    private boolean isSameAttack = false;
 
     @Override
     public void onGuildMemberJoin(final @NotNull GuildMemberJoinEvent event) {
 
-        if (isSameRaid) return;
+        if (isSameAttack) return;
 
         final Guild guild = event.getGuild();
         final String moderatorRoleAsMention = Config.getInstance().getRole().getModeratorRole().getAsMention();
 
-        if (QueryHelper.isRaid()) {
+        if (QueryHelper.isServerUnderAttack()) {
 
-            isSameRaid = true;
+            isSameAttack = true;
 
             Objects.requireNonNull(guild.getTextChannelById(Config.getInstance().getChannel().getAutoModerationChannel().getIdLong()))
                     .sendMessage(":red_circle: Es findet gerade einen Raid statt " + moderatorRoleAsMention)
@@ -35,7 +35,7 @@ public class RaidDetection extends ListenerAdapter {
 
         final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-        final Runnable runnable = () -> isSameRaid = false;
+        final Runnable runnable = () -> isSameAttack = false;
 
         final int delay = 30;
         scheduler.schedule(runnable, delay, TimeUnit.MINUTES);

@@ -16,8 +16,9 @@ public final class BanCommand extends UserBanishCommand {
     @Override
     public void banishUser(Member toBanish, Sanction sanction, Message originMessage) {
 
-        final String performedSanction = "gebannt";
+        final String performedSanction = SanctionType.BAN.getVerbalizedSanctionTyp();
         final SanctionType sanctionType = SanctionType.BAN;
+
         sendSanctionReason(toBanish.getUser(),sanctionType, performedSanction, sanction.reason);
 
         toBanish.ban(0, sanction.reason).complete();

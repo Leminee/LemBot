@@ -275,7 +275,7 @@ public final class QueryHelper {
 
     }
 
-    public static boolean isRaid() {
+    public static boolean isServerUnderAttack() {
 
 
         try (Connection connection = DatabaseConnector.openConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(RAID_DETECTION)) {

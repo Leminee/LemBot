@@ -21,9 +21,9 @@ public class TopMonthlyNotifier extends ListenerAdapter {
 
         final LocalDateTime firstDayThisMonth = LocalDateTime.now();
         final LocalDateTime firstDayNextMonth = firstDayThisMonth.plusMonths(1);
-        final long period = ChronoUnit.SECONDS.between(firstDayThisMonth, firstDayNextMonth);
+        final long periodInSeconds = ChronoUnit.SECONDS.between(firstDayThisMonth, firstDayNextMonth);
 
-        Helper.scheduleCommand("topmb", daysBeforeNextMonthInSeconds, period, TimeUnit.SECONDS);
-        Helper.scheduleCommand("topmf", daysBeforeNextMonthInSeconds, period, TimeUnit.SECONDS);
+        Helper.scheduleCommand("topmb", daysBeforeNextMonthInSeconds, periodInSeconds, TimeUnit.SECONDS);
+        Helper.scheduleCommand("topmf", daysBeforeNextMonthInSeconds, periodInSeconds, TimeUnit.SECONDS);
     }
 }

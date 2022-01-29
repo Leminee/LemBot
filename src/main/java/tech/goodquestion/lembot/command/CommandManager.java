@@ -15,7 +15,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static tech.goodquestion.lembot.library.Helper.PREFIX;
+import static tech.goodquestion.lembot.BotMain.PREFIX;
 
 public class CommandManager extends ListenerAdapter {
 

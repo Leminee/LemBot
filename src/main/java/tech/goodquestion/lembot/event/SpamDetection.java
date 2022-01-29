@@ -62,7 +62,7 @@ public class SpamDetection extends ListenerAdapter {
             event.getChannel().sendMessage(":mute: Du wurdest aufgrund verdächtigem Verhalten durch den Bot **gemutet** " + userAsMention + ".").queue();
 
             Objects.requireNonNull(event.getGuild().getTextChannelById(Config.getInstance().getChannel().getAutoModerationChannel().getIdLong()))
-                    .sendMessage(":mute: User " + Objects.requireNonNull(event.getMember()).getAsMention() + " wurde wegen Spam **gemutet** " + "\n(3 inhaltich identische Nachrichten in weniger als 30 Sekunden in mehrere Kanäle gepostet)\nGelöschte Nachricht: " + messageContent)
+                    .sendMessage(":mute: User " + Objects.requireNonNull(event.getMember()).getAsMention() + " wurde wegen Spam **gemutet** " + "\n(3 inhaltich identische Nachrichten in weniger als 30 Sekunden in mehrere Kanäle gepostet)\nGelöschte Nachricht: ```" + messageContent +"```")
                     .queue();
 
 

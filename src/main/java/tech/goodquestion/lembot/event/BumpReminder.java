@@ -17,7 +17,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-public class Reminder extends ListenerAdapter {
+public class BumpReminder extends ListenerAdapter {
 
     private final List<ScheduledFuture<?>> tasks = new ArrayList<>();
     private final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);

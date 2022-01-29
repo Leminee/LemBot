@@ -12,7 +12,7 @@ import java.awt.*;
 import java.util.List;
 import java.util.*;
 
-import static tech.goodquestion.lembot.library.Helper.PREFIX;
+import static tech.goodquestion.lembot.BotMain.PREFIX;
 
 public class HelpListCommand implements IBotCommand {
 

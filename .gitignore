@@ -6,7 +6,6 @@
 .DS_Store
 META-INF
 *.class
-note.txt
 ./test.config.yml
 
 # IntelliJ
@@ -119,10 +118,12 @@ buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 
+# Others
 lembot.config.yml
 .gitattributes
 attachments
 *.png
 /target/
 src/main/java/tech/goodquestion/lembot/music/Test.kt
+note.txt
 

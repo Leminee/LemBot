@@ -201,8 +201,8 @@ public final class CommandHelper {
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(INVITE_TRACKING_LOG)) {
             preparedStatement.setString(1, inviteTrackingData.url);
-            preparedStatement.setString(2, inviteTrackingData.usedBy);
-            preparedStatement.setString(3, inviteTrackingData.invitedBy);
+            preparedStatement.setLong(2, inviteTrackingData.usedBy);
+            preparedStatement.setLong(3, inviteTrackingData.invitedBy);
             preparedStatement.setInt(4, inviteTrackingData.uses);
             preparedStatement.executeUpdate();
 

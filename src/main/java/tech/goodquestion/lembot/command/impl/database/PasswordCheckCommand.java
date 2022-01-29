@@ -46,7 +46,7 @@ public class PasswordCheckCommand implements IBotCommand {
         channel.sendMessageEmbeds(embedBuilder.build()).queue();
     }
 
-    public boolean hasBeenLeaked(final String userPassword) {
+    private boolean hasBeenLeaked(final String userPassword) {
 
         if (userPassword.length() < 8) {
             return true;

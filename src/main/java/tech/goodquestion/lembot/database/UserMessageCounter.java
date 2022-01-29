@@ -57,7 +57,7 @@ public class UserMessageCounter extends ListenerAdapter {
 
     }
 
-    public void insertData(final String userMessage, final String userId, final String messageId) {
+    private void insertData(final String userMessage, final String userId, final String messageId) {
 
         Connection connection = DatabaseConnector.openConnection();
         final String userMessageData = "INSERT INTO user_message_content (id_message, id_discord, content) VALUES (?,?,?)";

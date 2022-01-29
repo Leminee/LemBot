@@ -55,7 +55,7 @@ public class ServerDataCommand implements IBotCommand {
 
     }
 
-    private static String getTimeCreated() {
+    private String getTimeCreated() {
 
         return Config.getInstance().getGuild().getTimeCreated().getDayOfMonth() + "-"
                 + Config.getInstance().getGuild().getTimeCreated().getMonthValue() + "-"

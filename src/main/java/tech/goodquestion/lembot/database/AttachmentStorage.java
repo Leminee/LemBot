@@ -28,7 +28,6 @@ public class AttachmentStorage extends ListenerAdapter {
         final String attachmentUrl = event.getMessage().getAttachments().get(0).getUrl();
         final String attachmentExtension = event.getMessage().getAttachments().get(0).getFileExtension();
         final double attachmentSize = event.getMessage().getAttachments().get(0).getSize();
-        final double attachmentSizeInKiloByte = attachmentSize / 1024;
 
         saveLocally(event.getMessage().getAttachments().get(0), userId, event.getMember(), event.getMessage());
 
@@ -42,7 +41,7 @@ public class AttachmentStorage extends ListenerAdapter {
             preparedStatement.setString(3, attachmentName);
             preparedStatement.setString(4, attachmentUrl);
             preparedStatement.setString(5, attachmentExtension);
-            preparedStatement.setDouble(6, attachmentSizeInKiloByte);
+            preparedStatement.setDouble(6, attachmentSize);
 
             preparedStatement.executeUpdate();
 

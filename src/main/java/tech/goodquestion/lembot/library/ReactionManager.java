@@ -22,10 +22,10 @@ import java.util.Optional;
  */
 @SuppressWarnings("ALL")
 public final class ReactionManager {
+
     private static final ArrayList<ReactionManager> reactionManagers = new ArrayList<>();
     private final JDA jda;
     private final ArrayList<ReactionMessage> reactionMessages = new ArrayList<>();
-
 
     /**
      * Erstellt einen ReactionManager auf Basis der angegebenen JDA

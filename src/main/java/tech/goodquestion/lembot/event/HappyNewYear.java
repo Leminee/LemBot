@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 public class HappyNewYear extends ListenerAdapter {
 
-    final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
+    private final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
     @Override
     public void onReady(final @NotNull ReadyEvent event) {
 

@@ -11,7 +11,7 @@ import tech.goodquestion.lembot.library.Helper;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 
-public class ActiveUsers extends ListenerAdapter {
+public class OnlineMemberStorage extends ListenerAdapter {
 
     public void onUserUpdateOnlineStatus(@Nonnull final UserUpdateOnlineStatusEvent event) {
 

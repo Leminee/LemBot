@@ -8,7 +8,10 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.command.KillSwitchCommand;
-import tech.goodquestion.lembot.command.impl.*;
+import tech.goodquestion.lembot.command.impl.BotDataCommand;
+import tech.goodquestion.lembot.command.impl.CodeBlockHelpCommand;
+import tech.goodquestion.lembot.command.impl.HelpListCommand;
+import tech.goodquestion.lembot.command.impl.ServerRoleListCommand;
 import tech.goodquestion.lembot.command.impl.database.*;
 import tech.goodquestion.lembot.command.impl.moderation.*;
 import tech.goodquestion.lembot.config.Config;
@@ -23,10 +26,21 @@ import javax.security.auth.login.LoginException;
 public class BotMain {
 
     public static JDA jda;
+    public static final String PREFIX = "?";
+    public static final String BOT_VERSION = "v3.1.2";
 
     public static void main(String[] args) {
 
         try {
+
+            System.out.println("""                 
+                     _      _____  __  __  ____    ___  _____\s
+                    | |    | ____||  \\/  || __ )  / _ \\|_   _|
+                    | |    |  _|  | |\\/| ||  _ \\ | | | | | | \s
+                    | |___ | |___ | |  | || |_) || |_| | | | \s
+                    |_____||_____||_|  |_||____/  \\___/  |_|\s
+                    @Author: Lem                       """ + "                      " + BOT_VERSION);
+
 
             jda = JDABuilder
                     .createDefault(Config.getInstance().getToken())
@@ -42,6 +56,13 @@ public class BotMain {
 
         jda.getPresence().setStatus(OnlineStatus.ONLINE);
         jda.getPresence().setActivity(Activity.playing("?help"));
+
+        initialiseObjects();
+        setupReactionRoles();
+
+    }
+
+    private static void initialiseObjects(){
 
         CommandManager commandManager = new CommandManager(jda);
 
@@ -69,9 +90,9 @@ public class BotMain {
         commandManager.registerCommand(new PlayCommand());
         commandManager.registerCommand(new TopBoosterCommand());
 
-        Reminder reminder = new Reminder();
+        BumpReminder bumpReminder = new BumpReminder();
 
-        jda.addEventListener(new Reminder());
+        jda.addEventListener(bumpReminder);
         jda.addEventListener(new WelcomingMemberJoin());
         jda.addEventListener(new MemberJoinStorage());
         jda.addEventListener(new UserMessageCounter());
@@ -80,7 +101,7 @@ public class BotMain {
         jda.addEventListener(new UpdatedMessageStorage());
         jda.addEventListener(new DeletedMessageStorage());
         jda.addEventListener(new TopMonthlyNotifier());
-        jda.addEventListener(new ActiveUsers());
+        jda.addEventListener(new OnlineMemberStorage());
         jda.addEventListener(new ChannelMessageCounter());
         jda.addEventListener(new VoiceJoinedStorage());
         jda.addEventListener(new VoiceLeftStorage());
@@ -88,7 +109,7 @@ public class BotMain {
         jda.addEventListener(new VoiceMoved());
         jda.addEventListener(new MemberAuthorization());
         jda.addEventListener(new AmountMemberStatus());
-        jda.addEventListener(new ReminderReactivation(reminder));
+        jda.addEventListener(new BumpReminderReactivation(bumpReminder));
         jda.addEventListener(new UpdatingUsername());
         jda.addEventListener(new MemberLeftStorage());
         jda.addEventListener(new AddingRole());
@@ -99,8 +120,7 @@ public class BotMain {
         jda.addEventListener(new InviteTracking());
         jda.addEventListener(new HappyNewYear());
         jda.addEventListener(new RaidDetection());
-
-        setupReactionRoles();
+        jda.addEventListener(new MediaOnly());
     }
 
 
@@ -108,8 +128,13 @@ public class BotMain {
 
         ReactionManager manager = new ReactionManager(jda);
 
-        for (ReactionRoleMessage reactionRoleMessage : Config.getInstance().getReactionRoles()) {
-            reactionRoleMessage.getRoles().forEach((emote, role) -> manager.registerReaction(reactionRoleMessage.getChannel(), reactionRoleMessage.getMessage(), emote, role));
+        for (final ReactionRoleMessage reactionRoleMessage : Config.getInstance().getReactionRoles()) {
+            reactionRoleMessage
+                    .getRoles()
+                    .forEach((emote, role) -> manager
+                            .registerReaction(reactionRoleMessage
+                                    .getChannel(), reactionRoleMessage
+                                    .getMessage(), emote, role));
 
         }
     }

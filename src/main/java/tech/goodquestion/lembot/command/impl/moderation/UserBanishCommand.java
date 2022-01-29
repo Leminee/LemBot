@@ -95,7 +95,7 @@ public abstract sealed class UserBanishCommand implements IBotCommand permits Ba
         banishUser(member, sanction, message);
     }
 
-    public static Member getMember(Message message, String[] args, List<Member> mentionedMembers, Member member) {
+    static Member getMember(Message message, String[] args, List<Member> mentionedMembers, Member member) {
         if (mentionedMembers.size() > 0) {
             member = mentionedMembers.get(0);
         } else {
@@ -121,7 +121,7 @@ public abstract sealed class UserBanishCommand implements IBotCommand permits Ba
         return "staff";
     }
 
-    public static void sendSanctionReason(User sanctionedUser,SanctionType sanctionType, String performedSanction, String reason) {
+    public static void sendSanctionReason(User sanctionedUser, SanctionType sanctionType, String performedSanction, String reason) {
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         try {
             Helper.createEmbed(embedBuilder, String.valueOf(sanctionType), "Du wurdest auf **GoodQuestion** " + " **" + performedSanction + "**" + "\n Grund: " + reason, EmbedColorHelper.ERROR);

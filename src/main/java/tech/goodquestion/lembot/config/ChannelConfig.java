@@ -17,6 +17,7 @@ public class ChannelConfig {
     private long autoModeration;
     private long joinLeft;
     private long updatedDeleted;
+    private long memes;
 
 
     public TextChannel getSanctionChannel() {
@@ -39,7 +40,7 @@ public class ChannelConfig {
         return Config.getInstance().getGuild().getTextChannelById(yourProjects);
     }
 
-        public VoiceChannel getMemberCountChannel() {
+    public VoiceChannel getMemberCountChannel() {
         return Config.getInstance().getGuild().getVoiceChannelById(memberCount);
     }
 
@@ -66,6 +67,10 @@ public class ChannelConfig {
 
     public TextChannel getUpdatedDeletedChannel() {
         return Config.getInstance().getGuild().getTextChannelById(updatedDeleted);
+    }
+
+    public TextChannel getMemesChannel() {
+        return Config.getInstance().getGuild().getTextChannelById(memes);
     }
 
 

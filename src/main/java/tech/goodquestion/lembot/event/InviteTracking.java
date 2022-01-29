@@ -67,23 +67,25 @@ public class InviteTracking extends ListenerAdapter {
 
                 final String url = retrievedInvite.getUrl();
                 final int uses = retrievedInvite.getUses();
-                final String invitedBy = Objects.requireNonNull(retrievedInvite.getInviter()).getAsMention();
+                final String invitedByAsMention = Objects.requireNonNull(retrievedInvite.getInviter()).getAsMention();
                 final String usedByAsMention = user.getAsMention();
 
                 embedBuilder.setTitle(title)
                         .setAuthor(user.getAsTag(), null,user.getEffectiveAvatarUrl())
                         .setColor(Color.decode(EmbedColorHelper.INVITE_TRACKING))
-                        .addField("Einladender", invitedBy, true)
+                        .addField("Einladender", invitedByAsMention, true)
                         .addField("Eingeladener", usedByAsMention, true)
                         .addField("Verwendungen", String.valueOf(uses), true)
                         .addField("URL", url, true)
                         .setFooter(retrievedInvite.getInviter().getAsTag(),retrievedInvite.getInviter().getEffectiveAvatarUrl())
                         .setTimestamp(Instant.now());
 
+                //UPDATE invite_tracking SET invited_by = SUBSTRING(invited_by,3,18) WHERE CHAR_LENGTH(invited_by) >20
+
                 InviteTrackingData inviteTrackingData = new InviteTrackingData();
                 inviteTrackingData.url = url;
-                inviteTrackingData.invitedBy = invitedBy;
-                inviteTrackingData.usedBy = usedByAsMention;
+                inviteTrackingData.invitedBy = retrievedInvite.getInviter().getIdLong();
+                inviteTrackingData.usedBy = user.getIdLong();
                 inviteTrackingData.uses = uses;
 
                 Objects.requireNonNull(event.getGuild().getTextChannelById(Config.getInstance()

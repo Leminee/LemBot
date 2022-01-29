@@ -17,7 +17,8 @@ import java.util.concurrent.TimeUnit;
 
 public class AddingRole extends ListenerAdapter {
 
-    public final Map<Long, ScheduledFuture<?>> tasks = new HashMap<>();
+    private final Map<Long, ScheduledFuture<?>> tasks = new HashMap<>();
+    private int roleAddDelay;
 
     @Override
     public void onGuildMemberJoin(@NotNull final GuildMemberJoinEvent event) {
@@ -67,4 +68,11 @@ public class AddingRole extends ListenerAdapter {
         if (task != null) task.cancel(false);
     }
 
+    public int getRoleAddDelay() {
+        return roleAddDelay;
+    }
+
+    public void setRoleAddDelay(int roleAddDelay) {
+        this.roleAddDelay = roleAddDelay;
+    }
 }

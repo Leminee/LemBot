@@ -1,4 +1,4 @@
-token: "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.z6AtUgXhKr7z7egmTfbNJ5LcI1A"
+token: "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.LeLPtTs_zD6aTL3LlRnT_5oEF2o"
 guild: 919074433505841172
 
 reactionRoles:
@@ -19,13 +19,13 @@ reactionRoles:
       846854659104833566: 846856698979418152
 
 commandRoles:
-  - abbr: bumper
+  - abbr: "bumper"
     role: 815922232106156033
 
 database:
-  uri: "jdbc:mysql://localhost:3306/lembot?autoReconnect=true&serverTimezone=UTC"
-  username: lembot
-  password: lembot
+  uri: "jdbc:mysql://database:3306/lembot?autoReconnect=true&serverTimezone=UTC"
+  username: "lembot"
+  password: "lembot"
 
 channel:
   sanction: 919074434021736502
@@ -40,6 +40,7 @@ channel:
   autoModeration: 933543435913269309
   joinLeft: 933543494000189482
   updatedDeleted: 933543560681230396
+  memes: 935788804915208252
 
 role:
   bump: 919074433556160536

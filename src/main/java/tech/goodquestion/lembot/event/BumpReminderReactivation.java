@@ -7,18 +7,18 @@ import tech.goodquestion.lembot.database.QueryHelper;
 
 import java.util.concurrent.TimeUnit;
 
-public class ReminderReactivation extends ListenerAdapter {
+public class BumpReminderReactivation extends ListenerAdapter {
 
-    private final Reminder reminder;
+    private final BumpReminder bumpReminder;
 
-    public ReminderReactivation(Reminder reminder) {
-        this.reminder = reminder;
+    public BumpReminderReactivation(BumpReminder bumpReminder) {
+        this.bumpReminder = bumpReminder;
     }
 
     @Override
     public void onReady(@NotNull final ReadyEvent event) {
 
-        reminder.scheduleReminder(QueryHelper.getMinutesToNextBump() + 1, TimeUnit.MINUTES);
+        bumpReminder.scheduleReminder(QueryHelper.getMinutesToNextBump() + 1, TimeUnit.MINUTES);
 
     }
 }

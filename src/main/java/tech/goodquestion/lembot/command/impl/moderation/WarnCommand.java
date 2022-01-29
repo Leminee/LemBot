@@ -28,8 +28,8 @@ public final class WarnCommand extends UserBanishCommand {
 
         CommandHelper.logUserWarn(sanction);
 
-        final String performedSanction = "verwarnt";
-        final SanctionType sanctionType = SanctionType.VERWARNUNG;
+        final String performedSanction = SanctionType.WARN.getVerbalizedSanctionTyp();
+        final SanctionType sanctionType = SanctionType.WARN;
         sendSanctionReason(toBanish.getUser(), sanctionType, performedSanction, sanction.reason);
     }
 
