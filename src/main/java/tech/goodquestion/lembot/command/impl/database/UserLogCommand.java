@@ -8,20 +8,22 @@ import tech.goodquestion.lembot.command.IBotCommand;
 
 import java.io.IOException;
 
-public class UserLog implements IBotCommand {
+public class UserLogCommand implements IBotCommand {
     @Override
-    public void dispatch(Message message, TextChannel channel, Member sender, String[] args) throws IOException {
+    public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) throws IOException {
+
+
 
     }
 
     @Override
     public String getName() {
-        return null;
+        return "ul";
     }
 
     @Override
     public String getDescription() {
-        return null;
+        return "`?ul` <user>: User Logs";
     }
 
     @Override

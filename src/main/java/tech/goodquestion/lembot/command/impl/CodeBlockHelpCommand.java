@@ -36,4 +36,9 @@ public class CodeBlockHelpCommand implements IBotCommand {
     public String getDescription() {
         return "`?hcb`: farbige Codeblöcke ";
     }
+
+    @Override
+    public boolean isPermitted(final Member member){
+        return true;
+    }
 }

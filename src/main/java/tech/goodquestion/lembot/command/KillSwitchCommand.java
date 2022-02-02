@@ -1,6 +1,5 @@
 package tech.goodquestion.lembot.command;
 
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -12,9 +11,6 @@ public class KillSwitchCommand implements IBotCommand {
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) throws IOException {
 
-        final boolean hasPermission = sender.hasPermission(Permission.ADMINISTRATOR);
-
-        if (!hasPermission) return;
 
         System.exit(0);
     }

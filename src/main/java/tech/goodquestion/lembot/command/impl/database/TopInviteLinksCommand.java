@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class TopInviteLinksCommand implements IBotCommand {
     @Override
-    public void dispatch(Message message, TextChannel channel, Member sender, String[] args) throws IOException {
+    public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) throws IOException {
 
 
 
@@ -23,6 +23,11 @@ public class TopInviteLinksCommand implements IBotCommand {
     @Override
     public String getDescription() {
         return "`?topbi`: User mit den meisten Invites";
+    }
+
+    @Override
+    public boolean isPermitted(final Member member){
+        return true;
     }
 
 

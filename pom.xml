@@ -5,7 +5,7 @@
     <groupId>tech.goodquestion</groupId>
     <artifactId>lembot</artifactId>
     <packaging>jar</packaging>
-    <version>3.0.0</version>
+    <version>1.0.0</version>
 
     <name>LemBot</name>
 
@@ -125,7 +125,7 @@
             </plugin>
         </plugins>
 
-        <finalName>lembotv3</finalName>
+        <finalName>lembotv1</finalName>
     </build>
 
     <repositories>

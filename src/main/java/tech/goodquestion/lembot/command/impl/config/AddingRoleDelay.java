@@ -1,6 +1,5 @@
 package tech.goodquestion.lembot.command.impl.config;
 
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -24,10 +23,6 @@ public class AddingRoleDelay implements IBotCommand {
         return null;
     }
 
-    @Override
-    public boolean isPermitted(Member member) {
-        return member.hasPermission(Permission.BAN_MEMBERS);
-    }
 
     @Override
     public String getHelpList() {

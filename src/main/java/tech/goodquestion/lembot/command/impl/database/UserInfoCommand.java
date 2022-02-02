@@ -7,19 +7,26 @@ import tech.goodquestion.lembot.command.IBotCommand;
 
 import java.io.IOException;
 
-public class UserInfo implements IBotCommand {
+public class UserInfoCommand implements IBotCommand {
     @Override
-    public void dispatch(Message message, TextChannel channel, Member sender, String[] args) throws IOException {
+    public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) throws IOException {
+
+
 
     }
 
     @Override
     public String getName() {
-        return null;
+        return "ui";
     }
 
     @Override
     public String getDescription() {
-        return null;
+        return "`?ui <user>`: Informationen zum User";
+    }
+
+    @Override
+    public boolean isPermitted(final Member member){
+        return true;
     }
 }

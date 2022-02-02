@@ -16,7 +16,7 @@ import java.sql.SQLException;
 public class TopActiveChannelsCommand implements IBotCommand {
 
     @Override
-    public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
+    public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) {
 
 
         try {
@@ -42,5 +42,10 @@ public class TopActiveChannelsCommand implements IBotCommand {
     @Override
     public String getDescription() {
         return "`?topc`: Die 5 aktivsten Channels";
+    }
+
+    @Override
+    public boolean isPermitted(final Member member){
+        return true;
     }
 }

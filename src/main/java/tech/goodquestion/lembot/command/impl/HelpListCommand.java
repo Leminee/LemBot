@@ -68,6 +68,11 @@ public class HelpListCommand implements IBotCommand {
     }
 
     @Override
+    public boolean isPermitted(final Member member){
+        return true;
+    }
+
+    @Override
     public String getHelpList() {
         return "default";
     }

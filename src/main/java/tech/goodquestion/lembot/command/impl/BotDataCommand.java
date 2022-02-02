@@ -47,4 +47,9 @@ public class BotDataCommand implements IBotCommand {
     public String getDescription() {
         return "`?lembot`: Informationen zum LemBot";
     }
+
+    @Override
+    public boolean isPermitted(final Member member){
+        return true;
+    }
 }

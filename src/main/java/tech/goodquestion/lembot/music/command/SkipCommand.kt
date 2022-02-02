@@ -12,10 +12,19 @@ class SkipCommand: IBotCommand {
     }
 
     override fun getName(): String {
-        TODO("Not yet implemented")
+       return "skip"
     }
 
     override fun getDescription(): String {
-        TODO("Not yet implemented")
+       return "`?skip <youtube url>`: Switcht den Song"
+    }
+
+    override fun isPermitted(member: Member?): Boolean {
+        return true
+    }
+
+
+    override fun getHelpList():String {
+        return "music"
     }
 }

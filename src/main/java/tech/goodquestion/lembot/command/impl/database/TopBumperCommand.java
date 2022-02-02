@@ -20,7 +20,7 @@ import java.sql.Statement;
 public class TopBumperCommand implements IBotCommand {
 
     @Override
-    public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
+    public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) {
 
         Connection connection = DatabaseConnector.openConnection();
 
@@ -51,5 +51,10 @@ public class TopBumperCommand implements IBotCommand {
     @Override
     public String getDescription() {
         return "`?topb`: User mit den meisten Bumps";
+    }
+
+    @Override
+    public boolean isPermitted(final Member member){
+        return true;
     }
 }

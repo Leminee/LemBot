@@ -16,7 +16,7 @@ import java.util.Objects;
 public class ServerDataCommand implements IBotCommand {
 
     @Override
-    public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
+    public void dispatch(final Message message, final TextChannel channel, final Member sender, String[] args) {
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
 
@@ -70,5 +70,10 @@ public class ServerDataCommand implements IBotCommand {
     @Override
     public String getDescription() {
         return "`?server`: Informationen zum Server";
+    }
+
+    @Override
+    public boolean isPermitted(final Member member){
+        return true;
     }
 }

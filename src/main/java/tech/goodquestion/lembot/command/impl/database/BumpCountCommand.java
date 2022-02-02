@@ -12,7 +12,7 @@ import tech.goodquestion.lembot.library.Helper;
 public class BumpCountCommand implements IBotCommand {
 
     @Override
-    public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
+    public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) {
 
         final UserData userData = new UserData();
         userData.userId = sender.getIdLong();
@@ -31,5 +31,10 @@ public class BumpCountCommand implements IBotCommand {
     @Override
     public String getDescription() {
         return "`?hmb`: Anzahl deiner Bumps";
+    }
+
+    @Override
+    public boolean isPermitted(final Member member){
+        return true;
     }
 }

@@ -25,4 +25,9 @@ public class AdvertisingCommand implements IBotCommand {
         return "";
     }
 
+    @Override
+    public String getHelpList(){
+        return "staff";
+    }
+
 }

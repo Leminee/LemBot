@@ -18,7 +18,7 @@ import java.sql.Statement;
 public class TopFlooderCommand implements IBotCommand {
 
     @Override
-    public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
+    public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) {
 
         Connection connection = DatabaseConnector.openConnection();
 
@@ -45,5 +45,10 @@ public class TopFlooderCommand implements IBotCommand {
     @Override
     public String getDescription() {
         return "`?topf`: User mit den meisten Nachrichten";
+    }
+
+    @Override
+    public boolean isPermitted(final Member member){
+        return true;
     }
 }

@@ -1,6 +1,5 @@
 package tech.goodquestion.lembot.command.impl.moderation;
 
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -24,12 +23,7 @@ public class MuteCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "";
-    }
-
-    @Override
-    public boolean isPermitted(Member member) {
-        return member.hasPermission(Permission.MESSAGE_MANAGE);
+        return "`?mute <user> <dauer> <reason> `: schickt den User in Timeout";
     }
 
     @Override

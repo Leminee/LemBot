@@ -43,4 +43,9 @@ public class ServerRoleListCommand implements IBotCommand {
     public String getDescription() {
         return "`?sroles`: Liste aller Rollen auf GQ";
     }
+
+    @Override
+    public boolean isPermitted(final Member member){
+        return true;
+    }
 }

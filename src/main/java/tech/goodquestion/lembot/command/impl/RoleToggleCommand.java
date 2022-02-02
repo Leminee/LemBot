@@ -60,6 +60,11 @@ public record RoleToggleCommand(String roleAbbr, long roleId,
         }
     }
 
+    @Override
+    public boolean isPermitted(final Member member){
+        return true;
+    }
+
     public enum Mode {
         ADD("+"),
         REMOVE("-");

@@ -35,4 +35,9 @@ public class ActiveUserRecordCommand implements IBotCommand {
     public String getDescription() {
         return "`?aur`: Record an gleichzeitig aktiven Usern";
     }
+
+    @Override
+    public boolean isPermitted(final Member member){
+        return true;
+    }
 }

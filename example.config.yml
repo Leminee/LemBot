@@ -1,4 +1,4 @@
-token: "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.LeLPtTs_zD6aTL3LlRnT_5oEF2o"
+token: "ODIwNDY4MDA5NzY0MjU3Nzky.YE1mYQ.UiSS5RdjEA4SbXI5e8S5iuT1CpI"
 guild: 919074433505841172
 
 reactionRoles:
@@ -20,10 +20,10 @@ reactionRoles:
 
 commandRoles:
   - abbr: "bumper"
-    role: 815922232106156033
+    role: 919074433556160536
 
 database:
-  uri: "jdbc:mysql://database:3306/lembot?autoReconnect=true&serverTimezone=UTC"
+  uri: "jdbc:mysql://localhost:3306/lembot?autoReconnect=true&serverTimezone=UTC"
   username: "lembot"
   password: "lembot"
 

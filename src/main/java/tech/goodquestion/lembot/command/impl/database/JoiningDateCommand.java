@@ -12,7 +12,7 @@ public class JoiningDateCommand implements IBotCommand {
 
 
     @Override
-    public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
+    public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) {
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         final String title = "Letztes Beitrittsdatum";
@@ -34,7 +34,12 @@ public class JoiningDateCommand implements IBotCommand {
         return "`?ljd`: Letztes Beitrittsdatum zum Server";
     }
 
-    private static String getDateJoined(Member sender) {
+    @Override
+    public boolean isPermitted(final Member member){
+        return true;
+    }
+
+    private String getDateJoined(final Member sender) {
 
 
         String day = String.valueOf(sender.getTimeJoined().getDayOfMonth());

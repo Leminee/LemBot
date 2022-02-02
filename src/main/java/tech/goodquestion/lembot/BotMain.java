@@ -6,40 +6,50 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.command.KillSwitchCommand;
-import tech.goodquestion.lembot.command.impl.BotDataCommand;
-import tech.goodquestion.lembot.command.impl.CodeBlockHelpCommand;
-import tech.goodquestion.lembot.command.impl.HelpListCommand;
-import tech.goodquestion.lembot.command.impl.ServerRoleListCommand;
+import tech.goodquestion.lembot.command.impl.*;
 import tech.goodquestion.lembot.command.impl.database.*;
 import tech.goodquestion.lembot.command.impl.moderation.*;
+import tech.goodquestion.lembot.config.CommandRole;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.config.ReactionRoleMessage;
 import tech.goodquestion.lembot.database.*;
 import tech.goodquestion.lembot.event.*;
 import tech.goodquestion.lembot.library.ReactionManager;
+import tech.goodquestion.lembot.music.command.LeaveCommand;
 import tech.goodquestion.lembot.music.command.PlayCommand;
+import tech.goodquestion.lembot.music.command.SkipCommand;
+import tech.goodquestion.lembot.music.command.StopCommand;
 
 import javax.security.auth.login.LoginException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class BotMain {
 
     public static JDA jda;
     public static final String PREFIX = "?";
-    public static final String BOT_VERSION = "v3.1.2";
+    public static final String BOT_VERSION = "v1.0.0";
 
     public static void main(String[] args) {
 
         try {
 
-            System.out.println("""                 
+            Logger logger = LoggerFactory.getLogger(BotMain.class);
+            logger.info("{} {}",LocalDateTime.now().format(DateTimeFormatter.ofPattern("d MMMM yyyy HH:mm")), BOT_VERSION);
+
+            System.out.println("""  
+                     \033[0;34m            
                      _      _____  __  __  ____    ___  _____\s
                     | |    | ____||  \\/  || __ )  / _ \\|_   _|
                     | |    |  _|  | |\\/| ||  _ \\ | | | | | | \s
                     | |___ | |___ | |  | || |_) || |_| | | | \s
                     |_____||_____||_|  |_||____/  \\___/  |_|\s
-                    @Author: Lem                       """ + "                      " + BOT_VERSION);
+                    @Author: Lem                     """ + "                      " + BOT_VERSION +"\033[0m"
+            );
 
 
             jda = JDABuilder
@@ -89,6 +99,12 @@ public class BotMain {
         commandManager.registerCommand(new KillSwitchCommand());
         commandManager.registerCommand(new PlayCommand());
         commandManager.registerCommand(new TopBoosterCommand());
+        commandManager.registerCommand(new LeaveCommand());
+        commandManager.registerCommand(new PlayCommand());
+        commandManager.registerCommand(new SkipCommand());
+        commandManager.registerCommand(new StopCommand());
+        commandManager.registerCommand(new UserInfoCommand());
+        commandManager.registerCommand(new UserLogCommand());
 
         BumpReminder bumpReminder = new BumpReminder();
 
@@ -121,6 +137,8 @@ public class BotMain {
         jda.addEventListener(new HappyNewYear());
         jda.addEventListener(new RaidDetection());
         jda.addEventListener(new MediaOnly());
+
+        setupRoleCommands(commandManager);
     }
 
 
@@ -136,6 +154,12 @@ public class BotMain {
                                     .getChannel(), reactionRoleMessage
                                     .getMessage(), emote, role));
 
+        }
+    }
+
+    private static void setupRoleCommands(CommandManager commandManager) {
+        for (CommandRole role : Config.getInstance().getCommandRoles()) {
+            RoleToggleCommand.register(commandManager, role.getAbbr(), role.getRole());
         }
     }
 }

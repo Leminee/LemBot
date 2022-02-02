@@ -10,11 +10,7 @@ import tech.goodquestion.lembot.library.Helper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
 public class BumpReminder extends ListenerAdapter {
@@ -53,10 +49,8 @@ public class BumpReminder extends ListenerAdapter {
                 "Bumpe den Server jetzt " + bumperRoleAsMention + " :grinning:"
         };
 
-        final Random random = new Random();
-
         final Runnable runnable = () -> {
-            final int randomNumber = random.nextInt(pingContent.length);
+            final int randomNumber = ThreadLocalRandom.current().nextInt(pingContent.length);
             Config.getInstance().getChannel().getBumpChannel().sendMessage(pingContent[randomNumber]).queue();
             tasks.clear();
         };

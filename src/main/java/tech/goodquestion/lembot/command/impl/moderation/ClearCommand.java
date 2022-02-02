@@ -1,7 +1,6 @@
 package tech.goodquestion.lembot.command.impl.moderation;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -45,10 +44,7 @@ public class ClearCommand implements IBotCommand {
         }
     }
 
-    @Override
-    public boolean isPermitted(Member member) {
-        return member.hasPermission(Permission.MESSAGE_MANAGE);
-    }
+
 
     @Override
     public String getName() {

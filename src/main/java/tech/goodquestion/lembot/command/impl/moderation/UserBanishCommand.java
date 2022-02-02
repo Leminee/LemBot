@@ -111,10 +111,6 @@ public abstract sealed class UserBanishCommand implements IBotCommand permits Ba
     public abstract void banishUser(Member toBanish, Sanction sanction, Message originMessage);
     public abstract boolean requiresAdmin();
 
-    @Override
-    public boolean isPermitted(Member member) {
-        return member.hasPermission(Permission.MESSAGE_MANAGE);
-    }
 
     @Override
     public String getHelpList() {
