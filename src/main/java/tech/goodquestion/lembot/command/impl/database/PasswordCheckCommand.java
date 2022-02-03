@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
+import org.restlet.resource.ClientResource;
 import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.database.CommandHelper;
 import tech.goodquestion.lembot.entity.OccurredException;
@@ -11,8 +12,6 @@ import tech.goodquestion.lembot.library.EmbedColorHelper;
 import tech.goodquestion.lembot.library.Helper;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 public class PasswordCheckCommand implements IBotCommand {
 
@@ -46,6 +45,8 @@ public class PasswordCheckCommand implements IBotCommand {
         channel.sendMessageEmbeds(embedBuilder.build()).queue();
     }
 
+
+
     private boolean hasBeenLeaked(final String userPassword) {
 
         if (userPassword.length() < 8) {
@@ -53,18 +54,15 @@ public class PasswordCheckCommand implements IBotCommand {
         }
 
 
-        final String bRockYouApiUrl = " https://goodquestion.tech:8443/brockyou/api/v2/" + userPassword;
+        final String bRockYouApiUrl = "https://goodquestion.tech:8443/brockyou/api/v2/" + userPassword;
 
         try {
 
-            final URL url = new URL(bRockYouApiUrl);
+            ClientResource resource = new ClientResource(bRockYouApiUrl);
 
-            final HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setRequestMethod("GET");
-            httpURLConnection.connect();
+            String apiResponseContent = resource.get().getText().toLowerCase();
 
-
-            return true;
+            if (apiResponseContent.contains("\"hasBeenLeaked\":true".toLowerCase())) return true;
 
 
         } catch (IOException ioException) {
