@@ -32,10 +32,6 @@ import java.time.format.DateTimeFormatter;
 public class BotMain {
 
     public static JDA jda;
-    public static final String PREFIX = "?";
-    public static final String SERVER_NAME= "GoodQuestion";
-    public static final String BOT_VERSION = "v1.0.0";
-    public static final String BOT_NAME = "LemBot";
 
     public static void main(String[] args) {
 
@@ -43,7 +39,7 @@ public class BotMain {
             
 
             Logger logger = LoggerFactory.getLogger(BotMain.class);
-            logger.info("{} {}",LocalDateTime.now().format(DateTimeFormatter.ofPattern("d MMMM yyyy HH:mm")), BOT_VERSION);
+            logger.info("{} {}",LocalDateTime.now().format(DateTimeFormatter.ofPattern("d MMMM yyyy HH:mm")), Config.getInstance().getVersion());
 
             System.out.println("""  
 
@@ -53,7 +49,7 @@ public class BotMain {
                     | |    |  _|  | |\\/| ||  _ \\ | | | | | | \s
                     | |___ | |___ | |  | || |_) || |_| | | | \s
                     |_____||_____||_|  |_||____/  \\___/  |_|\s
-                    @Author: Lem                     """ + "                      " + BOT_VERSION +"\033[0m\n\n"
+                    @Author: Lem                     """ + "                      " + Config.getInstance().getVersion() +"\033[0m\n\n"
 
 
 

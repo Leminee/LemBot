@@ -205,11 +205,10 @@ public final class Helper {
     }
 
 
-    public static String getAmountLemBotContributors() {
-
-        final String repositoryUrl = "https://github.com/Leminee/LemBot";
+    public static String getAmountContributors(final String repositoryUrl) {
 
         try {
+
            final Document document = Jsoup.connect(repositoryUrl)
                     .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36")
                     .get();

@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
+import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
 import tech.goodquestion.lembot.library.Helper;
 
@@ -15,11 +16,11 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static tech.goodquestion.lembot.BotMain.PREFIX;
+
 
 public class CommandManager extends ListenerAdapter {
 
-    public static final Pattern COMMAND_PATTERN = Pattern.compile("[" + PREFIX + "]([^ ]+)(.*)");
+    public static final Pattern COMMAND_PATTERN = Pattern.compile("[" + Config.getInstance().getPrefix() + "]([^ ]+)(.*)");
     private static CommandManager INSTANCE = null;
 
 

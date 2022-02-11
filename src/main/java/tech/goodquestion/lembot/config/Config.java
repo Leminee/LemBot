@@ -18,6 +18,10 @@ public class Config {
     private List<CommandRole> commandRoles;
     private DatabaseConfig database;
     private long guild;
+    private String serverName;
+    private String prefix;
+    private String botName;
+    private String version;
     private RoleConfig role;
     private ChannelConfig channel;
     private UserConfig user;
@@ -91,4 +95,19 @@ public class Config {
         return user;
     }
 
+    public String getServerName(){
+        return serverName;
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public String getBotName() {
+        return botName;
+    }
+
+    public String getVersion() {
+        return version;
+    }
 }

@@ -4,9 +4,9 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
-import tech.goodquestion.lembot.BotMain;
 import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.command.IBotCommand;
+import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
 import tech.goodquestion.lembot.library.Helper;
 
@@ -14,12 +14,12 @@ import java.awt.*;
 import java.util.List;
 import java.util.*;
 
-import static tech.goodquestion.lembot.BotMain.PREFIX;
-
 public class HelpListCommand implements IBotCommand {
 
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
+
+        final String prefix = Config.getInstance().getPrefix();
 
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
@@ -36,12 +36,12 @@ public class HelpListCommand implements IBotCommand {
         if (queriedHelpList.equals("-")) {
             EmbedBuilder embedBuilder1 = new EmbedBuilder().setColor(Color.decode(EmbedColorHelper.HELP))
                     .setTitle("Verfügbare Help-Listen")
-                    .setDescription(PREFIX+"help " + String.join("\n" +PREFIX+"help ",CommandManager.getInstance().getHelpLists()));
+                    .setDescription(prefix+"help " + String.join("\n" +prefix+"help ",CommandManager.getInstance().getHelpLists()));
             Helper.sendEmbed(embedBuilder1,message,true);
             return;
         }
 
-        StringBuilder descriptionBuilder = new StringBuilder("Hallo, ich heiße **" + BotMain.BOT_NAME  + "** und bin ein Bot für **"+ BotMain.SERVER_NAME +  "** :)\n");
+        StringBuilder descriptionBuilder = new StringBuilder("Hallo, ich heiße **" + Config.getInstance().getBotName()  + "** und bin ein Bot für **"+ Config.getInstance().getServerName() +  "** :)\n");
         descriptionBuilder.append("\n----------------- **BEFEHLSLISTE** -----------------\n");
         descriptionBuilder.append("\n");
 
@@ -53,7 +53,7 @@ public class HelpListCommand implements IBotCommand {
         }
 
         commandsOnHelpList.sort(Comparator.comparing(IBotCommand::getName));
-        commandsOnHelpList.forEach(c -> descriptionBuilder.append(BotMain.PREFIX + c.getDescription()).append("\n"));
+        commandsOnHelpList.forEach(c -> descriptionBuilder.append(prefix).append(c.getDescription()).append("\n"));
 
         embedBuilder.setDescription(descriptionBuilder.toString());
         Helper.sendEmbed(embedBuilder, message,true);
