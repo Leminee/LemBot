@@ -22,7 +22,7 @@ public class KillSwitchCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?ks`: killt den Bot";
+        return "`ks`: Killt den Bot";
     }
 
     @Override

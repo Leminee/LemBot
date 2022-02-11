@@ -22,7 +22,7 @@ public class AdvertisingCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?ad <user> <delay>:` Schickt dem User Werbung";
+        return "`ad <user> <delay>`: Schickt dem User Werbung";
     }
 
     @Override

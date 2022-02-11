@@ -82,7 +82,7 @@ public class PasswordCheckCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?check <password>`: Passwort-Sicherheitsüberprüfung";
+        return "`check <password>`: Passwort-Sicherheitsüberprüfung";
     }
 
     @Override

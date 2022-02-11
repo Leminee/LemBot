@@ -23,7 +23,7 @@ public class MuteCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?mute <user> <dauer> <reason> `: schickt den User in Timeout";
+        return "`mute <user> <dauer> <reason>`: Schickt den User in Timeout";
     }
 
     @Override

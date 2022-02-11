@@ -30,7 +30,7 @@ public class MessageCountCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?hmm`: Anzahl deiner geschickten Nachrichten";
+        return "`hmm`: Anzahl deiner geschickten Nachrichten";
     }
 
     @Override

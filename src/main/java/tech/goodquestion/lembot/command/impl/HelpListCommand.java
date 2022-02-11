@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
+import tech.goodquestion.lembot.BotMain;
 import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
@@ -40,7 +41,7 @@ public class HelpListCommand implements IBotCommand {
             return;
         }
 
-        StringBuilder descriptionBuilder = new StringBuilder("Hallo, ich heiße **LemBot** und bin ein Bot für **GoodQuestion** :)\n");
+        StringBuilder descriptionBuilder = new StringBuilder("Hallo, ich heiße **" + BotMain.BOT_NAME  + "** und bin ein Bot für **"+ BotMain.SERVER_NAME +  "** :)\n");
         descriptionBuilder.append("\n----------------- **BEFEHLSLISTE** -----------------\n");
         descriptionBuilder.append("\n");
 
@@ -52,7 +53,7 @@ public class HelpListCommand implements IBotCommand {
         }
 
         commandsOnHelpList.sort(Comparator.comparing(IBotCommand::getName));
-        commandsOnHelpList.forEach(c -> descriptionBuilder.append(c.getDescription()).append("\n"));
+        commandsOnHelpList.forEach(c -> descriptionBuilder.append(BotMain.PREFIX + c.getDescription()).append("\n"));
 
         embedBuilder.setDescription(descriptionBuilder.toString());
         Helper.sendEmbed(embedBuilder, message,true);
@@ -65,7 +66,7 @@ public class HelpListCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?help -`: Verfügbare Command-Listen";
+        return "`help -`: Verfügbare Command-Listen";
     }
 
     @Override

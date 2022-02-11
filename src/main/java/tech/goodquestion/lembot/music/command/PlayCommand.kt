@@ -80,7 +80,7 @@ class PlayCommand:IBotCommand {
     }
 
     override fun getDescription(): String {
-        return "`?play <youtube url>`: Spielt den Song ab"
+        return "`play <youtube url>`: Spielt den Song ab"
     }
 
     override fun isPermitted(member: Member?): Boolean {

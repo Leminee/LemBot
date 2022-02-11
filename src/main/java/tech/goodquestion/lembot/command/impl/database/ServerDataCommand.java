@@ -28,7 +28,7 @@ public class ServerDataCommand implements IBotCommand {
 
 
         embedBuilder.setTitle("Informationen zum Server")
-                .setColor(Color.decode(EmbedColorHelper.GOOD_QUESTION))
+                .setColor(Color.decode(EmbedColorHelper.SERVER))
                 .setDescription("Informationen zu **GoodQuestion**")
                 .setThumbnail("https://cdn.discordapp.com/attachments/919074434021736507/920552764784914472/logoqg1_1.gif")
                 .addField("Servermitglieder", String.valueOf(Config.getInstance().getGuild().getMemberCount()), true)
@@ -70,7 +70,7 @@ public class ServerDataCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?server`: Informationen zum Server";
+        return "`server`: Informationen zum Server";
     }
 
     @Override

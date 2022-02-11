@@ -23,7 +23,7 @@ public class UserLogCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?ul <user>`: User Logs";
+        return "`ul <user>`: User Logs";
     }
 
     @Override

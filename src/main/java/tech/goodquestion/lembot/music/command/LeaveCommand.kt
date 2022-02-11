@@ -15,7 +15,7 @@ class LeaveCommand : IBotCommand {
     }
 
     override fun getDescription(): String {
-        return "`?leave`: Bot verlässt den Voice"
+        return "`leave`: Bot verlässt den Voice"
     }
 
     override fun isPermitted(member: Member?): Boolean {

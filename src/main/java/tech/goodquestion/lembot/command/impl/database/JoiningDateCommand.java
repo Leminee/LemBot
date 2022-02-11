@@ -31,7 +31,7 @@ public class JoiningDateCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?ljd`: Letztes Beitrittsdatum zum Server";
+        return "`ljd`: Letztes Beitrittsdatum zum Server";
     }
 
     @Override

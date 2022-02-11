@@ -66,7 +66,6 @@ public class SpamDetection extends ListenerAdapter {
                     .sendMessage(":mute: User " + Objects.requireNonNull(event.getMember()).getAsMention() + " wurde wegen Spam **gemutet** " + "\n(3 inhaltich identische Nachrichten in weniger als 30 Sekunden in mehrere Kanäle gepostet)\nGelöschte Nachricht: ```" + messageContent +"```")
                     .queue();
 
-
         }
 
     }

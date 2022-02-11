@@ -33,7 +33,7 @@ public class ActiveUserRecordCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?aur`: Record an gleichzeitig aktiven Usern";
+        return "`aur`: Record an gleichzeitig aktiven Usern";
     }
 
     @Override

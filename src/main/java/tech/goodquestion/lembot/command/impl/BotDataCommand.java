@@ -26,7 +26,7 @@ public class BotDataCommand implements IBotCommand {
         final EmbedBuilder embedBuilder = new EmbedBuilder()
                 .setAuthor(bot, gitHubRepositoryUrl, botIconUrl)
                 .setTitle("Informationen zum LemBot")
-                .setColor(Color.decode(EmbedColorHelper.GOOD_QUESTION))
+                .setColor(Color.decode(EmbedColorHelper.SERVER))
                 .setThumbnail("https://cdn.discordapp.com/attachments/919074434021736507/920552764784914472/logoqg1_1.gif")
                 .addField("Geschrieben in", "Java (JDA)", true)
                 .addField("Geschrieben von", Objects.requireNonNull(Config.getInstance().getGuild().getOwner()).getAsMention(), true)
@@ -40,12 +40,12 @@ public class BotDataCommand implements IBotCommand {
 
     @Override
     public String getName() {
-        return "lembot";
+        return BotMain.BOT_NAME.toLowerCase();
     }
 
     @Override
     public String getDescription() {
-        return "`?lembot`: Informationen zum LemBot";
+        return "`"+BotMain.BOT_NAME.toLowerCase() + "`: " + "Informationen zum " + BotMain.BOT_NAME;
     }
 
     @Override

@@ -50,7 +50,7 @@ public class TopBumperCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?topb`: User mit den meisten Bumps";
+        return "`topb`: User mit den meisten Bumps";
     }
 
     @Override

@@ -16,7 +16,7 @@ class SkipCommand: IBotCommand {
     }
 
     override fun getDescription(): String {
-       return "`?skip <youtube url>`: Skipt den Song"
+       return "`skip <youtube url>`: Skipt den Song"
     }
 
     override fun isPermitted(member: Member?): Boolean {

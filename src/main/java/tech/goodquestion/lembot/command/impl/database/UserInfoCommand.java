@@ -22,7 +22,7 @@ public class UserInfoCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?ui <user>`: Informationen zum User";
+        return "`ui <user>`: Informationen zum User";
     }
 
     @Override

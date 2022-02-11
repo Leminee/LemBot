@@ -27,7 +27,7 @@ public class ServerRoleListCommand implements IBotCommand {
         final StringBuilder stringBuilder = new StringBuilder();
 
         for (int i = 0; i < serverRoles.size() - 2; i++) {
-            stringBuilder.append(serverRoles.get(i).getAsMention()).append("\n");
+            stringBuilder.append(serverRoles.get(i).getAsMention()).append("(").append(Objects.requireNonNull(Objects.requireNonNull(serverRoles.get(i).getColor()).toString())).append(")").append("\n");
         }
 
         embedBuilder.setDescription(stringBuilder);
@@ -41,7 +41,7 @@ public class ServerRoleListCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?sroles`: Liste aller Rollen auf GQ";
+        return "`sroles`: Liste aller Rollen auf GQ";
     }
 
     @Override

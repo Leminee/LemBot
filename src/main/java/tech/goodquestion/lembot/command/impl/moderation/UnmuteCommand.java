@@ -87,7 +87,7 @@ public class UnmuteCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?unmute <user> <reason>`: entfernt" + Config.getInstance().getRole().getMuteRole().getAsMention();
+        return "`unmute <user> <reason>`: Entfernt" + Config.getInstance().getRole().getMuteRole().getAsMention();
     }
 
 

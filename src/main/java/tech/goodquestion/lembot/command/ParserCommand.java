@@ -51,7 +51,13 @@ public class ParserCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?p`: parst den Input in DateTime";
+        return "`p`: Parst den Input in DateTime";
+    }
+
+    @Override
+    public boolean isPermitted(final Member member){
+        return true;
+
     }
 
 

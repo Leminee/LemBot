@@ -41,7 +41,7 @@ public class TopActiveChannelsCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?topc`: Die 5 aktivsten Channels";
+        return "`topc`: Die 5 aktivsten Channels";
     }
 
     @Override

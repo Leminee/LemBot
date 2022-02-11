@@ -22,7 +22,7 @@ public class TopInviteLinksCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?topbi`: User mit den meisten Invites";
+        return "`topbi`: User mit den meisten Invites";
     }
 
     @Override

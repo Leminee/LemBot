@@ -16,7 +16,7 @@ class StopCommand : IBotCommand {
     }
 
     override fun getDescription(): String {
-        return "`?stop`: Stoppt den Song"
+        return "`stop`: Stoppt den Song"
     }
 
     override fun isPermitted(member: Member?): Boolean {

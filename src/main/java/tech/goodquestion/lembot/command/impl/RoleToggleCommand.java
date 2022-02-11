@@ -54,9 +54,9 @@ public record RoleToggleCommand(String roleAbbr, long roleId,
     @Override
     public String getDescription() {
         if (mode == Mode.ADD) {
-            return "`?" + getName() + "`: Weist dir <@&" + roleId + "> zu";
+            return "`" + getName() + ":` Weist dir <@&" + roleId + "> zu";
         } else {
-            return "`?" + getName() + "`: Entfernt dir <@&" + roleId + ">";
+            return "`" + getName() + ":` Entfernt dir <@&" + roleId + ">";
         }
     }
 

@@ -30,7 +30,7 @@ public class BumpCountCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?hmb`: Anzahl deiner Bumps";
+        return "`hmb`: Anzahl deiner Bumps";
     }
 
     @Override

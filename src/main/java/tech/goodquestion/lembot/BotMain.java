@@ -33,7 +33,9 @@ public class BotMain {
 
     public static JDA jda;
     public static final String PREFIX = "?";
+    public static final String SERVER_NAME= "GoodQuestion";
     public static final String BOT_VERSION = "v1.0.0";
+    public static final String BOT_NAME = "LemBot";
 
     public static void main(String[] args) {
 

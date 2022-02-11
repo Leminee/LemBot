@@ -20,7 +20,7 @@ public class TopBoosterCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?topbo`: User mit den meisten Boosts";
+        return "`topbo`: User mit den meisten Boosts";
     }
 
     @Override

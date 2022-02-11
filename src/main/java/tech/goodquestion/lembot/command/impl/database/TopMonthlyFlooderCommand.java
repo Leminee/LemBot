@@ -52,7 +52,7 @@ public class TopMonthlyFlooderCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`?topmf`: Top Flooder *der letzten 30 Tage*";
+        return "`topmf`: Top Flooder *der letzten 30 Tage*";
     }
 
     @Override
