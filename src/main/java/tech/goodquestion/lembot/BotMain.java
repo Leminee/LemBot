@@ -5,9 +5,12 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
+import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import tech.goodquestion.lembot.command.BotsCommand;
 import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.command.KillSwitchCommand;
 import tech.goodquestion.lembot.command.ParserCommand;
@@ -61,8 +64,10 @@ public class BotMain {
             jda = JDABuilder
                     .createDefault(Config.getInstance().getToken())
                     .enableIntents(GatewayIntent.GUILD_MEMBERS)
-                    .setMemberCachePolicy(MemberCachePolicy.ALL)
                     .enableIntents(GatewayIntent.GUILD_PRESENCES)
+                    .enableCache(CacheFlag.ONLINE_STATUS)
+                    .setMemberCachePolicy(MemberCachePolicy.ALL)
+                    .setChunkingFilter(ChunkingFilter.ALL)
                     .build();
 
 
@@ -114,6 +119,7 @@ public class BotMain {
         commandManager.registerCommand(new UserLogCommand());
         commandManager.registerCommand(new WarnCommand());
         commandManager.registerCommand(new ParserCommand());
+        commandManager.registerCommand(new BotsCommand());
 
         BumpReminder bumpReminder = new BumpReminder();
 
