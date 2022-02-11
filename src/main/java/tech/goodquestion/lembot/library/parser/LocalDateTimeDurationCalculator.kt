@@ -1,4 +1,4 @@
-package tech.goodquestion.lembot.library
+package tech.goodquestion.lembot.library.parser
 
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit

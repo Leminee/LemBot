@@ -35,7 +35,7 @@ public class BotDataCommand implements IBotCommand {
                 .addField("Source Code", gitHubRepositoryUrl, true);
 
 
-        channel.sendMessageEmbeds(embedBuilder.build()).queue();
+        Helper.sendEmbed(embedBuilder,message,true);
     }
 
     @Override

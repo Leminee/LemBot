@@ -20,7 +20,7 @@ public class MessageCountCommand implements IBotCommand {
         final String embedTitle = "Nachrichten";
 
         Helper.getAmount(userData, QueryHelper.AMOUNT_MESSAGES, QueryHelper.NEXT_HIGHER_USER_AMOUNT_MESSAGES);
-        Helper.sendAmount(userData, EmbedColorHelper.FLOOD, "Nachrichten", channel, embedTitle);
+        Helper.sendAmount(userData, EmbedColorHelper.FLOOD, "Nachrichten", message, embedTitle);
     }
 
     @Override

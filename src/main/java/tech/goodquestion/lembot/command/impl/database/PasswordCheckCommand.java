@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
+import org.json.JSONObject;
 import org.restlet.resource.ClientResource;
 import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.database.CommandHelper;
@@ -31,18 +32,19 @@ public class PasswordCheckCommand implements IBotCommand {
 
         if (hasBeenLeaked(userPassword)) {
 
-            String description = ":red_circle: Passwort wurde leider gefunden " + message.getAuthor().getAsMention();
+            String description = ":red_circle: Passwort wurde leider gefunden ";
 
             Helper.createEmbed(embedBuilder, embedTitle, description, EmbedColorHelper.ERROR);
 
+
         } else {
 
-            String description = ":green_circle: Nicht gefunden " +message.getAuthor().getAsMention();
+            String description = ":green_circle: Nicht gefunden ";
 
             Helper.createEmbed(embedBuilder, embedTitle,description, EmbedColorHelper.SUCCESS);
         }
 
-        channel.sendMessageEmbeds(embedBuilder.build()).queue();
+        message.replyEmbeds(embedBuilder.build()).queue();
     }
 
 
@@ -53,17 +55,16 @@ public class PasswordCheckCommand implements IBotCommand {
             return true;
         }
 
-
         final String bRockYouApiUrl = "https://goodquestion.tech:8443/brockyou/api/v2/" + userPassword;
 
         try {
 
-            ClientResource resource = new ClientResource(bRockYouApiUrl);
+            final ClientResource resource = new ClientResource(bRockYouApiUrl);
+            final String apiResponseContent = resource.get().getText();
+            final JSONObject jsonObject = new JSONObject(apiResponseContent);
+            final boolean hasBeenLeaked = (boolean) jsonObject.get("hasBeenLeaked");
 
-            String apiResponseContent = resource.get().getText().toLowerCase();
-
-            if (apiResponseContent.contains("\"hasBeenLeaked\":true".toLowerCase())) return true;
-
+            if (hasBeenLeaked) return true;
 
         } catch (IOException ioException) {
 

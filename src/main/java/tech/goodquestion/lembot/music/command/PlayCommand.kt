@@ -23,7 +23,7 @@ class PlayCommand:IBotCommand {
 
             Helper.createEmbed(embedBuilder,"Error",":x: Gib bitte die Url an $memberAsMention", EmbedColorHelper.ERROR)
 
-            channel?.sendMessageEmbeds(embedBuilder.build())?.queue()
+            Helper.sendEmbed(embedBuilder,message,true)
 
             return
 
@@ -36,7 +36,7 @@ class PlayCommand:IBotCommand {
 
             Helper.createEmbed(embedBuilder,"Error",":x: Url ist nicht valid $memberAsMention", EmbedColorHelper.ERROR)
 
-            channel?.sendMessageEmbeds(embedBuilder.build())?.queue()
+            Helper.sendEmbed(embedBuilder,message,true)
 
             return
 

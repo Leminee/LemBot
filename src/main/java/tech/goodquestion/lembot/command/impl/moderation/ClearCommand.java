@@ -26,7 +26,7 @@ public class ClearCommand implements IBotCommand {
             final EmbedBuilder embedBuilder = new EmbedBuilder();
 
             Helper.createEmbed(embedBuilder, "Bestätigung", "Es wurden " + (amountMessagesToDelete - 1) + " Nachrichten durch " + message.getAuthor().getAsMention() + " erfolgreich gelöscht!", EmbedColorHelper.SUCCESS);
-            channel.sendMessageEmbeds(embedBuilder.build()).queue();
+            Helper.sendEmbed(embedBuilder,message,false);
 
         } catch (IllegalArgumentException illegalArgumentException) {
             if (illegalArgumentException.getMessage().equals("Message retrieval")) {

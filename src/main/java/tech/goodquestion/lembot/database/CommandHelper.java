@@ -175,7 +175,7 @@ public final class CommandHelper {
         }
     }
 
-    public static void insertVoiceChannelData(final String insertQuery, final VoiceChannel voiceChannel) {
+    public static void logVoiceChannelData(final String insertQuery, final VoiceChannel voiceChannel) {
 
         Connection connection = DatabaseConnector.openConnection();
 

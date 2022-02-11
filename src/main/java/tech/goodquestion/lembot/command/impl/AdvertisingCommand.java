@@ -17,12 +17,12 @@ public class AdvertisingCommand implements IBotCommand {
 
     @Override
     public String getName() {
-        return "";
+        return "?ad";
     }
 
     @Override
     public String getDescription() {
-        return "";
+        return "`?ad <user> <delay>:` Schickt dem User Werbung";
     }
 
     @Override

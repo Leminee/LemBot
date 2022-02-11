@@ -22,6 +22,7 @@ public class CommandManager extends ListenerAdapter {
     public static final Pattern COMMAND_PATTERN = Pattern.compile("[" + PREFIX + "]([^ ]+)(.*)");
     private static CommandManager INSTANCE = null;
 
+
     public static CommandManager getInstance() {
         return INSTANCE;
     }
@@ -59,15 +60,11 @@ public class CommandManager extends ListenerAdapter {
 
         Matcher commandMatcher = COMMAND_PATTERN.matcher(message.getContentRaw());
 
-        if (!commandMatcher.matches()) {
-            return;
-        }
+        if (!commandMatcher.matches()) return;
 
         String command = commandMatcher.group(1).toLowerCase();
 
-        if (!commands.containsKey(command)) {
-            return;
-        }
+        if (!commands.containsKey(command)) return;
 
         String[] args = commandMatcher.group(2).split(" ");
 
@@ -75,11 +72,11 @@ public class CommandManager extends ListenerAdapter {
 
         IBotCommand executor = commands.get(command);
 
-        if (!executor.isPermitted(message.getMember())) {
+        if (!executor.isPermitted(Objects.requireNonNull(message.getMember()))) {
             EmbedBuilder embedBuilder = new EmbedBuilder();
             String embedDescription = ":x: Permission Denied";
             Helper.createEmbed(embedBuilder, "Error", embedDescription, EmbedColorHelper.ERROR);
-            message.getChannel().sendMessageEmbeds(embedBuilder.build()).queue();
+            Helper.sendEmbed(embedBuilder,message,true);
             return;
         }
 

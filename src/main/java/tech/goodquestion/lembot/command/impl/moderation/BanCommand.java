@@ -7,6 +7,7 @@ import tech.goodquestion.lembot.database.CommandHelper;
 import tech.goodquestion.lembot.entity.Sanction;
 import tech.goodquestion.lembot.entity.SanctionType;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
+import tech.goodquestion.lembot.library.Helper;
 
 import java.awt.*;
 
@@ -29,7 +30,7 @@ public final class BanCommand extends UserBanishCommand {
         embedBuilder.setDescription("User " + toBanish.getAsMention() + " wurde durch " + originMessage.getAuthor().getAsMention() + "**" + " gebannt." + "**" + "\n Angegebener Grund: " + sanction.reason);
 
 
-        originMessage.getChannel().sendMessageEmbeds(embedBuilder.build()).queue();
+        Helper.sendEmbed(embedBuilder,originMessage,false);
 
         CommandHelper.logUserBan(sanction);
 

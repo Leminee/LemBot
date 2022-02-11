@@ -1,9 +1,10 @@
-package tech.goodquestion.lembot.library
+package tech.goodquestion.lembot.library.parser
 
 import java.lang.IllegalArgumentException
 import kotlin.math.*
 import java.time.DateTimeException
 import java.time.LocalDateTime
+import java.time.Period
 import java.time.format.DateTimeFormatter
 
 
@@ -52,6 +53,7 @@ class LocalDateTimeParser private constructor() {
 
             val args: MutableList<String> = cleanedHumanInput.trim().split(" ") as MutableList<String>
 
+            if (args.size == 1) throw IllegalArgumentException("no number found")
 
             args.removeAll(listOf(""))
 
@@ -96,9 +98,17 @@ class LocalDateTimeParser private constructor() {
         }
 
 
-        @JvmStatic
-        fun LocalDateTime.toGermanFormat(): String = this.format(DateTimeFormatter.ofPattern("dd MMMM yyyy HH:mm"))
+        fun LocalDateTime.toGermanFormat(): String = this.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"))
 
+        fun LocalDateTime.getPeriodUntil(): String {
+
+            val period: Period = Period.between(LocalDateTime.now().toLocalDate(), this.toLocalDate())
+            val years = abs(period.years)
+            val months = abs(period.months)
+            val days = abs(period.days)
+
+            return "$years years $months months $days days"
+        }
 
         private fun removeSpecialCharacters(string: String): String {
 
@@ -113,6 +123,7 @@ class LocalDateTimeParser private constructor() {
 
             return true
         }
+
 
 
         fun getSpecialDays(): Set<String> {

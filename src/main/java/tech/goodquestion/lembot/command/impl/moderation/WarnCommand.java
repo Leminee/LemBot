@@ -8,13 +8,14 @@ import tech.goodquestion.lembot.database.CommandHelper;
 import tech.goodquestion.lembot.entity.Sanction;
 import tech.goodquestion.lembot.entity.SanctionType;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
+import tech.goodquestion.lembot.library.Helper;
 
 import java.awt.*;
 
 public final class WarnCommand extends UserBanishCommand {
 
     @Override
-    public void banishUser(Member toBanish, Sanction sanction, Message originMsg) {
+    public void banishUser(Member toBanish, Sanction sanction, Message originMessage) {
 
 
         toBanish.getGuild().addRoleToMember(sanction.userId, Config.getInstance().getRole().getWarnRole()).queue();
@@ -22,9 +23,9 @@ public final class WarnCommand extends UserBanishCommand {
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setColor(Color.decode(EmbedColorHelper.SUCCESS));
         embedBuilder.setTitle("Bestätigung");
-        embedBuilder.setDescription("User " + toBanish.getAsMention() + " wurde durch " + originMsg.getAuthor().getAsMention() +
+        embedBuilder.setDescription("User " + toBanish.getAsMention() + " wurde durch " + originMessage.getAuthor().getAsMention() +
                 "**" + " verwarnt." + "**" + "\n Angegebener Grund: " + sanction.reason);
-        originMsg.getChannel().sendMessageEmbeds(embedBuilder.build()).queue();
+        Helper.sendEmbed(embedBuilder,originMessage,false);
 
         CommandHelper.logUserWarn(sanction);
 

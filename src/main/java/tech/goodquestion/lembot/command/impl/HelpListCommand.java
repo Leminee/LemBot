@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
+import tech.goodquestion.lembot.library.Helper;
 
 import java.awt.*;
 import java.util.List;
@@ -35,11 +36,11 @@ public class HelpListCommand implements IBotCommand {
             EmbedBuilder embedBuilder1 = new EmbedBuilder().setColor(Color.decode(EmbedColorHelper.HELP))
                     .setTitle("Verfügbare Help-Listen")
                     .setDescription(PREFIX+"help " + String.join("\n" +PREFIX+"help ",CommandManager.getInstance().getHelpLists()));
-            message.getChannel().sendMessageEmbeds(embedBuilder1.build()).queue();
+            Helper.sendEmbed(embedBuilder1,message,true);
             return;
         }
 
-        StringBuilder descriptionBuilder = new StringBuilder("Hallo, ich heiße **LemBot** und bin ein Bot für **GoodQuestion** :)");
+        StringBuilder descriptionBuilder = new StringBuilder("Hallo, ich heiße **LemBot** und bin ein Bot für **GoodQuestion** :)\n");
         descriptionBuilder.append("\n----------------- **BEFEHLSLISTE** -----------------\n");
         descriptionBuilder.append("\n");
 
@@ -54,7 +55,7 @@ public class HelpListCommand implements IBotCommand {
         commandsOnHelpList.forEach(c -> descriptionBuilder.append(c.getDescription()).append("\n"));
 
         embedBuilder.setDescription(descriptionBuilder.toString());
-        message.getChannel().sendMessageEmbeds(embedBuilder.build()).queue();
+        Helper.sendEmbed(embedBuilder, message,true);
     }
 
     @Override

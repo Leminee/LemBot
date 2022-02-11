@@ -26,19 +26,19 @@ public record RoleToggleCommand(String roleAbbr, long roleId,
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
         Role role = message.getGuild().getRoleById(roleId);
         String embedDescription;
-        EmbedBuilder roleAddedEmbed = new EmbedBuilder();
+        EmbedBuilder embedBuilder = new EmbedBuilder();
 
         assert role != null;
         if (mode == Mode.ADD) {
             message.getGuild().addRoleToMember(Objects.requireNonNull(message.getMember()).getIdLong(), role).complete();
-            embedDescription = "<@&" + roleId + "> wurde dir erfolgreich zugewiesen " + message.getAuthor().getAsMention();
+            embedDescription = "<@&" + roleId + "> wurde dir erfolgreich zugewiesen ";
         } else {
             message.getGuild().removeRoleFromMember(Objects.requireNonNull(message.getMember()).getIdLong(), role).complete();
-            embedDescription = "<@&" + roleId + "> wurde dir erfolgreich entfernt " + message.getAuthor().getAsMention();
+            embedDescription = "<@&" + roleId + "> wurde dir erfolgreich entfernt ";
         }
 
-        Helper.createEmbed(roleAddedEmbed, "Bestätigung", embedDescription, EmbedColorHelper.BUMP);
-        channel.sendMessageEmbeds(roleAddedEmbed.build()).queue();
+        Helper.createEmbed(embedBuilder, "Bestätigung", embedDescription, EmbedColorHelper.BUMP);
+        Helper.sendEmbed(embedBuilder,message,true);
     }
 
     @Override

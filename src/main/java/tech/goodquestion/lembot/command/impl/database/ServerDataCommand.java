@@ -8,6 +8,7 @@ import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.database.QueryHelper;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
+import tech.goodquestion.lembot.library.Helper;
 
 import java.awt.*;
 import java.util.List;
@@ -50,7 +51,7 @@ public class ServerDataCommand implements IBotCommand {
                         .replace(",", "\n"), true);
 
 
-        channel.sendMessageEmbeds(embedBuilder.build()).queue();
+        Helper.sendEmbed(embedBuilder,message,true);
 
 
     }

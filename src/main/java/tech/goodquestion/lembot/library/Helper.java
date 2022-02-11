@@ -1,8 +1,8 @@
 package tech.goodquestion.lembot.library;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -98,28 +98,33 @@ public final class Helper {
 
     }
 
-    public static void sendAmount(final UserData userData,final String embedColor, final String amountOf, final TextChannel channel, final String embedTitle) {
+    public static void sendAmount(final UserData userData, final String embedColor, final String amountOf, final Message message, final String embedTitle) {
 
+        final EmbedBuilder embedBuilder = new EmbedBuilder();
+        embedBuilder.setColor(Color.decode(embedColor));
+        embedBuilder.setTitle(embedTitle);
         final String authorMention = "<@" + userData.userId + ">";
 
+
         if (!userData.hasBump()) {
-            channel.sendMessage("Du hast leider noch keinen erfolgreichen Bump " + authorMention).queue();
+            embedBuilder.setDescription("Du hast leider noch keinen erfolgreichen Bump ");
+
+            sendEmbed(embedBuilder,message,true);
             return;
         }
 
         if (userData.isTop()) {
-            channel.sendMessage(" :first_place: Du bist **TOP 1** mit " + userData.amountOf + " " + amountOf + " " + authorMention).queue();
+
+            embedBuilder.setDescription(" :first_place: Du bist **TOP 1** mit " + userData.amountOf + " " + amountOf);
+            sendEmbed(embedBuilder,message,true);
             return;
         }
 
        final String mentionedUser = CommandManager.getInstance().getJDA().retrieveUserById(userData.nextHigherUserId).complete().getAsMention();
 
-        final EmbedBuilder embedBuilder = new EmbedBuilder();
-        embedBuilder.setColor(Color.decode(embedColor));
-        embedBuilder.setTitle(embedTitle);
         embedBuilder.setDescription("Anzahl deiner " + amountOf + " **" + userData.amountOf + "**" + " " + authorMention + "\n" + "Du bist hinter dem User " + mentionedUser + " **(" + userData.nextHigherUserAmountOf + " " + amountOf + ")**");
 
-        channel.sendMessageEmbeds(embedBuilder.build()).queue();
+        message.replyEmbeds(embedBuilder.build()).queue();
     }
 
     public static void scheduleCommand(final String command,final long delay, final long period, final TimeUnit timeUnit) {
@@ -158,12 +163,23 @@ public final class Helper {
         embedBuilder.setColor(Color.decode(embedColor));
     }
 
-    public static void addTopToEmbed(ResultSet resultSet,final EmbedBuilder embedBuilder, final String embedTitle, final String embedDescription, final String embedThumbnail, final String embedColor, final TextChannel channel, final String amountOf) {
-        createEmbed(embedBuilder, embedTitle, embedDescription, embedColor, embedThumbnail);
-        addTopToEmbed(resultSet, embedBuilder, channel, amountOf);
+    public static void sendEmbed(final EmbedBuilder embedBuilder, final Message message, final boolean reply) {
+
+        if (reply) {
+            message.replyEmbeds(embedBuilder.build()).queue();
+            return;
+        }
+
+        message.getChannel().sendMessageEmbeds(embedBuilder.build()).queue();
+
     }
 
-    public static void addTopToEmbed(ResultSet resultSet, final EmbedBuilder embedBuilder, final TextChannel channel, final String amountOf) {
+    public static void addTopToEmbed(ResultSet resultSet,final EmbedBuilder embedBuilder, final String embedTitle, final String embedDescription, final String embedThumbnail, final String embedColor, final Message message, final String amountOf) {
+        createEmbed(embedBuilder, embedTitle, embedDescription, embedColor, embedThumbnail);
+        addTopToEmbed(resultSet, embedBuilder, message, amountOf);
+    }
+
+    public static void addTopToEmbed(ResultSet resultSet, final EmbedBuilder embedBuilder, final Message message, final String amountOf) {
         int top = 1;
 
         try {
@@ -173,7 +189,7 @@ public final class Helper {
                 top++;
             }
 
-            channel.sendMessageEmbeds(embedBuilder.build()).queue();
+            sendEmbed(embedBuilder,message,true);
 
         } catch (SQLException sqlException) {
 

@@ -20,7 +20,7 @@ public class BumpCountCommand implements IBotCommand {
         final String embedTitle = "Bumps";
         
         Helper.getAmount(userData, QueryHelper.AMOUNT_BUMPS, QueryHelper.NEXT_HIGHER_USER_AMOUNT_BUMPS);
-        Helper.sendAmount(userData, EmbedColorHelper.BUMP, "Bumps", channel, embedTitle);
+        Helper.sendAmount(userData, EmbedColorHelper.BUMP, "Bumps", message, embedTitle);
     }
 
     @Override

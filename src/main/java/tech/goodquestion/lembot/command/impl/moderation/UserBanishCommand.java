@@ -28,9 +28,9 @@ public abstract sealed class UserBanishCommand implements IBotCommand permits Ba
 
         if (args.length < 2) {
             final EmbedBuilder embedBuilder = new EmbedBuilder();
-            final String embedDescription = ":x: Bitte gebe einen Grund an!";
+            final String embedDescription = ":x: Gebe einen Grund an!";
             Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
-            channel.sendMessageEmbeds(embedBuilder.build()).queue();
+            Helper.sendEmbed(embedBuilder,message,true);
             return;
         }
 
@@ -38,7 +38,7 @@ public abstract sealed class UserBanishCommand implements IBotCommand permits Ba
             final EmbedBuilder embedBuilder = new EmbedBuilder();
             final String embedDescription = ":x: Dieser Befehl kann nur in [channel] ausgeführt werden!".replace("[channel]",Config.getInstance().getChannel().getSanctionChannel().getAsMention());
             Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
-            channel.sendMessageEmbeds(embedBuilder.build()).queue();
+            Helper.sendEmbed(embedBuilder,message,true);
             return;
         }
 
@@ -55,7 +55,7 @@ public abstract sealed class UserBanishCommand implements IBotCommand permits Ba
             final EmbedBuilder embedBuilder = new EmbedBuilder();
             final String embedDescription = ":x: User ist nicht auf dem Server!";
             Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
-            channel.sendMessageEmbeds(embedBuilder.build()).queue();
+            Helper.sendEmbed(embedBuilder,message,true);
             return;
 
         }
@@ -63,9 +63,9 @@ public abstract sealed class UserBanishCommand implements IBotCommand permits Ba
         assert member != null;
         if (member.hasPermission(Permission.ADMINISTRATOR)) {
             final EmbedBuilder embedBuilder = new EmbedBuilder();
-            final String embedDescription = ":x: Admins/Moderatoren können nicht gekickt oder gebannt werden!";
+            final String embedDescription = ":x: Admins/Moderatoren können nicht gebannt werden!";
             Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
-            channel.sendMessageEmbeds(embedBuilder.build()).queue();
+            Helper.sendEmbed(embedBuilder,message,true);
             return;
         }
 
@@ -88,7 +88,7 @@ public abstract sealed class UserBanishCommand implements IBotCommand permits Ba
             final EmbedBuilder embedBuilder = new EmbedBuilder();
             final String embedDescription = ":x: Permission denied";
             Helper.createEmbed(embedBuilder, "", embedDescription, EmbedColorHelper.ERROR);
-            channel.sendMessageEmbeds(embedBuilder.build()).queue();
+            Helper.sendEmbed(embedBuilder,message,true);
             return;
         }
 

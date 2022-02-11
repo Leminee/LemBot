@@ -22,15 +22,15 @@ import java.util.List;
 public class UnmuteCommand implements IBotCommand {
 
     @Override
-    public void dispatch(Message msg, TextChannel channel, Member sender, String[] args) {
+    public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
         if (args.length < 1) {
             return;
         }
 
-        final List<Member> mentionedMembers = msg.getMentionedMembers();
+        final List<Member> mentionedMembers = message.getMentionedMembers();
         Member member;
 
-        member = UserBanishCommand.getMember(msg, args, mentionedMembers, null);
+        member = UserBanishCommand.getMember(message, args, mentionedMembers, null);
 
         if (member == null) {
             EmbedBuilder embedBuilder = new EmbedBuilder();
@@ -45,8 +45,9 @@ public class UnmuteCommand implements IBotCommand {
         final EmbedBuilder embedBuilder= new EmbedBuilder();
         embedBuilder.setColor(Color.decode(EmbedColorHelper.SUCCESS));
         embedBuilder.setTitle("Bestätigung");
-        embedBuilder.setDescription("User " + member.getAsMention() + " wurde durch " + msg.getAuthor().getAsMention() + " erfolgreich **" + " ungemutet." + "**");
-        channel.sendMessageEmbeds(embedBuilder.build()).queue();
+        embedBuilder.setDescription("User " + member.getAsMention() + " wurde durch " + message.getAuthor().getAsMention() + " erfolgreich **" + " ungemutet." + "**");
+
+        Helper.sendEmbed(embedBuilder,message,false);
 
         Connection connection = DatabaseConnector.openConnection();
 
