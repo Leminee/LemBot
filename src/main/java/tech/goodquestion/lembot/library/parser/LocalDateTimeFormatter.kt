@@ -18,13 +18,6 @@ class LocalDateTimeFormatter private constructor() {
             return localDateTime.format(germanFormat)
         }
 
-        @JvmStatic
-        fun toFrenchFormat(localDateTime: LocalDateTime): String {
-
-            val frenchFormat: DateTimeFormatter = dateFormatter.withLocale(Locale.FRENCH)
-
-            return localDateTime.format(frenchFormat)
-        }
 
         @JvmStatic
         fun toUSFormat(localDateTime: LocalDateTime): String {
