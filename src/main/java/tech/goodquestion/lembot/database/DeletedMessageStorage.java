@@ -37,7 +37,7 @@ public class DeletedMessageStorage extends ListenerAdapter {
             if (resultSet.next()) {
 
                 final String deletedMessageAuthorAsMention = "<@" + resultSet.getString(2) + ">" ;
-                final String deletedMessageContent = resultSet.getString(3);
+                String deletedMessageContent = resultSet.getString(3);
                 final String channelAsMention = "<#" + event.getChannel().getIdLong() +">";
 
                 final User authorDeletedMessage = event.getJDA().retrieveUserById(resultSet.getString(2)).complete();
@@ -49,6 +49,13 @@ public class DeletedMessageStorage extends ListenerAdapter {
 
 
                 final EmbedBuilder embedBuilder = new EmbedBuilder();
+
+                if (!isValidLength(deletedMessageContent)) {
+
+                   deletedMessageContent = deletedMessageContent.substring(0,900)
+                            +"\n\n ```Hinweis: Der Inhalt der gelöschten Nachricht war länger als die erlaubten Zeichen (1024).```";
+                }
+
 
                 embedBuilder.setTitle("Gelöschte Nachricht")
                         .setAuthor(authorDeletedMessageAsTag,null,authorDeletedMessageAvatarUrl)
@@ -72,6 +79,12 @@ public class DeletedMessageStorage extends ListenerAdapter {
             System.out.println(sqlException.getMessage());
             CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, this.getClass().getName()));
         }
+    }
+
+    private boolean isValidLength(final String message) {
+
+        final int fieldMaxLength = 1024;
+        return message.length() < fieldMaxLength;
     }
 
 }

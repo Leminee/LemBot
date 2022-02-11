@@ -22,16 +22,29 @@ public class UpdatedMessageStorage extends ListenerAdapter {
         final long updatedMessageId = event.getMessageIdLong();
         final long authorId = event.getAuthor().getIdLong();
         final String authorUpdatedMessageAsTag = event.getAuthor().getAsTag();
-        final String updatedMessageContent = event.getMessage().getContentRaw();
+        String updatedMessageContent = event.getMessage().getContentRaw();
 
         Connection connection = DatabaseConnector.openConnection();
         final String updatedMessageData = "INSERT INTO updated_message (id, id_message, id_discord, username,content) VALUES (NULL,?,?,?,?);";
 
         final String updatedMessageAuthorAsMention = "<@" + authorId+ ">" ;
         final String channelAsMention = "<#" + event.getChannel().getIdLong() +">";
-        final String newContent = updatedMessageContent;
         final String authorAvatarUrl = event.getAuthor().getEffectiveAvatarUrl();
+        String updatedMessageOldContent = QueryHelper.getUpdatedMessageOldContent(updatedMessageId, QueryHelper.UPDATED_MESSAGE_LAST_CONTENT);
 
+
+        if (!isValidLength(updatedMessageContent)) {
+
+            updatedMessageContent = updatedMessageContent.substring(0,900)
+                    +"\n\n ```Hinweis: Der Inhalt der beabeiteten Nachricht war länger als  die erlaubten Zeichen (1024).```";
+
+        }
+
+        if (!isValidLength(updatedMessageOldContent)) {
+
+            updatedMessageOldContent = updatedMessageOldContent.substring(0,900)
+                    +"\n\n ````Hinweis: Der Inhalt der beabeiteten Nachricht war länger als die erlaubten Zeichen (1024).```";
+        }
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle("Bearbeitete Nachricht")
@@ -40,9 +53,11 @@ public class UpdatedMessageStorage extends ListenerAdapter {
                 .addField("Author", updatedMessageAuthorAsMention,true)
                 .addField("Author ID", String.valueOf(authorId),true)
                 .addField("Kanal",channelAsMention,true)
-                .addField("Alter Inhalt",QueryHelper.getUpdatedMessageOldContent(updatedMessageId, QueryHelper.UPDATED_MESSAGE_LAST_CONTENT),false)
-                .addField("Neuer Inhalt", newContent,false)
+                .addField("Alter Inhalt",updatedMessageOldContent,false)
+                .addField("Neuer Inhalt", updatedMessageContent,false)
                 .setTimestamp(Instant.now());
+
+
 
         Config.getInstance().getChannel().getUpdatedDeletedChannel().sendMessageEmbeds(embedBuilder.build()).queue();
 
@@ -60,6 +75,14 @@ public class UpdatedMessageStorage extends ListenerAdapter {
 
             CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, this.getClass().getName()));
         }
+
+
+    }
+
+    private boolean isValidLength(final String message) {
+
+        final int fieldMaxLength = 1024;
+        return message.length() < fieldMaxLength;
     }
 
 }
