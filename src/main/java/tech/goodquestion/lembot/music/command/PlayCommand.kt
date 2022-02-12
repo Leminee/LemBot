@@ -15,13 +15,12 @@ class PlayCommand:IBotCommand {
 
     override fun dispatch(message: Message?, channel: TextChannel?, sender: Member?, args: Array<out String>?) {
 
-        val memberAsMention: String? = sender?.asMention
 
         if (args?.size!! == 0)  {
 
             val embedBuilder = EmbedBuilder()
 
-            Helper.createEmbed(embedBuilder,"Error",":x: Gib bitte die Url an $memberAsMention", EmbedColorHelper.ERROR)
+            Helper.createEmbed(embedBuilder,"Error",":x: Gib bitte die Url an ", EmbedColorHelper.ERROR)
 
             Helper.sendEmbed(embedBuilder,message,true)
 
@@ -34,7 +33,7 @@ class PlayCommand:IBotCommand {
 
             val embedBuilder = EmbedBuilder()
 
-            Helper.createEmbed(embedBuilder,"Error",":x: Url ist nicht valid $memberAsMention", EmbedColorHelper.ERROR)
+            Helper.createEmbed(embedBuilder,"Error",":x: Url ist nicht valid ", EmbedColorHelper.ERROR)
 
             Helper.sendEmbed(embedBuilder,message,true)
 
@@ -47,9 +46,9 @@ class PlayCommand:IBotCommand {
 
             val embedBuilder = EmbedBuilder()
 
-            Helper.createEmbed(embedBuilder,"Error",":x: Du musst in einem Voice Channel sein $memberAsMention", EmbedColorHelper.ERROR)
+            Helper.createEmbed(embedBuilder,"Error",":x: Du musst in einem Voice Channel sein ", EmbedColorHelper.ERROR)
 
-            channel?.sendMessageEmbeds(embedBuilder.build())?.queue()
+            Helper.sendEmbed(embedBuilder,message,true)
 
             return
 
@@ -63,7 +62,7 @@ class PlayCommand:IBotCommand {
 
             val embedBuilder = EmbedBuilder()
 
-            Helper.createEmbed(embedBuilder,"Error",":x: Ich bin bereits in einem Voice $memberAsMention", EmbedColorHelper.ERROR)
+            Helper.createEmbed(embedBuilder,"Error",":x: Ich bin bereits in einem Voice ", EmbedColorHelper.ERROR)
 
             channel?.sendMessageEmbeds(embedBuilder.build())?.queue()
 

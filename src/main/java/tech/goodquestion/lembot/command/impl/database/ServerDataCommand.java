@@ -29,7 +29,7 @@ public class ServerDataCommand implements IBotCommand {
 
         embedBuilder.setTitle("Informationen zum Server")
                 .setColor(Color.decode(EmbedColorHelper.SERVER))
-                .setDescription("Informationen zu ** + " + Config.getInstance().getServerName() +"**")
+                .setDescription("Informationen zu **" + Config.getInstance().getServerName() +"**")
                 .setThumbnail("https://cdn.discordapp.com/attachments/919074434021736507/920552764784914472/logoqg1_1.gif")
                 .addField("Servermitglieder", String.valueOf(Config.getInstance().getGuild().getMemberCount()), true)
                 .addField("Erstellungsdatum", getTimeCreated(), true)

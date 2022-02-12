@@ -37,7 +37,7 @@ public record RoleToggleCommand(String roleAbbr, long roleId,
             embedDescription = "<@&" + roleId + "> wurde dir erfolgreich entfernt ";
         }
 
-        Helper.createEmbed(embedBuilder, "Bestätigung", embedDescription, EmbedColorHelper.BUMP);
+        Helper.createEmbed(embedBuilder, "Bestätigung", embedDescription, EmbedColorHelper.SUCCESS);
         Helper.sendEmbed(embedBuilder,message,true);
     }
 

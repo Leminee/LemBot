@@ -60,9 +60,4 @@ public class ParserCommand implements IBotCommand {
 
     }
 
-
-    @Override
-    public String getHelpList() {
-        return "default";
-    }
 }

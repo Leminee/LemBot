@@ -40,12 +40,6 @@ user:
   disboard: 302050872383242240
   bot: 820468009764257792
 
-
-commandRoles:
-  - abbr: "bumper"
-    role: 919074433556160536
-
-
 reactionRoles:
   - channel: 779107472622223400 # self-roles
     message: 821186181903024179
@@ -63,3 +57,6 @@ reactionRoles:
       846816752867868742: 846812921375359027
       846854659104833566: 846856698979418152
 
+commandRoles:
+  - abbr: "bumper"
+    role: 919074433556160536

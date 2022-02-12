@@ -27,22 +27,23 @@ public class HelpListCommand implements IBotCommand {
         embedBuilder.setColor(Color.decode(EmbedColorHelper.HELP));
         embedBuilder.setThumbnail("https://cotelangues.com/wp-content/uploads/2019/06/Fragezeichen-Tafel-868x524.jpg");
 
-        String queriedHelpList = "default";
+        String queriedHelpList = "";
 
         if (args.length > 0) {
             queriedHelpList = args[0].toLowerCase(Locale.ROOT);
         }
 
-        if (queriedHelpList.equals("-")) {
+        if (queriedHelpList.equals("") ||queriedHelpList.equals("-")) {
             EmbedBuilder embedBuilder1 = new EmbedBuilder().setColor(Color.decode(EmbedColorHelper.HELP))
                     .setTitle("Verfügbare Help-Listen")
-                    .setDescription(prefix+"help " + String.join("\n" +prefix+"help ",CommandManager.getInstance().getHelpLists()));
+                    .setDescription(prefix+ "help " + String.join("\n" +prefix+"help ",CommandManager.getInstance().getHelpLists()));
+
             Helper.sendEmbed(embedBuilder1,message,true);
             return;
         }
 
         StringBuilder descriptionBuilder = new StringBuilder("Hallo, ich heiße **" + Config.getInstance().getBotName()  + "** und bin ein Bot für **"+ Config.getInstance().getServerName() +  "** :)\n");
-        descriptionBuilder.append("\n----------------- **BEFEHLSLISTE** -----------------\n");
+        descriptionBuilder.append("\n---------------    **BEFEHLSLISTE**    ---------------\n");
         descriptionBuilder.append("\n");
 
         List<IBotCommand> commandsOnHelpList = new ArrayList<>();
@@ -50,8 +51,9 @@ public class HelpListCommand implements IBotCommand {
         for (IBotCommand command : CommandManager.getInstance().getCommands().values()) {
             if (!Objects.equals(command.getHelpList(), queriedHelpList)) continue;
             commandsOnHelpList.add(command);
-        }
 
+        }
+        
         commandsOnHelpList.sort(Comparator.comparing(IBotCommand::getName));
         commandsOnHelpList.forEach(c -> descriptionBuilder.append(prefix).append(c.getDescription()).append("\n"));
 
@@ -76,7 +78,7 @@ public class HelpListCommand implements IBotCommand {
 
     @Override
     public String getHelpList() {
-        return "default";
+        return "general";
     }
 
 }

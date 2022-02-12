@@ -34,4 +34,6 @@ public class RoleConfig {
     public Role getModeratorRole(){
         return Config.getInstance().getGuild().getRoleById(moderator);
     }
+
+
 }

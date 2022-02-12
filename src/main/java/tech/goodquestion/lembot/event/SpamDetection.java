@@ -24,11 +24,10 @@ public class SpamDetection extends ListenerAdapter {
         final boolean senderIsBot = event.getMessage().getAuthor().isBot();
         final boolean senderIsStaff = Objects.requireNonNull(event.getMessage().getMember()).hasPermission(Permission.MESSAGE_MANAGE);
         final Member member = event.getMember();
-        final String userAsMention = event.getMessage().getAuthor().getAsMention();
         final String messageContent = event.getMessage().getContentRaw();
         assert member != null;
         final List<Role> userRoles = member.getRoles();
-        final Member bot = event.getGuild().retrieveMemberById(Config.getInstance().getUser().getLemBotId()).complete();
+        final Member bot = event.getGuild().retrieveMemberById(Config.getInstance().getUser().getBotId()).complete();
 
         final Sanction sanction = new Sanction();
         sanction.userId = userId;
@@ -60,7 +59,8 @@ public class SpamDetection extends ListenerAdapter {
             event.getGuild().addRoleToMember(userId, mutedRole).queue();
 
             CommandHelper.logUserMute(sanction);
-            event.getChannel().sendMessage(":mute: Du wurdest aufgrund Verdacht auf Scam durch den Bot **gemutet** " + userAsMention + ".").queue();
+
+            event.getMessage().reply(":mute: Du wurdest aufgrund Verdacht auf Scam durch den Bot **gemutet**").queue();
 
             Objects.requireNonNull(event.getGuild().getTextChannelById(Config.getInstance().getChannel().getAutoModerationChannel().getIdLong()))
                     .sendMessage(":mute: User " + Objects.requireNonNull(event.getMember()).getAsMention() + " wurde wegen Spam **gemutet** " + "\n(3 inhaltich identische Nachrichten in weniger als 30 Sekunden in mehrere Kanäle gepostet)\nGelöschte Nachricht: ```" + messageContent +"```")

@@ -18,6 +18,6 @@ public interface IBotCommand {
         return member.hasPermission(Permission.MESSAGE_MANAGE);
     }
     default String getHelpList() {
-        return "default";
+        return "general";
     }
 }

@@ -5,8 +5,9 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import tech.goodquestion.lembot.config.Config;
-import tech.goodquestion.lembot.library.Helper;
+import tech.goodquestion.lembot.library.parser.LocalDateTimeFormatter;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class LinkDeletion extends ListenerAdapter {
@@ -31,9 +32,10 @@ public class LinkDeletion extends ListenerAdapter {
 
         final String authorAsMention = event.getAuthor().getAsMention();
         final String channelAsMention = event.getChannel().getAsMention();
-        event.getChannel().sendMessage(" :x: Nachricht wurde gelöscht, da sie einen Link enthält, der nicht verifiziert werden konnte " + authorAsMention + "!").queue();
+        event.getMessage().reply(":x: Nachricht wurde gelöscht, da sie einen Link enthält, der nicht verifiziert werden konnte").queue();
+
         Objects.requireNonNull(event.getGuild().getTextChannelById(Config.getInstance().getChannel().getAutoModerationChannel().getIdLong()))
-                .sendMessage(":red_circle:  **Folgender Link wurde gelöscht** \n" + userMessage + "\n**(gesendet von " + authorAsMention + " in " + channelAsMention + " am " + Helper.getGermanDateTime() + ")**")
+                .sendMessage(":red_circle:  **Folgender Link wurde gelöscht** \n" + userMessage + "\n**(gesendet von " + authorAsMention + " in " + channelAsMention + " am " + LocalDateTimeFormatter.toGermanFormat(LocalDateTime.now()) + ")**")
                 .queue();
     }
 

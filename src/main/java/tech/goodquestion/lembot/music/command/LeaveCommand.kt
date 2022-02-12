@@ -3,11 +3,17 @@ package tech.goodquestion.lembot.music.command
 import net.dv8tion.jda.api.entities.Member
 import net.dv8tion.jda.api.entities.Message
 import net.dv8tion.jda.api.entities.TextChannel
+import net.dv8tion.jda.api.managers.AudioManager
 import tech.goodquestion.lembot.command.IBotCommand
+import tech.goodquestion.lembot.config.Config
 
 class LeaveCommand : IBotCommand {
     override fun dispatch(message: Message?, channel: TextChannel?, sender: Member?, args: Array<out String>?) {
-        TODO("Not yet implemented")
+
+        val audioManager: AudioManager = Config.getInstance().guild.audioManager
+
+        if(audioManager.isConnected) audioManager.closeAudioConnection()
+
     }
 
     override fun getName(): String {

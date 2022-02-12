@@ -122,7 +122,7 @@ public final class Helper {
 
        final String mentionedUser = CommandManager.getInstance().getJDA().retrieveUserById(userData.nextHigherUserId).complete().getAsMention();
 
-        embedBuilder.setDescription("Anzahl deiner " + amountOf + " **" + userData.amountOf + "**" + " " + authorMention + "\n" + "Du bist hinter dem User " + mentionedUser + " **(" + userData.nextHigherUserAmountOf + " " + amountOf + ")**");
+        embedBuilder.setDescription("Anzahl deiner " + amountOf + " **" + userData.amountOf + "**" + "\n" + "Du bist hinter dem User " + mentionedUser + " **(" + userData.nextHigherUserAmountOf + ")**");
 
         message.replyEmbeds(embedBuilder.build()).queue();
     }

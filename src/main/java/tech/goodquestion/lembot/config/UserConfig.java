@@ -9,7 +9,7 @@ public class UserConfig {
         return disboard;
     }
 
-    public long getLemBotId(){
+    public long getBotId(){
         return bot;
     }
 

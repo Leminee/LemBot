@@ -109,7 +109,6 @@ public class BotMain {
         commandManager.registerCommand(new SkipCommand());
         commandManager.registerCommand(new StopCommand());
         commandManager.registerCommand(new TopActiveChannelsCommand());
-        commandManager.registerCommand(new TopBoosterCommand());
         commandManager.registerCommand(new TopBumperCommand());
         commandManager.registerCommand(new TopFlooderCommand());
         commandManager.registerCommand(new TopMonthlyBumperCommand());

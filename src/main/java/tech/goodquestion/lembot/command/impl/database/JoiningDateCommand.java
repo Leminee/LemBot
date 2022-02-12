@@ -50,4 +50,9 @@ public class JoiningDateCommand implements IBotCommand {
 
     }
 
+    @Override
+    public String getHelpList() {
+        return "stats";
+    }
+
 }

@@ -37,4 +37,9 @@ public class BumpCountCommand implements IBotCommand {
     public boolean isPermitted(final Member member){
         return true;
     }
+
+    @Override
+    public String getHelpList() {
+        return "stats";
+    }
 }

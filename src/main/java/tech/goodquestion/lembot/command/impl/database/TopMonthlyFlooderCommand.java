@@ -60,4 +60,9 @@ public class TopMonthlyFlooderCommand implements IBotCommand {
         return true;
     }
 
+    @Override
+    public String getHelpList() {
+        return "stats";
+    }
+
 }
