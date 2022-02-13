@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Erstellungszeit: 20. Jan 2022 um 00:22
+-- Erstellungszeit: 13. Feb 2022 um 06:36
 -- Server-Version: 10.3.31-MariaDB-0+deb10u1
 -- PHP-Version: 7.4.27
 
@@ -312,6 +312,20 @@ CREATE TABLE `voice_leave` (
   `name` varchar(255) NOT NULL,
   `left_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `voice_move`
+--
+
+CREATE TABLE `voice_move` (
+  `id_discord` bigint(20) NOT NULL,
+  `user_tag` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `moved_from` varchar(255) NOT NULL,
+  `moved_in_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
