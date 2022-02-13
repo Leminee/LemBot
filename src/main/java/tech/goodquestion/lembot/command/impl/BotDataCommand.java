@@ -39,7 +39,7 @@ public class BotDataCommand implements IBotCommand {
 
     @Override
     public String getName() {
-        return Config.getInstance().getServerName().toLowerCase();
+        return Config.getInstance().getBotConfig().getName().toLowerCase();
     }
 
     @Override

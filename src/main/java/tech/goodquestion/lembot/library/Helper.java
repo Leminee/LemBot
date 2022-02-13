@@ -39,7 +39,7 @@ public final class Helper {
 
     public static boolean isNotSuccessfulBump(final List<MessageEmbed> messages, final User embedAuthor) {
 
-        final long disBoardId = Config.getInstance().getUserConfig().getDisboardId();
+        final long disBoardId = Config.getInstance().getGuild().getJDA().retrieveUserById(302050872383242240L).complete().getIdLong();
         final String successfulBumpImageUrl = "https://disboard.org/images/bot-command-image-bump.png";
 
         if (embedAuthor.getIdLong() != disBoardId) {

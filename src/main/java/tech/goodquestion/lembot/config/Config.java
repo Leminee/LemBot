@@ -20,7 +20,6 @@ public class Config {
     private DatabaseConfig database;
     private RoleConfig role;
     private ChannelConfig channel;
-    private UserConfig user;
     private CategoryConfig category;
     private BotConfig bot;
     private long guild;
@@ -68,10 +67,6 @@ public class Config {
 
     public CategoryConfig getCategoryConfig() {
         return category;
-    }
-
-    public UserConfig getUserConfig() {
-        return user;
     }
 
     public BotConfig getBotConfig() {
