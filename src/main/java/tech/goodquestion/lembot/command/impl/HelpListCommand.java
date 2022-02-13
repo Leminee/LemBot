@@ -17,7 +17,7 @@ import java.util.*;
 public class HelpListCommand implements IBotCommand {
 
     @Override
-    public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
+    public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) {
 
         final char prefix = Config.getInstance().getBotConfig().getPrefix();
 
@@ -33,7 +33,8 @@ public class HelpListCommand implements IBotCommand {
             queriedHelpList = args[0].toLowerCase(Locale.ROOT);
         }
 
-        if (queriedHelpList.equals("") ||queriedHelpList.equals("-")) {
+
+        if (!CommandManager.getInstance().getHelpLists().toString().contains(queriedHelpList) || queriedHelpList.equals("")) {
             EmbedBuilder embedBuilder1 = new EmbedBuilder().setColor(Color.decode(EmbedColorHelper.HELP))
                     .setTitle("Verfügbare Help-Listen")
                     .setDescription(prefix+ "help " + String.join("\n" +prefix+"help ",CommandManager.getInstance().getHelpLists()));
@@ -68,7 +69,7 @@ public class HelpListCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`help -`: Verfügbare Command-Listen";
+        return "`help`: Verfügbare Command-Listen";
     }
 
     @Override

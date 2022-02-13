@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class BotsCommand implements IBotCommand {
 
     @Override
-    public void dispatch(Message message, TextChannel channel, Member sender, String[] args) throws IOException {
+    public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) throws IOException {
 
         final List<Member> members = Config.getInstance().getGuild().getMembers();
 

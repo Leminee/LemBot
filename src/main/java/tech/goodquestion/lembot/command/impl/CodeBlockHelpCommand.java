@@ -11,7 +11,7 @@ import tech.goodquestion.lembot.library.Helper;
 public class CodeBlockHelpCommand implements IBotCommand {
 
     @Override
-    public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
+    public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) {
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         final String highlightedCodeBlock = "\n\\```<Programmiersprache>\n // Code\n```";

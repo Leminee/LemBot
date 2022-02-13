@@ -8,11 +8,16 @@ import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.entity.VoiceChannel;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
 import tech.goodquestion.lembot.library.Helper;
+import tech.goodquestion.lembot.library.parser.LocalDateTimeFormatter;
+
+import java.time.LocalTime;
 
 public class VoiceJoinedStorage extends ListenerAdapter {
 
     @Override
     public void onGuildVoiceJoin(@NotNull final GuildVoiceJoinEvent event) {
+
+
 
         final String insertQuery = "INSERT INTO voice_join (id_discord, user_tag, username, name) VALUES (?,?,?,?);";
 
@@ -27,7 +32,7 @@ public class VoiceJoinedStorage extends ListenerAdapter {
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
 
-        final String embedDescription = userMentioned + " ist **" + voiceChannel.name + "** um " + Helper.getCurrentDateTime() + " Uhr **gejoint**.";
+        final String embedDescription = userMentioned + " ist **" + voiceChannel.name + "** um " + LocalDateTimeFormatter.formatTime(LocalTime.now()) + " Uhr **gejoint**.";
 
         Helper.createEmbed(embedBuilder, "Voice gejoint", embedDescription, EmbedColorHelper.VOICE_JOINED, "https://cdn.discordapp.com/attachments/819694809765380146/880646674366754856/Bildschirmfoto_2021-08-27_um_04.55.07.png");
         Config.getInstance().getChannelConfig().getVoiceChatChannel().sendMessageEmbeds(embedBuilder.build()).queue();

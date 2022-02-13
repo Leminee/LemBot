@@ -15,7 +15,7 @@ import java.awt.*;
 public final class WarnCommand extends UserBanishCommand {
 
     @Override
-    public void banishUser(Member toBanish, Sanction sanction, Message originMessage) {
+    public void banishUser(final Member toBanish, final Sanction sanction, final Message originMessage) {
 
 
         toBanish.getGuild().addRoleToMember(sanction.userId, Config.getInstance().getRoleConfig().getWarnRole()).queue();

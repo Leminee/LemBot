@@ -149,8 +149,9 @@ public class BotMain {
         jda.addEventListener(new VoiceAutoCreation());
         jda.addEventListener(new VoiceJoinedStorage());
         jda.addEventListener(new VoiceLeftStorage());
-        jda.addEventListener(new VoiceMoved());
+        jda.addEventListener(new VoiceMovedStorage());
         jda.addEventListener(new WelcomingMemberJoin());
+        jda.addEventListener(new HoppingDetection());
 
         setupRoleCommands(commandManager);
     }

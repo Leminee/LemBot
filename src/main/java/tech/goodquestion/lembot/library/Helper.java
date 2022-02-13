@@ -21,7 +21,6 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -30,8 +29,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public final class Helper {
-
-    public static final String HAPPY_NEW_YEAR_GIF_URL = "https://happynewyear2021status.com/wp-content/uploads/2021/11/new-year-gifs-2022-1.gif";
 
     private Helper(){
 
@@ -103,8 +100,6 @@ public final class Helper {
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setColor(Color.decode(embedColor));
         embedBuilder.setTitle(embedTitle);
-        final String authorMention = "<@" + userData.userId + ">";
-
 
         if (!userData.hasBump()) {
             embedBuilder.setDescription("Du hast leider noch keinen erfolgreichen Bump ");
@@ -198,12 +193,6 @@ public final class Helper {
         }
     }
 
-    public static String getCurrentDateTime() {
-        final Date date = new Date();
-
-        return date.toString().substring(11, 16);
-    }
-
 
     public static String getAmountContributors(final String repositoryUrl) {
 
@@ -232,5 +221,6 @@ public final class Helper {
         return dateNow + " um " + timeNow;
 
     }
+
 
 }

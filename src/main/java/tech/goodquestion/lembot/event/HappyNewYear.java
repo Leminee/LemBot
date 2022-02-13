@@ -4,7 +4,6 @@ import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import tech.goodquestion.lembot.config.Config;
-import tech.goodquestion.lembot.library.Helper;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -16,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 public class HappyNewYear extends ListenerAdapter {
 
     private final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
+    private final String HAPPY_NEW_YEAR_GIF_URL = "https://happynewyear2021status.com/wp-content/uploads/2021/11/new-year-gifs-2022-1.gif";
     @Override
     public void onReady(final @NotNull ReadyEvent event) {
 
@@ -39,7 +39,7 @@ public class HappyNewYear extends ListenerAdapter {
 
 
             Objects.requireNonNull(Config.getInstance().getChannelConfig().getGeneralChannel())
-                    .sendMessage(Helper.HAPPY_NEW_YEAR_GIF_URL)
+                    .sendMessage(HAPPY_NEW_YEAR_GIF_URL)
                     .queue();
         };
 

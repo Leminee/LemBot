@@ -23,7 +23,7 @@ import java.util.Objects;
 public abstract sealed class UserBanishCommand implements IBotCommand permits BanCommand, WarnCommand {
 
     @Override
-    public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
+    public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) {
 
 
         if (args.length < 2) {
@@ -95,7 +95,7 @@ public abstract sealed class UserBanishCommand implements IBotCommand permits Ba
         banishUser(member, sanction, message);
     }
 
-    static Member getMember(Message message, String[] args, List<Member> mentionedMembers, Member member) {
+    static Member getMember(final Message message, final String[] args, final List<Member> mentionedMembers, Member member) {
         if (mentionedMembers.size() > 0) {
             member = mentionedMembers.get(0);
         } else {

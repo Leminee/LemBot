@@ -15,7 +15,7 @@ import java.util.Objects;
 public class BotDataCommand implements IBotCommand {
 
     @Override
-    public void dispatch(Message message, TextChannel channel, Member sender, String[] args){
+    public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args){
 
 
         final String bot = Objects.requireNonNull(Config.getInstance().getGuild().getMemberById(Config.getInstance().getBotConfig().getId())).getUser().getAsTag();

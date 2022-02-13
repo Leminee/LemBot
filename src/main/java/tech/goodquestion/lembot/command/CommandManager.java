@@ -32,7 +32,7 @@ public class CommandManager extends ListenerAdapter {
     private final JDA jda;
     private final Set<String> helpLists = new HashSet<>();
 
-    public void registerCommand(IBotCommand command) {
+    public void registerCommand(final IBotCommand command) {
         commands.put(command.getName(), command);
 
         if (command.getHelpList() != null) {
@@ -40,18 +40,18 @@ public class CommandManager extends ListenerAdapter {
         }
     }
 
-    public IBotCommand getCommand(String name) {
+    public IBotCommand getCommand(final String name) {
         return commands.getOrDefault(name, null);
     }
 
-    public CommandManager(JDA jda) {
+    public CommandManager(final JDA jda) {
         this.jda = jda;
         INSTANCE = this;
         jda.addEventListener(this);
     }
 
     @Override
-    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
+    public void onMessageReceived(@NotNull final MessageReceivedEvent event) {
 
         final Message message = event.getMessage();
 

@@ -20,6 +20,7 @@ public final class EmbedColorHelper {
     public static final String INVITE_TRACKING = "0x2e493d";
     public static final String DELETED= "0xdc3544";
     public static final String UPDATED = "0xffc007";
+    public static final String AUTO_MODERATION = "#fff3cd";
 
 
     private EmbedColorHelper(){

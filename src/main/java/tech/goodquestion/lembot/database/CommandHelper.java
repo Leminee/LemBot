@@ -3,7 +3,6 @@ package tech.goodquestion.lembot.database;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import tech.goodquestion.lembot.entity.InviteTrackingData;
 import tech.goodquestion.lembot.entity.OccurredException;
 import tech.goodquestion.lembot.entity.Sanction;
@@ -13,7 +12,6 @@ import tech.goodquestion.lembot.library.Helper;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Objects;
 
 public final class CommandHelper {
 
@@ -27,7 +25,6 @@ public final class CommandHelper {
     public static final String USER_WARN_DATA = "INSERT INTO warned_user (id,id_discord,user_tag, username, warn_author, reason, channel_name) " +
             "VALUES (NULL,?,?,?,?,?,?)";
     public static final String ACTIVE_MEMBER_LOG = "INSERT INTO user_online (amount) VALUES (?);";
-
     public static final String ADJUSTING_NEW_USERNAME_IN_BUMPER = "UPDATE user_bump SET username = ? WHERE id_discord = ?;";
     public static final String ADJUSTING_NEW_USERNAME_IN_MESSAGE = "UPDATE user_message SET username = ? WHERE id_discord = ?;";
     public static final String USERNAME_UPDATED_LOG = "INSERT INTO updated_username (id, id_discord, user_tag, old_username, new_username) VALUES (NULL,?,?,?,?);";
@@ -215,18 +212,4 @@ public final class CommandHelper {
 
     }
 
-    public static void deleteSpammerMessages(final MessageReceivedEvent event, final long userId) {
-
-        QueryHelper.getIdsLastMessages(userId);
-
-        for (long messageId : QueryHelper.messagesIds) {
-
-            final long channelId = event.getChannel().getIdLong();
-
-            Objects.requireNonNull(event.getGuild().getTextChannelById(channelId))
-                    .deleteMessageById(messageId)
-                    .complete();
-        }
-
-    }
 }

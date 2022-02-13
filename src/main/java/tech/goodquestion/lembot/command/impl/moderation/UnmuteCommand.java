@@ -22,7 +22,8 @@ import java.util.List;
 public class UnmuteCommand implements IBotCommand {
 
     @Override
-    public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
+    public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) {
+
         if (args.length < 1) {
             return;
         }

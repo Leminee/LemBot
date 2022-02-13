@@ -13,7 +13,7 @@ import java.util.List;
 public class ClearCommand implements IBotCommand {
 
     @Override
-    public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
+    public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) {
 
         try {
             final int amountMessagesToDelete = Integer.parseInt(args[0]) + 1;

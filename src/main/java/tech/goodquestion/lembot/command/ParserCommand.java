@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class ParserCommand implements IBotCommand {
 
     @Override
-    public void dispatch(Message message, TextChannel channel, Member sender, String[] args) throws IOException {
+    public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) throws IOException {
 
 
         if (args.length < 1) return;
