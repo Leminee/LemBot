@@ -69,7 +69,7 @@ public class DeletedMessageStorage extends ListenerAdapter {
 
 
 
-                Config.getInstance().getChannel().getUpdatedDeletedChannel().sendMessageEmbeds(embedBuilder.build()).queue();
+                Config.getInstance().getChannelConfig().getUpdatedDeletedChannel().sendMessageEmbeds(embedBuilder.build()).queue();
 
                 PreparedStatement preparedStatementOne = connection.prepareStatement(deletedMessage);
                 preparedStatementOne.setLong(1, idDeletedMessage);

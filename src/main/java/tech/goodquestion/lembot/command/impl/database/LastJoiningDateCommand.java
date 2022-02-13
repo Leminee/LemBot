@@ -8,7 +8,7 @@ import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
 import tech.goodquestion.lembot.library.Helper;
 
-public class JoiningDateCommand implements IBotCommand {
+public class LastJoiningDateCommand implements IBotCommand {
 
 
     @Override

@@ -39,7 +39,7 @@ public final class Helper {
 
     public static boolean isNotSuccessfulBump(final List<MessageEmbed> messages, final User embedAuthor) {
 
-        final long disBoardId = Config.getInstance().getUser().getDisboardId();
+        final long disBoardId = Config.getInstance().getUserConfig().getDisboardId();
         final String successfulBumpImageUrl = "https://disboard.org/images/bot-command-image-bump.png";
 
         if (embedAuthor.getIdLong() != disBoardId) {
@@ -141,7 +141,7 @@ public final class Helper {
 
         final Runnable commandRunner = () -> {
             try {
-                botCommand.dispatch(null, Config.getInstance().getChannel().getBumpChannel(), null, args);
+                botCommand.dispatch(null, Config.getInstance().getChannelConfig().getBumpChannel(), null, args);
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }

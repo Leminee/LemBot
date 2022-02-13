@@ -266,7 +266,7 @@ public class VoiceAutoCreation extends ListenerAdapter {
 
         if (isOnlyOneMemberInVoice) {
 
-            Category voiceFunCategory = Config.getInstance().getCategory().getVoiceFunCategory();
+            Category voiceFunCategory = Config.getInstance().getCategoryConfig().getVoiceFunCategory();
             event.getGuild().createVoiceChannel(voiceName, voiceFunCategory).queue();
         }
     }
@@ -291,7 +291,7 @@ public class VoiceAutoCreation extends ListenerAdapter {
         }
 
         final String randomlyCombinedVoiceName = LEFT[random.nextInt(LEFT.length)] + "_" + RIGHT[random.nextInt(RIGHT.length)];
-        final Category voiceFunCategory = Config.getInstance().getCategory().getVoiceFunCategory();
+        final Category voiceFunCategory = Config.getInstance().getCategoryConfig().getVoiceFunCategory();
 
         final boolean isVoiceLeftEmpty = event.getChannelLeft().getMembers().size() == 0;
         final boolean wasVoiceJoinedEmpty = event.getChannelJoined().getMembers().size() == 1;

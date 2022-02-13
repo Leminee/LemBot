@@ -40,7 +40,7 @@ public class UnmuteCommand implements IBotCommand {
             return;
         }
 
-        member.getGuild().removeRoleFromMember(member.getIdLong(), Config.getInstance().getRole().getMuteRole()).queue();
+        member.getGuild().removeRoleFromMember(member.getIdLong(), Config.getInstance().getRoleConfig().getMuteRole()).queue();
 
         final EmbedBuilder embedBuilder= new EmbedBuilder();
         embedBuilder.setColor(Color.decode(EmbedColorHelper.SUCCESS));
@@ -87,7 +87,7 @@ public class UnmuteCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`unmute <user> <reason>`: Entfernt" + Config.getInstance().getRole().getMuteRole().getAsMention();
+        return "`unmute <user> <reason>`: Entfernt" + Config.getInstance().getRoleConfig().getMuteRole().getAsMention();
     }
 
 

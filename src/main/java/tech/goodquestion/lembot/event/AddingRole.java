@@ -24,7 +24,7 @@ public class AddingRole extends ListenerAdapter {
 
         final Member member = event.getMember();
         final Guild guild = member.getGuild();
-        final Role codingRole = Config.getInstance().getRole().getCodingRole();
+        final Role codingRole = Config.getInstance().getRoleConfig().getCodingRole();
 
         final int delay = 12;
         assert codingRole != null;
@@ -38,9 +38,9 @@ public class AddingRole extends ListenerAdapter {
 
         final Member member = event.getMember();
         final Guild guild = member.getGuild();
-        final Role codingRole = Config.getInstance().getRole().getCodingRole();
-        final Role hackingRole = Config.getInstance().getRole().getHackingRole();
-        final Role mutedRole = Config.getInstance().getRole().getMuteRole();
+        final Role codingRole = Config.getInstance().getRoleConfig().getCodingRole();
+        final Role hackingRole = Config.getInstance().getRoleConfig().getHackingRole();
+        final Role mutedRole = Config.getInstance().getRoleConfig().getMuteRole();
         final List<Role> memberAddedRoles = member.getRoles();
 
 

@@ -21,7 +21,7 @@ public class ParserCommand implements IBotCommand {
         if (args.length < 1) return;
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
-        final String title = "DateTimeParser";
+        final String title = "ZeitParser";
 
         try {
 

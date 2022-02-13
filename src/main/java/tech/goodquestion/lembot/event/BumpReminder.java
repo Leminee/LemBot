@@ -41,7 +41,7 @@ public class BumpReminder extends ListenerAdapter {
 
     public void scheduleReminder(final int reminderDelay, final TimeUnit timeUnit) {
 
-        final String bumperRoleAsMention = "<@&" + Config.getInstance().getRole().getBumpRoleId() + ">";
+        final String bumperRoleAsMention = "<@&" + Config.getInstance().getRoleConfig().getBumpRoleId() + ">";
 
         final String[] pingContent = {
                 "Jetzt kann wieder gebumpt werden " + bumperRoleAsMention + " :grin:",
@@ -51,7 +51,7 @@ public class BumpReminder extends ListenerAdapter {
 
         final Runnable runnable = () -> {
             final int randomNumber = ThreadLocalRandom.current().nextInt(pingContent.length);
-            Config.getInstance().getChannel().getBumpChannel().sendMessage(pingContent[randomNumber]).queue();
+            Config.getInstance().getChannelConfig().getBumpChannel().sendMessage(pingContent[randomNumber]).queue();
             tasks.clear();
         };
 

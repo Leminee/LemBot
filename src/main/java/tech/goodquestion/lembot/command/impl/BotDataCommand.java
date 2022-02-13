@@ -18,18 +18,18 @@ public class BotDataCommand implements IBotCommand {
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args){
 
 
-        final String bot = Objects.requireNonNull(Config.getInstance().getGuild().getMemberById(Config.getInstance().getUser().getBotId())).getUser().getAsTag();
+        final String bot = Objects.requireNonNull(Config.getInstance().getGuild().getMemberById(Config.getInstance().getBotConfig().getId())).getUser().getAsTag();
         final String gitHubRepositoryUrl = "https://github.com/Leminee/LemBot";
-        final String botIconUrl = Config.getInstance().getGuild().getMemberById(Config.getInstance().getUser().getBotId()).getUser().getEffectiveAvatarUrl();
+        final String botIconUrl = Objects.requireNonNull(Config.getInstance().getGuild().getMemberById(Config.getInstance().getBotConfig().getId())).getUser().getEffectiveAvatarUrl();
 
         final EmbedBuilder embedBuilder = new EmbedBuilder()
                 .setAuthor(bot, gitHubRepositoryUrl, botIconUrl)
-                .setTitle("Informationen zum " + Config.getInstance().getBotName())
+                .setTitle("Informationen zum " + Config.getInstance().getBotConfig().getName())
                 .setColor(Color.decode(EmbedColorHelper.SERVER))
                 .setThumbnail("https://cdn.discordapp.com/attachments/919074434021736507/920552764784914472/logoqg1_1.gif")
                 .addField("Geschrieben in", "Java (JDA)", true)
                 .addField("Geschrieben von", Objects.requireNonNull(Config.getInstance().getGuild().getMemberById(739143338975952959L)).getAsMention(), true)
-                .addField("Akutelle Version", Config.getInstance().getVersion(), true)
+                .addField("Akutelle Version", Config.getInstance().getBotConfig().getVersion(), true)
                 .addField("Mitwirkende", Helper.getAmountContributors(gitHubRepositoryUrl), true)
                 .addField("Source Code", gitHubRepositoryUrl, true);
 
@@ -39,12 +39,12 @@ public class BotDataCommand implements IBotCommand {
 
     @Override
     public String getName() {
-        return Config.getInstance().getBotName().toLowerCase();
+        return Config.getInstance().getServerName().toLowerCase();
     }
 
     @Override
     public String getDescription() {
-        return "`"+Config.getInstance().getBotName().toLowerCase() + "`: " + "Informationen zum " + Config.getInstance().getBotName();
+        return "`"+Config.getInstance().getBotConfig().getName().toLowerCase() + "`: " + "Informationen zum " + Config.getInstance().getBotConfig().getName();
     }
 
     @Override

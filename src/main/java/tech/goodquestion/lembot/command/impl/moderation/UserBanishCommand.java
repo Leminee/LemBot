@@ -34,9 +34,9 @@ public abstract sealed class UserBanishCommand implements IBotCommand permits Ba
             return;
         }
 
-        if (channel.getIdLong() != Config.getInstance().getChannel().getSanctionChannel().getIdLong()) {
+        if (channel.getIdLong() != Config.getInstance().getChannelConfig().getSanctionChannel().getIdLong()) {
             final EmbedBuilder embedBuilder = new EmbedBuilder();
-            final String embedDescription = ":x: Dieser Befehl kann nur in [channel] ausgeführt werden!".replace("[channel]",Config.getInstance().getChannel().getSanctionChannel().getAsMention());
+            final String embedDescription = ":x: Dieser Befehl kann nur in [channel] ausgeführt werden!".replace("[channel]",Config.getInstance().getChannelConfig().getSanctionChannel().getAsMention());
             Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
             Helper.sendEmbed(embedBuilder,message,true);
             return;

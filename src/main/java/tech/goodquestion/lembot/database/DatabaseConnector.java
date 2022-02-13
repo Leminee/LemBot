@@ -13,7 +13,7 @@ public class DatabaseConnector {
     private static MysqlConnectionPoolDataSource dataSource;
 
     private static void setupDataSource() {
-        DatabaseConfig config = Config.getInstance().getDatabase();
+        DatabaseConfig config = Config.getInstance().getDatabaseConfig();
         dataSource = new MysqlConnectionPoolDataSource();
         dataSource.setURL(config.getUrl());
         dataSource.setUser(config.getUsername());

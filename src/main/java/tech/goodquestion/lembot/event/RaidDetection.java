@@ -22,13 +22,13 @@ public class RaidDetection extends ListenerAdapter {
         if (isSameAttack) return;
 
         final Guild guild = event.getGuild();
-        final String moderatorRoleAsMention = Config.getInstance().getRole().getModeratorRole().getAsMention();
+        final String moderatorRoleAsMention = Config.getInstance().getRoleConfig().getModeratorRole().getAsMention();
 
         if (QueryHelper.isServerUnderAttack()) {
 
             isSameAttack = true;
 
-            Objects.requireNonNull(guild.getTextChannelById(Config.getInstance().getChannel().getAutoModerationChannel().getIdLong()))
+            Objects.requireNonNull(guild.getTextChannelById(Config.getInstance().getChannelConfig().getAutoModerationChannel().getIdLong()))
                     .sendMessage(":red_circle: Es findet gerade einen Raid statt " + moderatorRoleAsMention)
                     .queue();
         }

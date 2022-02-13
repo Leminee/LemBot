@@ -17,22 +17,20 @@ public class InviteLinkDeletion extends ListenerAdapter {
        final String userMessage = event.getMessage().getContentRaw();
 
         if (!(userMessage.contains("https://discord.gg") || userMessage.contains("https://discord.com/invite/") || userMessage.contains("https://discord.io/"))) return;
-
-        final long authorId = event.getAuthor().getIdLong();
+        
         final long channelId = event.getChannel().getIdLong();
-        final long ownerId = Config.getInstance().getGuild().getOwnerIdLong();
         final Member author = event.getMember();
         assert author != null;
         final boolean isStaff = author.hasPermission(Permission.MESSAGE_MANAGE);
 
-        if (authorId == ownerId || isStaff || channelId == Config.getInstance().getChannel().getYourProjectsChannel().getIdLong()) {
+        if (isStaff || channelId == Config.getInstance().getChannelConfig().getYourProjectsChannel().getIdLong()) {
             return;
         }
 
         event.getMessage().delete().queue();
 
         final String authorAsMention =  event.getAuthor().getAsMention();
-        final long logChannelId = Config.getInstance().getChannel().getAutoModerationChannel().getIdLong();
+        final long logChannelId = Config.getInstance().getChannelConfig().getAutoModerationChannel().getIdLong();
         final String channelAsMention = event.getChannel().getAsMention();
 
         event.getMessage().reply(":x: Hier dürfen keine Invitelinks gepostet werden!").queue();

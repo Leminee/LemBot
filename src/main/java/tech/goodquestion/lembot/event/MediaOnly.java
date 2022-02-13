@@ -13,7 +13,7 @@ public class MediaOnly extends ListenerAdapter {
     public void onMessageReceived(final MessageReceivedEvent event) {
 
 
-       final long memeChannelId = Config.getInstance().getChannel().getMemesChannel().getIdLong();
+       final long memeChannelId = Config.getInstance().getChannelConfig().getMemesChannel().getIdLong();
        final Set<Long> mediaOnlyChannels = Set.of(
                 memeChannelId
         );

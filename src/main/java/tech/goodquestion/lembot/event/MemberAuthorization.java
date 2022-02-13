@@ -38,7 +38,7 @@ public class MemberAuthorization extends ListenerAdapter {
 
                 if (isMuted) {
 
-                    event.getGuild().addRoleToMember(userId, Config.getInstance().getRole().getMuteRole()).queue();
+                    event.getGuild().addRoleToMember(userId, Config.getInstance().getRoleConfig().getMuteRole()).queue();
                 }
             }
 

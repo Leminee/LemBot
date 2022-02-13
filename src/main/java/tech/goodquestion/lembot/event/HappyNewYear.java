@@ -34,11 +34,11 @@ public class HappyNewYear extends ListenerAdapter {
 
                     System.out.println(interruptedException.getMessage());
                 }
-                Objects.requireNonNull(Config.getInstance().getChannel().getGeneralChannel()).sendMessage(String.valueOf(i)).queue();
+                Objects.requireNonNull(Config.getInstance().getChannelConfig().getGeneralChannel()).sendMessage(String.valueOf(i)).queue();
             }
 
 
-            Objects.requireNonNull(Config.getInstance().getChannel().getGeneralChannel())
+            Objects.requireNonNull(Config.getInstance().getChannelConfig().getGeneralChannel())
                     .sendMessage(Helper.HAPPY_NEW_YEAR_GIF_URL)
                     .queue();
         };

@@ -23,11 +23,11 @@ public class WelcomingMemberJoin extends ListenerAdapter {
 
         final String personalizedWelcomeMessage = welcomeMessage
                 .replace("[member]", newMemberAsMention)
-                .replace("[channel]", Config.getInstance().getChannel().getSelfRolesChannel().getAsMention());
+                .replace("[channel]", Config.getInstance().getChannelConfig().getSelfRolesChannel().getAsMention());
 
-        Config.getInstance().getChannel().getNewArrivalsChannel().sendMessage(personalizedWelcomeMessage).queue();
+        Config.getInstance().getChannelConfig().getNewArrivalsChannel().sendMessage(personalizedWelcomeMessage).queue();
 
-        Config.getInstance().getChannel().getJoinLeftChannel()
+        Config.getInstance().getChannelConfig().getJoinLeftChannel()
                 .sendMessage(":arrow_right: User " + newMemberAsMention + " ist am " + Helper.getGermanDateTime() + " **gejoint**")
                 .queue();
 

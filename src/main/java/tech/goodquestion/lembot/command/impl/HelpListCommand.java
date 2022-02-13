@@ -19,7 +19,7 @@ public class HelpListCommand implements IBotCommand {
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
 
-        final String prefix = Config.getInstance().getPrefix();
+        final char prefix = Config.getInstance().getBotConfig().getPrefix();
 
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
@@ -42,7 +42,7 @@ public class HelpListCommand implements IBotCommand {
             return;
         }
 
-        StringBuilder descriptionBuilder = new StringBuilder("Hallo, ich heiße **" + Config.getInstance().getBotName()  + "** und bin ein Bot für **"+ Config.getInstance().getServerName() +  "** :)\n");
+        StringBuilder descriptionBuilder = new StringBuilder("Hallo, ich heiße **" + Config.getInstance().getBotConfig().getName()  + "** und bin ein Bot für **"+ Config.getInstance().getServerName() +  "** :)\n");
         descriptionBuilder.append("\n---------------    **BEFEHLSLISTE**    ---------------\n");
         descriptionBuilder.append("\n");
 

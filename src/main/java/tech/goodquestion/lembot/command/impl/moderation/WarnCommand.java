@@ -18,7 +18,7 @@ public final class WarnCommand extends UserBanishCommand {
     public void banishUser(Member toBanish, Sanction sanction, Message originMessage) {
 
 
-        toBanish.getGuild().addRoleToMember(sanction.userId, Config.getInstance().getRole().getWarnRole()).queue();
+        toBanish.getGuild().addRoleToMember(sanction.userId, Config.getInstance().getRoleConfig().getWarnRole()).queue();
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setColor(Color.decode(EmbedColorHelper.SUCCESS));
@@ -46,7 +46,7 @@ public final class WarnCommand extends UserBanishCommand {
 
     @Override
     public String getDescription() {
-        return "`warn <user> <reason>`: Weist " + Config.getInstance().getRole().getWarnRole().getAsMention() + " zu";
+        return "`warn <user> <reason>`: Weist " + Config.getInstance().getRoleConfig().getWarnRole().getAsMention() + " zu";
     }
 
 }

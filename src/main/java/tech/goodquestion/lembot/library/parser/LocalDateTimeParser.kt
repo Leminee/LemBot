@@ -57,11 +57,11 @@ class LocalDateTimeParser private constructor() {
 
             val args: MutableList<String> = cleanedHumanInput.trim().split(" ") as MutableList<String>
 
-            if (args.size == 1) throw IllegalArgumentException("no number found")
+            if (args.size == 1) throw IllegalArgumentException("keine Zahl gefunden")
 
             args.removeAll(listOf(""))
 
-            if (containsOutOfRangeValue(humanInput)) throw NumberFormatException("number too large")
+            if (containsOutOfRangeValue(humanInput)) throw NumberFormatException("Zahl zu lang")
 
             if (findWeekDay(humanInput.lowercase(Locale.getDefault())) != null) {
 
@@ -90,17 +90,17 @@ class LocalDateTimeParser private constructor() {
 
                 } catch (numberFormatException: NumberFormatException) {
 
-                    throw NumberFormatException("invalid input")
+                    throw NumberFormatException("Input nicht valid")
 
                 }
             }
 
-            if (years >= LocalDateTime.MAX.year) throw DateTimeException("years out of range")
-            if (months / 12 >= LocalDateTime.MAX.year) throw DateTimeException("months out of range")
-            if (days >= MAX_EPOCH_DAY_VALUE) throw DateTimeException("days out of range")
-            if (hours / 24 >= MAX_EPOCH_DAY_VALUE) throw DateTimeException("hours out of range")
-            if (minutes / 1440 >= MAX_EPOCH_DAY_VALUE) throw DateTimeException("minutes out of range")
-            if (seconds / 86400 >= MAX_EPOCH_DAY_VALUE) throw DateTimeException("seconds out of range")
+            if (years >= LocalDateTime.MAX.year) throw DateTimeException("Erlaubte Zahl für Jahre überschrieten")
+            if (months / 12 >= LocalDateTime.MAX.year) throw DateTimeException("Erlaubte Zahl für Monate überschrieten")
+            if (days >= MAX_EPOCH_DAY_VALUE) throw DateTimeException("Erlaubte Zahl für Tage überschrieten")
+            if (hours / 24 >= MAX_EPOCH_DAY_VALUE) throw DateTimeException("Erlaubte Zahl für Stunden überschrieten")
+            if (minutes / 1440 >= MAX_EPOCH_DAY_VALUE) throw DateTimeException("Erlaubte Zahl für Minuten überschrieten")
+            if (seconds / 86400 >= MAX_EPOCH_DAY_VALUE) throw DateTimeException("Erlaubte Zahl für Sekunden überschrieten")
 
 
             localDateTime = LocalDateTime.now()

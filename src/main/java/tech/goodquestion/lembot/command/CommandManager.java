@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 
 public class CommandManager extends ListenerAdapter {
 
-    public static final Pattern COMMAND_PATTERN = Pattern.compile("[" + Config.getInstance().getPrefix() + "]([^ ]+)(.*)");
+    public static final Pattern COMMAND_PATTERN = Pattern.compile("[" + Config.getInstance().getBotConfig().getPrefix() + "]([^ ]+)(.*)");
     private static CommandManager INSTANCE = null;
 
 

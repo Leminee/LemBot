@@ -20,7 +20,7 @@ class PlayCommand:IBotCommand {
 
             val embedBuilder = EmbedBuilder()
 
-            Helper.createEmbed(embedBuilder,"Error",":x: Gib bitte die Url an ", EmbedColorHelper.ERROR)
+            Helper.createEmbed(embedBuilder,"Fehler",":x: Gib bitte die Url an ", EmbedColorHelper.ERROR)
 
             Helper.sendEmbed(embedBuilder,message,true)
 
@@ -33,7 +33,7 @@ class PlayCommand:IBotCommand {
 
             val embedBuilder = EmbedBuilder()
 
-            Helper.createEmbed(embedBuilder,"Error",":x: Url ist nicht valid ", EmbedColorHelper.ERROR)
+            Helper.createEmbed(embedBuilder,"Fehler",":x: Url ist nicht valid ", EmbedColorHelper.ERROR)
 
             Helper.sendEmbed(embedBuilder,message,true)
 
@@ -46,7 +46,7 @@ class PlayCommand:IBotCommand {
 
             val embedBuilder = EmbedBuilder()
 
-            Helper.createEmbed(embedBuilder,"Error",":x: Du musst in einem Voice Channel sein ", EmbedColorHelper.ERROR)
+            Helper.createEmbed(embedBuilder,"Fehler",":x: Du musst in einem Voice Channel sein ", EmbedColorHelper.ERROR)
 
             Helper.sendEmbed(embedBuilder,message,true)
 
@@ -62,7 +62,7 @@ class PlayCommand:IBotCommand {
 
             val embedBuilder = EmbedBuilder()
 
-            Helper.createEmbed(embedBuilder,"Error",":x: Ich bin bereits in einem Voice ", EmbedColorHelper.ERROR)
+            Helper.createEmbed(embedBuilder,"Fehler",":x: Ich bin bereits in einem Voice ", EmbedColorHelper.ERROR)
 
             channel?.sendMessageEmbeds(embedBuilder.build())?.queue()
 

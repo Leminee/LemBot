@@ -6,26 +6,25 @@ import org.yaml.snakeyaml.constructor.Constructor;
 import org.yaml.snakeyaml.introspector.BeanAccess;
 import tech.goodquestion.lembot.BotMain;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 public class Config {
 
     public static final String CONFIG_FILE = "example.config.yml";
     private static Config INSTANCE = null;
-    private String token;
     private List<ReactionRoleMessage> reactionRoles;
     private List<CommandRole> commandRoles;
     private DatabaseConfig database;
-    private long guild;
-    private String serverName;
-    private String prefix;
-    private String botName;
-    private String version;
     private RoleConfig role;
     private ChannelConfig channel;
     private UserConfig user;
     private CategoryConfig category;
+    private BotConfig bot;
+    private long guild;
+    private String serverName;
 
     public static Config getInstance() {
         if (INSTANCE == null) {
@@ -46,23 +45,6 @@ public class Config {
     }
 
 
-    public void save() {
-        Yaml configDumper = new Yaml();
-        configDumper.setBeanAccess(BeanAccess.FIELD);
-        try {
-            FileWriter configWriter = new FileWriter(CONFIG_FILE);
-            configDumper.dump(this, configWriter);
-            configWriter.close();
-        } catch (IOException e) {
-            System.err.println("Error writing config file");
-        }
-    }
-
-
-    public String getToken() {
-        return token;
-    }
-
     public List<ReactionRoleMessage> getReactionRoles() {
         return reactionRoles;
     }
@@ -71,43 +53,37 @@ public class Config {
         return commandRoles;
     }
 
-    public DatabaseConfig getDatabase() {
+    public DatabaseConfig getDatabaseConfig() {
         return database;
+    }
+
+
+    public RoleConfig getRoleConfig() {
+        return role;
+    }
+
+    public ChannelConfig getChannelConfig() {
+        return channel;
+    }
+
+    public CategoryConfig getCategoryConfig() {
+        return category;
+    }
+
+    public UserConfig getUserConfig() {
+        return user;
+    }
+
+    public BotConfig getBotConfig() {
+        return bot;
     }
 
     public Guild getGuild() {
         return BotMain.jda.getGuildById(guild);
     }
 
-    public RoleConfig getRole() {
-        return role;
-    }
-
-    public ChannelConfig getChannel() {
-        return channel;
-    }
-
-    public CategoryConfig getCategory() {
-        return category;
-    }
-
-    public UserConfig getUser() {
-        return user;
-    }
-
     public String getServerName(){
         return serverName;
     }
-
-    public String getPrefix() {
-        return prefix;
-    }
-
-    public String getBotName() {
-        return botName;
-    }
-
-    public String getVersion() {
-        return version;
-    }
 }
+

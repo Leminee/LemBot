@@ -59,7 +59,7 @@ public class UpdatedMessageStorage extends ListenerAdapter {
 
 
 
-        Config.getInstance().getChannel().getUpdatedDeletedChannel().sendMessageEmbeds(embedBuilder.build()).queue();
+        Config.getInstance().getChannelConfig().getUpdatedDeletedChannel().sendMessageEmbeds(embedBuilder.build()).queue();
 
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(updatedMessageData)) {

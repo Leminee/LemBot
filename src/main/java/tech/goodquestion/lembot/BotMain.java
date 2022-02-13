@@ -42,7 +42,7 @@ public class BotMain {
             
 
             Logger logger = LoggerFactory.getLogger(BotMain.class);
-            logger.info("{} {}",LocalDateTime.now().format(DateTimeFormatter.ofPattern("d MMMM yyyy HH:mm")), Config.getInstance().getVersion());
+            logger.info("{} {}",LocalDateTime.now().format(DateTimeFormatter.ofPattern("d MMMM yyyy HH:mm")), Config.getInstance().getBotConfig().getVersion());
 
             System.out.println("""  
 
@@ -52,7 +52,7 @@ public class BotMain {
                     | |    |  _|  | |\\/| ||  _ \\ | | | | | | \s
                     | |___ | |___ | |  | || |_) || |_| | | | \s
                     |_____||_____||_|  |_||____/  \\___/  |_|\s
-                    @Author: Lem                     """ + "                      " + Config.getInstance().getVersion() +"\033[0m\n\n"
+                    @Author: Lem                     """ + "                      " + Config.getInstance().getBotConfig().getVersion() +"\033[0m\n\n"
 
 
 
@@ -62,7 +62,7 @@ public class BotMain {
 
 
             jda = JDABuilder
-                    .createDefault(Config.getInstance().getToken())
+                    .createDefault(Config.getInstance().getBotConfig().getToken())
                     .enableIntents(GatewayIntent.GUILD_MEMBERS)
                     .enableIntents(GatewayIntent.GUILD_PRESENCES)
                     .enableCache(CacheFlag.ONLINE_STATUS)
@@ -95,7 +95,7 @@ public class BotMain {
         commandManager.registerCommand(new ClearCommand());
         commandManager.registerCommand(new CodeBlockHelpCommand());
         commandManager.registerCommand(new HelpListCommand());
-        commandManager.registerCommand(new JoiningDateCommand());
+        commandManager.registerCommand(new LastJoiningDateCommand());
         commandManager.registerCommand(new KillSwitchCommand());
         commandManager.registerCommand(new LeaveCommand());
         commandManager.registerCommand(new MessageCountCommand());

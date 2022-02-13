@@ -89,7 +89,7 @@ public class InviteTracking extends ListenerAdapter {
                 inviteTrackingData.uses = uses;
 
                 Objects.requireNonNull(event.getGuild().getTextChannelById(Config.getInstance()
-                        .getChannel().getJoinLeftChannel().getIdLong()))
+                        .getChannelConfig().getJoinLeftChannel().getIdLong()))
                         .sendMessageEmbeds(embedBuilder.build())
                         .queue();
 

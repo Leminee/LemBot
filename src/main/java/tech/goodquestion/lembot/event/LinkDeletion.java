@@ -24,7 +24,7 @@ public class LinkDeletion extends ListenerAdapter {
         assert author != null;
         boolean isStaff = author.hasPermission(Permission.MESSAGE_MANAGE);
 
-        if (channelId != Config.getInstance().getChannel().getNewArrivalsChannel().getIdLong() || isStaff) {
+        if (channelId != Config.getInstance().getChannelConfig().getNewArrivalsChannel().getIdLong() || isStaff) {
             return;
         }
 
@@ -34,7 +34,7 @@ public class LinkDeletion extends ListenerAdapter {
         final String channelAsMention = event.getChannel().getAsMention();
         event.getMessage().reply(":x: Nachricht wurde gelöscht, da sie einen Link enthält, der nicht verifiziert werden konnte").queue();
 
-        Objects.requireNonNull(event.getGuild().getTextChannelById(Config.getInstance().getChannel().getAutoModerationChannel().getIdLong()))
+        Objects.requireNonNull(event.getGuild().getTextChannelById(Config.getInstance().getChannelConfig().getAutoModerationChannel().getIdLong()))
                 .sendMessage(":red_circle:  **Folgender Link wurde gelöscht** \n" + userMessage + "\n**(gesendet von " + authorAsMention + " in " + channelAsMention + " am " + LocalDateTimeFormatter.toGermanFormat(LocalDateTime.now()) + ")**")
                 .queue();
     }
