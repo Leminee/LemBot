@@ -10,17 +10,14 @@ import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.config.Config;
-import tech.goodquestion.lembot.database.CommandHelper;
-import tech.goodquestion.lembot.entity.OccurredException;
 import tech.goodquestion.lembot.entity.Sanction;
-import tech.goodquestion.lembot.entity.SanctionType;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
 import tech.goodquestion.lembot.library.Helper;
 
 import java.util.List;
 import java.util.Objects;
 
-public abstract sealed class UserBanishCommand implements IBotCommand permits BanCommand, WarnCommand {
+public abstract sealed class UserBanishCommand implements IBotCommand permits BanCommand, WarnCommand, MuteCommand{
 
     @Override
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) {
@@ -84,6 +81,7 @@ public abstract sealed class UserBanishCommand implements IBotCommand permits Ba
         sanction.reason = reason.toString();
         sanction.channelName = channel.getName();
 
+
         if (requiresAdmin() && !Objects.requireNonNull(message.getMember()).hasPermission(Permission.MANAGE_ROLES)) {
             final EmbedBuilder embedBuilder = new EmbedBuilder();
             final String embedDescription = ":x: Permission denied";
@@ -111,22 +109,10 @@ public abstract sealed class UserBanishCommand implements IBotCommand permits Ba
     public abstract void banishUser(Member toBanish, Sanction sanction, Message originMessage);
     public abstract boolean requiresAdmin();
 
-
     @Override
     public String getHelpList() {
         return "staff";
     }
 
-    public static void sendSanctionReason(User sanctionedUser, SanctionType sanctionType, String performedSanction, String reason) {
-        final EmbedBuilder embedBuilder = new EmbedBuilder();
-        try {
-            Helper.createEmbed(embedBuilder, String.valueOf(sanctionType), "Du wurdest auf **GoodQuestion** " + " **" + performedSanction + "**" + "\n Grund: " + reason, EmbedColorHelper.ERROR);
-            sanctionedUser.openPrivateChannel()
-                    .flatMap(channel -> channel.sendMessageEmbeds(embedBuilder.build()))
-                    .complete();
-        }catch (ErrorResponseException errorResponseException) {
-            System.out.println(errorResponseException.getMessage());
-            CommandHelper.logException(OccurredException.getOccurredExceptionData(errorResponseException,UserBanishCommand.class.getName()));
-        }
-    }
+
 }
