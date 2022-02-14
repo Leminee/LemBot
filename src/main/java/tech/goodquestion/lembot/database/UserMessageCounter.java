@@ -26,14 +26,14 @@ public class UserMessageCounter extends ListenerAdapter {
         if (userMessageContent.isEmpty() || event.getAuthor().isBot()) return;
 
         Connection connection = DatabaseConnector.openConnection();
-       final String insertMessageData = "INSERT INTO user_message (id_discord, username, number_message) VALUES (?,?,?);";
+        final String insertMessageData = "INSERT INTO user_message (id_discord, username, number_message) VALUES (?,?,?);";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertMessageData)) {
             preparedStatement.setString(1, userId);
             preparedStatement.setString(2, userName);
             preparedStatement.setInt(3, numberMessage);
 
-           final  String isUserInDB = "SELECT id_discord FROM user_message WHERE id_discord = ? ";
+            final String isUserInDB = "SELECT id_discord FROM user_message WHERE id_discord = ? ";
             PreparedStatement prepareStatementOne = connection.prepareStatement(isUserInDB);
             prepareStatementOne.setString(1, userId);
             ResultSet resultSet = prepareStatementOne.executeQuery();
@@ -49,9 +49,9 @@ public class UserMessageCounter extends ListenerAdapter {
             }
 
             insertData(userMessageContent, userId, messageId);
+
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
-
             CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, this.getClass().getName()));
         }
 
@@ -71,7 +71,6 @@ public class UserMessageCounter extends ListenerAdapter {
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
-
             CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, this.getClass().getName()));
         }
     }

@@ -71,13 +71,13 @@ public class InviteTracking extends ListenerAdapter {
                 final String usedByAsMention = user.getAsMention();
 
                 embedBuilder.setTitle(title)
-                        .setAuthor(user.getAsTag(), null,user.getEffectiveAvatarUrl())
+                        .setAuthor(user.getAsTag(), null, user.getEffectiveAvatarUrl())
                         .setColor(Color.decode(EmbedColorHelper.INVITE_TRACKING))
                         .addField("Einladender", invitedByAsMention, true)
                         .addField("Eingeladener", usedByAsMention, true)
                         .addField("Verwendungen", String.valueOf(uses), true)
                         .addField("URL", url, true)
-                        .setFooter(retrievedInvite.getInviter().getAsTag(),retrievedInvite.getInviter().getEffectiveAvatarUrl())
+                        .setFooter(retrievedInvite.getInviter().getAsTag(), retrievedInvite.getInviter().getEffectiveAvatarUrl())
                         .setTimestamp(Instant.now());
 
                 //UPDATE invite_tracking SET invited_by = SUBSTRING(invited_by,3,18) WHERE CHAR_LENGTH(invited_by) >20

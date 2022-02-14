@@ -9,7 +9,6 @@ public final class EmbedColorHelper {
     public static final String VOICE_LEFT = "0x000000";
     public static final String VOICE_MOVED = "0x706935";
     public static final String RECORD = "0xFFFF00";
-    public static final String BOOST = "0xf47fff";
     public static final String SERVER = "0x393e86";
     public static final String HIGHLIGHTED_CODE_BLOCK = "0x2a4550";
     public static final String JOIN_DATE = "0xFFA500";
@@ -18,13 +17,14 @@ public final class EmbedColorHelper {
     public static final String FLOOD = "0x682d55";
     public static final String TOP_CHANNELS = "0x808080";
     public static final String INVITE_TRACKING = "0x2e493d";
-    public static final String DELETED= "0xdc3544";
+    public static final String DELETED = "0xdc3544";
     public static final String UPDATED = "0xffc007";
+    public static final String WARN = "0xffc007";
+    public static final String MUTE = "#616168";
+    public static final String BAN = "0xFF0000";
     public static final String AUTO_MODERATION = "#fff3cd";
 
-
-    private EmbedColorHelper(){
+    private EmbedColorHelper() {
 
     }
-
 }

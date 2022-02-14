@@ -19,13 +19,11 @@ import java.util.Objects;
 
 public final class BanCommand extends UserBanishCommand {
 
-
     @Override
     public void banishUser(final Member toBanish, final Sanction sanction, final Message originMessage) {
 
         final String performedSanction = SanctionType.BAN.getVerbalizedSanctionTyp();
         final SanctionType sanctionType = SanctionType.BAN;
-
 
         toBanish.ban(0, sanction.reason).complete();
 
@@ -42,13 +40,11 @@ public final class BanCommand extends UserBanishCommand {
         embedBuilder.setFooter(originMessage.getMember().getUser().getAsTag(),originMessage.getMember().getEffectiveAvatarUrl());
         embedBuilder.setTimestamp(Instant.now());
 
-
         Helper.sendEmbed(embedBuilder,originMessage,false);
 
         notifyBannedUser(toBanish.getUser(),sanctionType, performedSanction, sanction.reason, Objects.requireNonNull(originMessage.getMember()));
 
         CommandHelper.logUserBan(sanction);
-
     }
 
 

@@ -17,7 +17,6 @@ public class ParserCommand implements IBotCommand {
     @Override
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) throws IOException {
 
-
         if (args.length < 1) return;
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
@@ -27,21 +26,18 @@ public class ParserCommand implements IBotCommand {
 
             final LocalDateTime parsedInput = LocalDateTimeParser.parse(message.getContentRaw());
 
-
             assert parsedInput != null;
             final String description = "```js\n" + LocalDateTimeFormatter.toGermanFormat(parsedInput) + "```\n";
 
             Helper.createEmbed(embedBuilder, title, description, EmbedColorHelper.SUCCESS);
 
-            Helper.sendEmbed(embedBuilder,message,true);
+            Helper.sendEmbed(embedBuilder, message, true);
 
         } catch (NumberFormatException | DateTimeException numberFormatException) {
 
             Helper.createEmbed(embedBuilder, title, "```" + numberFormatException.getMessage() + "```", EmbedColorHelper.ERROR);
             channel.sendMessageEmbeds(embedBuilder.build()).queue();
-
         }
-
     }
 
     @Override
@@ -55,9 +51,8 @@ public class ParserCommand implements IBotCommand {
     }
 
     @Override
-    public boolean isPermitted(final Member member){
+    public boolean isPermitted(final Member member) {
         return true;
 
     }
-
 }

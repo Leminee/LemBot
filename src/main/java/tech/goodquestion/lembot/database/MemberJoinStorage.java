@@ -9,6 +9,5 @@ public class MemberJoinStorage extends ListenerAdapter {
     public void onGuildMemberJoin(GuildMemberJoinEvent event) {
         CommandHelper.logUserJoin(event.getUser());
         CommandHelper.logMemberAmount(event.getGuild());
-
     }
 }

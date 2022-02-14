@@ -38,5 +38,4 @@ public class LinkDeletion extends ListenerAdapter {
                 .sendMessage(":red_circle:  **Folgender Link wurde gelöscht** \n" + userMessage + "\n**(gesendet von " + authorAsMention + " in " + channelAsMention + " am " + LocalDateTimeFormatter.toGermanFormat(LocalDateTime.now()) + ")**")
                 .queue();
     }
-
 }

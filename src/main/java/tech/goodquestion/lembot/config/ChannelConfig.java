@@ -19,7 +19,6 @@ public class ChannelConfig {
     private long updatedDeleted;
     private long memes;
 
-
     public TextChannel getSanctionChannel() {
         return Config.getInstance().getGuild().getTextChannelById(sanction);
     }
@@ -52,8 +51,7 @@ public class ChannelConfig {
         return Config.getInstance().getGuild().getTextChannelById(staff);
     }
 
-
-    public TextChannel getGeneralChannel(){
+    public TextChannel getGeneralChannel() {
         return Config.getInstance().getGuild().getTextChannelById(general);
     }
 
@@ -72,6 +70,4 @@ public class ChannelConfig {
     public TextChannel getMemesChannel() {
         return Config.getInstance().getGuild().getTextChannelById(memes);
     }
-
-
 }

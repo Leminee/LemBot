@@ -24,7 +24,7 @@ public class BumpReminder extends ListenerAdapter {
         final List<MessageEmbed> disBoardEmbed = event.getMessage().getEmbeds();
         final User embedAuthor = event.getAuthor();
 
-        if (Helper.isNotSuccessfulBump(disBoardEmbed,embedAuthor)) return;
+        if (Helper.isNotSuccessfulBump(disBoardEmbed, embedAuthor)) return;
 
         scheduleReminder();
 
@@ -57,7 +57,6 @@ public class BumpReminder extends ListenerAdapter {
 
         final ScheduledFuture<?> task = scheduledExecutorService.schedule(runnable, reminderDelay, timeUnit);
         tasks.add(task);
-
     }
 
     private void cancelRedundantTask() {
@@ -68,7 +67,5 @@ public class BumpReminder extends ListenerAdapter {
                 .collect(Collectors.toList());
 
         runningTasks.get(1).cancel(false);
-
     }
-
 }

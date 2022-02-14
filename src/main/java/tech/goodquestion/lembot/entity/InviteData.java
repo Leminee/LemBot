@@ -22,8 +22,7 @@ public class InviteData {
         return uses;
     }
 
-    public void incrementUses()
-    {
+    public void incrementUses() {
         this.uses++;
     }
 }

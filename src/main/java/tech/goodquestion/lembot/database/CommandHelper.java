@@ -32,10 +32,9 @@ public final class CommandHelper {
     public static final String INVITE_TRACKING_LOG = "INSERT INTO invite_tracking (id, url, used_by, invited_by, amount) VALUES (NULL,?,?,?,?);";
     private static final String CLASS_NAME = CommandHelper.class.getName();
 
-    private CommandHelper(){
+    private CommandHelper() {
 
     }
-
 
     public static void adjustUsername(final String adjustingDateQuery, final String newUsername, final long userId) {
 
@@ -47,7 +46,6 @@ public final class CommandHelper {
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
-
             CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
         }
     }
@@ -58,10 +56,10 @@ public final class CommandHelper {
             statement.setBlob(2, Helper.changeCharacterEncoding(statement, userTag));
             statement.setString(3, String.valueOf(newStatus));
             statement.executeUpdate();
+
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
-
-            logException(OccurredException.getOccurredExceptionData(sqlException,CLASS_NAME));
+            logException(OccurredException.getOccurredExceptionData(sqlException, CLASS_NAME));
         }
     }
 
@@ -71,13 +69,13 @@ public final class CommandHelper {
             statement.setLong(1, userId);
             statement.setBlob(2, Helper.changeCharacterEncoding(statement, userTag));
             statement.setBlob(3, Helper.changeCharacterEncoding(statement, oldUsername));
-            statement.setBlob(4, Helper.changeCharacterEncoding(statement,newUsername));
+            statement.setBlob(4, Helper.changeCharacterEncoding(statement, newUsername));
             statement.executeUpdate();
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
 
-            logException(OccurredException.getOccurredExceptionData(sqlException,CLASS_NAME));
+            logException(OccurredException.getOccurredExceptionData(sqlException, CLASS_NAME));
         }
     }
 
@@ -85,11 +83,10 @@ public final class CommandHelper {
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(ACTIVE_MEMBER_LOG)) {
             preparedStatement.setLong(1, memberCount);
             preparedStatement.executeUpdate();
+
         } catch (SQLException sqlException) {
-
             System.out.println(sqlException.getMessage());
-
-            logException(OccurredException.getOccurredExceptionData(sqlException,CLASS_NAME));
+            logException(OccurredException.getOccurredExceptionData(sqlException, CLASS_NAME));
         }
     }
 
@@ -97,10 +94,10 @@ public final class CommandHelper {
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement statement = connection.prepareStatement(INSERT_MEMBER_AMOUNT)) {
             statement.setInt(1, guild.getMemberCount());
             statement.executeUpdate();
+
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
-
-            logException(OccurredException.getOccurredExceptionData(sqlException,CLASS_NAME));
+            logException(OccurredException.getOccurredExceptionData(sqlException, CLASS_NAME));
         }
     }
 
@@ -125,12 +122,11 @@ public final class CommandHelper {
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
-
-            logException(OccurredException.getOccurredExceptionData(sqlException,CLASS_NAME));
+            logException(OccurredException.getOccurredExceptionData(sqlException, CLASS_NAME));
         }
     }
 
-    public static void logMemberStatus(final String query,final User member) {
+    public static void logMemberStatus(final String query, final User member) {
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, member.getIdLong());
             preparedStatement.setString(2, member.getAsTag());
@@ -138,10 +134,8 @@ public final class CommandHelper {
             preparedStatement.setString(4, member.getEffectiveAvatarUrl());
             preparedStatement.executeUpdate();
         } catch (SQLException sqlException) {
-
             System.out.println(sqlException.getMessage());
-
-            logException(OccurredException.getOccurredExceptionData(sqlException,CLASS_NAME));
+            logException(OccurredException.getOccurredExceptionData(sqlException, CLASS_NAME));
         }
     }
 
@@ -166,9 +160,7 @@ public final class CommandHelper {
             preparedStatement.executeUpdate();
 
         } catch (SQLException sqlException) {
-
             System.out.println(sqlException.getMessage());
-
         }
     }
 
@@ -184,14 +176,12 @@ public final class CommandHelper {
             preparedStatement.executeUpdate();
 
         } catch (SQLException sqlException) {
-
             System.out.println(sqlException.getMessage());
-
             logException(OccurredException.getOccurredExceptionData(sqlException, CommandHelper.class.getName()));
         }
     }
 
-    public static void logInviteLinkTracking(final InviteTrackingData inviteTrackingData){
+    public static void logInviteLinkTracking(final InviteTrackingData inviteTrackingData) {
 
 
         Connection connection = DatabaseConnector.openConnection();
@@ -204,12 +194,8 @@ public final class CommandHelper {
             preparedStatement.executeUpdate();
 
         } catch (SQLException sqlException) {
-
             System.out.println(sqlException.getMessage());
-
             logException(OccurredException.getOccurredExceptionData(sqlException, CommandHelper.class.getName()));
         }
-
     }
-
 }

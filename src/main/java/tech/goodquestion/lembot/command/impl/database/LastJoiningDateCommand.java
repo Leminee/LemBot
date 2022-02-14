@@ -11,7 +11,6 @@ import tech.goodquestion.lembot.library.parser.LocalDateTimeFormatter;
 
 public class LastJoiningDateCommand implements IBotCommand {
 
-
     @Override
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) {
 
@@ -21,8 +20,7 @@ public class LastJoiningDateCommand implements IBotCommand {
 
         Helper.createEmbed(embedBuilder, title, description, EmbedColorHelper.JOIN_DATE);
 
-        Helper.sendEmbed(embedBuilder,message,true);
-
+        Helper.sendEmbed(embedBuilder, message, true);
     }
 
     @Override
@@ -36,7 +34,7 @@ public class LastJoiningDateCommand implements IBotCommand {
     }
 
     @Override
-    public boolean isPermitted(final Member member){
+    public boolean isPermitted(final Member member) {
         return true;
     }
 
@@ -44,5 +42,4 @@ public class LastJoiningDateCommand implements IBotCommand {
     public String getHelpList() {
         return "stats";
     }
-
 }

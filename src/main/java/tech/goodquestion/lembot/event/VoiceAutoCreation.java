@@ -12,7 +12,6 @@ import java.util.Random;
 
 public class VoiceAutoCreation extends ListenerAdapter {
 
-
     private static final String[] LEFT = {
             "admiring",
             "adoring",
@@ -246,7 +245,6 @@ public class VoiceAutoCreation extends ListenerAdapter {
             "wing",
             // Steve Wozniak invented the Apple I and Apple II. https://en.wikipedia.org/wiki/Steve_Wozniak
             "wozniak",
-
     };
 
     final Random random = new Random();
@@ -313,7 +311,5 @@ public class VoiceAutoCreation extends ListenerAdapter {
         if (!isVoiceLeftEmpty && wasVoiceJoinedEmpty) {
             event.getGuild().createVoiceChannel(randomlyCombinedVoiceName, voiceFunCategory).queue();
         }
-
     }
-
 }

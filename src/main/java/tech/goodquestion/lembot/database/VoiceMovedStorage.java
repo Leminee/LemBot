@@ -29,7 +29,6 @@ public class VoiceMovedStorage extends ListenerAdapter {
         voiceChannel.memberName = event.getMember().getUser().getName();
         voiceChannel.name = event.getChannelLeft().getName();
 
-
         final EmbedBuilder embedBuilder = new EmbedBuilder();
 
         final String embedDescription = memberAsMention + " ist von " + "**" + voiceChannelLeft + "**" + " in " + "**" + voiceChannelJoined + "**" + " um " + LocalDateTimeFormatter.formatTime(LocalTime.now()) + " Uhr **gemovt**.";
@@ -42,6 +41,6 @@ public class VoiceMovedStorage extends ListenerAdapter {
 
         Config.getInstance().getChannelConfig().getVoiceChatChannel().sendMessageEmbeds(embedBuilder.build()).queue();
 
-        CommandHelper.logVoiceChannelData(insertQuery,voiceChannel);
+        CommandHelper.logVoiceChannelData(insertQuery, voiceChannel);
     }
 }

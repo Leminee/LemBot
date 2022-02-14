@@ -26,36 +26,34 @@ public class PasswordCheckCommand implements IBotCommand {
         }
 
         message.delete().queue();
-        
-        final String userPassword = args[0];
+
+        final String password = args[0];
         final String embedTitle = "Passwort-Sicherheitsüberprüfung";
 
-        if (hasBeenLeaked(userPassword)) {
+
+        if (hasBeenLeaked(password)) {
 
             String description = ":red_circle: Passwort wurde leider gefunden ";
 
             Helper.createEmbed(embedBuilder, embedTitle, description, EmbedColorHelper.ERROR);
 
-
         } else {
 
             String description = ":green_circle: Nicht gefunden ";
 
-            Helper.createEmbed(embedBuilder, embedTitle,description, EmbedColorHelper.SUCCESS);
+            Helper.createEmbed(embedBuilder, embedTitle, description, EmbedColorHelper.SUCCESS);
         }
 
-        message.replyEmbeds(embedBuilder.build()).queue();
+        Helper.sendEmbed(embedBuilder, message, true);
     }
 
+    private boolean hasBeenLeaked(final String password) {
 
-
-    private boolean hasBeenLeaked(final String userPassword) {
-
-        if (userPassword.length() < 8) {
+        if (password.length() < 8) {
             return true;
         }
 
-        final String bRockYouApiUrl = "https://goodquestion.tech:8443/brockyou/api/v2/" + userPassword;
+        final String bRockYouApiUrl = "https://goodquestion.tech:8443/brockyou/api/v2/" + password;
 
         try {
 
@@ -68,8 +66,10 @@ public class PasswordCheckCommand implements IBotCommand {
 
         } catch (IOException ioException) {
 
+
             System.out.println(ioException.getMessage());
             CommandHelper.logException(OccurredException.getOccurredExceptionData(ioException, this.getClass().getName()));
+
         }
 
         return false;
@@ -86,7 +86,7 @@ public class PasswordCheckCommand implements IBotCommand {
     }
 
     @Override
-    public boolean isPermitted(final Member member){
+    public boolean isPermitted(final Member member) {
         return true;
     }
 }

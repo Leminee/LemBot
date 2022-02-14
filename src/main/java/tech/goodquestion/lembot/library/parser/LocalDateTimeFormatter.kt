@@ -9,7 +9,7 @@ class LocalDateTimeFormatter private constructor() {
 
     companion object Formatter {
 
-        private val dateFormatter:DateTimeFormatter =  DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")
+        private val dateFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")
 
         @JvmStatic
         fun toGermanFormat(localDateTime: LocalDateTime): String {
@@ -32,8 +32,8 @@ class LocalDateTimeFormatter private constructor() {
         @JvmStatic
         fun formatTime(localTime: LocalTime): String? {
 
-            val dateFormatter:DateTimeFormatter =  DateTimeFormatter.ofPattern("HH:mm")
-            val time : DateTimeFormatter = dateFormatter.withLocale(Locale.GERMAN)
+            val dateFormatter: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+            val time: DateTimeFormatter = dateFormatter.withLocale(Locale.GERMAN)
 
             return localTime.format(time)
 

@@ -20,13 +20,11 @@ import java.util.concurrent.*;
 
 public final class MuteCommand extends UserBanishCommand {
 
-
     private final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
 
     public void banishUser(final Member toBanish, final Sanction sanction, final Message originMessage){
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
-
         final String performedSanction = SanctionType.MUTE.getVerbalizedSanctionTyp();
         final SanctionType sanctionType = SanctionType.MUTE;
 
@@ -53,14 +51,12 @@ public final class MuteCommand extends UserBanishCommand {
         scheduleReminder(sanction.duration,TimeUnit.MINUTES,toBanish);
     }
 
-
     public void scheduleReminder(final long delay, final TimeUnit timeUnit, Member sanctionedMember) {
 
 
         final Runnable runnable = () -> notifyStaff(sanctionedMember);
 
         scheduledExecutorService.schedule(runnable, delay, timeUnit);
-
     }
 
     private void notifyStaff(Member sanctionedMember){
@@ -68,7 +64,6 @@ public final class MuteCommand extends UserBanishCommand {
         final EmbedBuilder embedBuilder = new EmbedBuilder();
 
         embedBuilder.setColor(Color.decode(EmbedColorHelper.AUTO_MODERATION));
-
         embedBuilder.setTitle(" :mute: Member automatisch ungemutet");
         embedBuilder.setAuthor(sanctionedMember.getUser().getAsTag(), null,sanctionedMember.getUser().getEffectiveAvatarUrl());
         embedBuilder.addField("Ungemuteter Member", sanctionedMember.getAsMention(), true);
@@ -76,13 +71,12 @@ public final class MuteCommand extends UserBanishCommand {
         embedBuilder.setTimestamp(Instant.now());
 
         Config.getInstance().getChannelConfig().getAutoModerationChannel().sendMessageEmbeds(embedBuilder.build()).queue();
-
     }
+
     @Override
     public boolean requiresAdmin() {
         return false;
     }
-
 
     private void notifyMutedUser(final User sanctionedUser, final SanctionType sanctionType, final String performedSanction, final String reason, final long duration, final Member sanctionAuthor) {
 

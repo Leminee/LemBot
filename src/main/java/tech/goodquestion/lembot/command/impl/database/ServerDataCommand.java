@@ -26,10 +26,9 @@ public class ServerDataCommand implements IBotCommand {
                 .filter(member -> member.getUser().isBot())
                 .count();
 
-
         embedBuilder.setTitle("Informationen zum Server")
                 .setColor(Color.decode(EmbedColorHelper.SERVER))
-                .setDescription("Informationen zu **" + Config.getInstance().getServerName() +"**")
+                .setDescription("Informationen zu **" + Config.getInstance().getServerName() + "**")
                 .setThumbnail("https://cdn.discordapp.com/attachments/919074434021736507/920552764784914472/logoqg1_1.gif")
                 .addField("Servermitglieder", String.valueOf(Config.getInstance().getGuild().getMemberCount()), true)
                 .addField("Erstellungsdatum", getTimeCreated(), true)
@@ -50,9 +49,7 @@ public class ServerDataCommand implements IBotCommand {
                         .replace("]", "")
                         .replace(",", "\n"), true);
 
-
-        Helper.sendEmbed(embedBuilder,message,true);
-
+        Helper.sendEmbed(embedBuilder, message, true);
 
     }
 
@@ -74,7 +71,7 @@ public class ServerDataCommand implements IBotCommand {
     }
 
     @Override
-    public boolean isPermitted(final Member member){
+    public boolean isPermitted(final Member member) {
         return true;
     }
 }

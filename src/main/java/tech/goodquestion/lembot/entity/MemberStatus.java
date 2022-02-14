@@ -6,5 +6,4 @@ public class MemberStatus {
     public String tag;
     public String name;
     public String url;
-
 }

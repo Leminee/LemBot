@@ -13,7 +13,6 @@ public class UserLogCommand implements IBotCommand {
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) throws IOException {
 
 
-
     }
 
     @Override

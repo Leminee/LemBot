@@ -11,7 +11,6 @@ public class KillSwitchCommand implements IBotCommand {
     @Override
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) throws IOException {
 
-
         System.exit(0);
     }
 

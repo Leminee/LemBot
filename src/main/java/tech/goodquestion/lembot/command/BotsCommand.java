@@ -32,9 +32,7 @@ public class BotsCommand implements IBotCommand {
             if (!bot.getOnlineStatus().equals(OnlineStatus.OFFLINE)) {
 
                 stringBuilder.append(":green_circle: ").append(bot.getUser().getAsMention()).append("\n");
-            }
-
-            else {
+            } else {
                 stringBuilder.append(":black_circle: ").append(bot.getUser().getAsMention()).append("\n");
             }
 
@@ -49,7 +47,6 @@ public class BotsCommand implements IBotCommand {
         Helper.sendEmbed(embedBuilder, message, true);
 
     }
-
 
     @Override
     public String getName() {
@@ -71,6 +68,4 @@ public class BotsCommand implements IBotCommand {
     public String getHelpList() {
         return "stats";
     }
-
-
 }

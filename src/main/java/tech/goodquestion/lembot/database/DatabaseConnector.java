@@ -26,11 +26,10 @@ public class DatabaseConnector {
                 setupDataSource();
             }
             return dataSource.getConnection();
+
         } catch (SQLException sqlException) {
             CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, MysqlConnectionPoolDataSource.class.getName()));
             throw new RuntimeException("database connection couldn't be established");
-
         }
     }
-
 }

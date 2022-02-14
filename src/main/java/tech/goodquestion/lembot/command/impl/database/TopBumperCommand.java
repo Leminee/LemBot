@@ -33,7 +33,7 @@ public class TopBumperCommand implements IBotCommand {
             final String embedThumbnail = "https://cdn.discordapp.com/attachments/819694809765380146/869248076446052402/Bildschirmfoto_2021-07-26_um_17.48.08.png";
             final String amountOf = "Bumps";
 
-            Helper.addTopToEmbed(resultSet, topBumperEmbed, embedTitle, embedDescription, embedThumbnail, EmbedColorHelper.BUMP, message,amountOf);
+            Helper.addTopToEmbed(resultSet, topBumperEmbed, embedTitle, embedDescription, embedThumbnail, EmbedColorHelper.BUMP, message, amountOf);
 
         } catch (SQLException sqlException) {
 
@@ -54,7 +54,7 @@ public class TopBumperCommand implements IBotCommand {
     }
 
     @Override
-    public boolean isPermitted(final Member member){
+    public boolean isPermitted(final Member member) {
         return true;
     }
 

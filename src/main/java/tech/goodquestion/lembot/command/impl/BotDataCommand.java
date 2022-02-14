@@ -15,8 +15,7 @@ import java.util.Objects;
 public class BotDataCommand implements IBotCommand {
 
     @Override
-    public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args){
-
+    public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) {
 
         final String bot = Objects.requireNonNull(Config.getInstance().getGuild().getMemberById(Config.getInstance().getBotConfig().getId())).getUser().getAsTag();
         final String gitHubRepositoryUrl = "https://github.com/Leminee/LemBot";
@@ -34,7 +33,7 @@ public class BotDataCommand implements IBotCommand {
                 .addField("Source Code", gitHubRepositoryUrl, true);
 
 
-        Helper.sendEmbed(embedBuilder,message,true);
+        Helper.sendEmbed(embedBuilder, message, true);
     }
 
     @Override
@@ -44,11 +43,11 @@ public class BotDataCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`"+Config.getInstance().getBotConfig().getName().toLowerCase() + "`: " + "Informationen zum " + Config.getInstance().getBotConfig().getName();
+        return "`" + Config.getInstance().getBotConfig().getName().toLowerCase() + "`: " + "Informationen zum " + Config.getInstance().getBotConfig().getName();
     }
 
     @Override
-    public boolean isPermitted(final Member member){
+    public boolean isPermitted(final Member member) {
         return true;
     }
 }

@@ -12,7 +12,6 @@ public class UserInfoCommand implements IBotCommand {
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) throws IOException {
 
 
-
     }
 
     @Override
@@ -26,7 +25,7 @@ public class UserInfoCommand implements IBotCommand {
     }
 
     @Override
-    public boolean isPermitted(final Member member){
+    public boolean isPermitted(final Member member) {
         return true;
     }
 }

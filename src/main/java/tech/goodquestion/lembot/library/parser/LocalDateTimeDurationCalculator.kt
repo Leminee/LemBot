@@ -4,9 +4,9 @@ import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 import kotlin.math.abs
 
-class LocalDateTimeDurationCalculator private constructor(){
+class LocalDateTimeDurationCalculator private constructor() {
 
-    companion object Duration{
+    companion object Duration {
 
         @JvmStatic
         fun getDurationUntilInSeconds(localDateTime: LocalDateTime): Long {

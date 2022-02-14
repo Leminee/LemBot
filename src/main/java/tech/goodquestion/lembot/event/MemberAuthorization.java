@@ -34,7 +34,7 @@ public class MemberAuthorization extends ListenerAdapter {
 
             if (resultSet.next()) {
 
-               final boolean isMuted = resultSet.getInt(1) == 1;
+                final boolean isMuted = resultSet.getInt(1) == 1;
 
                 if (isMuted) {
 

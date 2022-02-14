@@ -14,16 +14,13 @@ public class ActiveUserRecordCommand implements IBotCommand {
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
 
-
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         final String title = "Rekord an gleichzeitig aktiven Usern";
         final String description = "Der aktuelle Record liegt bei " + "**" + QueryHelper.getActiveUserRecord() + "**" + " gleichzeitig aktiven Usern";
 
         Helper.createEmbed(embedBuilder, title, description, EmbedColorHelper.RECORD);
 
-        Helper.sendEmbed(embedBuilder,message,true);
-
-
+        Helper.sendEmbed(embedBuilder, message, true);
     }
 
     @Override
@@ -37,7 +34,7 @@ public class ActiveUserRecordCommand implements IBotCommand {
     }
 
     @Override
-    public boolean isPermitted(final Member member){
+    public boolean isPermitted(final Member member) {
         return true;
     }
 

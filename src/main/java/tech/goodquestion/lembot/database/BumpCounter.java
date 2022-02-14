@@ -75,7 +75,6 @@ public class BumpCounter extends ListenerAdapter {
             CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, this.getClass().getName()));
         }
     }
-
 }
 
 

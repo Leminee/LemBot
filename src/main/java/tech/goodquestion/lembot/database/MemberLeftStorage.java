@@ -15,9 +15,8 @@ public class MemberLeftStorage extends ListenerAdapter {
         CommandHelper.logUserLeave(event.getUser());
         CommandHelper.logMemberAmount(event.getGuild());
 
-
         Objects.requireNonNull(event.getGuild().getTextChannelById(Config.getInstance().getChannelConfig().getJoinLeftChannel().getIdLong()))
-                .sendMessage(":door: User **" + event.getUser().getAsTag() + "** hat den Server am " + Helper.getGermanDateTime() +" **verlassen**")
+                .sendMessage(":door: User **" + event.getUser().getAsTag() + "** hat den Server am " + Helper.getGermanDateTime() + " **verlassen**")
                 .queue();
     }
 }

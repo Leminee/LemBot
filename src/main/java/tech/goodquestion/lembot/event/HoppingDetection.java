@@ -20,33 +20,28 @@ public class HoppingDetection extends ListenerAdapter {
     @Override
     public void onGuildVoiceMove(@NotNull final GuildVoiceMoveEvent event) {
 
-
-        if (QueryHelper.isHopper(event.getMember().getIdLong())) muteHopper(event.getMember());
-
+        if (QueryHelper.isHopper(event.getMember().getIdLong())) timeOutHopper(event.getMember());
     }
 
     @Override
     public void onGuildVoiceJoin(@NotNull final GuildVoiceJoinEvent event) {
 
-
-        if (QueryHelper.isHopper(event.getMember().getIdLong())) muteHopper(event.getMember());
-
-
+        if (QueryHelper.isHopper(event.getMember().getIdLong())) timeOutHopper(event.getMember());
     }
 
-    private void muteHopper(final Member member) {
+    private void timeOutHopper(final Member member) {
 
-        final int duration = 1;
-        member.timeoutFor(Duration.ofMinutes(duration)).queue();
+        final int durationInMinutes = 1;
+        member.timeoutFor(Duration.ofMinutes(durationInMinutes)).queue();
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
-        embedBuilder.setAuthor(member.getUser().getAsTag(),null,member.getEffectiveAvatarUrl());
+        embedBuilder.setAuthor(member.getUser().getAsTag(), null, member.getEffectiveAvatarUrl());
         embedBuilder.setTitle("Hopping Detection");
         embedBuilder.setDescription("Timeout aufgrund von Hopping");
-        embedBuilder.addField("Member", member.getAsMention(),true);
-        embedBuilder.addField("Grund", "Hopping",true);
-        embedBuilder.addField("Dauer",duration + " Minute",true);
-        embedBuilder.addField("Hops", "5 in 30s",false);
+        embedBuilder.addField("Member", member.getAsMention(), true);
+        embedBuilder.addField("Dauer", durationInMinutes + " Minute", true);
+        embedBuilder.addField("Hops", "10 in 60s", true);
+        embedBuilder.addField("Grund", "```Hopping```", false);
         embedBuilder.setColor(Color.decode(EmbedColorHelper.AUTO_MODERATION));
         embedBuilder.setTimestamp(Instant.now());
 
@@ -55,5 +50,4 @@ public class HoppingDetection extends ListenerAdapter {
                 .getTextChannelById(Config.getInstance().getChannelConfig().getAutoModerationChannel().getIdLong()))
                 .sendMessageEmbeds(embedBuilder.build()).queue();
     }
-
 }

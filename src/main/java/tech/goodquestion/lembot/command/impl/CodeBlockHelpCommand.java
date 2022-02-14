@@ -24,7 +24,7 @@ public class CodeBlockHelpCommand implements IBotCommand {
                 EmbedColorHelper.HIGHLIGHTED_CODE_BLOCK);
         embedBuilder.setImage("https://cdn.discordapp.com/attachments/919074434021736507/923287641087176734/Bildschirmfoto_2021-12-22_um_19.55.21.png");
 
-        Helper.sendEmbed(embedBuilder,message,false);
+        Helper.sendEmbed(embedBuilder, message, false);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class CodeBlockHelpCommand implements IBotCommand {
     }
 
     @Override
-    public boolean isPermitted(final Member member){
+    public boolean isPermitted(final Member member) {
         return true;
     }
 }

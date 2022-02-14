@@ -43,12 +43,12 @@ public class UnmuteCommand implements IBotCommand {
 
         member.getGuild().removeRoleFromMember(member.getIdLong(), Config.getInstance().getRoleConfig().getMuteRole()).queue();
 
-        final EmbedBuilder embedBuilder= new EmbedBuilder();
+        final EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setColor(Color.decode(EmbedColorHelper.SUCCESS));
         embedBuilder.setTitle("Bestätigung");
         embedBuilder.setDescription("User " + member.getAsMention() + " wurde durch " + message.getAuthor().getAsMention() + " erfolgreich **" + " ungemutet." + "**");
 
-        Helper.sendEmbed(embedBuilder,message,false);
+        Helper.sendEmbed(embedBuilder, message, false);
 
         Connection connection = DatabaseConnector.openConnection();
 

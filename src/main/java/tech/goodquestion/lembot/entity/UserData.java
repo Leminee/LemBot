@@ -14,5 +14,4 @@ public class UserData {
     public boolean isTop() {
         return nextHigherUserId == null || nextHigherUserAmountOf == null;
     }
-
 }

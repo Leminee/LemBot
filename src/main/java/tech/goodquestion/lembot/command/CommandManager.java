@@ -17,12 +17,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-
 public class CommandManager extends ListenerAdapter {
 
     public static final Pattern COMMAND_PATTERN = Pattern.compile("[" + Config.getInstance().getBotConfig().getPrefix() + "]([^ ]+)(.*)");
     private static CommandManager INSTANCE = null;
-
 
     public static CommandManager getInstance() {
         return INSTANCE;
@@ -77,7 +75,7 @@ public class CommandManager extends ListenerAdapter {
             EmbedBuilder embedBuilder = new EmbedBuilder();
             String embedDescription = ":x: Permission Denied";
             Helper.createEmbed(embedBuilder, "Error", embedDescription, EmbedColorHelper.ERROR);
-            Helper.sendEmbed(embedBuilder,message,true);
+            Helper.sendEmbed(embedBuilder, message, true);
             return;
         }
 
@@ -99,5 +97,4 @@ public class CommandManager extends ListenerAdapter {
     public Set<String> getHelpLists() {
         return helpLists;
     }
-
 }

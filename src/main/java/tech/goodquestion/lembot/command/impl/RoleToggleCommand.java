@@ -21,7 +21,6 @@ public record RoleToggleCommand(String roleAbbr, long roleId,
         commandManager.registerCommand(new RoleToggleCommand(roleAbbr, roleId, Mode.REMOVE));
     }
 
-
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
         Role role = message.getGuild().getRoleById(roleId);
@@ -38,7 +37,7 @@ public record RoleToggleCommand(String roleAbbr, long roleId,
         }
 
         Helper.createEmbed(embedBuilder, "Bestätigung", embedDescription, EmbedColorHelper.SUCCESS);
-        Helper.sendEmbed(embedBuilder,message,true);
+        Helper.sendEmbed(embedBuilder, message, true);
     }
 
     @Override
@@ -61,7 +60,7 @@ public record RoleToggleCommand(String roleAbbr, long roleId,
     }
 
     @Override
-    public boolean isPermitted(final Member member){
+    public boolean isPermitted(final Member member) {
         return true;
     }
 

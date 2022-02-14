@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
 
 public final class Helper {
 
-    private Helper(){
+    private Helper() {
 
     }
 
@@ -89,7 +89,6 @@ public final class Helper {
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
-
             CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, Helper.class.getName()));
         }
 
@@ -102,27 +101,27 @@ public final class Helper {
         embedBuilder.setTitle(embedTitle);
 
         if (!userData.hasBump()) {
-            embedBuilder.setDescription("Du hast leider noch keinen erfolgreichen Bump ");
+            embedBuilder.setDescription("Du hast noch keinen erfolgreichen Bump");
 
-            sendEmbed(embedBuilder,message,true);
+            sendEmbed(embedBuilder, message, true);
             return;
         }
 
         if (userData.isTop()) {
 
             embedBuilder.setDescription(" :first_place: Du bist **TOP 1** mit " + userData.amountOf + " " + amountOf);
-            sendEmbed(embedBuilder,message,true);
+            sendEmbed(embedBuilder, message, true);
             return;
         }
 
-       final String mentionedUser = CommandManager.getInstance().getJDA().retrieveUserById(userData.nextHigherUserId).complete().getAsMention();
+        final String mentionedUser = CommandManager.getInstance().getJDA().retrieveUserById(userData.nextHigherUserId).complete().getAsMention();
 
         embedBuilder.setDescription("Anzahl deiner " + amountOf + " **" + userData.amountOf + "**" + "\n" + "Du bist hinter dem User " + mentionedUser + " **(" + userData.nextHigherUserAmountOf + ")**");
 
         message.replyEmbeds(embedBuilder.build()).queue();
     }
 
-    public static void scheduleCommand(final String command,final long delay, final long period, final TimeUnit timeUnit) {
+    public static void scheduleCommand(final String command, final long delay, final long period, final TimeUnit timeUnit) {
         scheduleCommand(command, delay, period, timeUnit, new String[0]);
     }
 
@@ -137,8 +136,9 @@ public final class Helper {
         final Runnable commandRunner = () -> {
             try {
                 botCommand.dispatch(null, Config.getInstance().getChannelConfig().getBumpChannel(), null, args);
+
             } catch (IOException ioException) {
-                ioException.printStackTrace();
+                System.out.println(ioException.getMessage());
             }
         };
 
@@ -166,10 +166,9 @@ public final class Helper {
         }
 
         message.getChannel().sendMessageEmbeds(embedBuilder.build()).queue();
-
     }
 
-    public static void addTopToEmbed(ResultSet resultSet,final EmbedBuilder embedBuilder, final String embedTitle, final String embedDescription, final String embedThumbnail, final String embedColor, final Message message, final String amountOf) {
+    public static void addTopToEmbed(ResultSet resultSet, final EmbedBuilder embedBuilder, final String embedTitle, final String embedDescription, final String embedThumbnail, final String embedColor, final Message message, final String amountOf) {
         createEmbed(embedBuilder, embedTitle, embedDescription, embedColor, embedThumbnail);
         addTopToEmbed(resultSet, embedBuilder, message, amountOf);
     }
@@ -180,14 +179,13 @@ public final class Helper {
         try {
             while (resultSet.next()) {
 
-                embedBuilder.addField("TOP " + top,  "<@" +resultSet.getString(1) +"> " + "**(" + resultSet.getString(2) + " " + amountOf + ")**", false);
+                embedBuilder.addField("TOP " + top, "<@" + resultSet.getString(1) + "> " + "**(" + resultSet.getString(2) + " " + amountOf + ")**", false);
                 top++;
             }
 
-            sendEmbed(embedBuilder,message,true);
+            sendEmbed(embedBuilder, message, true);
 
         } catch (SQLException sqlException) {
-
             System.out.println(sqlException.getMessage());
             CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, Helper.class.getName()));
         }
@@ -198,10 +196,10 @@ public final class Helper {
 
         try {
 
-           final Document document = Jsoup.connect(repositoryUrl)
+            final Document document = Jsoup.connect(repositoryUrl)
                     .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36")
                     .get();
-           final Elements element = document.getElementsByClass("Counter");
+            final Elements element = document.getElementsByClass("Counter");
 
             return element.get(element.size() - 1).text();
 
@@ -219,8 +217,5 @@ public final class Helper {
         String timeNow = LocalTime.now().format(timeFormatter);
 
         return dateNow + " um " + timeNow;
-
     }
-
-
 }

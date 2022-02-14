@@ -20,7 +20,7 @@ import java.sql.Statement;
 public class TopMonthlyBumperCommand implements IBotCommand {
 
     @Override
-    public void dispatch(final Message message, final TextChannel channel,final Member sender, final String[] args) {
+    public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) {
 
         Connection connection = DatabaseConnector.openConnection();
 
@@ -33,7 +33,7 @@ public class TopMonthlyBumperCommand implements IBotCommand {
             final String embedThumbnail = "https://cdn.discordapp.com/attachments/819694809765380146/869248076446052402/Bildschirmfoto_2021-07-26_um_17.48.08.png";
             final String amountOf = "Bumps";
 
-            Helper.addTopToEmbed(resultSet, embedBuilder, embedTitle, embedDescription, embedThumbnail, EmbedColorHelper.BUMP, message,amountOf);
+            Helper.addTopToEmbed(resultSet, embedBuilder, embedTitle, embedDescription, embedThumbnail, EmbedColorHelper.BUMP, message, amountOf);
 
 
         } catch (SQLException sqlException) {
@@ -42,7 +42,6 @@ public class TopMonthlyBumperCommand implements IBotCommand {
             CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, this.getClass().getName()));
         }
     }
-
 
     @Override
     public String getName() {
@@ -55,12 +54,12 @@ public class TopMonthlyBumperCommand implements IBotCommand {
     }
 
     @Override
-    public boolean isPermitted(final Member member){
+    public boolean isPermitted(final Member member) {
         return true;
     }
+
     @Override
     public String getHelpList() {
         return "stats";
     }
-
 }

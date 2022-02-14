@@ -65,7 +65,7 @@ public class AttachmentStorage extends ListenerAdapter {
 
     private String getFileSenderAsTag(Member member, final long userId, final Message message) {
 
-       final User user = CommandManager.getInstance().getJDA().retrieveUserById(userId, true).complete();
+        final User user = CommandManager.getInstance().getJDA().retrieveUserById(userId, true).complete();
 
         if (user != null) {
             member = message.getGuild().retrieveMember(user).complete();

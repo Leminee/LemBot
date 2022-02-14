@@ -29,5 +29,4 @@ public class AdvertisingCommand implements IBotCommand {
     public String getHelpList(){
         return "staff";
     }
-
 }

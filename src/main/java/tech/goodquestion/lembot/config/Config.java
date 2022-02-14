@@ -43,7 +43,6 @@ public class Config {
         }
     }
 
-
     public List<ReactionRoleMessage> getReactionRoles() {
         return reactionRoles;
     }
@@ -77,7 +76,7 @@ public class Config {
         return BotMain.jda.getGuildById(guild);
     }
 
-    public String getServerName(){
+    public String getServerName() {
         return serverName;
     }
 }

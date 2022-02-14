@@ -36,9 +36,9 @@ public class DeletedMessageStorage extends ListenerAdapter {
 
             if (resultSet.next()) {
 
-                final String deletedMessageAuthorAsMention = "<@" + resultSet.getString(2) + ">" ;
+                final String deletedMessageAuthorAsMention = "<@" + resultSet.getString(2) + ">";
                 String deletedMessageContent = resultSet.getString(3);
-                final String channelAsMention = "<#" + event.getChannel().getIdLong() +">";
+                final String channelAsMention = "<#" + event.getChannel().getIdLong() + ">";
 
                 final User authorDeletedMessage = event.getJDA().retrieveUserById(resultSet.getString(2)).complete();
 
@@ -52,21 +52,19 @@ public class DeletedMessageStorage extends ListenerAdapter {
 
                 if (!isValidLength(deletedMessageContent)) {
 
-                   deletedMessageContent = deletedMessageContent.substring(0,900)
-                            +"\n\n ```Hinweis: Der Inhalt der gelöschten Nachricht war länger als die erlaubten Zeichen (1024).```";
+                    deletedMessageContent = deletedMessageContent.substring(0, 900)
+                            + "\n\n ```Hinweis: Der Inhalt der gelöschten Nachricht war länger als die erlaubten Zeichen (1024).```";
                 }
 
 
                 embedBuilder.setTitle("Gelöschte Nachricht")
-                        .setAuthor(authorDeletedMessageAsTag,null,authorDeletedMessageAvatarUrl)
+                        .setAuthor(authorDeletedMessageAsTag, null, authorDeletedMessageAvatarUrl)
                         .setColor(Color.decode(EmbedColorHelper.DELETED))
-                        .addField("Author", deletedMessageAuthorAsMention,true)
-                        .addField("Author ID", String.valueOf(authorDeletedMessageIdLong),true)
-                        .addField("Kanal",channelAsMention,true)
-                        .addField("Inhalt", deletedMessageContent,false)
+                        .addField("Author", deletedMessageAuthorAsMention, true)
+                        .addField("Author ID", String.valueOf(authorDeletedMessageIdLong), true)
+                        .addField("Kanal", channelAsMention, true)
+                        .addField("Inhalt", deletedMessageContent, false)
                         .setTimestamp(Instant.now());
-
-
 
 
                 Config.getInstance().getChannelConfig().getUpdatedDeletedChannel().sendMessageEmbeds(embedBuilder.build()).queue();
@@ -75,6 +73,7 @@ public class DeletedMessageStorage extends ListenerAdapter {
                 preparedStatementOne.setLong(1, idDeletedMessage);
                 preparedStatementOne.executeUpdate();
             }
+
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
             CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, this.getClass().getName()));
@@ -86,5 +85,4 @@ public class DeletedMessageStorage extends ListenerAdapter {
         final int fieldMaxLength = 1024;
         return message.length() < fieldMaxLength;
     }
-
 }

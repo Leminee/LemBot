@@ -23,5 +23,4 @@ public class AmountMemberStatus extends ListenerAdapter {
                 .setName("Members: " + event.getGuild().getMemberCount())
                 .queue();
     }
-
 }

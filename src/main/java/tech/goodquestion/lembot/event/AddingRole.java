@@ -26,9 +26,9 @@ public class AddingRole extends ListenerAdapter {
         final Guild guild = member.getGuild();
         final Role codingRole = Config.getInstance().getRoleConfig().getCodingRole();
 
-        final int delay = 12;
+        final int delayInHours = 12;
         assert codingRole != null;
-        ScheduledFuture<?> task = guild.addRoleToMember(member, codingRole).queueAfter(delay, TimeUnit.HOURS);
+        ScheduledFuture<?> task = guild.addRoleToMember(member, codingRole).queueAfter(delayInHours, TimeUnit.HOURS);
         tasks.put(member.getIdLong(), task);
 
     }
@@ -42,7 +42,6 @@ public class AddingRole extends ListenerAdapter {
         final Role hackingRole = Config.getInstance().getRoleConfig().getHackingRole();
         final Role mutedRole = Config.getInstance().getRoleConfig().getMuteRole();
         final List<Role> memberAddedRoles = member.getRoles();
-
 
         for (final Role addedRole : memberAddedRoles) {
 
@@ -66,5 +65,4 @@ public class AddingRole extends ListenerAdapter {
         ScheduledFuture<?> task = tasks.remove(member.getIdLong());
         if (task != null) task.cancel(false);
     }
-
 }

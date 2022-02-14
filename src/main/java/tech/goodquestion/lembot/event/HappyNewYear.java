@@ -16,9 +16,9 @@ public class HappyNewYear extends ListenerAdapter {
 
     private final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
     private final String HAPPY_NEW_YEAR_GIF_URL = "https://happynewyear2021status.com/wp-content/uploads/2021/11/new-year-gifs-2022-1.gif";
+
     @Override
     public void onReady(final @NotNull ReadyEvent event) {
-
 
         final LocalDateTime localDateTimeNow = LocalDateTime.now();
         final int currentYear = LocalDateTime.now().getYear();

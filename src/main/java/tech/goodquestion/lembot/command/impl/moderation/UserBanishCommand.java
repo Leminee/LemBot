@@ -17,28 +17,26 @@ import tech.goodquestion.lembot.library.Helper;
 import java.util.List;
 import java.util.Objects;
 
-public abstract sealed class UserBanishCommand implements IBotCommand permits BanCommand, WarnCommand, MuteCommand{
+public abstract sealed class UserBanishCommand implements IBotCommand permits BanCommand, WarnCommand, MuteCommand {
 
     @Override
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) {
-
 
         if (args.length < 2) {
             final EmbedBuilder embedBuilder = new EmbedBuilder();
             final String embedDescription = ":x: Gebe einen Grund an!";
             Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
-            Helper.sendEmbed(embedBuilder,message,true);
+            Helper.sendEmbed(embedBuilder, message, true);
             return;
         }
 
         if (channel.getIdLong() != Config.getInstance().getChannelConfig().getSanctionChannel().getIdLong()) {
             final EmbedBuilder embedBuilder = new EmbedBuilder();
-            final String embedDescription = ":x: Dieser Befehl kann nur in [channel] ausgeführt werden!".replace("[channel]",Config.getInstance().getChannelConfig().getSanctionChannel().getAsMention());
+            final String embedDescription = ":x: Dieser Befehl kann nur in [channel] ausgeführt werden!".replace("[channel]", Config.getInstance().getChannelConfig().getSanctionChannel().getAsMention());
             Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
-            Helper.sendEmbed(embedBuilder,message,true);
+            Helper.sendEmbed(embedBuilder, message, true);
             return;
         }
-
 
         final List<Member> mentionedMembers = message.getMentionedMembers();
         Member member;
@@ -52,7 +50,7 @@ public abstract sealed class UserBanishCommand implements IBotCommand permits Ba
             final EmbedBuilder embedBuilder = new EmbedBuilder();
             final String embedDescription = ":x: User ist nicht auf dem Server!";
             Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
-            Helper.sendEmbed(embedBuilder,message,true);
+            Helper.sendEmbed(embedBuilder, message, true);
             return;
 
         }
@@ -62,7 +60,7 @@ public abstract sealed class UserBanishCommand implements IBotCommand permits Ba
             final EmbedBuilder embedBuilder = new EmbedBuilder();
             final String embedDescription = ":x: Admins/Moderatoren können nicht gebannt werden!";
             Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
-            Helper.sendEmbed(embedBuilder,message,true);
+            Helper.sendEmbed(embedBuilder, message, true);
             return;
         }
 
@@ -81,12 +79,11 @@ public abstract sealed class UserBanishCommand implements IBotCommand permits Ba
         sanction.reason = reason.toString();
         sanction.channelName = channel.getName();
 
-
         if (requiresAdmin() && !Objects.requireNonNull(message.getMember()).hasPermission(Permission.MANAGE_ROLES)) {
             final EmbedBuilder embedBuilder = new EmbedBuilder();
             final String embedDescription = ":x: Permission denied";
             Helper.createEmbed(embedBuilder, "", embedDescription, EmbedColorHelper.ERROR);
-            Helper.sendEmbed(embedBuilder,message,true);
+            Helper.sendEmbed(embedBuilder, message, true);
             return;
         }
 
@@ -107,12 +104,11 @@ public abstract sealed class UserBanishCommand implements IBotCommand permits Ba
     }
 
     public abstract void banishUser(Member toBanish, Sanction sanction, Message originMessage);
+
     public abstract boolean requiresAdmin();
 
     @Override
     public String getHelpList() {
         return "staff";
     }
-
-
 }

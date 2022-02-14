@@ -11,7 +11,7 @@ public enum SanctionType {
         this.verbalizedSanctionTyp = verbalizedSanctionTyp;
     }
 
-    public String getVerbalizedSanctionTyp(){
+    public String getVerbalizedSanctionTyp() {
         return verbalizedSanctionTyp;
     }
 }

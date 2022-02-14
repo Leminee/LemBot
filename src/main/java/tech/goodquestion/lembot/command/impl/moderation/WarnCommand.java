@@ -26,7 +26,6 @@ public final class WarnCommand extends UserBanishCommand {
     @Override
     public void banishUser(final Member toBanish, final Sanction sanction, final Message originMessage) {
 
-
         toBanish.getGuild().addRoleToMember(sanction.userId, Config.getInstance().getRoleConfig().getWarnRole()).queue();
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
@@ -40,7 +39,6 @@ public final class WarnCommand extends UserBanishCommand {
         embedBuilder.setFooter(originMessage.getMember().getUser().getAsTag(),originMessage.getMember().getEffectiveAvatarUrl());
         embedBuilder.setTimestamp(Instant.now());
 
-
         Helper.sendEmbed(embedBuilder,originMessage,false);
 
         final String performedSanction = SanctionType.WARN.getVerbalizedSanctionTyp();
@@ -50,7 +48,6 @@ public final class WarnCommand extends UserBanishCommand {
 
         CommandHelper.logUserWarn(sanction);
     }
-
 
     private void notifyWarnedUser(final User sanctionedUser, final SanctionType sanctionType, final String performedSanction, final String reason, final Member sanctionAuthor){
 
@@ -81,7 +78,6 @@ public final class WarnCommand extends UserBanishCommand {
             System.out.println(errorResponseException.getMessage());
             CommandHelper.logException(OccurredException.getOccurredExceptionData(errorResponseException,UserBanishCommand.class.getName()));
         }
-
     }
 
     public void scheduleReminder(final long delay, final TimeUnit timeUnit, Member sanctionedMember) {
@@ -106,8 +102,8 @@ public final class WarnCommand extends UserBanishCommand {
         embedBuilder.setTimestamp(Instant.now());
 
         Config.getInstance().getChannelConfig().getAutoModerationChannel().sendMessageEmbeds(embedBuilder.build()).queue();
-
     }
+
     @Override
     public boolean requiresAdmin() {
         return true;
@@ -122,5 +118,4 @@ public final class WarnCommand extends UserBanishCommand {
     public String getDescription() {
         return "`warn <user> <reason>`: Weist " + Config.getInstance().getRoleConfig().getWarnRole().getAsMention() + " zu";
     }
-
 }

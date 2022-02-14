@@ -24,7 +24,7 @@ public class BotConfig {
         return version;
     }
 
-    public long getId(){
+    public long getId() {
         return id;
     }
 }

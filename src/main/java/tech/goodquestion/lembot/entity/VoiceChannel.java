@@ -6,5 +6,4 @@ public class VoiceChannel {
     public String memberTag;
     public String memberName;
     public String name;
-
 }

@@ -1,24 +1,25 @@
 package tech.goodquestion.lembot.event;
 
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.database.CommandHelper;
 import tech.goodquestion.lembot.database.QueryHelper;
 import tech.goodquestion.lembot.entity.Sanction;
+import tech.goodquestion.lembot.library.EmbedColorHelper;
 
-import java.util.List;
+import java.awt.*;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Objects;
 
 public class SpamDetection extends ListenerAdapter {
 
-
     @Override
     public void onMessageReceived(final MessageReceivedEvent event) {
-
 
         final long userId = event.getMessage().getAuthor().getIdLong();
         final boolean senderIsBot = event.getMessage().getAuthor().isBot();
@@ -26,7 +27,6 @@ public class SpamDetection extends ListenerAdapter {
         final Member member = event.getMember();
         final String messageContent = event.getMessage().getContentRaw();
         assert member != null;
-        final List<Role> userRoles = member.getRoles();
         final Member bot = event.getGuild().retrieveMemberById(Config.getInstance().getBotConfig().getId()).complete();
 
         final Sanction sanction = new Sanction();
@@ -39,41 +39,41 @@ public class SpamDetection extends ListenerAdapter {
 
         if (senderIsBot || senderIsStaff || messageContent.length() < 10) return;
 
-
         if (QueryHelper.isSpammer(userId, messageContent)) {
 
-            disconnect(member);
+            timeOutScammer(member, event);
 
             QueryHelper.deleteScammerMessages(event, userId, messageContent);
 
 
-            for (final Role role : userRoles) {
-
-                event.getGuild().removeRoleFromMember(userId, role).queue();
-            }
-
-
-            final Role mutedRole = Config.getInstance().getRoleConfig().getMuteRole();
-
-            assert mutedRole != null;
-            event.getGuild().addRoleToMember(userId, mutedRole).queue();
-
             CommandHelper.logUserMute(sanction);
 
-            event.getMessage().reply(":mute: Du wurdest aufgrund Verdacht auf Scam durch den Bot **gemutet**").queue();
+            event.getMessage().reply(":mute: Timeout aufgrund Verdacht auf Scam durch den Bot").queue();
 
-            Objects.requireNonNull(event.getGuild().getTextChannelById(Config.getInstance().getChannelConfig().getAutoModerationChannel().getIdLong()))
-                    .sendMessage(":mute: User " + Objects.requireNonNull(event.getMember()).getAsMention() + " wurde wegen Spam **gemutet** " + "\n(3 inhaltich identische Nachrichten in weniger als 30 Sekunden in mehrere Kanäle gepostet)\nGelöschte Nachricht: ```" + messageContent +"```")
-                    .queue();
 
         }
-
     }
 
-    private void disconnect(Member member) {
+    private void timeOutScammer(final Member member, MessageReceivedEvent event) {
 
-        if (Objects.requireNonNull(member.getVoiceState()).inAudioChannel()) {
-            member.getGuild().kickVoiceMember(member).queue();
-        }
+        final int durationInHours = 6;
+        member.timeoutFor(Duration.ofSeconds(durationInHours)).queue();
+
+        final EmbedBuilder embedBuilder = new EmbedBuilder();
+
+        embedBuilder.setAuthor(member.getUser().getAsTag(), null, member.getEffectiveAvatarUrl());
+        embedBuilder.setTitle("Verdacht auf Scam");
+        embedBuilder.setDescription("Timeout aufgrund von Verdacht auf Scam");
+        embedBuilder.addField("Member", member.getAsMention(), true);
+        embedBuilder.addField("Dauer", durationInHours + " Tage", true);
+        embedBuilder.addField("Grund", "```Verdacht auf Scam```", true);
+        embedBuilder.addField("Nachricht", event.getMessage().getContentRaw(), false);
+        embedBuilder.setColor(Color.decode(EmbedColorHelper.AUTO_MODERATION));
+        embedBuilder.setTimestamp(Instant.now());
+
+        Objects.requireNonNull(Config.getInstance()
+                .getGuild()
+                .getTextChannelById(Config.getInstance().getChannelConfig().getAutoModerationChannel().getIdLong()))
+                .sendMessageEmbeds(embedBuilder.build()).queue();
     }
 }

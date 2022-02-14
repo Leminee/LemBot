@@ -20,7 +20,6 @@ public class ClearCommand implements IBotCommand {
 
             final List<Message> messagesToDelete = message.getChannel().getHistory().retrievePast(amountMessagesToDelete).complete();
 
-
             channel.deleteMessages(messagesToDelete).queue();
 
             final EmbedBuilder embedBuilder = new EmbedBuilder();
@@ -29,11 +28,11 @@ public class ClearCommand implements IBotCommand {
             Helper.sendEmbed(embedBuilder,message,false);
 
         } catch (IllegalArgumentException illegalArgumentException) {
+
             if (illegalArgumentException.getMessage().equals("Message retrieval")) {
                 final EmbedBuilder embedBuilder = new EmbedBuilder();
                 Helper.createEmbed(embedBuilder, "Fehler", ":x: Mehr als 100 Nachrichten können nicht gelöscht werden!", EmbedColorHelper.ERROR);
                 channel.sendMessageEmbeds(embedBuilder.build()).queue();
-
 
             } else if (illegalArgumentException instanceof NumberFormatException) {
                 final EmbedBuilder embedBuilder = new EmbedBuilder();
@@ -43,8 +42,6 @@ public class ClearCommand implements IBotCommand {
             }
         }
     }
-
-
 
     @Override
     public String getName() {

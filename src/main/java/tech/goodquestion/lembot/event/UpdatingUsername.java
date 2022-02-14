@@ -24,8 +24,7 @@ public class UpdatingUsername extends ListenerAdapter {
         }
 
         CommandHelper.logUpdatedUsername(memberId, memberTag, oldUsername, newUsername);
-        CommandHelper.adjustUsername(CommandHelper.ADJUSTING_NEW_USERNAME_IN_BUMPER,newUsername, memberId);
-        CommandHelper.adjustUsername(CommandHelper.ADJUSTING_NEW_USERNAME_IN_MESSAGE,newUsername, memberId);
-
+        CommandHelper.adjustUsername(CommandHelper.ADJUSTING_NEW_USERNAME_IN_BUMPER, newUsername, memberId);
+        CommandHelper.adjustUsername(CommandHelper.ADJUSTING_NEW_USERNAME_IN_MESSAGE, newUsername, memberId);
     }
 }

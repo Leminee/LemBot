@@ -23,10 +23,6 @@ import tech.goodquestion.lembot.config.ReactionRoleMessage;
 import tech.goodquestion.lembot.database.*;
 import tech.goodquestion.lembot.event.*;
 import tech.goodquestion.lembot.library.ReactionManager;
-import tech.goodquestion.lembot.music.command.LeaveCommand;
-import tech.goodquestion.lembot.music.command.PlayCommand;
-import tech.goodquestion.lembot.music.command.SkipCommand;
-import tech.goodquestion.lembot.music.command.StopCommand;
 
 import javax.security.auth.login.LoginException;
 import java.time.LocalDateTime;
@@ -39,27 +35,22 @@ public class BotMain {
     public static void main(String[] args) {
 
         try {
-            
 
             Logger logger = LoggerFactory.getLogger(BotMain.class);
-            logger.info("{} {}",LocalDateTime.now().format(DateTimeFormatter.ofPattern("d MMMM yyyy HH:mm")), Config.getInstance().getBotConfig().getVersion());
+            logger.info("{} {}", LocalDateTime.now().format(DateTimeFormatter.ofPattern("d MMMM yyyy HH:mm")), Config.getInstance().getBotConfig().getVersion());
 
-            System.out.println("""  
+            System.out.println("""
 
-                     \033[0;34m            
+                     \033[0;34m\040\040\040\040\040\040\040\040\040\040\040\040
                      _      _____  __  __  ____    ___  _____\s
                     | |    | ____||  \\/  || __ )  / _ \\|_   _|
                     | |    |  _|  | |\\/| ||  _ \\ | | | | | | \s
                     | |___ | |___ | |  | || |_) || |_| | | | \s
                     |_____||_____||_|  |_||____/  \\___/  |_|\s
-                    @Author: Lem                     """ + "                      " + Config.getInstance().getBotConfig().getVersion() +"\033[0m\n\n"
-
-
-
-
+                    @Author: Lem\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040"""
+                    + Config.getInstance().getBotConfig().getVersion() + "\033[0m\n\n"
 
             );
-
 
             jda = JDABuilder
                     .createDefault(Config.getInstance().getBotConfig().getToken())
@@ -80,10 +71,9 @@ public class BotMain {
 
         initializeObjects();
         setupReactionRoles();
-
     }
 
-    private static void initializeObjects(){
+    private static void initializeObjects() {
 
         CommandManager commandManager = new CommandManager(jda);
 
@@ -97,17 +87,12 @@ public class BotMain {
         commandManager.registerCommand(new HelpListCommand());
         commandManager.registerCommand(new LastJoiningDateCommand());
         commandManager.registerCommand(new KillSwitchCommand());
-        commandManager.registerCommand(new LeaveCommand());
         commandManager.registerCommand(new MessageCountCommand());
         commandManager.registerCommand(new MuteCommand());
         commandManager.registerCommand(new NextBumpTimeCommand());
         commandManager.registerCommand(new PasswordCheckCommand());
-        commandManager.registerCommand(new PlayCommand());
-        commandManager.registerCommand(new PlayCommand());
         commandManager.registerCommand(new ServerDataCommand());
         commandManager.registerCommand(new ServerRoleListCommand());
-        commandManager.registerCommand(new SkipCommand());
-        commandManager.registerCommand(new StopCommand());
         commandManager.registerCommand(new TopActiveChannelsCommand());
         commandManager.registerCommand(new TopBumperCommand());
         commandManager.registerCommand(new TopFlooderCommand());
@@ -156,7 +141,6 @@ public class BotMain {
         setupRoleCommands(commandManager);
     }
 
-
     private static void setupReactionRoles() {
 
         ReactionManager manager = new ReactionManager(jda);
@@ -164,11 +148,7 @@ public class BotMain {
         for (final ReactionRoleMessage reactionRoleMessage : Config.getInstance().getReactionRoles()) {
             reactionRoleMessage
                     .getRoles()
-                    .forEach((emote, role) -> manager
-                            .registerReaction(reactionRoleMessage
-                                    .getChannel(), reactionRoleMessage
-                                    .getMessage(), emote, role));
-
+                    .forEach((emote, role) -> manager.registerReaction(reactionRoleMessage.getChannel(), reactionRoleMessage.getMessage(), emote, role));
         }
     }
 

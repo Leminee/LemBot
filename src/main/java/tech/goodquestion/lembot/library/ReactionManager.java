@@ -38,7 +38,6 @@ public final class ReactionManager {
         reactionManagers.add(this);
     }
 
-
     /**
      * Gibt den ReactionManager zurück, der die angegebene JDA als Basis benutzt
      *

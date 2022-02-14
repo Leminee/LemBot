@@ -32,7 +32,7 @@ public class ServerRoleListCommand implements IBotCommand {
         }
 
         embedBuilder.setDescription(stringBuilder);
-        Helper.sendEmbed(embedBuilder,message,true);
+        Helper.sendEmbed(embedBuilder, message, true);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class ServerRoleListCommand implements IBotCommand {
     }
 
     @Override
-    public boolean isPermitted(final Member member){
+    public boolean isPermitted(final Member member) {
         return true;
     }
 }

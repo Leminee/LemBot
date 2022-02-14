@@ -18,7 +18,6 @@ public class TopActiveChannelsCommand implements IBotCommand {
     @Override
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) {
 
-
         try {
             MessageEmbed messageEmbed = QueryHelper.getTopChannels()
                     .setColor(Color.decode(EmbedColorHelper.TOP_CHANNELS))
@@ -45,7 +44,7 @@ public class TopActiveChannelsCommand implements IBotCommand {
     }
 
     @Override
-    public boolean isPermitted(final Member member){
+    public boolean isPermitted(final Member member) {
         return true;
     }
 

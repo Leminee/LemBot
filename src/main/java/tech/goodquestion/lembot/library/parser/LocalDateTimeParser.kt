@@ -12,7 +12,6 @@ import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-
 class LocalDateTimeParser private constructor() {
 
     companion object Parser {
@@ -65,7 +64,7 @@ class LocalDateTimeParser private constructor() {
 
             if (findWeekDay(humanInput.lowercase(Locale.getDefault())) != null) {
 
-                val foundWeekDay:DayOfWeek? = findWeekDay(humanInput.lowercase(Locale.getDefault()))
+                val foundWeekDay: DayOfWeek? = findWeekDay(humanInput.lowercase(Locale.getDefault()))
 
 
                 localDateTime = LocalDateTime.now().with(TemporalAdjusters.next(foundWeekDay))
@@ -133,7 +132,7 @@ class LocalDateTimeParser private constructor() {
             return string.replace("[-+^]*".toRegex(), "")
         }
 
-        private fun findWeekDay(input: String): DayOfWeek?{
+        private fun findWeekDay(input: String): DayOfWeek? {
 
             val foundWeekDay: DayOfWeek
 
@@ -154,7 +153,7 @@ class LocalDateTimeParser private constructor() {
 
         }
 
-        private fun containsOutOfRangeValue(input:String):Boolean {
+        private fun containsOutOfRangeValue(input: String): Boolean {
 
             val pattern: Pattern = Pattern.compile("\\d{19,}")
             val matcher: Matcher = pattern.matcher(input)
@@ -168,5 +167,4 @@ class LocalDateTimeParser private constructor() {
             return specialDays.keys
         }
     }
-
 }

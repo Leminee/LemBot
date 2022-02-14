@@ -17,10 +17,7 @@ public class VoiceJoinedStorage extends ListenerAdapter {
     @Override
     public void onGuildVoiceJoin(@NotNull final GuildVoiceJoinEvent event) {
 
-
-
         final String insertQuery = "INSERT INTO voice_join (id_discord, user_tag, username, name) VALUES (?,?,?,?);";
-
         final VoiceChannel voiceChannel = new VoiceChannel();
 
         voiceChannel.memberId = event.getMember().getIdLong();

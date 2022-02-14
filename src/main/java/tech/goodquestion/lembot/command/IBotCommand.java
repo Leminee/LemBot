@@ -11,12 +11,15 @@ import java.io.IOException;
 public interface IBotCommand {
 
     void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) throws IOException;
+
     String getName();
+
     String getDescription();
 
     default boolean isPermitted(final Member member) {
         return member.hasPermission(Permission.MESSAGE_MANAGE);
     }
+
     default String getHelpList() {
         return "general";
     }

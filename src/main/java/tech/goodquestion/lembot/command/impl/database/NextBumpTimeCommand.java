@@ -16,7 +16,7 @@ public class NextBumpTimeCommand implements IBotCommand {
 
         try {
 
-            final String nextBumpTime = String.valueOf(QueryHelper.getNextBumpTime()).substring(0,5);
+            final String nextBumpTime = String.valueOf(QueryHelper.getNextBumpTime()).substring(0, 5);
             int minutesBeforeNextBump = QueryHelper.getMinutesToNextBump() + 1;
 
             if (minutesBeforeNextBump < 0) {
@@ -24,12 +24,12 @@ public class NextBumpTimeCommand implements IBotCommand {
             }
 
             final String title = "Uhrzeit nächsten Bumps";
-            final String description =  "Nächster Bump um **" + nextBumpTime
+            final String description = "Nächster Bump um **" + nextBumpTime
                     + "** " + "Uhr " + "(in **" + minutesBeforeNextBump + "** Minuten) ";
             final EmbedBuilder embedBuilder = new EmbedBuilder();
 
-            Helper.createEmbed(embedBuilder,title,description, EmbedColorHelper.BUMP);
-            Helper.sendEmbed(embedBuilder,message,true);
+            Helper.createEmbed(embedBuilder, title, description, EmbedColorHelper.BUMP);
+            Helper.sendEmbed(embedBuilder, message, true);
 
         } catch (StringIndexOutOfBoundsException stringIndexOutOfBoundsException) {
 
@@ -48,7 +48,7 @@ public class NextBumpTimeCommand implements IBotCommand {
     }
 
     @Override
-    public boolean isPermitted(final Member member){
+    public boolean isPermitted(final Member member) {
         return true;
     }
 }

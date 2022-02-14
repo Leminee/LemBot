@@ -14,15 +14,16 @@ public class RoleEvents extends ListenerAdapter {
     @Override
     public void onRoleCreate(@Nonnull final RoleCreateEvent event) {
 
-       final String newCreatedRole =  event.getRole().getAsMention();
-       Objects.requireNonNull(event.getGuild()
-               .getTextChannelById(Config.getInstance().getChannelConfig().getUpdatedDeletedChannel().getIdLong()))
-               .sendMessage(String.format("Es wurde soeben folgende Rolle **erstellt** %s", newCreatedRole)).queue();
+        final String newCreatedRole = event.getRole().getAsMention();
+        Objects.requireNonNull(event.getGuild()
+                .getTextChannelById(Config.getInstance().getChannelConfig().getUpdatedDeletedChannel().getIdLong()))
+                .sendMessage(String.format("Es wurde soeben folgende Rolle **erstellt** %s", newCreatedRole)).queue();
     }
+
     @Override
     public void onRoleDelete(@Nonnull final RoleDeleteEvent event) {
 
-        final String deletedRole =  event.getRole().getName();
+        final String deletedRole = event.getRole().getName();
         Objects.requireNonNull(event.getGuild()
                 .getTextChannelById(Config.getInstance().getChannelConfig().getUpdatedDeletedChannel().getIdLong()))
                 .sendMessage(String.format("Es wurde soeben folgende Rolle **entfernt** `@%s`", deletedRole)).queue();
@@ -30,12 +31,11 @@ public class RoleEvents extends ListenerAdapter {
 
     public void onRoleUpdateName(@Nonnull final RoleUpdateNameEvent event) {
 
-        final String oldName =  event.getOldName();
+        final String oldName = event.getOldName();
         final String newName = event.getNewName();
         Objects.requireNonNull(event.getGuild()
                 .getTextChannelById(Config.getInstance().getChannelConfig().getUpdatedDeletedChannel().getIdLong()))
                 .sendMessage(String.format("Es wurde soeben folgende Rolle `@%s` in `@%s` umbenannt", oldName, newName)).queue();
 
     }
-
 }
