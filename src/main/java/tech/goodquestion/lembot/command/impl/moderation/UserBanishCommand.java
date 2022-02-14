@@ -78,6 +78,7 @@ public abstract sealed class UserBanishCommand implements IBotCommand permits Ba
         sanction.author = message.getAuthor().getAsTag();
         sanction.reason = reason.toString();
         sanction.channelName = channel.getName();
+        sanction.duration = Long.parseLong(args[1]);
 
         if (requiresAdmin() && !Objects.requireNonNull(message.getMember()).hasPermission(Permission.MANAGE_ROLES)) {
             final EmbedBuilder embedBuilder = new EmbedBuilder();

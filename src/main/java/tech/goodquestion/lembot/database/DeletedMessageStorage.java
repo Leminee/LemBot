@@ -56,7 +56,7 @@ public class DeletedMessageStorage extends ListenerAdapter {
                             + "\n\n ```Hinweis: Der Inhalt der gelöschten Nachricht war länger als die erlaubten Zeichen (1024).```";
                 }
 
-
+                // FIXME: 14.02.22 add deleted pic as Image (what abouts vids?)
                 embedBuilder.setTitle("Gelöschte Nachricht")
                         .setAuthor(authorDeletedMessageAsTag, null, authorDeletedMessageAvatarUrl)
                         .setColor(Color.decode(EmbedColorHelper.DELETED))

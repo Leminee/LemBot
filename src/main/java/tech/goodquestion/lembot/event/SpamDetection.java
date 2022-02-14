@@ -62,7 +62,7 @@ public class SpamDetection extends ListenerAdapter {
         embedBuilder.setTitle("Verdacht auf Scam");
         embedBuilder.setDescription("Timeout aufgrund von Verdacht auf Scam");
         embedBuilder.addField("Member", member.getAsMention(), true);
-        embedBuilder.addField("Dauer", durationInHours + " Tage", true);
+        embedBuilder.addField("Dauer", durationInHours + " Stunden", true);
         embedBuilder.addField("Grund", "```Verdacht auf Scam```", true);
         embedBuilder.addField("Nachricht", event.getMessage().getContentRaw(), false);
         embedBuilder.setColor(Color.decode(EmbedColorHelper.AUTO_MODERATION));

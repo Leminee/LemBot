@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.time.Instant;
 
 public class UpdatedMessageStorage extends ListenerAdapter {
+
     @Override
     public void onMessageUpdate(@Nonnull final MessageUpdateEvent event) {
 
@@ -32,7 +33,7 @@ public class UpdatedMessageStorage extends ListenerAdapter {
         final String authorAvatarUrl = event.getAuthor().getEffectiveAvatarUrl();
         String updatedMessageOldContent = QueryHelper.getUpdatedMessageOldContent(updatedMessageId, QueryHelper.UPDATED_MESSAGE_LAST_CONTENT);
 
-
+        
         if (isNotValidLength(updatedMessageContent)) {
 
             updatedMessageContent = updatedMessageContent.substring(0, 900)
@@ -43,10 +44,18 @@ public class UpdatedMessageStorage extends ListenerAdapter {
         if (isNotValidLength(updatedMessageOldContent)) {
 
             updatedMessageOldContent = updatedMessageOldContent.substring(0, 900)
-                    + "\n\n ````Hinweis: Der Inhalt der beabeiteten Nachricht war länger als die erlaubten Zeichen (1024).```";
+                    + "\n\n ```Hinweis: Der Inhalt der beabeiteten Nachricht war länger als die erlaubten Zeichen (1024).```";
+        }
+        final EmbedBuilder embedBuilder = new EmbedBuilder();
+
+
+        // FIXME: 14.02.22 Only the url of the deleted image 
+        final boolean containsAttachment = event.getMessage().getAttachments().size() != 0;
+        if(containsAttachment){
+            embedBuilder.setImage(event.getMessage().getAttachments().get(0).getUrl());
         }
 
-        final EmbedBuilder embedBuilder = new EmbedBuilder();
+
         embedBuilder.setTitle("Bearbeitete Nachricht")
                 .setAuthor(authorUpdatedMessageAsTag, null, authorAvatarUrl)
                 .setColor(Color.decode(EmbedColorHelper.UPDATED))
@@ -74,8 +83,6 @@ public class UpdatedMessageStorage extends ListenerAdapter {
 
             CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, this.getClass().getName()));
         }
-
-
     }
 
     private boolean isNotValidLength(final String message) {

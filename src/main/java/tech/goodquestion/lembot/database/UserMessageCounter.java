@@ -16,10 +16,16 @@ public class UserMessageCounter extends ListenerAdapter {
     @Override
     public void onMessageReceived(final MessageReceivedEvent event) {
 
-        final String userMessageContent = event.getMessage().getContentRaw();
+        String userMessageContent = event.getMessage().getContentRaw();
         final String userId = Objects.requireNonNull(event.getMember()).getId();
         final String userName = event.getMember().getEffectiveName();
         final String messageId = event.getMessageId();
+
+        final boolean containsAttachment = event.getMessage().getAttachments().size() != 0;
+
+        if (containsAttachment) {
+            userMessageContent += "\n **Bildurl** \n" + event.getMessage().getAttachments().get(0).getUrl();
+        }
 
         int numberMessage = 1;
 

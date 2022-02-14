@@ -40,7 +40,6 @@ public class BotMain {
             logger.info("{} {}", LocalDateTime.now().format(DateTimeFormatter.ofPattern("d MMMM yyyy HH:mm")), Config.getInstance().getBotConfig().getVersion());
 
             System.out.println("""
-
                      \033[0;34m\040\040\040\040\040\040\040\040\040\040\040\040
                      _      _____  __  __  ____    ___  _____\s
                     | |    | ____||  \\/  || __ )  / _ \\|_   _|
@@ -49,7 +48,6 @@ public class BotMain {
                     |_____||_____||_|  |_||____/  \\___/  |_|\s
                     @Author: Lem\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040\040"""
                     + Config.getInstance().getBotConfig().getVersion() + "\033[0m\n\n"
-
             );
 
             jda = JDABuilder

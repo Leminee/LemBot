@@ -36,7 +36,7 @@ public class ParserCommand implements IBotCommand {
         } catch (NumberFormatException | DateTimeException numberFormatException) {
 
             Helper.createEmbed(embedBuilder, title, "```" + numberFormatException.getMessage() + "```", EmbedColorHelper.ERROR);
-            channel.sendMessageEmbeds(embedBuilder.build()).queue();
+            Helper.sendEmbed(embedBuilder, message, true);
         }
     }
 

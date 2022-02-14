@@ -54,6 +54,13 @@ public class AdvertisingCommand implements IBotCommand {
 
             advertiseServer(args);
 
+            final EmbedBuilder embedBuilder = new EmbedBuilder();
+            final String title = "Bestätigung";
+            final String description = ":white_check_mark: DM zugestellt";
+
+            Helper.createEmbed(embedBuilder, title, description, EmbedColorHelper.SUCCESS);
+            Helper.sendEmbed(embedBuilder, message, true);
+
         } catch (ErrorResponseException errorResponseException) {
             System.out.println(errorResponseException.getMessage());
             CommandHelper.logException(OccurredException.getOccurredExceptionData(errorResponseException, this.getName()));
