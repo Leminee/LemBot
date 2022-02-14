@@ -42,7 +42,7 @@ public class ServerRoleListCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`sroles`: Liste aller Rollen auf GQ";
+        return "`sroles`: Liste aller Rollen auf " + Config.getInstance().getServerName();
     }
 
     @Override

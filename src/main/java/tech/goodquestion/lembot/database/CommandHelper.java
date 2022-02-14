@@ -31,6 +31,7 @@ public final class CommandHelper {
     public static final String EXCEPTION_LOG = "INSERT INTO exception (id_exception, occurred_in, type, details) VALUES (NULL,?,?,?);";
     public static final String INVITE_TRACKING_LOG = "INSERT INTO invite_tracking (id, url, used_by, invited_by, amount) VALUES (NULL,?,?,?,?);";
     private static final String CLASS_NAME = CommandHelper.class.getName();
+    private static final String ADVERTISING = "INSERT INTO advertising (id, id_discord, user_tag) VALUES (NULL, ?, ?)";
 
     private CommandHelper() {
 
@@ -51,11 +52,11 @@ public final class CommandHelper {
     }
 
     public static void logMemberStatusChange(final long userId, final String userTag, final OnlineStatus newStatus) {
-        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement statement = connection.prepareStatement(INSERT_USER_STATUS)) {
-            statement.setLong(1, userId);
-            statement.setBlob(2, Helper.changeCharacterEncoding(statement, userTag));
-            statement.setString(3, String.valueOf(newStatus));
-            statement.executeUpdate();
+        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement= connection.prepareStatement(INSERT_USER_STATUS)) {
+           preparedStatement.setLong(1, userId);
+            preparedStatement.setBlob(2, Helper.changeCharacterEncoding(preparedStatement, userTag));
+            preparedStatement.setString(3, String.valueOf(newStatus));
+            preparedStatement.executeUpdate();
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
@@ -65,12 +66,12 @@ public final class CommandHelper {
 
     public static void logUpdatedUsername(final long userId, final String userTag, final String oldUsername, final String newUsername) {
 
-        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement statement = connection.prepareStatement(USERNAME_UPDATED_LOG)) {
-            statement.setLong(1, userId);
-            statement.setBlob(2, Helper.changeCharacterEncoding(statement, userTag));
-            statement.setBlob(3, Helper.changeCharacterEncoding(statement, oldUsername));
-            statement.setBlob(4, Helper.changeCharacterEncoding(statement, newUsername));
-            statement.executeUpdate();
+        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(USERNAME_UPDATED_LOG)) {
+            preparedStatement.setLong(1, userId);
+            preparedStatement.setBlob(2, Helper.changeCharacterEncoding(preparedStatement, userTag));
+            preparedStatement.setBlob(3, Helper.changeCharacterEncoding(preparedStatement, oldUsername));
+            preparedStatement.setBlob(4, Helper.changeCharacterEncoding(preparedStatement, newUsername));
+            preparedStatement.executeUpdate();
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
@@ -91,9 +92,9 @@ public final class CommandHelper {
     }
 
     public static void logMemberAmount(final Guild guild) {
-        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement statement = connection.prepareStatement(INSERT_MEMBER_AMOUNT)) {
-            statement.setInt(1, guild.getMemberCount());
-            statement.executeUpdate();
+        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(INSERT_MEMBER_AMOUNT)) {
+            preparedStatement.setInt(1, guild.getMemberCount());
+            preparedStatement.executeUpdate();
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
@@ -196,6 +197,19 @@ public final class CommandHelper {
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
             logException(OccurredException.getOccurredExceptionData(sqlException, CommandHelper.class.getName()));
+        }
+    }
+
+    public static void logAdvertising(final long userId, final String userTag){
+
+        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement= connection.prepareStatement(ADVERTISING)) {
+            preparedStatement.setLong(1, userId);
+            preparedStatement.setBlob(2, Helper.changeCharacterEncoding(preparedStatement, userTag));
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
+            logException(OccurredException.getOccurredExceptionData(sqlException, CLASS_NAME));
         }
     }
 }

@@ -45,12 +45,9 @@ public class SpamDetection extends ListenerAdapter {
 
             QueryHelper.deleteScammerMessages(event, userId, messageContent);
 
-
             CommandHelper.logUserMute(sanction);
 
             event.getMessage().reply(":mute: Timeout aufgrund Verdacht auf Scam durch den Bot").queue();
-
-
         }
     }
 

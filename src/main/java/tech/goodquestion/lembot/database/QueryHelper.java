@@ -24,6 +24,7 @@ public final class QueryHelper {
     public static final String SPAM_VERIFICATION = "SELECT COUNT(DISTINCT id_channel) FROM `channel` INNER JOIN user_message_content ON channel.id_message = user_message_content.id_message WHERE user_message_content.id_discord = ? AND content = ? AND posted_at >= NOW() - INTERVAL 30 SECOND";
     public static final String SPAM_DATA = "SELECT id_channel, channel.id_message FROM `channel` INNER JOIN user_message_content ON channel.id_message = user_message_content.id_message WHERE user_message_content.id_discord = ? AND content = ? AND posted_at >= NOW() - INTERVAL 30 SECOND";
     public static final String HOPPING_CHECK = "SELECT COUNT(id_discord) FROM voice_join WHERE id_discord = ? AND joined_at >= NOW() - INTERVAL 60 SECOND UNION ALL SELECT COUNT(id_discord) FROM voice_move WHERE id_discord = ? AND moved_in_at >= NOW() - INTERVAL 60 SECOND";
+    private static final String ADVERTISING_CHECK = "SELECT * FROM advertising WHERE id_discord = ?" ;
     public static String MESSAGE_COUNT = "SELECT COUNT(user_message_content.id_discord) + 40000 FROM user_message_content";
     public static String ADMINS_MENTIONED = "SELECT mention FROM staff WHERE role_name = 'Administrator' AND mention != '<@739143338975952959>' ORDER BY staff_since;";
     public static String MODERATORS_MENTIONED = "SELECT mention FROM staff WHERE role_name = 'Moderator' ORDER BY staff_since;";
@@ -337,5 +338,29 @@ public final class QueryHelper {
         }
 
         return oldContent;
+    }
+
+    public static boolean hasAlreadyReceivedAdvertising(final long userid) {
+
+
+       try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(ADVERTISING_CHECK)) {
+
+           preparedStatement.setLong(1, userid);
+
+           ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+
+                return true;
+
+            }
+
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
+
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
+        }
+        return false;
+
     }
 }
