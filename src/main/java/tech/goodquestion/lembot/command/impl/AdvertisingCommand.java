@@ -79,7 +79,7 @@ public final class AdvertisingCommand implements IBotCommand {
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         final String title = "Bewerte unseren Server";
         final String description = "Wir hoffen, dass wir Dir behilflich sein konnten und sein werden, und freuen uns darüber, dass Du Teil der Community bist!\n" +
-                "Wir würden uns freuen, wenn Du unseren Server auf **disboard.org** (Webseite, die Server und Personen verbindet) bewertest.";
+                "Wir würden uns freuen, wenn Du unseren Server auf [**disboard.org**](https://disboard.org/de/server/779105997792083969) (Webseite, die Server und Personen verbindet) bewertest.";
         final String embedColor = EmbedColorHelper.SERVER;
         embedBuilder.addField("Geschätzte Ausfüllzeit", "1 bis 2 Minuten", true);
 
