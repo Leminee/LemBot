@@ -6,7 +6,7 @@ import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.io.IOException;
 
-public class KillSwitchCommand implements IBotCommand {
+public final class KillSwitchCommand implements IBotCommand {
 
     @Override
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) throws IOException {

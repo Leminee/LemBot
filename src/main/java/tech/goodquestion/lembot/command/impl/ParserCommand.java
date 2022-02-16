@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 
-public class ParserCommand implements IBotCommand {
+public final class ParserCommand implements IBotCommand {
 
     @Override
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) throws IOException {

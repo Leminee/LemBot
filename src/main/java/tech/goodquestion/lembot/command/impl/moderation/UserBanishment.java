@@ -17,7 +17,7 @@ import tech.goodquestion.lembot.library.Helper;
 import java.util.List;
 import java.util.Objects;
 
-public abstract sealed class UserBanishCommand implements IBotCommand permits BanCommand, WarnCommand, MuteCommand {
+public abstract sealed class UserBanishCommand implements IBotCommand permits BanCommand, WarnCommand {
 
     @Override
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) {
@@ -78,7 +78,6 @@ public abstract sealed class UserBanishCommand implements IBotCommand permits Ba
         sanction.author = message.getAuthor().getAsTag();
         sanction.reason = reason.toString();
         sanction.channelName = channel.getName();
-        sanction.duration = Long.parseLong(args[1]);
 
         if (requiresAdmin() && !Objects.requireNonNull(message.getMember()).hasPermission(Permission.MANAGE_ROLES)) {
             final EmbedBuilder embedBuilder = new EmbedBuilder();
