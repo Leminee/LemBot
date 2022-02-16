@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import org.json.JSONObject;
 import org.restlet.resource.ClientResource;
+import org.restlet.resource.ResourceException;
 import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.database.CommandHelper;
 import tech.goodquestion.lembot.entity.OccurredException;
@@ -25,26 +26,34 @@ public final class PasswordCheckCommand implements IBotCommand {
             return;
         }
 
-        message.delete().queue();
+        delete(message);
 
         final String password = args[0];
         final String embedTitle = "Passwort-Sicherheitsüberprüfung";
 
 
-        if (hasBeenLeaked(password)) {
+        try {
+            if (hasBeenLeaked(password)) {
 
-            String description = ":red_circle: Passwort wurde leider gefunden ";
+                String description = ":red_circle: Passwort wurde leider gefunden ";
 
-            Helper.createEmbed(embedBuilder, embedTitle, description, EmbedColorHelper.ERROR);
+                Helper.createEmbed(embedBuilder, embedTitle, description, EmbedColorHelper.ERROR);
 
-        } else {
+            } else {
 
-            String description = ":green_circle: Nicht gefunden ";
+                String description = ":green_circle: Nicht gefunden ";
 
-            Helper.createEmbed(embedBuilder, embedTitle, description, EmbedColorHelper.SUCCESS);
+                Helper.createEmbed(embedBuilder, embedTitle, description, EmbedColorHelper.SUCCESS);
+            }
+
+            Helper.sendEmbed(embedBuilder, message, true);
+
+        } catch (ResourceException resourceException) {
+
+            final EmbedBuilder embedBuilder1 = new EmbedBuilder();
+            Helper.createEmbed(embedBuilder1, "Error", "API outage :(", EmbedColorHelper.ERROR);
+            Helper.sendEmbed(embedBuilder1,message,true);
         }
-
-        Helper.sendEmbed(embedBuilder, message, true);
     }
 
     private boolean hasBeenLeaked(final String password) {
@@ -65,14 +74,15 @@ public final class PasswordCheckCommand implements IBotCommand {
             if (hasBeenLeaked) return true;
 
         } catch (IOException ioException) {
-
-
             System.out.println(ioException.getMessage());
             CommandHelper.logException(OccurredException.getOccurredExceptionData(ioException, this.getClass().getName()));
-
         }
 
         return false;
+    }
+
+    private void delete(Message message){
+        message.delete().queue();
     }
 
     @Override
