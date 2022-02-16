@@ -16,7 +16,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.Objects;
 
-public class SpamDetection extends ListenerAdapter {
+public final class SpamDetection extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(final MessageReceivedEvent event) {

@@ -16,7 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Instant;
 
-public class DeletedMessageStorage extends ListenerAdapter {
+public final class DeletedMessageStorage extends ListenerAdapter {
 
     @Override
     public void onMessageDelete(@Nonnull final MessageDeleteEvent event) {

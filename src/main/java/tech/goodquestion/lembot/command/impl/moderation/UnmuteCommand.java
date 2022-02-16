@@ -19,7 +19,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class UnmuteCommand implements IBotCommand {
+public final class UnmuteCommand extends RemovalBanishment implements IBotCommand {
 
     @Override
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) {
@@ -31,7 +31,7 @@ public class UnmuteCommand implements IBotCommand {
         final List<Member> mentionedMembers = message.getMentionedMembers();
         Member member;
 
-        member = UserBanishCommand.getMember(message, args, mentionedMembers, null);
+        member = UserBanishment.getMember(message, args, mentionedMembers, null);
 
         if (member == null) {
             EmbedBuilder embedBuilder = new EmbedBuilder();

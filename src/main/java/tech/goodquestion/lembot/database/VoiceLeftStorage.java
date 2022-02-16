@@ -12,7 +12,7 @@ import tech.goodquestion.lembot.library.parser.LocalDateTimeFormatter;
 
 import java.time.LocalTime;
 
-public class VoiceLeftStorage extends ListenerAdapter {
+public final class VoiceLeftStorage extends ListenerAdapter {
 
     @Override
     public void onGuildVoiceLeave(@NotNull final GuildVoiceLeaveEvent event) {

@@ -15,7 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.Instant;
 
-public class UpdatedMessageStorage extends ListenerAdapter {
+public final class UpdatedMessageStorage extends ListenerAdapter {
 
     @Override
     public void onMessageUpdate(@Nonnull final MessageUpdateEvent event) {

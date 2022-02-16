@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-public class AddingRole extends ListenerAdapter {
+public final class AddingRole extends ListenerAdapter {
 
     private final Map<Long, ScheduledFuture<?>> tasks = new HashMap<>();
 

@@ -3,7 +3,7 @@ package tech.goodquestion.lembot.config;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 
-public class ChannelConfig {
+public final class ChannelConfig {
 
     private long sanction;
     private long newArrivals;

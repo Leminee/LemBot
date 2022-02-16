@@ -1,8 +1,9 @@
-package tech.goodquestion.lembot.command;
+package tech.goodquestion.lembot.command.impl;
 
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
+import tech.goodquestion.lembot.command.IBotCommand;
 
 import java.io.IOException;
 

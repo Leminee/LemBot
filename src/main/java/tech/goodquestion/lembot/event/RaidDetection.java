@@ -12,7 +12,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class RaidDetection extends ListenerAdapter {
+public final class RaidDetection extends ListenerAdapter {
 
     private boolean isSameAttack = false;
 

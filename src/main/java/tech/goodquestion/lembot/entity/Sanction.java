@@ -1,6 +1,6 @@
 package tech.goodquestion.lembot.entity;
 
-public class Sanction {
+public final class Sanction {
 
     public long userId;
     public String userTag;

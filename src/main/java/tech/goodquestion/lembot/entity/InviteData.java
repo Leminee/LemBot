@@ -4,7 +4,7 @@ import net.dv8tion.jda.api.entities.Invite;
 
 import java.util.Objects;
 
-public class InviteData {
+public final class InviteData {
 
     private final long guildId;
     private int uses;

@@ -17,7 +17,7 @@ import java.awt.*;
 import java.time.Instant;
 import java.util.Objects;
 
-public final class BanCommand extends UserBanishCommand {
+public final class BanCommand extends UserBanishment {
 
     @Override
     public void banishUser(final Member toBanish, final Sanction sanction, final Message originMessage) {
@@ -71,7 +71,7 @@ public final class BanCommand extends UserBanishCommand {
                     .sendMessage(errorResponseException.getMessage() + " " +  sanctionedUser.getAsTag()).queue();
 
             System.out.println(errorResponseException.getMessage());
-            CommandHelper.logException(OccurredException.getOccurredExceptionData(errorResponseException, UserBanishCommand.class.getName()));
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(errorResponseException, UserBanishment.class.getName()));
         }
     }
     @Override

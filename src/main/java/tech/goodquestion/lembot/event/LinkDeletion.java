@@ -10,7 +10,7 @@ import tech.goodquestion.lembot.library.parser.LocalDateTimeFormatter;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class LinkDeletion extends ListenerAdapter {
+public final class LinkDeletion extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(final MessageReceivedEvent event) {

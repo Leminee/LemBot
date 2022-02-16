@@ -3,26 +3,33 @@ package tech.goodquestion.lembot.command.impl.moderation;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
+import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.database.CommandHelper;
 import tech.goodquestion.lembot.entity.OccurredException;
-import tech.goodquestion.lembot.entity.Sanction;
 import tech.goodquestion.lembot.entity.SanctionType;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
 import tech.goodquestion.lembot.library.Helper;
 
 import java.awt.*;
+import java.io.IOException;
 import java.time.Instant;
 import java.util.Objects;
-import java.util.concurrent.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
-public final class MuteCommand extends UserBanishCommand {
+public final class MuteCommand implements IBotCommand {
 
     private final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
 
-    public void banishUser(final Member toBanish, final Sanction sanction, final Message originMessage){
+
+    @Override
+    public void dispatch(Message message, TextChannel channel, Member sender, String[] args) throws IOException {
+
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         final String performedSanction = SanctionType.MUTE.getVerbalizedSanctionTyp();
@@ -32,6 +39,7 @@ public final class MuteCommand extends UserBanishCommand {
 
         embedBuilder.setTitle("Bestätigung");
         embedBuilder.setDescription("**" + ":mute: Member gemutet" + "**");
+        /*
         embedBuilder.setAuthor(toBanish.getUser().getAsTag(), null,toBanish.getUser().getEffectiveAvatarUrl());
         embedBuilder.addField("Gemuteter Member", toBanish.getAsMention(), true);
         embedBuilder.addField("Gemutet von", Objects.requireNonNull(originMessage.getMember()).getAsMention(), true);
@@ -49,6 +57,8 @@ public final class MuteCommand extends UserBanishCommand {
         CommandHelper.logUserMute(sanction);
 
         scheduleReminder(sanction.duration,TimeUnit.MINUTES,toBanish);
+    }*/
+
     }
 
     public void scheduleReminder(final long delay, final TimeUnit timeUnit, Member sanctionedMember) {
@@ -73,10 +83,6 @@ public final class MuteCommand extends UserBanishCommand {
         Config.getInstance().getChannelConfig().getAutoModerationChannel().sendMessageEmbeds(embedBuilder.build()).queue();
     }
 
-    @Override
-    public boolean requiresAdmin() {
-        return false;
-    }
 
     private void notifyMutedUser(final User sanctionedUser, final SanctionType sanctionType, final String performedSanction, final String reason, final long duration, final Member sanctionAuthor) {
 
@@ -101,9 +107,10 @@ public final class MuteCommand extends UserBanishCommand {
                     .sendMessage(errorResponseException.getMessage() + " " +  sanctionedUser.getAsTag()).queue();
 
             System.out.println(errorResponseException.getMessage());
-            CommandHelper.logException(OccurredException.getOccurredExceptionData(errorResponseException, UserBanishCommand.class.getName()));
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(errorResponseException, UserBanishment.class.getName()));
         }
     }
+
 
     @Override
     public String getName() {
@@ -112,13 +119,9 @@ public final class MuteCommand extends UserBanishCommand {
 
     @Override
     public String getDescription() {
-        return "`mute <user> <dauer> <reason>`: Schickt den User in Timeout";
+        return "`mute <user> <dauer> <reason>`: Mutet den User";
     }
 
-    @Override
-    public boolean isPermitted(Member member) {
-        return super.isPermitted(member);
-    }
 
     @Override
     public String getHelpList() {

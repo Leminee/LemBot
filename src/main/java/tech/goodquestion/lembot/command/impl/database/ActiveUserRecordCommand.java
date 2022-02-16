@@ -9,7 +9,7 @@ import tech.goodquestion.lembot.database.QueryHelper;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
 import tech.goodquestion.lembot.library.Helper;
 
-public class ActiveUserRecordCommand implements IBotCommand {
+public final class ActiveUserRecordCommand implements IBotCommand {
 
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {

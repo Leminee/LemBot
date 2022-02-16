@@ -9,7 +9,7 @@ import tech.goodquestion.lembot.library.Helper;
 
 import java.util.Objects;
 
-public class InviteLinkDeletion extends ListenerAdapter {
+public final class InviteLinkDeletion extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(final MessageReceivedEvent event) {

@@ -6,7 +6,7 @@ import tech.goodquestion.lembot.config.Config;
 
 import java.util.Set;
 
-public class MediaOnly extends ListenerAdapter {
+public final class MediaOnly extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(final MessageReceivedEvent event) {

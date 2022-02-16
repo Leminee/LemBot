@@ -2,7 +2,7 @@ package tech.goodquestion.lembot.config;
 
 import java.util.Map;
 
-public class ReactionRoleMessage {
+public final class ReactionRoleMessage {
 
     private String channel;
     private String message;

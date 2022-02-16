@@ -17,7 +17,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class CommandManager extends ListenerAdapter {
+public final class CommandManager extends ListenerAdapter {
 
     public static final Pattern COMMAND_PATTERN = Pattern.compile("[" + Config.getInstance().getBotConfig().getPrefix() + "]([^ ]+)(.*)");
     private static CommandManager INSTANCE = null;

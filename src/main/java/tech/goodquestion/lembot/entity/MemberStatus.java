@@ -1,6 +1,6 @@
 package tech.goodquestion.lembot.entity;
 
-public class MemberStatus {
+public final class MemberStatus {
 
     public Long Id;
     public String tag;

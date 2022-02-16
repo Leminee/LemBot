@@ -15,7 +15,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.Objects;
 
-public class HoppingDetection extends ListenerAdapter {
+public final class HoppingDetection extends ListenerAdapter {
 
     @Override
     public void onGuildVoiceMove(@NotNull final GuildVoiceMoveEvent event) {

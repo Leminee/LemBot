@@ -8,7 +8,7 @@ import tech.goodquestion.lembot.command.IBotCommand;
 
 import java.io.IOException;
 
-public class UserLogCommand implements IBotCommand {
+public final class UserLogCommand implements IBotCommand {
     @Override
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) throws IOException {
 

@@ -2,7 +2,7 @@ package tech.goodquestion.lembot.config;
 
 import net.dv8tion.jda.api.entities.Category;
 
-public class CategoryConfig {
+public final class CategoryConfig {
 
     private long voiceFun;
 

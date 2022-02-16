@@ -7,7 +7,7 @@ import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.library.Helper;
 
 
-public class WelcomingMemberJoin extends ListenerAdapter {
+public final class WelcomingMemberJoin extends ListenerAdapter {
 
     @Override
     public void onGuildMemberJoin(@NotNull final GuildMemberJoinEvent event) {

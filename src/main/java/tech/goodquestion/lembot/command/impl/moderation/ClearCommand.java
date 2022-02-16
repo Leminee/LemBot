@@ -10,7 +10,7 @@ import tech.goodquestion.lembot.library.Helper;
 
 import java.util.List;
 
-public class ClearCommand implements IBotCommand {
+public final class ClearCommand implements IBotCommand {
 
     @Override
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) {

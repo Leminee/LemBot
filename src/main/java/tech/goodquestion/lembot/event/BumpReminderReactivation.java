@@ -7,7 +7,7 @@ import tech.goodquestion.lembot.database.QueryHelper;
 
 import java.util.concurrent.TimeUnit;
 
-public class BumpReminderReactivation extends ListenerAdapter {
+public final class BumpReminderReactivation extends ListenerAdapter {
 
     private final BumpReminder bumpReminder;
 

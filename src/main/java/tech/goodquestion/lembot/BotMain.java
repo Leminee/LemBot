@@ -10,10 +10,10 @@ import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import tech.goodquestion.lembot.command.BotsCommand;
+import tech.goodquestion.lembot.command.impl.BotsCommand;
 import tech.goodquestion.lembot.command.CommandManager;
-import tech.goodquestion.lembot.command.KillSwitchCommand;
-import tech.goodquestion.lembot.command.ParserCommand;
+import tech.goodquestion.lembot.command.impl.KillSwitchCommand;
+import tech.goodquestion.lembot.command.impl.ParserCommand;
 import tech.goodquestion.lembot.command.impl.*;
 import tech.goodquestion.lembot.command.impl.database.*;
 import tech.goodquestion.lembot.command.impl.moderation.*;
@@ -102,6 +102,8 @@ public class BotMain {
         commandManager.registerCommand(new WarnCommand());
         commandManager.registerCommand(new ParserCommand());
         commandManager.registerCommand(new BotsCommand());
+        commandManager.registerCommand(new UnbanCommand());
+        commandManager.registerCommand(new UnwarnCommand());
 
         BumpReminder bumpReminder = new BumpReminder();
 

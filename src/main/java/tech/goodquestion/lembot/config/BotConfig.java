@@ -1,6 +1,6 @@
 package tech.goodquestion.lembot.config;
 
-public class BotConfig {
+public final class BotConfig {
 
     private String token;
     private char prefix;

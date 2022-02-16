@@ -13,7 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class MemberAuthorization extends ListenerAdapter {
+public final class MemberAuthorization extends ListenerAdapter {
 
     @Override
     public void onGuildMemberJoin(@NotNull final GuildMemberJoinEvent event) {

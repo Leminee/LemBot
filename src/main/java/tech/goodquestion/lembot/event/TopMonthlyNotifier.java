@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
 
-public class TopMonthlyNotifier extends ListenerAdapter {
+public final class TopMonthlyNotifier extends ListenerAdapter {
 
     @Override
     public void onReady(@NotNull final ReadyEvent event) {

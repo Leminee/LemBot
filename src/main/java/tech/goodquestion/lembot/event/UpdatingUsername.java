@@ -4,7 +4,7 @@ import net.dv8tion.jda.api.events.guild.member.update.GuildMemberUpdateNicknameE
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import tech.goodquestion.lembot.database.CommandHelper;
 
-public class UpdatingUsername extends ListenerAdapter {
+public final class UpdatingUsername extends ListenerAdapter {
 
     @Override
     public void onGuildMemberUpdateNickname(final GuildMemberUpdateNicknameEvent event) {

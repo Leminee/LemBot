@@ -11,7 +11,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.List;
 
-public class Config {
+public final class Config {
 
     public static final String CONFIG_FILE = "example.config.yml";
     private static Config INSTANCE = null;

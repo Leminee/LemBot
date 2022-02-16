@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
-public class BumpReminder extends ListenerAdapter {
+public final class BumpReminder extends ListenerAdapter {
 
     private final List<ScheduledFuture<?>> tasks = new ArrayList<>();
     private final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);

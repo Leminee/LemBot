@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class InviteTracking extends ListenerAdapter {
+public final class InviteTracking extends ListenerAdapter {
 
     private final Map<String, InviteData> invitesCache = new ConcurrentHashMap<>();
 

@@ -14,7 +14,7 @@ import tech.goodquestion.lembot.library.Helper;
 
 import java.io.IOException;
 
-public class PasswordCheckCommand implements IBotCommand {
+public final class PasswordCheckCommand implements IBotCommand {
 
     @Override
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) {

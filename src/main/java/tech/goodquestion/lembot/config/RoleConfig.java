@@ -2,7 +2,7 @@ package tech.goodquestion.lembot.config;
 
 import net.dv8tion.jda.api.entities.Role;
 
-public class RoleConfig {
+public final class RoleConfig {
 
     private long bump;
     private long mute;

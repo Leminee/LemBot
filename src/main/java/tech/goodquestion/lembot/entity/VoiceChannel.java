@@ -1,6 +1,6 @@
 package tech.goodquestion.lembot.entity;
 
-public class VoiceChannel {
+public final class VoiceChannel {
 
     public long memberId;
     public String memberTag;

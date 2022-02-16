@@ -1,6 +1,6 @@
 package tech.goodquestion.lembot.config;
 
-public class DatabaseConfig {
+public final class DatabaseConfig {
 
     private String uri;
     private String username;

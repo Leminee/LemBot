@@ -20,7 +20,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public final class WarnCommand extends UserBanishCommand {
+public final class WarnCommand extends UserBanishment {
 
     private final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
     @Override
@@ -76,7 +76,7 @@ public final class WarnCommand extends UserBanishCommand {
                     .sendMessage(errorResponseException.getMessage() + " " +  sanctionedUser.getAsTag()).queue();
 
             System.out.println(errorResponseException.getMessage());
-            CommandHelper.logException(OccurredException.getOccurredExceptionData(errorResponseException,UserBanishCommand.class.getName()));
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(errorResponseException, UserBanishment.class.getName()));
         }
     }
 

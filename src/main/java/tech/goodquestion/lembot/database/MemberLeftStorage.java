@@ -8,7 +8,7 @@ import tech.goodquestion.lembot.library.Helper;
 
 import java.util.Objects;
 
-public class MemberLeftStorage extends ListenerAdapter {
+public final class MemberLeftStorage extends ListenerAdapter {
 
     @Override
     public void onGuildMemberRemove(@NotNull GuildMemberRemoveEvent event) {

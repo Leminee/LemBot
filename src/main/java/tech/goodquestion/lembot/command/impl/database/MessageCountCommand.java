@@ -9,7 +9,7 @@ import tech.goodquestion.lembot.entity.UserData;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
 import tech.goodquestion.lembot.library.Helper;
 
-public class MessageCountCommand implements IBotCommand {
+public final class MessageCountCommand implements IBotCommand {
 
     @Override
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) {

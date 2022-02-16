@@ -10,7 +10,7 @@ import tech.goodquestion.lembot.config.Config;
 
 import java.util.Random;
 
-public class VoiceAutoCreation extends ListenerAdapter {
+public final class VoiceAutoCreation extends ListenerAdapter {
 
     private static final String[] LEFT = {
             "admiring",

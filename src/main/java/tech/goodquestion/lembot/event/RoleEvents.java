@@ -9,7 +9,7 @@ import tech.goodquestion.lembot.config.Config;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 
-public class RoleEvents extends ListenerAdapter {
+public final class RoleEvents extends ListenerAdapter {
 
     @Override
     public void onRoleCreate(@Nonnull final RoleCreateEvent event) {

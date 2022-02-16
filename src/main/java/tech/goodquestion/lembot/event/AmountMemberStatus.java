@@ -6,7 +6,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import tech.goodquestion.lembot.config.Config;
 
-public class AmountMemberStatus extends ListenerAdapter {
+public final class AmountMemberStatus extends ListenerAdapter {
 
     @Override
     public void onGuildMemberJoin(final GuildMemberJoinEvent event) {

@@ -17,7 +17,7 @@ import tech.goodquestion.lembot.library.Helper;
 import java.util.List;
 import java.util.Objects;
 
-public abstract sealed class UserBanishCommand implements IBotCommand permits BanCommand, WarnCommand {
+public abstract sealed class UserBanishment implements IBotCommand permits BanCommand, WarnCommand {
 
     @Override
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) {

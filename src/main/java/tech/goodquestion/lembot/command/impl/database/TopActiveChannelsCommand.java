@@ -13,7 +13,7 @@ import tech.goodquestion.lembot.library.EmbedColorHelper;
 import java.awt.*;
 import java.sql.SQLException;
 
-public class TopActiveChannelsCommand implements IBotCommand {
+public final class TopActiveChannelsCommand implements IBotCommand {
 
     @Override
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) {

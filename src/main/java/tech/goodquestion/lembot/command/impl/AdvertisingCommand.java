@@ -17,7 +17,7 @@ import tech.goodquestion.lembot.library.Helper;
 import java.io.IOException;
 import java.time.Instant;
 
-public class AdvertisingCommand implements IBotCommand {
+public final class AdvertisingCommand implements IBotCommand {
 
     @Override
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) throws IOException {
@@ -79,7 +79,7 @@ public class AdvertisingCommand implements IBotCommand {
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         final String title = "Bewerte unseren Server";
         final String description = "Wir hoffen, dass wir Dir behilflich sein konnten und sein werden, und freuen uns darüber, dass Du Teil der Community bist!\n" +
-                "Wir würden uns sehr freuen, wenn Du unseren Server auf **Disboard.org** (Webseite, die Server und Personen verbindet) bewertest.";
+                "Wir würden uns freuen, wenn Du unseren Server auf **disboard.org** (Webseite, die Server und Personen verbindet) bewertest.";
         final String embedColor = EmbedColorHelper.SERVER;
         embedBuilder.addField("Geschätzte Ausfüllzeit", "1 bis 2 Minuten", true);
 

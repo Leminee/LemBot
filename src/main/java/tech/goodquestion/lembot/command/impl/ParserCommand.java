@@ -1,9 +1,10 @@
-package tech.goodquestion.lembot.command;
+package tech.goodquestion.lembot.command.impl;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
+import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.library.*;
 import tech.goodquestion.lembot.library.parser.LocalDateTimeFormatter;
 import tech.goodquestion.lembot.library.parser.LocalDateTimeParser;

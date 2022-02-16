@@ -1,6 +1,6 @@
 package tech.goodquestion.lembot.entity;
 
-public class InviteTrackingData {
+public final class InviteTrackingData {
 
     public String url;
     public long usedBy;

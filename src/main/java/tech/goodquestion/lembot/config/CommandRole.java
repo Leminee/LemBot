@@ -1,6 +1,6 @@
 package tech.goodquestion.lembot.config;
 
-public class CommandRole {
+public final class CommandRole {
 
     private String abbr;
     private long role;

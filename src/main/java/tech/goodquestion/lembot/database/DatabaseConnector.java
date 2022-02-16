@@ -8,7 +8,7 @@ import tech.goodquestion.lembot.entity.OccurredException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class DatabaseConnector {
+public final class DatabaseConnector {
 
     private static MysqlConnectionPoolDataSource dataSource;
 

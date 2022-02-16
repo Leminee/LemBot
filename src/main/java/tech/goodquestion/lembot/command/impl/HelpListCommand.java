@@ -14,7 +14,7 @@ import java.awt.*;
 import java.util.List;
 import java.util.*;
 
-public class HelpListCommand implements IBotCommand {
+public final class HelpListCommand implements IBotCommand {
 
     @Override
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) {

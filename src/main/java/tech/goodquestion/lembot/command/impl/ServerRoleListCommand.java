@@ -14,7 +14,7 @@ import java.awt.*;
 import java.util.List;
 import java.util.Objects;
 
-public class ServerRoleListCommand implements IBotCommand {
+public final class ServerRoleListCommand implements IBotCommand {
 
     @Override
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) {

@@ -1,6 +1,6 @@
 package tech.goodquestion.lembot.entity;
 
-public class UserData {
+public final class UserData {
 
     public Long userId;
     public Integer amountOf;

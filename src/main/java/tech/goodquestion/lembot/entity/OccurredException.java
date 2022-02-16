@@ -1,6 +1,6 @@
 package tech.goodquestion.lembot.entity;
 
-public class OccurredException {
+public final class OccurredException {
 
     public String occurredIn;
     public String type;

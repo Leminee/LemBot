@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Erstellungszeit: 13. Feb 2022 um 06:36
+-- Erstellungszeit: 16. Feb 2022 um 02:55
 -- Server-Version: 10.3.31-MariaDB-0+deb10u1
 -- PHP-Version: 7.4.27
 
@@ -20,6 +20,19 @@ SET time_zone = "+00:00";
 --
 -- Datenbank: `discordbot`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `advertising`
+--
+
+CREATE TABLE `advertising` (
+  `id` int(11) NOT NULL,
+  `id_discord` bigint(20) NOT NULL,
+  `user_tag` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `sent_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -349,6 +362,12 @@ CREATE TABLE `warned_user` (
 --
 
 --
+-- Indizes für die Tabelle `advertising`
+--
+ALTER TABLE `advertising`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indizes für die Tabelle `banned_user`
 --
 ALTER TABLE `banned_user`
@@ -478,6 +497,12 @@ ALTER TABLE `warned_user`
 --
 -- AUTO_INCREMENT für exportierte Tabellen
 --
+
+--
+-- AUTO_INCREMENT für Tabelle `advertising`
+--
+ALTER TABLE `advertising`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT für Tabelle `banned_user`
