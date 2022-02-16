@@ -16,6 +16,7 @@ import tech.goodquestion.lembot.library.Helper;
 
 import java.io.IOException;
 import java.time.Instant;
+import java.util.Objects;
 
 public final class AdvertisingCommand implements IBotCommand {
 
@@ -63,7 +64,7 @@ public final class AdvertisingCommand implements IBotCommand {
 
         } catch (ErrorResponseException errorResponseException) {
             System.out.println(errorResponseException.getMessage());
-            CommandHelper.logException(OccurredException.getOccurredExceptionData(errorResponseException, this.getName()));
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(errorResponseException, this.getClass().getName()));
 
             final EmbedBuilder embedBuilder1 = new EmbedBuilder();
 
@@ -81,12 +82,13 @@ public final class AdvertisingCommand implements IBotCommand {
         final String description = "Wir hoffen, dass wir Dir behilflich sein konnten und sein werden, und freuen uns darüber, dass Du Teil der Community bist!\n" +
                 "Wir würden uns freuen, wenn Du unseren Server auf [**disboard.org**](https://disboard.org/de/server/779105997792083969) (Webseite, die Server und Personen verbindet) bewertest.";
         final String embedColor = EmbedColorHelper.SERVER;
-        embedBuilder.addField("Geschätzte Ausfüllzeit", "1 bis 2 Minuten", true);
+        embedBuilder.addField("Geschätzte Ausfüllzeit", "1 bis 3 Minuten", true);
 
-        embedBuilder.addField("Link zur Bewertungsseite", "https://disboard.org/de/server/779105997792083969", true);
+        embedBuilder.addField("Link zur Bewertungsseite", "[**disboard.org/gq**](https://disboard.org/de/review/create/779105997792083969)", true);
         embedBuilder.setThumbnail("https://cdn.discordapp.com/attachments/919074434021736507/920552764784914472/logoqg1_1.gif");
         embedBuilder.setImage("https://cdn.discordapp.com/attachments/942585447383728159/942688214278369320/Bildschirmfoto_2022-02-14_um_08.46.20.png");
-        embedBuilder.setFooter("Danke <3");
+        embedBuilder.addField("Hinweis", "```Du musst auf disboard.org mit Deinem Discord-Account eingeloggt sein, um den Server bewerten zu können.```", false);
+        embedBuilder.setFooter(Objects.requireNonNull(Config.getInstance().getGuild().getOwner()).getUser().getAsTag() +" | Danke <3",Config.getInstance().getGuild().getOwner().getUser().getEffectiveAvatarUrl());
         embedBuilder.setTimestamp(Instant.now());
 
         Helper.createEmbed(embedBuilder, title, description, embedColor);
