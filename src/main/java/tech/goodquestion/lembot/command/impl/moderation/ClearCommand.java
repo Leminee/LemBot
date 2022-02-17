@@ -8,7 +8,9 @@ import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
 import tech.goodquestion.lembot.library.Helper;
 
+import java.awt.*;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public final class ClearCommand implements IBotCommand {
 
@@ -23,9 +25,13 @@ public final class ClearCommand implements IBotCommand {
             channel.deleteMessages(messagesToDelete).queue();
 
             final EmbedBuilder embedBuilder = new EmbedBuilder();
+            embedBuilder.setTitle("Bestätigung");
+            final String description = "Es wurden " + (amountMessagesToDelete - 1) + " Nachrichten durch " + message.getAuthor().getAsMention() + " erfolgreich gelöscht!";
+            embedBuilder.setDescription(description);
+            embedBuilder.setColor(Color.decode(EmbedColorHelper.SUCCESS));
 
-            Helper.createEmbed(embedBuilder, "Bestätigung", "Es wurden " + (amountMessagesToDelete - 1) + " Nachrichten durch " + message.getAuthor().getAsMention() + " erfolgreich gelöscht!", EmbedColorHelper.SUCCESS);
-            Helper.sendEmbed(embedBuilder,message,false);
+            channel.sendMessageEmbeds(embedBuilder.build())
+                    .queue( m -> m.delete().queueAfter(3, TimeUnit.HOURS));
 
         } catch (IllegalArgumentException illegalArgumentException) {
 
