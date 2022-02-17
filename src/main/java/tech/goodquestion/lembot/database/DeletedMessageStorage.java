@@ -15,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Instant;
+import java.util.concurrent.TimeUnit;
 
 public final class DeletedMessageStorage extends ListenerAdapter {
 
@@ -67,7 +68,8 @@ public final class DeletedMessageStorage extends ListenerAdapter {
                         .setTimestamp(Instant.now());
 
 
-                Config.getInstance().getChannelConfig().getUpdatedDeletedChannel().sendMessageEmbeds(embedBuilder.build()).queue();
+                Config.getInstance().getChannelConfig().getUpdatedDeletedChannel().sendMessageEmbeds(embedBuilder.build())
+                        .queue(m -> m.delete().queueAfter(14, TimeUnit.DAYS));
 
                 PreparedStatement preparedStatementOne = connection.prepareStatement(deletedMessage);
                 preparedStatementOne.setLong(1, idDeletedMessage);

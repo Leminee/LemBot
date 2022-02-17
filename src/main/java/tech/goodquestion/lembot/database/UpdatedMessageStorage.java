@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.Instant;
+import java.util.concurrent.TimeUnit;
 
 public final class UpdatedMessageStorage extends ListenerAdapter {
 
@@ -67,7 +68,8 @@ public final class UpdatedMessageStorage extends ListenerAdapter {
                 .setTimestamp(Instant.now());
 
 
-        Config.getInstance().getChannelConfig().getUpdatedDeletedChannel().sendMessageEmbeds(embedBuilder.build()).queue();
+        Config.getInstance().getChannelConfig().getUpdatedDeletedChannel().sendMessageEmbeds(embedBuilder.build())
+                .queue(m -> m.delete().queueAfter(14, TimeUnit.DAYS));
 
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(updatedMessageData)) {
