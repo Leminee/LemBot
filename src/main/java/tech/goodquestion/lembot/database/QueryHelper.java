@@ -28,6 +28,11 @@ public final class QueryHelper {
     private static final String ADVERTISING_CHECK = "SELECT * FROM advertising WHERE id_discord = ?" ;
     private static final String LAST_JOIN_DATE = "SELECT joined_at FROM `user_join` WHERE id_discord = ? ORDER BY `joined_at` DESC LIMIT 1";
     private static final String LAST_ACTIVITY = "SELECT * FROM((SELECT changed_at FROM `user_status` WHERE id_discord = ? AND status = 'OFFLINE' ORDER BY changed_at DESC LIMIT 1) UNION ALL (SELECT posted_at FROM `user_message_content` WHERE id_discord = ? ORDER BY `posted_at` DESC LIMIT 1)) t ORDER BY t.changed_at DESC";
+    private static final String AMOUNT_WARNS = "SELECT COUNT(id_discord) FROM warned_user WHERE id_discord = ?";
+    private static final String AMOUNT_MUTES = "SELECT COUNT(id_discord) FROM muted_user WHERE id_discord = ?";
+    private static final String AMOUNT_BANS= "SELECT COUNT(id_discord) FROM banned_user WHERE id_discord = ?" ;
+    private static final String INVITER = "SELECT invited_by FROM invite_tracking WHERE used_by = ?";
+    private static final String ACTIVE_SANCTION = "SELECT activ FROM `muted_user` WHERE id_discord = ? ORDER BY activ DESC LIMIT 1";
     public static String MESSAGE_COUNT = "SELECT COUNT(user_message_content.id_discord) + 40000 FROM user_message_content";
     public static String ADMINS_MENTIONED = "SELECT mention FROM staff WHERE role_name = 'Administrator' AND mention != '<@739143338975952959>' ORDER BY staff_since;";
     public static String MODERATORS_MENTIONED = "SELECT mention FROM staff WHERE role_name = 'Moderator' ORDER BY staff_since;";
@@ -446,8 +451,6 @@ public final class QueryHelper {
                 return amountMessages;
             }
 
-
-
         } catch (SQLException sqlException) {
 
             System.out.println(sqlException.getMessage());
@@ -461,5 +464,63 @@ public final class QueryHelper {
     public static long getAmountBumpsBy(long userId) {
 
         return getAmountOfBy(userId, AMOUNT_BUMPS);
+    }
+
+
+    public static long getAmountWarns(long userId){
+        return getAmountOfBy(userId,AMOUNT_WARNS);
+    }
+
+    public static long getAmountMutes(long userId){
+        return getAmountOfBy(userId,AMOUNT_MUTES);
+    }
+
+    public static long getAmountBans(long userId){
+        return getAmountOfBy(userId,AMOUNT_BANS);
+    }
+
+    public static String getInviter(long userId) {
+
+        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(INVITER)) {
+
+            preparedStatement.setLong(1, userId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+
+                return "<@" + resultSet.getString(1) + ">";
+            }
+
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
+        }
+
+        return "N/A";
+    }
+
+    public static boolean hasActiveSanction(long userId){
+
+        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(ACTIVE_SANCTION)) {
+
+            preparedStatement.setLong(1, userId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+
+            if (resultSet.next()) {
+
+                return resultSet.getInt(1) == 1;
+            }
+
+        } catch (SQLException sqlException) {
+
+            System.out.println(sqlException.getMessage());
+
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
+        }
+
+        return false;
     }
 }
