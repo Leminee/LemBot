@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import tech.goodquestion.lembot.entity.OccurredException;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -25,6 +26,8 @@ public final class QueryHelper {
     public static final String SPAM_DATA = "SELECT id_channel, channel.id_message FROM `channel` INNER JOIN user_message_content ON channel.id_message = user_message_content.id_message WHERE user_message_content.id_discord = ? AND content = ? AND posted_at >= NOW() - INTERVAL 30 SECOND";
     public static final String HOPPING_CHECK = "SELECT COUNT(id_discord) FROM voice_join WHERE id_discord = ? AND joined_at >= NOW() - INTERVAL 60 SECOND UNION ALL SELECT COUNT(id_discord) FROM voice_move WHERE id_discord = ? AND moved_in_at >= NOW() - INTERVAL 60 SECOND";
     private static final String ADVERTISING_CHECK = "SELECT * FROM advertising WHERE id_discord = ?" ;
+    private static final String LAST_JOIN_DATE = "SELECT joined_at FROM `user_join` WHERE id_discord = ? ORDER BY `joined_at` DESC LIMIT 1";
+    private static final String LAST_ACTIVITY = "SELECT * FROM((SELECT changed_at FROM `user_status` WHERE id_discord = ? AND status = 'OFFLINE' ORDER BY changed_at DESC LIMIT 1) UNION ALL (SELECT posted_at FROM `user_message_content` WHERE id_discord = ? ORDER BY `posted_at` DESC LIMIT 1)) t ORDER BY t.changed_at DESC";
     public static String MESSAGE_COUNT = "SELECT COUNT(user_message_content.id_discord) + 40000 FROM user_message_content";
     public static String ADMINS_MENTIONED = "SELECT mention FROM staff WHERE role_name = 'Administrator' AND mention != '<@739143338975952959>' ORDER BY staff_since;";
     public static String MODERATORS_MENTIONED = "SELECT mention FROM staff WHERE role_name = 'Moderator' ORDER BY staff_since;";
@@ -35,6 +38,7 @@ public final class QueryHelper {
     public static String FIRST_CONTENT_AFTER_UPDATING_MESSAGE = "SELECT content FROM user_message_content WHERE id_message = ? ";
     public static String UPDATED_MESSAGE_LAST_CONTENT = "SELECT content FROM updated_message WHERE id_message = ? ORDER BY updated_at DESC LIMIT 1 ";
     public static String RAID_DETECTION = "SELECT COUNT(DISTINCT id_discord) FROM `user_join` WHERE joined_at >= NOW() - INTERVAL 30 SECOND";
+
 
     private QueryHelper() {
 
@@ -357,10 +361,105 @@ public final class QueryHelper {
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
-
             CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
         }
         return false;
 
+    }
+
+    public static LocalDateTime getLastJoinDateTimeBy(long userId) {
+
+        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(LAST_JOIN_DATE)) {
+
+            preparedStatement.setLong(1, userId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            LocalDateTime lastDatetimeJoined;
+
+            if (resultSet.next()) {
+
+                lastDatetimeJoined =  resultSet.getTimestamp(1).toLocalDateTime();
+                return lastDatetimeJoined;
+            }
+
+
+        } catch (SQLException sqlException) {
+
+            System.out.println(sqlException.getMessage());
+
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
+        }
+
+        return null;
+
+    }
+
+    public static LocalDateTime getLastActivityDateTimeBy(long userId) {
+
+        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(LAST_ACTIVITY)) {
+
+            preparedStatement.setLong(1, userId);
+            preparedStatement.setLong(2, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+
+            LocalDateTime lastActivityDateTime;
+
+            if (resultSet.next()) {
+
+                lastActivityDateTime = resultSet.getTimestamp(1).toLocalDateTime();
+
+
+               return lastActivityDateTime;
+            }
+
+
+        } catch (SQLException sqlException) {
+
+            System.out.println(sqlException.getMessage());
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
+        }
+
+        return null;
+    }
+
+    public static long getAmountMessagesBy(long userId) {
+
+        return getAmountOfBy(userId, AMOUNT_MESSAGES);
+    }
+
+    public static long getAmountOfBy(long userId, String amountOf) {
+
+        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(amountOf)) {
+
+            preparedStatement.setLong(1, userId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            int amountMessages;
+
+            if (resultSet.next()) {
+
+                amountMessages = resultSet.getInt(1);
+
+                return amountMessages;
+            }
+
+
+
+        } catch (SQLException sqlException) {
+
+            System.out.println(sqlException.getMessage());
+
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
+        }
+
+        return 0;
+    }
+
+    public static long getAmountBumpsBy(long userId) {
+
+        return getAmountOfBy(userId, AMOUNT_BUMPS);
     }
 }
