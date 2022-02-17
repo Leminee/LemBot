@@ -218,4 +218,18 @@ public final class Helper {
 
         return dateNow + " um " + timeNow;
     }
+
+    public static User getUserFromCommandInput(final Message message, final String[] args) {
+
+        List<User> mentionedUsers = message.getMentionedUsers();
+        User user;
+
+        if (mentionedUsers.size() == 0) {
+            user = CommandManager.getInstance().getJDA().retrieveUserById(args[0], true).complete();
+        } else {
+            user = mentionedUsers.get(0);
+        }
+
+        return user;
+    }
 }

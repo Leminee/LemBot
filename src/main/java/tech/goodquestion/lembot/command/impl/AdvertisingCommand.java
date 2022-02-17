@@ -40,7 +40,9 @@ public final class AdvertisingCommand implements IBotCommand {
             return;
         }
 
-        if (QueryHelper.hasAlreadyReceivedAdvertising(Long.parseLong(args[0]))) {
+        final User user = Helper.getUserFromCommandInput(message, args);
+
+        if (QueryHelper.hasAlreadyReceivedAdvertising(user.getIdLong())) {
 
             final EmbedBuilder embedBuilder = new EmbedBuilder();
             final String title = "Fehler";
@@ -53,7 +55,7 @@ public final class AdvertisingCommand implements IBotCommand {
 
         try {
 
-            advertiseServer(args);
+            advertiseServer(args, message);
 
             final EmbedBuilder embedBuilder = new EmbedBuilder();
             final String title = "Bestätigung";
@@ -73,9 +75,9 @@ public final class AdvertisingCommand implements IBotCommand {
         }
     }
 
-    private void advertiseServer(String[] args) {
+    private void advertiseServer(String[] args, Message message) {
 
-        final User user = Config.getInstance().getGuild().getJDA().retrieveUserById(args[0]).complete();
+        final User user = Helper.getUserFromCommandInput(message,args);
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         final String title = "Bewerte unseren Server";
@@ -98,10 +100,12 @@ public final class AdvertisingCommand implements IBotCommand {
                 .complete();
 
 
-        final String userTag = Config.getInstance().getGuild().getJDA().retrieveUserById(args[0]).complete().getAsTag();
+        final String userTag = user.getAsTag();
 
         CommandHelper.logAdvertising(Long.parseLong(args[0]), userTag);
     }
+
+
 
     @Override
     public String getName() {
