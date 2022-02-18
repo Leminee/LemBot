@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import tech.goodquestion.lembot.command.IBotCommand;
+import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.database.QueryHelper;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
 import tech.goodquestion.lembot.library.Helper;
@@ -22,6 +23,14 @@ public final class UserLogCommand implements IBotCommand {
     @Override
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) throws IOException {
 
+
+        if (channel.getIdLong() != Config.getInstance().getChannelConfig().getStaffCommandsChannel().getIdLong()) {
+            final EmbedBuilder embedBuilder = new EmbedBuilder();
+            final String embedDescription = ":x: Dieser Befehl kann nur in [channel] ausgeführt werden!".replace("[channel]", Config.getInstance().getChannelConfig().getStaffCommandsChannel().getAsMention());
+            Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
+            Helper.sendEmbed(embedBuilder, message, true);
+            return;
+        }
 
         User user;
 
@@ -52,22 +61,16 @@ public final class UserLogCommand implements IBotCommand {
             return;
         }
 
-
         final String accountCreationDate = LocalDateTimeFormatter.toGermanFormat(user.getTimeCreated().toLocalDateTime());
 
-        String lastActivityDateTime;
-        if (QueryHelper.getLastActivityDateTimeBy(userId) == null) {
-
-            lastActivityDateTime = "N/A";
-
-        } else {
-            lastActivityDateTime = LocalDateTimeFormatter.toGermanFormat(Objects.requireNonNull(QueryHelper.getLastActivityDateTimeBy(userId)));
-        }
+        final String lastActivityDateTime = QueryHelper.getLastActivityDateTimeBy(userId) == null
+                ? "N/A"
+                : LocalDateTimeFormatter.toGermanFormat(Objects.requireNonNull(QueryHelper.getLastActivityDateTimeBy(userId)));
 
         final long amountMessages = QueryHelper.getAmountMessagesBy(userId);
         final long amountBumps = QueryHelper.getAmountBumpsBy(userId);
 
-        final String lastActivity = !member.getOnlineStatus().equals(OnlineStatus.OFFLINE) ? ":green_circle: Online" : "```js\nZuletzt aktiv am " + lastActivityDateTime + "```";
+        final String lastActivity = !member.getOnlineStatus().equals(OnlineStatus.OFFLINE) ? ":green_circle: Online" : String.format("```js\nZuletzt aktiv am %s```" ,lastActivityDateTime);
 
         final String activeSanction = QueryHelper.hasActiveSanction(userId) ? "*Mute*" : "*Keine*";
 
@@ -89,22 +92,14 @@ public final class UserLogCommand implements IBotCommand {
         embedBuilder.addField("Aktive Sanktion", activeSanction, true);
         embedBuilder.addField("Aktivität", lastActivity, false);
 
-
         Helper.sendEmbed(embedBuilder, message, true);
-
     }
-
-
 
     private String getLastJoinDate(Member member){
-
         return LocalDateTimeFormatter.toGermanFormat(member.getTimeJoined().toLocalDateTime());
-
     }
 
-
     private int getAmountRoles(Member member){
-
         return member.getRoles().size();
     }
 

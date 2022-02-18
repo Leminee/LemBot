@@ -57,7 +57,6 @@ public final class DeletedMessageStorage extends ListenerAdapter {
                             + "\n\n ```Hinweis: Der Inhalt der gelöschten Nachricht war länger als die erlaubten Zeichen (1024).```";
                 }
 
-                // FIXME: 14.02.22 add deleted pic as Image (what abouts vids?)
                 embedBuilder.setTitle("Gelöschte Nachricht")
                         .setAuthor(authorDeletedMessageAsTag, null, authorDeletedMessageAvatarUrl)
                         .setColor(Color.decode(EmbedColorHelper.DELETED))
@@ -67,9 +66,11 @@ public final class DeletedMessageStorage extends ListenerAdapter {
                         .addField("Inhalt", deletedMessageContent, false)
                         .setTimestamp(Instant.now());
 
-
-                Config.getInstance().getChannelConfig().getUpdatedDeletedChannel().sendMessageEmbeds(embedBuilder.build())
-                        .queue(m -> m.delete().queueAfter(14, TimeUnit.DAYS));
+                Config.getInstance()
+                        .getChannelConfig()
+                        .getUpdatedDeletedChannel()
+                        .sendMessageEmbeds(embedBuilder.build())
+                        .queue(m -> m.delete().queueAfter(7, TimeUnit.DAYS));
 
                 PreparedStatement preparedStatementOne = connection.prepareStatement(deletedMessage);
                 preparedStatementOne.setLong(1, idDeletedMessage);

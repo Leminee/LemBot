@@ -24,7 +24,7 @@ public final class UserMessageCounter extends ListenerAdapter {
         final boolean containsAttachment = event.getMessage().getAttachments().size() != 0;
 
         if (containsAttachment) {
-            userMessageContent += "\n **Bildurl** \n" + event.getMessage().getAttachments().get(0).getUrl();
+            userMessageContent += "\n__Bildurl__\n" + event.getMessage().getAttachments().get(0).getUrl();
         }
 
         int numberMessage = 1;

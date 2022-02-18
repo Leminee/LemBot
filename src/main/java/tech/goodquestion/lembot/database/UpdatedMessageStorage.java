@@ -33,6 +33,7 @@ public final class UpdatedMessageStorage extends ListenerAdapter {
         final String channelAsMention = "<#" + event.getChannel().getIdLong() + ">";
         final String authorAvatarUrl = event.getAuthor().getEffectiveAvatarUrl();
         String updatedMessageOldContent = QueryHelper.getUpdatedMessageOldContent(updatedMessageId, QueryHelper.UPDATED_MESSAGE_LAST_CONTENT);
+        System.out.println(updatedMessageOldContent);
 
         
         if (isNotValidLength(updatedMessageContent)) {
@@ -47,15 +48,14 @@ public final class UpdatedMessageStorage extends ListenerAdapter {
             updatedMessageOldContent = updatedMessageOldContent.substring(0, 900)
                     + "\n\n ```Hinweis: Der Inhalt der beabeiteten Nachricht war länger als die erlaubten Zeichen (1024).```";
         }
-        final EmbedBuilder embedBuilder = new EmbedBuilder();
 
-
-        // FIXME: 14.02.22 Only the url of the deleted image 
         final boolean containsAttachment = event.getMessage().getAttachments().size() != 0;
-        if(containsAttachment){
-            embedBuilder.setImage(event.getMessage().getAttachments().get(0).getUrl());
+
+        if (containsAttachment) {
+            updatedMessageContent += "\n__Bildurl__\n" + event.getMessage().getAttachments().get(0).getUrl();
         }
 
+        final EmbedBuilder embedBuilder = new EmbedBuilder();
 
         embedBuilder.setTitle("Bearbeitete Nachricht")
                 .setAuthor(authorUpdatedMessageAsTag, null, authorAvatarUrl)
@@ -68,8 +68,11 @@ public final class UpdatedMessageStorage extends ListenerAdapter {
                 .setTimestamp(Instant.now());
 
 
-        Config.getInstance().getChannelConfig().getUpdatedDeletedChannel().sendMessageEmbeds(embedBuilder.build())
-                .queue(m -> m.delete().queueAfter(14, TimeUnit.DAYS));
+        Config.getInstance()
+                .getChannelConfig()
+                .getUpdatedDeletedChannel()
+                .sendMessageEmbeds(embedBuilder.build())
+                .queue(m -> m.delete().queueAfter(7, TimeUnit.DAYS));
 
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(updatedMessageData)) {
@@ -82,7 +85,6 @@ public final class UpdatedMessageStorage extends ListenerAdapter {
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
-
             CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, this.getClass().getName()));
         }
     }
