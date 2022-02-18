@@ -8,7 +8,6 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.entity.OccurredException;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -19,17 +18,16 @@ public final class AttachmentStorage extends ListenerAdapter {
     @Override
     public void onMessageReceived(final MessageReceivedEvent event) {
 
-        final long userId = event.getMessage().getAuthor().getIdLong();
-
         if (event.getMessage().getAttachments().size() == 0) return;
 
+        final long userId = event.getMessage().getAuthor().getIdLong();
         final long attachmentId = event.getMessage().getAttachments().get(0).getIdLong();
         final String attachmentName = event.getMessage().getAttachments().get(0).getFileName();
         final String attachmentUrl = event.getMessage().getAttachments().get(0).getUrl();
         final String attachmentExtension = event.getMessage().getAttachments().get(0).getFileExtension();
         final double attachmentSize = event.getMessage().getAttachments().get(0).getSize();
 
-        saveLocally(event.getMessage().getAttachments().get(0), userId, event.getMember(), event.getMessage());
+        saveLocally(event.getMessage().getAttachments().get(0), event.getMember(), event.getMessage());
 
         Connection connection = DatabaseConnector.openConnection();
         final String insertMessageData = "INSERT INTO user_attachment (id_discord,id_attachment, name, url, extension,size) VALUES (?,?,?,?,?,?);";
@@ -45,32 +43,25 @@ public final class AttachmentStorage extends ListenerAdapter {
 
             preparedStatement.executeUpdate();
 
-
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
             CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, this.getClass().getName()));
         }
     }
 
-    private void saveLocally(final Message.Attachment attachment, final long userId, final Member member, final Message message) {
-        attachment.downloadToFile("attachments/" + getFileSenderAsTag(member, userId, message) + "_" + getGermanDateTimeForFileName() + "_" + attachment.getFileName())
-                .thenAccept(File::getName)
-                .exceptionally(t ->
-                {
-                    System.out.println(t.getMessage());
-                    return null;
-                });
+    private void saveLocally(final Message.Attachment attachment, final Member member, final Message message) {
+
+        final String fileName = getFileSenderAsTag(member, message) + "_" + getGermanDateTimeForFileName() + "_" + attachment.getFileName();
+        attachment.downloadToFile("attachments/" + fileName);
     }
 
+    private String getFileSenderAsTag(Member member, final Message message) {
 
-    private String getFileSenderAsTag(Member member, final long userId, final Message message) {
-
-        final User user = CommandManager.getInstance().getJDA().retrieveUserById(userId, true).complete();
+        final User user = CommandManager.getInstance().getJDA().retrieveUserById(member.getIdLong(), true).complete();
 
         if (user != null) {
             member = message.getGuild().retrieveMember(user).complete();
         }
-
         return member.getUser().getAsTag();
     }
 
