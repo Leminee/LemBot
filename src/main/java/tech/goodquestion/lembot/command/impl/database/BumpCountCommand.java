@@ -16,7 +16,6 @@ public final class BumpCountCommand implements IBotCommand {
 
         final UserData userData = new UserData();
         userData.userId = sender.getIdLong();
-
         final String embedTitle = "Bumps";
 
         Helper.getAmount(userData, QueryHelper.AMOUNT_BUMPS, QueryHelper.NEXT_HIGHER_USER_AMOUNT_BUMPS);

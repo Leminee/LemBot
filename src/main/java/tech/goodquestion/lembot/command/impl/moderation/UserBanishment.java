@@ -6,15 +6,12 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.exceptions.ErrorResponseException;
-import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.entity.Sanction;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
 import tech.goodquestion.lembot.library.Helper;
 
-import java.util.List;
 import java.util.Objects;
 
 public abstract sealed class UserBanishment implements IBotCommand permits BanCommand, WarnCommand {
@@ -38,24 +35,12 @@ public abstract sealed class UserBanishment implements IBotCommand permits BanCo
             return;
         }
 
-        final List<Member> mentionedMembers = message.getMentionedMembers();
-        Member member;
+        User user;
 
-        try {
+        user = Helper.getUserFromCommandInput(message, args);
 
-            member = getMember(message, args, mentionedMembers, null);
+        Member member = Config.getInstance().getGuild().retrieveMember(user).complete();
 
-        } catch (ErrorResponseException errorResponseException) {
-
-            final EmbedBuilder embedBuilder = new EmbedBuilder();
-            final String embedDescription = ":x: User ist nicht auf dem Server!";
-            Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
-            Helper.sendEmbed(embedBuilder, message, true);
-            return;
-
-        }
-
-        assert member != null;
         if (member.hasPermission(Permission.ADMINISTRATOR)) {
             final EmbedBuilder embedBuilder = new EmbedBuilder();
             final String embedDescription = ":x: Admins/Moderatoren können nicht gebannt werden!";
@@ -72,9 +57,9 @@ public abstract sealed class UserBanishment implements IBotCommand permits BanCo
 
         final Sanction sanction = new Sanction();
 
-        sanction.userId = member.getIdLong();
-        sanction.userTag = member.getUser().getAsTag();
-        sanction.userName = member.getUser().getName();
+        sanction.userId = user.getIdLong();
+        sanction.userTag = user.getAsTag();
+        sanction.userName = user.getName();
         sanction.author = message.getAuthor().getAsTag();
         sanction.reason = reason.toString();
         sanction.channelName = channel.getName();
@@ -87,23 +72,12 @@ public abstract sealed class UserBanishment implements IBotCommand permits BanCo
             return;
         }
 
-        banishUser(member, sanction, message);
+
+        banishUser(user, sanction, message);
     }
 
-    static Member getMember(final Message message, final String[] args, final List<Member> mentionedMembers, Member member) {
-        if (mentionedMembers.size() > 0) {
-            member = mentionedMembers.get(0);
-        } else {
-            User user = CommandManager.getInstance().getJDA().retrieveUserById(args[0], true).complete();
 
-            if (user != null) {
-                member = message.getGuild().retrieveMember(user).complete();
-            }
-        }
-        return member;
-    }
-
-    public abstract void banishUser(Member toBanish, Sanction sanction, Message originMessage);
+    public abstract void banishUser(User toBanish, Sanction sanction, Message originMessage);
 
     public abstract boolean requiresAdmin();
 

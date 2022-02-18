@@ -43,9 +43,7 @@ public final class MemberAuthorization extends ListenerAdapter {
             }
 
         } catch (SQLException sqlException) {
-
             System.out.println(sqlException.getMessage());
-
             CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, this.getClass().getName()));
         }
     }

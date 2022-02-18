@@ -50,7 +50,6 @@ public final class ServerDataCommand implements IBotCommand {
                         .replace(",", "\n"), true);
 
         Helper.sendEmbed(embedBuilder, message, true);
-
     }
 
     private String getTimeCreated() {

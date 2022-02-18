@@ -12,6 +12,7 @@ public final class UnwarnCommand extends RemovalBanishment implements IBotComman
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) throws IOException {
 
+
     }
 
     @Override
@@ -23,7 +24,6 @@ public final class UnwarnCommand extends RemovalBanishment implements IBotComman
     public String getDescription() {
         return "`unwarn <user> <reason>`: Entfernt" + Config.getInstance().getRoleConfig().getWarnRole().getAsMention();
     }
-
 
     @Override
     public String getHelpList() {

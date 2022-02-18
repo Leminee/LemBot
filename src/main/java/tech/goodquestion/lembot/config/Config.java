@@ -13,7 +13,7 @@ import java.util.List;
 
 public final class Config {
 
-    public static final String CONFIG_FILE = "lembot.config.yml";
+    public static final String CONFIG_FILE = "example.config.yml";
     private static Config INSTANCE = null;
     private List<ReactionRoleMessage> reactionRoles;
     private List<CommandRole> commandRoles;

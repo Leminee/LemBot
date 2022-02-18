@@ -31,7 +31,6 @@ public final class PasswordCheckCommand implements IBotCommand {
         final String password = args[0];
         final String embedTitle = "Passwort-Sicherheitsüberprüfung";
 
-
         try {
             if (hasBeenLeaked(password)) {
 

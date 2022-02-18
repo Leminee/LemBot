@@ -38,7 +38,6 @@ public final class TopMonthlyBumperCommand implements IBotCommand {
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
-
             CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, this.getClass().getName()));
         }
     }

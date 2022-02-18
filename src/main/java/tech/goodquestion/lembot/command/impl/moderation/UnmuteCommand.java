@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
 import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.database.CommandHelper;
@@ -17,9 +18,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 public final class UnmuteCommand extends RemovalBanishment implements IBotCommand {
+
 
     @Override
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) {
@@ -28,25 +29,17 @@ public final class UnmuteCommand extends RemovalBanishment implements IBotComman
             return;
         }
 
-        final List<Member> mentionedMembers = message.getMentionedMembers();
-        Member member;
+        User user;
 
-        member = UserBanishment.getMember(message, args, mentionedMembers, null);
+        user = Helper.getUserFromCommandInput(message, args);
 
-        if (member == null) {
-            EmbedBuilder embedBuilder = new EmbedBuilder();
-            final String embedDescription = ":x: User ist nicht auf dem Server!";
-            Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
-            channel.sendMessageEmbeds(embedBuilder.build()).queue();
-            return;
-        }
 
-        member.getGuild().removeRoleFromMember(member.getIdLong(), Config.getInstance().getRoleConfig().getMuteRole()).queue();
+        Config.getInstance().getGuild().removeRoleFromMember(user.getIdLong(), Config.getInstance().getRoleConfig().getMuteRole()).queue();
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setColor(Color.decode(EmbedColorHelper.SUCCESS));
         embedBuilder.setTitle("Bestätigung");
-        embedBuilder.setDescription("User " + member.getAsMention() + " wurde durch " + message.getAuthor().getAsMention() + " erfolgreich **" + " ungemutet." + "**");
+        embedBuilder.setDescription("User " + user.getAsMention() + " wurde durch " + message.getAuthor().getAsMention() + " erfolgreich **" + " ungemutet." + "**");
 
         Helper.sendEmbed(embedBuilder, message, false);
 
@@ -56,7 +49,7 @@ public final class UnmuteCommand extends RemovalBanishment implements IBotComman
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(userMuted)) {
 
-            preparedStatement.setLong(1, member.getIdLong());
+            preparedStatement.setLong(1, user.getIdLong());
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -68,7 +61,7 @@ public final class UnmuteCommand extends RemovalBanishment implements IBotComman
                 PreparedStatement preparedStatementOne = connection.prepareStatement(userUnmute);
 
                 preparedStatementOne.setString(1, "0");
-                preparedStatementOne.setLong(2, member.getIdLong());
+                preparedStatementOne.setLong(2, user.getIdLong());
 
                 preparedStatementOne.executeUpdate();
             }

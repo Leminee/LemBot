@@ -5,8 +5,10 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import tech.goodquestion.lembot.command.IBotCommand;
+import tech.goodquestion.lembot.database.CommandHelper;
 import tech.goodquestion.lembot.database.DatabaseConnector;
 import tech.goodquestion.lembot.database.QueryHelper;
+import tech.goodquestion.lembot.entity.OccurredException;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
 import tech.goodquestion.lembot.library.Helper;
 
@@ -34,6 +36,7 @@ public final class TopFlooderCommand implements IBotCommand {
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, this.getClass().getName()));
         }
     }
 

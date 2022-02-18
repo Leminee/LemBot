@@ -20,29 +20,29 @@ import java.util.Objects;
 public final class BanCommand extends UserBanishment {
 
     @Override
-    public void banishUser(final Member toBanish, final Sanction sanction, final Message originMessage) {
+    public void banishUser(final User toBanish, final Sanction sanction, final Message originMessage) {
 
         final String performedSanction = SanctionType.BAN.getVerbalizedSanctionTyp();
         final SanctionType sanctionType = SanctionType.BAN;
-
-        toBanish.ban(0, sanction.reason).complete();
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
 
         embedBuilder.setColor(Color.decode(EmbedColorHelper.SUCCESS));
 
         embedBuilder.setTitle("Bestätigung");
-        embedBuilder.setAuthor(toBanish.getUser().getAsTag(), null,toBanish.getUser().getEffectiveAvatarUrl());
+        embedBuilder.setAuthor(toBanish.getAsTag(), null,toBanish.getEffectiveAvatarUrl());
         embedBuilder.setDescription("**" + ":no_entry: User gebannt" + "**");
         embedBuilder.addField("Gebannter User", toBanish.getAsMention(), true);
-        embedBuilder.addField("Gebannt von",originMessage.getMember().getAsMention(), true);
+        embedBuilder.addField("Gebannt von", Objects.requireNonNull(originMessage.getMember()).getAsMention(), true);
         embedBuilder.addField("Grund",  "```" + sanction.reason + "```", false);
         embedBuilder.setFooter(originMessage.getMember().getUser().getAsTag(),originMessage.getMember().getEffectiveAvatarUrl());
         embedBuilder.setTimestamp(Instant.now());
 
         Helper.sendEmbed(embedBuilder,originMessage,false);
 
-        notifyBannedUser(toBanish.getUser(),sanctionType, performedSanction, sanction.reason, Objects.requireNonNull(originMessage.getMember()));
+        notifyBannedUser(toBanish,sanctionType, performedSanction, sanction.reason, Objects.requireNonNull(originMessage.getMember()));
+
+        originMessage.getGuild().ban(toBanish,0, sanction.reason).complete();
 
         CommandHelper.logUserBan(sanction);
     }
@@ -54,7 +54,7 @@ public final class BanCommand extends UserBanishment {
 
         try {
 
-            Helper.createEmbed(embedBuilder, String.valueOf(sanctionType), "Du wurdest auf **GoodQuestion** " + " **" + performedSanction + "**", EmbedColorHelper.BAN);
+            Helper.createEmbed(embedBuilder, ":no_entry: " + sanctionType, "Du wurdest auf **GoodQuestion** " + " **" + performedSanction + "**", EmbedColorHelper.BAN);
             embedBuilder.addField("Dauer", "permanent", true);
             embedBuilder.addField("Gebannt von", sanctionAuthor.getAsMention(), true);
             embedBuilder.addField("Grund", "```" + reason + "```", false);
@@ -71,7 +71,7 @@ public final class BanCommand extends UserBanishment {
                     .sendMessage(errorResponseException.getMessage() + " " +  sanctionedUser.getAsTag()).queue();
 
             System.out.println(errorResponseException.getMessage());
-            CommandHelper.logException(OccurredException.getOccurredExceptionData(errorResponseException, UserBanishment.class.getName()));
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(errorResponseException, this.getClass().getName()));
         }
     }
     @Override

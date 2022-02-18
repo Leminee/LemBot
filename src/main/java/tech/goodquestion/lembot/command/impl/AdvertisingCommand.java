@@ -25,6 +25,7 @@ public final class AdvertisingCommand implements IBotCommand {
 
         if (args.length != 1) {
 
+
             final EmbedBuilder embedBuilder = new EmbedBuilder();
             final String embedDescription = "Command nicht valid";
             Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
@@ -32,9 +33,9 @@ public final class AdvertisingCommand implements IBotCommand {
             return;
         }
 
-        if (channel.getIdLong() != Config.getInstance().getChannelConfig().getStaffRoomChannel().getIdLong()) {
+        if (channel.getIdLong() != Config.getInstance().getChannelConfig().getStaffCommandsChannel().getIdLong()) {
             final EmbedBuilder embedBuilder = new EmbedBuilder();
-            final String embedDescription = ":x: Dieser Befehl kann nur in [channel] ausgeführt werden!".replace("[channel]", Config.getInstance().getChannelConfig().getStaffRoomChannel().getAsMention());
+            final String embedDescription = ":x: Dieser Befehl kann nur in [channel] ausgeführt werden!".replace("[channel]", Config.getInstance().getChannelConfig().getStaffCommandsChannel().getAsMention());
             Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
             Helper.sendEmbed(embedBuilder, message, true);
             return;
@@ -99,13 +100,10 @@ public final class AdvertisingCommand implements IBotCommand {
                 .flatMap(channel -> channel.sendMessageEmbeds(embedBuilder.build()))
                 .complete();
 
-
         final String userTag = user.getAsTag();
 
         CommandHelper.logAdvertising(Long.parseLong(args[0]), userTag);
     }
-
-
 
     @Override
     public String getName() {
@@ -114,7 +112,7 @@ public final class AdvertisingCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`ad <user id>`: Schickt dem User Werbung";
+        return "`ad <user>`: Schickt dem User Werbung";
     }
 
     @Override

@@ -51,22 +51,15 @@ public final class MemberInfoCommand implements IBotCommand {
             return;
         }
 
-
         final String accountCreationDate = LocalDateTimeFormatter.toGermanFormat(user.getTimeCreated().toLocalDateTime());
-
-        String lastActivityDateTime;
-        if (QueryHelper.getLastActivityDateTimeBy(userId) == null) {
-
-            lastActivityDateTime = "N/A";
-
-        } else {
-            lastActivityDateTime = LocalDateTimeFormatter.toGermanFormat(Objects.requireNonNull(QueryHelper.getLastActivityDateTimeBy(userId)));
-        }
-
+        final String lastActivityDateTime = QueryHelper.getLastActivityDateTimeBy(userId) == null
+                ? "N/A"
+                : LocalDateTimeFormatter.toGermanFormat(Objects.requireNonNull(QueryHelper.getLastActivityDateTimeBy(userId)));
         final long amountMessages = QueryHelper.getAmountMessagesBy(userId);
         final long amountBumps = QueryHelper.getAmountBumpsBy(userId);
-
-        String lastActivity = !member.getOnlineStatus().equals(OnlineStatus.OFFLINE) ? ":green_circle: Online" : "```js\nZuletzt aktiv am " + lastActivityDateTime + "```";
+        final String lastActivity = !member.getOnlineStatus().equals(OnlineStatus.OFFLINE)
+                ? ":green_circle: Online"
+                : "```js\nZuletzt aktiv am " + lastActivityDateTime + "```";
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle("Member Informationen");
@@ -82,15 +75,11 @@ public final class MemberInfoCommand implements IBotCommand {
         embedBuilder.addField("Aktivität", lastActivity, false);
 
         Helper.sendEmbed(embedBuilder, message, true);
-
     }
-
-
-
+    
     private String getLastJoinDate(Member member){
 
         return LocalDateTimeFormatter.toGermanFormat(member.getTimeJoined().toLocalDateTime());
-
     }
 
     private int getAmountRoles(Member member){
@@ -105,7 +94,7 @@ public final class MemberInfoCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`ui <user>`: Informationen zum Member";
+        return "`mi <user>`: Informationen zum Member";
     }
 
     @Override

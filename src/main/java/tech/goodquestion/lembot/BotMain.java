@@ -59,7 +59,6 @@ public class BotMain {
                     .setChunkingFilter(ChunkingFilter.ALL)
                     .build();
 
-
         } catch (LoginException loginException) {
             System.out.println(loginException.getMessage());
         }
@@ -83,7 +82,7 @@ public class BotMain {
         commandManager.registerCommand(new ClearCommand());
         commandManager.registerCommand(new CodeBlockHelpCommand());
         commandManager.registerCommand(new HelpListCommand());
-        commandManager.registerCommand(new LastJoiningDateCommand());
+        commandManager.registerCommand(new LastJoinDateCommand());
         commandManager.registerCommand(new KillSwitchCommand());
         commandManager.registerCommand(new MessageCountCommand());
         commandManager.registerCommand(new MuteCommand());
@@ -97,8 +96,8 @@ public class BotMain {
         commandManager.registerCommand(new TopMonthlyBumperCommand());
         commandManager.registerCommand(new TopMonthlyFlooderCommand());
         commandManager.registerCommand(new UnmuteCommand());
-        commandManager.registerCommand(new UserInfoCommand());
-        commandManager.registerCommand(new UserLogCommand());
+        commandManager.registerCommand(new MemberInfoCommand());
+        commandManager.registerCommand(new MemberLogsCommand());
         commandManager.registerCommand(new WarnCommand());
         commandManager.registerCommand(new ParserCommand());
         commandManager.registerCommand(new BotsCommand());
@@ -127,7 +126,6 @@ public class BotMain {
         jda.addEventListener(new RaidDetection());
         jda.addEventListener(new RoleEvents());
         jda.addEventListener(new SpamDetection());
-        jda.addEventListener(new TopMonthlyNotifier());
         jda.addEventListener(new UpdatedMessageStorage());
         jda.addEventListener(new UpdatingUsername());
         jda.addEventListener(new UserMessageCounter());

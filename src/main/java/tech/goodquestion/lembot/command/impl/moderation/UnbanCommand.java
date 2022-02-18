@@ -11,6 +11,8 @@ public final class UnbanCommand extends RemovalBanishment implements IBotCommand
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) throws IOException {
 
+
+
     }
 
     @Override
@@ -22,7 +24,6 @@ public final class UnbanCommand extends RemovalBanishment implements IBotCommand
     public String getDescription() {
         return "`unban <user> <reason>`: Entfernt den Ban";
     }
-
 
     @Override
     public String getHelpList() {

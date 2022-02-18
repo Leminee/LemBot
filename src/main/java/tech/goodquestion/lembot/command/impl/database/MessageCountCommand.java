@@ -16,7 +16,6 @@ public final class MessageCountCommand implements IBotCommand {
 
         final UserData userData = new UserData();
         userData.userId = sender.getIdLong();
-
         final String embedTitle = "Nachrichten";
 
         Helper.getAmount(userData, QueryHelper.AMOUNT_MESSAGES, QueryHelper.NEXT_HIGHER_USER_AMOUNT_MESSAGES);

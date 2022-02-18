@@ -9,7 +9,7 @@ import tech.goodquestion.lembot.library.EmbedColorHelper;
 import tech.goodquestion.lembot.library.Helper;
 import tech.goodquestion.lembot.library.parser.LocalDateTimeFormatter;
 
-public final class LastJoiningDateCommand implements IBotCommand {
+public final class LastJoinDateCommand implements IBotCommand {
 
     @Override
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) {
@@ -19,7 +19,6 @@ public final class LastJoiningDateCommand implements IBotCommand {
         final String description = "Du bist dem Server am " + "**" + LocalDateTimeFormatter.toGermanFormat(sender.getTimeJoined().toLocalDateTime()) + "**" + " beigetreten ";
 
         Helper.createEmbed(embedBuilder, title, description, EmbedColorHelper.JOIN_DATE);
-
         Helper.sendEmbed(embedBuilder, message, true);
     }
 

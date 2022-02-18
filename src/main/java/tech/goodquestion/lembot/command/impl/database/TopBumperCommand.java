@@ -36,9 +36,7 @@ public final class TopBumperCommand implements IBotCommand {
             Helper.addTopToEmbed(resultSet, topBumperEmbed, embedTitle, embedDescription, embedThumbnail, EmbedColorHelper.BUMP, message, amountOf);
 
         } catch (SQLException sqlException) {
-
             System.out.println(sqlException.getMessage());
-
             CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, this.getClass().getName()));
         }
     }

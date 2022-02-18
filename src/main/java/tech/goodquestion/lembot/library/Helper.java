@@ -8,7 +8,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import tech.goodquestion.lembot.command.CommandManager;
-import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.database.CommandHelper;
 import tech.goodquestion.lembot.database.DatabaseConnector;
@@ -24,9 +23,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public final class Helper {
 
@@ -119,30 +115,6 @@ public final class Helper {
         embedBuilder.setDescription("Anzahl deiner " + amountOf + " **" + userData.amountOf + "**" + "\n" + "Du bist hinter dem User " + mentionedUser + " **(" + userData.nextHigherUserAmountOf + ")**");
 
         message.replyEmbeds(embedBuilder.build()).queue();
-    }
-
-    public static void scheduleCommand(final String command, final long delay, final long period, final TimeUnit timeUnit) {
-        scheduleCommand(command, delay, period, timeUnit, new String[0]);
-    }
-
-    public static void scheduleCommand(final String command, final long delay, final long period, final TimeUnit timeUnit, final String[] args) {
-
-        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-
-        IBotCommand botCommand = CommandManager.getInstance().getCommand(command);
-
-        if (botCommand == null) return;
-
-        final Runnable commandRunner = () -> {
-            try {
-                botCommand.dispatch(null, Config.getInstance().getChannelConfig().getBumpChannel(), null, args);
-
-            } catch (IOException ioException) {
-                System.out.println(ioException.getMessage());
-            }
-        };
-
-        scheduler.scheduleAtFixedRate(commandRunner, delay, period, timeUnit);
     }
 
     public static void createEmbed(final EmbedBuilder embedBuilder, final String title, final String description, final String embedColor, final String thumbnail) {

@@ -19,7 +19,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 
-public final class UserLogCommand implements IBotCommand {
+public final class MemberLogsCommand implements IBotCommand {
     @Override
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) throws IOException {
 
@@ -75,11 +75,11 @@ public final class UserLogCommand implements IBotCommand {
         final String activeSanction = QueryHelper.hasActiveSanction(userId) ? "*Mute*" : "*Keine*";
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
-        embedBuilder.setTitle("User Logs");
+        embedBuilder.setTitle("Member Logs");
         embedBuilder.setColor(Color.decode(EmbedColorHelper.MEMBER_INFO));
         embedBuilder.setAuthor(user.getAsTag(), null, Helper.getUserFromCommandInput(message, args).getEffectiveAvatarUrl());
         embedBuilder.setThumbnail(user.getAvatarUrl());
-        embedBuilder.addField("User", userAsMention, true);
+        embedBuilder.addField("Member", userAsMention, true);
         embedBuilder.addField("Erstellungsdatum", accountCreationDate, true);
         embedBuilder.addField("Letztes Beitrittsdatum", getLastJoinDate(member), true);
         embedBuilder.addField("Nachrichten", String.valueOf(amountMessages), true);
@@ -105,12 +105,12 @@ public final class UserLogCommand implements IBotCommand {
 
     @Override
     public String getName() {
-        return "ul";
+        return "ml";
     }
 
     @Override
     public String getDescription() {
-        return "`ul <user>`: User Logs";
+        return "`ml <user>`: Member Logs";
     }
 
     @Override

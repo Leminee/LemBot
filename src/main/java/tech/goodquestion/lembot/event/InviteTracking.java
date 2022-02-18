@@ -56,10 +56,8 @@ public final class InviteTracking extends ListenerAdapter {
             for (final Invite retrievedInvite : retrievedInvites) {
                 final String code = retrievedInvite.getCode();
                 final InviteData cachedInvite = invitesCache.get(code);
-                if (cachedInvite == null)
-                    continue;
-                if (retrievedInvite.getUses() == cachedInvite.getUses())
-                    continue;
+                if (cachedInvite == null) continue;
+                if (retrievedInvite.getUses() == cachedInvite.getUses()) continue;
                 cachedInvite.incrementUses();
 
                 final EmbedBuilder embedBuilder = new EmbedBuilder();
@@ -79,8 +77,6 @@ public final class InviteTracking extends ListenerAdapter {
                         .addField("URL", url, true)
                         .setFooter(retrievedInvite.getInviter().getAsTag(), retrievedInvite.getInviter().getEffectiveAvatarUrl())
                         .setTimestamp(Instant.now());
-
-                //UPDATE invite_tracking SET invited_by = SUBSTRING(invited_by,3,18) WHERE CHAR_LENGTH(invited_by) >20
 
                 InviteTrackingData inviteTrackingData = new InviteTrackingData();
                 inviteTrackingData.url = url;

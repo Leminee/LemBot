@@ -27,7 +27,6 @@ public final class TopActiveChannelsCommand implements IBotCommand {
             message.replyEmbeds(messageEmbed).queue();
 
         } catch (SQLException sqlException) {
-
             System.out.println(sqlException.getMessage());
             CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, this.getClass().getName()));
         }

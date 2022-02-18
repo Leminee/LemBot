@@ -19,8 +19,8 @@ public final class ActiveUserRecordCommand implements IBotCommand {
         final String description = "Der aktuelle Record liegt bei " + "**" + QueryHelper.getActiveUserRecord() + "**" + " gleichzeitig aktiven Usern";
 
         Helper.createEmbed(embedBuilder, title, description, EmbedColorHelper.RECORD);
-
         Helper.sendEmbed(embedBuilder, message, true);
+
     }
 
     @Override

@@ -24,14 +24,14 @@ public final class WarnCommand extends UserBanishment {
 
     private final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
     @Override
-    public void banishUser(final Member toBanish, final Sanction sanction, final Message originMessage) {
+    public void banishUser(final User toBanish, final Sanction sanction, final Message originMessage) {
 
-        toBanish.getGuild().addRoleToMember(sanction.userId, Config.getInstance().getRoleConfig().getWarnRole()).queue();
+        originMessage.getGuild().addRoleToMember(sanction.userId, Config.getInstance().getRoleConfig().getWarnRole()).queue();
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setColor(Color.decode(EmbedColorHelper.SUCCESS));
         embedBuilder.setTitle("Bestätigung");
-        embedBuilder.setAuthor(toBanish.getUser().getAsTag(), null,toBanish.getUser().getEffectiveAvatarUrl());
+        embedBuilder.setAuthor(toBanish.getAsTag(), null,toBanish.getEffectiveAvatarUrl());
         embedBuilder.setDescription("**" + ":warning: Member verwarnt" + "**");
         embedBuilder.addField("Verwarnter Member", toBanish.getAsMention(), true);
         embedBuilder.addField("Verwarnt von",originMessage.getMember().getAsMention(), true);
@@ -44,9 +44,10 @@ public final class WarnCommand extends UserBanishment {
         final String performedSanction = SanctionType.WARN.getVerbalizedSanctionTyp();
         final SanctionType sanctionType = SanctionType.WARN;
 
-        notifyWarnedUser(toBanish.getUser(), sanctionType, performedSanction, sanction.reason, Objects.requireNonNull(originMessage.getMember()));
+        notifyWarnedUser(toBanish, sanctionType, performedSanction, sanction.reason, Objects.requireNonNull(originMessage.getMember()));
 
         CommandHelper.logUserWarn(sanction);
+
     }
 
     private void notifyWarnedUser(final User sanctionedUser, final SanctionType sanctionType, final String performedSanction, final String reason, final Member sanctionAuthor){
@@ -56,7 +57,7 @@ public final class WarnCommand extends UserBanishment {
             final  EmbedBuilder embedBuilder = new EmbedBuilder();
             final String defaultWarnDuration = "28 Tage";
 
-            Helper.createEmbed(embedBuilder, String.valueOf(sanctionType), "Du wurdest auf **GoodQuestion** " + " **" + performedSanction + "**", EmbedColorHelper.WARN);
+            Helper.createEmbed(embedBuilder, ":warning: " + sanctionType, "Du wurdest auf **GoodQuestion** " + " **" + performedSanction + "**", EmbedColorHelper.WARN);
             embedBuilder.addField("Dauer", defaultWarnDuration, true);
             embedBuilder.addField("Verwarnt von", sanctionAuthor.getAsMention(), true);
             embedBuilder.addField("Grund",  "```" + reason + "```", false);
@@ -76,7 +77,7 @@ public final class WarnCommand extends UserBanishment {
                     .sendMessage(errorResponseException.getMessage() + " " +  sanctionedUser.getAsTag()).queue();
 
             System.out.println(errorResponseException.getMessage());
-            CommandHelper.logException(OccurredException.getOccurredExceptionData(errorResponseException, UserBanishment.class.getName()));
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(errorResponseException, this.getClass().getName()));
         }
     }
 
