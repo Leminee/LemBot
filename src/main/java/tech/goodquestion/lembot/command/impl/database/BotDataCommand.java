@@ -1,4 +1,4 @@
-package tech.goodquestion.lembot.command.impl;
+package tech.goodquestion.lembot.command.impl.database;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.config.Config;
+import tech.goodquestion.lembot.database.QueryHelper;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
 import tech.goodquestion.lembot.library.Helper;
 
@@ -30,7 +31,10 @@ public final class BotDataCommand implements IBotCommand {
                 .addField("Geschrieben in", "Java (JDA)", true)
                 .addField("Geschrieben von", botAuthor, true)
                 .addField("Akutelle Version", Config.getInstance().getBotConfig().getVersion(), true)
-                .addField("Mitwirkende", Helper.getAmountContributors(gitHubRepositoryUrl), true)
+                .addField("**" +Helper.getAmountContributors(gitHubRepositoryUrl) + "**" + " Mitwirkende", (QueryHelper.getContributorsAsMention() + "\n")
+                        .replace("[", "")
+                        .replace("]", "")
+                        .replace(",", "\n"), true)
                 .addField("Source Code", gitHubRepositoryUrl, true);
 
         Helper.sendEmbed(embedBuilder, message, true);

@@ -33,6 +33,7 @@ public final class QueryHelper {
     private static final String AMOUNT_BANS= "SELECT COUNT(id_discord) FROM banned_user WHERE id_discord = ?" ;
     private static final String INVITER = "SELECT invited_by FROM invite_tracking WHERE used_by = ?";
     private static final String ACTIVE_SANCTION = "SELECT activ FROM `muted_user` WHERE id_discord = ? ORDER BY activ DESC LIMIT 1";
+    private static final String CONTRIBUTORS ="SELECT mention FROM contributor ORDER BY contributor_since" ;
     public static String MESSAGE_COUNT = "SELECT COUNT(user_message_content.id_discord) + 40000 FROM user_message_content";
     public static String ADMINS_MENTIONED = "SELECT mention FROM staff WHERE role_name = 'Administrator' AND mention != '<@739143338975952959>' ORDER BY staff_since;";
     public static String MODERATORS_MENTIONED = "SELECT mention FROM staff WHERE role_name = 'Moderator' ORDER BY staff_since;";
@@ -40,6 +41,7 @@ public final class QueryHelper {
     public static final String NEXT_HIGHER_USER_AMOUNT_BUMPS = "SELECT id_discord, number_bumps FROM user_bump WHERE number_bumps > ? ORDER BY number_bumps, username LIMIT 1";
     public static final List<String> adminsAsMention = new ArrayList<>();
     public static final List<String> moderatorsAsMention = new ArrayList<>();
+    public static final List<String> contributorsAsMention = new ArrayList<>();
     public static String FIRST_CONTENT_AFTER_UPDATING_MESSAGE = "SELECT content FROM user_message_content WHERE id_message = ? ";
     public static String UPDATED_MESSAGE_LAST_CONTENT = "SELECT content FROM updated_message WHERE id_message = ? ORDER BY updated_at DESC LIMIT 1 ";
     public static String RAID_DETECTION = "SELECT COUNT(DISTINCT id_discord) FROM `user_join` WHERE joined_at >= NOW() - INTERVAL 30 SECOND";
@@ -522,5 +524,25 @@ public final class QueryHelper {
         }
 
         return false;
+    }
+
+    public static List<String> getContributorsAsMention() {
+
+        if (contributorsAsMention.size() > 0) return contributorsAsMention;
+
+        try (Connection connection = DatabaseConnector.openConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(CONTRIBUTORS)) {
+
+            while (resultSet.next()) {
+
+                contributorsAsMention.add(resultSet.getString(1));
+            }
+
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
+
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
+        }
+
+        return contributorsAsMention;
     }
 }
