@@ -5,7 +5,9 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import tech.goodquestion.lembot.command.IBotCommand;
+import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.database.QueryHelper;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
 import tech.goodquestion.lembot.library.Helper;
@@ -18,7 +20,26 @@ public class UserSanctionHistory implements IBotCommand {
 
         if (args.length != 1) return;
 
-        User user = Helper.getUserFromCommandInput(message, args);
+        if (channel.getIdLong() != Config.getInstance().getChannelConfig().getStaffCommandsChannel().getIdLong()) {
+            final EmbedBuilder embedBuilder = new EmbedBuilder();
+            final String embedDescription = ":x: Dieser Befehl kann nur in [channel] ausgeführt werden!".replace("[channel]", Config.getInstance().getChannelConfig().getStaffCommandsChannel().getAsMention());
+            Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
+            Helper.sendEmbed(embedBuilder, message, true);
+            return;
+        }
+
+        User user;
+        try {
+
+            user = Helper.getUserFromCommandInput(message, args);
+
+        }catch (ErrorResponseException errorResponseException){
+
+            final EmbedBuilder embedBuilder = new EmbedBuilder();
+            Helper.createEmbed(embedBuilder, "Error", ":x: Kein User gefunden", EmbedColorHelper.ERROR);
+            Helper.sendEmbed(embedBuilder, message, true);
+            return;
+        }
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setAuthor(user.getAsTag(),null,user.getEffectiveAvatarUrl());
