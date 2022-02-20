@@ -112,7 +112,7 @@ public final class AdvertisingCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`ad <user>`: Schickt dem User Werbung";
+        return "`ad <member>`: Schickt dem User Werbung";
     }
 
     @Override

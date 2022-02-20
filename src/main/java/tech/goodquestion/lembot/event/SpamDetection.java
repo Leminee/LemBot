@@ -36,6 +36,7 @@ public final class SpamDetection extends ListenerAdapter {
         sanction.userName = event.getMessage().getAuthor().getName();
         sanction.reason = "Verdacht auf Scam";
         sanction.channelName = event.getMessage().getChannel().getName();
+        sanction.reason = "6 Hours";
 
         if (senderIsBot || senderIsStaff || messageContent.length() < 10) return;
 
@@ -45,7 +46,7 @@ public final class SpamDetection extends ListenerAdapter {
 
             QueryHelper.deleteScammerMessages(event, userId, messageContent);
 
-            CommandHelper.logUserMute(sanction);
+            CommandHelper.logMemberMute(sanction);
 
             event.getMessage().reply(":mute: Timeout aufgrund Verdacht auf Scam durch den Bot").queue();
         }

@@ -94,7 +94,7 @@ public final class MemberInfoCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`mi <user>`: Informationen zum Member";
+        return "`mi <member>`: Informationen zum Member";
     }
 
     @Override

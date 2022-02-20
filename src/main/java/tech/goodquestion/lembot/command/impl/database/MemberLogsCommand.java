@@ -110,7 +110,7 @@ public final class MemberLogsCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`ml <user>`: Member Logs";
+        return "`ml <member>`: Member Logs";
     }
 
     @Override

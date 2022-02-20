@@ -88,7 +88,7 @@ public final class MuteCommand implements IBotCommand {
 
         notifyMutedUser(sanctionedMember, sanctionType, performedSanction, sanction.reason, sanction.duration, sender);
 
-        CommandHelper.logUserMute(sanction);
+        CommandHelper.logMemberMute(sanction);
 
         scheduleReminder(parsedDuration, TimeUnit.MINUTES, sanctionedMember);
     }
@@ -177,7 +177,7 @@ public final class MuteCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`mute <user> <dauer> <reason>`: Mutet den User";
+        return "`mute <member> <dauer> <reason>`: Mutet den Member";
     }
 
 
