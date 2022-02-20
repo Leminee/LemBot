@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Erstellungszeit: 16. Feb 2022 um 02:55
+-- Erstellungszeit: 20. Feb 2022 um 02:56
 -- Server-Version: 10.3.31-MariaDB-0+deb10u1
 -- PHP-Version: 7.4.27
 
@@ -63,6 +63,18 @@ CREATE TABLE `channel` (
   `name` varchar(255) NOT NULL,
   `sent_on` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `contributor`
+--
+
+CREATE TABLE `contributor` (
+  `id` int(11) NOT NULL,
+  `mention` varchar(255) NOT NULL,
+  `contributor_since` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -380,6 +392,12 @@ ALTER TABLE `channel`
   ADD PRIMARY KEY (`id_message`);
 
 --
+-- Indizes für die Tabelle `contributor`
+--
+ALTER TABLE `contributor`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indizes für die Tabelle `deleted_message`
 --
 ALTER TABLE `deleted_message`
@@ -509,6 +527,12 @@ ALTER TABLE `advertising`
 --
 ALTER TABLE `banned_user`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `contributor`
+--
+ALTER TABLE `contributor`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT für Tabelle `exception`
