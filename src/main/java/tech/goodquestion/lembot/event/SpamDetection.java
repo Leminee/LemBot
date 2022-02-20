@@ -36,7 +36,7 @@ public final class SpamDetection extends ListenerAdapter {
         sanction.userName = event.getMessage().getAuthor().getName();
         sanction.reason = "Verdacht auf Scam";
         sanction.channelName = event.getMessage().getChannel().getName();
-        sanction.reason = "6 Hours";
+        sanction.reason = "5 Hours";
 
         if (senderIsBot || senderIsStaff || messageContent.length() < 10) return;
 
@@ -54,7 +54,7 @@ public final class SpamDetection extends ListenerAdapter {
 
     private void timeOutScammer(final Member member, MessageReceivedEvent event) {
 
-        final int durationInHours = 6;
+        final int durationInHours = 5;
         member.timeoutFor(Duration.ofSeconds(durationInHours)).queue();
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
