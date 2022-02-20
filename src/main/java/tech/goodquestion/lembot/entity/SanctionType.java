@@ -5,9 +5,9 @@ public enum SanctionType {
     MUTE("gemutet"),
     WARN("verwarnt");
 
-    private String verbalizedSanctionTyp;
+    private final String verbalizedSanctionTyp;
 
-    SanctionType(String verbalizedSanctionTyp) {
+    SanctionType(final String verbalizedSanctionTyp) {
         this.verbalizedSanctionTyp = verbalizedSanctionTyp;
     }
 

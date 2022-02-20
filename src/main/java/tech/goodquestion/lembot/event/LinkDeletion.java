@@ -39,7 +39,8 @@ public final class LinkDeletion extends ListenerAdapter {
         embedBuilder.setAuthor(author.getUser().getAsTag(), null, author.getEffectiveAvatarUrl());
         embedBuilder.setTitle("Link gelöscht");
         embedBuilder.addField("Author", author.getAsMention(), true);
-        embedBuilder.addField("Channel", event.getChannel().getAsMention(), true);
+        embedBuilder.addField("Author ID", String.valueOf(author.getIdLong()), true);
+        embedBuilder.addField("Kanal", event.getChannel().getAsMention(), true);
         embedBuilder.addField("Grund", "```Nicht verifizierter Link```", false);
         embedBuilder.addField("Nachricht", event.getMessage().getContentRaw(), false);
         embedBuilder.setColor(Color.decode(EmbedColorHelper.AUTO_MODERATION));

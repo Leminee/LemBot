@@ -36,14 +36,15 @@ public final class InviteLinkDeletion extends ListenerAdapter {
 
         final long logChannelId = Config.getInstance().getChannelConfig().getAutoModerationChannel().getIdLong();
 
-        event.getMessage().reply(":x: In diesem Channel dürfen keine Invitelinks gepostet werden!").queue();
+        event.getMessage().reply(":x: In diesem Kanal dürfen keine Invitelinks gepostet werden!").queue();
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
 
         embedBuilder.setAuthor(author.getUser().getAsTag(), null, author.getEffectiveAvatarUrl());
         embedBuilder.setTitle("EinladungsLink gelöscht");
         embedBuilder.addField("Author", author.getAsMention(), true);
-        embedBuilder.addField("Channel", event.getChannel().getAsMention(), true);
+        embedBuilder.addField("Author ID", String.valueOf(author.getIdLong()), true);
+        embedBuilder.addField("Kanal", event.getChannel().getAsMention(), true);
         embedBuilder.addField("Grund", "```Posten eines Einladungslinks in einen nicht erlaubten Channel```", false);
         embedBuilder.addField("Nachricht", event.getMessage().getContentRaw(), false);
         embedBuilder.setColor(Color.decode(EmbedColorHelper.AUTO_MODERATION));
