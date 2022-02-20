@@ -1,12 +1,15 @@
 package tech.goodquestion.lembot.event;
 
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import tech.goodquestion.lembot.config.Config;
-import tech.goodquestion.lembot.library.Helper;
+import tech.goodquestion.lembot.library.EmbedColorHelper;
 
+import java.awt.*;
+import java.time.Instant;
 import java.util.Objects;
 
 public final class InviteLinkDeletion extends ListenerAdapter {
@@ -16,8 +19,9 @@ public final class InviteLinkDeletion extends ListenerAdapter {
 
         final String userMessage = event.getMessage().getContentRaw();
 
-        if (!(userMessage.contains("https://discord.gg") || userMessage.contains("https://discord.com/invite/") || userMessage.contains("https://discord.io/")))
-            return;
+        if (!(userMessage.contains("https://discord.gg") || userMessage.contains("https://discord.com/invite/") || userMessage.contains("https://discord.io/"))) return;
+
+        if (event.getChannel().getIdLong() == Config.getInstance().getChannelConfig().getNewArrivalsChannel().getIdLong()) return;
 
         final long channelId = event.getChannel().getIdLong();
         final Member author = event.getMember();
@@ -30,14 +34,23 @@ public final class InviteLinkDeletion extends ListenerAdapter {
 
         event.getMessage().delete().queue();
 
-        final String authorAsMention = event.getAuthor().getAsMention();
         final long logChannelId = Config.getInstance().getChannelConfig().getAutoModerationChannel().getIdLong();
-        final String channelAsMention = event.getChannel().getAsMention();
 
-        event.getMessage().reply(":x: Hier dürfen keine Invitelinks gepostet werden!").queue();
+        event.getMessage().reply(":x: In diesem Channel dürfen keine Invitelinks gepostet werden!").queue();
+
+        final EmbedBuilder embedBuilder = new EmbedBuilder();
+
+        embedBuilder.setAuthor(author.getUser().getAsTag(), null, author.getEffectiveAvatarUrl());
+        embedBuilder.setTitle("EinladungsLink gelöscht");
+        embedBuilder.addField("Author", author.getAsMention(), true);
+        embedBuilder.addField("Channel", event.getChannel().getAsMention(), true);
+        embedBuilder.addField("Grund", "```Posten eines Einladungslinks in einen nicht erlaubten Channel```", false);
+        embedBuilder.addField("Nachricht", event.getMessage().getContentRaw(), false);
+        embedBuilder.setColor(Color.decode(EmbedColorHelper.AUTO_MODERATION));
+        embedBuilder.setTimestamp(Instant.now());
 
         Objects.requireNonNull(event.getGuild().getTextChannelById(logChannelId))
-                .sendMessage(":red_circle:  **Einladungslink gelöscht** \n" + userMessage + "\n**(gesendet von " + authorAsMention + " in " + channelAsMention + " am " + Helper.getGermanDateTime() + ")**")
+                .sendMessageEmbeds(embedBuilder.build())
                 .queue();
     }
 }

@@ -54,7 +54,7 @@ public class UserSanctionHistory implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`user <user>`: Historie der Sanktionen";
+        return "`ush <user>`: Historie der Sanktionen";
     }
 
     @Override

@@ -1,13 +1,15 @@
 package tech.goodquestion.lembot.event;
 
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import tech.goodquestion.lembot.config.Config;
-import tech.goodquestion.lembot.library.parser.LocalDateTimeFormatter;
+import tech.goodquestion.lembot.library.EmbedColorHelper;
 
-import java.time.LocalDateTime;
+import java.awt.*;
+import java.time.Instant;
 import java.util.Objects;
 
 public final class LinkDeletion extends ListenerAdapter {
@@ -30,12 +32,21 @@ public final class LinkDeletion extends ListenerAdapter {
 
         event.getMessage().delete().queue();
 
-        final String authorAsMention = event.getAuthor().getAsMention();
-        final String channelAsMention = event.getChannel().getAsMention();
         event.getMessage().reply(":x: Nachricht wurde gelöscht, da sie einen Link enthält, der nicht verifiziert werden konnte").queue();
 
+        final EmbedBuilder embedBuilder = new EmbedBuilder();
+
+        embedBuilder.setAuthor(author.getUser().getAsTag(), null, author.getEffectiveAvatarUrl());
+        embedBuilder.setTitle("Link gelöscht");
+        embedBuilder.addField("Author", author.getAsMention(), true);
+        embedBuilder.addField("Channel", event.getChannel().getAsMention(), true);
+        embedBuilder.addField("Grund", "```Nicht verifizierter Link```", false);
+        embedBuilder.addField("Nachricht", event.getMessage().getContentRaw(), false);
+        embedBuilder.setColor(Color.decode(EmbedColorHelper.AUTO_MODERATION));
+        embedBuilder.setTimestamp(Instant.now());
+
         Objects.requireNonNull(event.getGuild().getTextChannelById(Config.getInstance().getChannelConfig().getAutoModerationChannel().getIdLong()))
-                .sendMessage(":red_circle:  **Folgender Link wurde gelöscht** \n" + userMessage + "\n**(gesendet von " + authorAsMention + " in " + channelAsMention + " am " + LocalDateTimeFormatter.toGermanFormat(LocalDateTime.now()) + ")**")
+                .sendMessageEmbeds(embedBuilder.build())
                 .queue();
     }
 }
