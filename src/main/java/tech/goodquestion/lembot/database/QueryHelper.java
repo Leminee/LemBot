@@ -3,6 +3,7 @@ package tech.goodquestion.lembot.database;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import tech.goodquestion.lembot.entity.OccurredException;
+import tech.goodquestion.lembot.library.parser.LocalDateTimeFormatter;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -34,6 +35,7 @@ public final class QueryHelper {
     private static final String INVITER = "SELECT invited_by FROM invite_tracking WHERE used_by = ?";
     private static final String ACTIVE_SANCTION = "SELECT activ FROM `muted_user` WHERE id_discord = ? ORDER BY activ DESC LIMIT 1";
     private static final String CONTRIBUTORS ="SELECT mention FROM contributor ORDER BY contributor_since" ;
+    private static final String SANCTION_HISTORY = "SELECT * FROM ((SELECT \":warning: VERWARNT am \", warned_at, \" durch \", warn_author, \" mit folgender Begründung: \", CONCAT('```',warned_user.reason, '```') FROM warned_user WHERE warned_user.id_discord = ?) UNION ALL (SELECT \":mute: GEMUTET am \", muted_at, \" durch \", mute_author, \" mit folgender Begründung: \", CONCAT('```',muted_user.reason,'```') FROM muted_user WHERE muted_user.id_discord = ?) UNION ALL (SELECT \":no_entry: GEBANNT am \", banned_at, \" durch \", ban_author,\" mit folgender Begründung: \", CONCAT('```',banned_user.reason,'```') FROM banned_user WHERE banned_user.id_discord = ?)) AS t ORDER BY t.warned_at";
     public static String MESSAGE_COUNT = "SELECT COUNT(user_message_content.id_discord) + 40000 FROM user_message_content";
     public static String ADMINS_MENTIONED = "SELECT mention FROM staff WHERE role_name = 'Administrator' AND mention != '<@739143338975952959>' ORDER BY staff_since;";
     public static String MODERATORS_MENTIONED = "SELECT mention FROM staff WHERE role_name = 'Moderator' ORDER BY staff_since;";
@@ -545,4 +547,42 @@ public final class QueryHelper {
 
         return contributorsAsMention;
     }
+
+    public static String getSanctionHistoryBy(final long userId){
+
+
+        final StringBuilder sanctionHistory = new StringBuilder();
+
+        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(SANCTION_HISTORY)) {
+
+            preparedStatement.setLong(1, userId);
+            preparedStatement.setLong(2, userId);
+            preparedStatement.setLong(3, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                sanctionHistory
+                        .append(resultSet.getString(1))
+                        .append("**")
+                        .append(LocalDateTimeFormatter.toGermanFormat(resultSet.getTimestamp(2).toLocalDateTime()))
+                        .append("**")
+                        .append(resultSet.getString(3))
+                        .append("**")
+                        .append(resultSet.getString(4))
+                        .append("**")
+                        .append(resultSet.getString(5))
+                        .append(resultSet.getString(6))
+                        .append("\n");
+            }
+
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
+
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
+        }
+
+        return sanctionHistory.toString();
+    }
+
 }

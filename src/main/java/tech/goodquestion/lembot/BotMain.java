@@ -103,6 +103,7 @@ public class BotMain {
         commandManager.registerCommand(new BotsCommand());
         commandManager.registerCommand(new UnbanCommand());
         commandManager.registerCommand(new UnwarnCommand());
+        commandManager.registerCommand(new UserSanctionHistory());
 
         BumpReminder bumpReminder = new BumpReminder();
 
