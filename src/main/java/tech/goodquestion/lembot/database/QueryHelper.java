@@ -27,7 +27,6 @@ public final class QueryHelper {
     public static final String SPAM_DATA = "SELECT id_channel, channel.id_message FROM `channel` INNER JOIN user_message_content ON channel.id_message = user_message_content.id_message WHERE user_message_content.id_discord = ? AND content = ? AND posted_at >= NOW() - INTERVAL 30 SECOND";
     public static final String HOPPING_CHECK = "SELECT COUNT(id_discord) FROM voice_join WHERE id_discord = ? AND joined_at >= NOW() - INTERVAL 60 SECOND UNION ALL SELECT COUNT(id_discord) FROM voice_move WHERE id_discord = ? AND moved_in_at >= NOW() - INTERVAL 60 SECOND";
     private static final String ADVERTISING_CHECK = "SELECT * FROM advertising WHERE id_discord = ?" ;
-    private static final String LAST_JOIN_DATE = "SELECT joined_at FROM `user_join` WHERE id_discord = ? ORDER BY `joined_at` DESC LIMIT 1";
     private static final String LAST_ACTIVITY = "SELECT * FROM((SELECT changed_at FROM `user_status` WHERE id_discord = ? AND status = 'OFFLINE' ORDER BY changed_at DESC LIMIT 1) UNION ALL (SELECT posted_at FROM `user_message_content` WHERE id_discord = ? ORDER BY `posted_at` DESC LIMIT 1)) t ORDER BY t.changed_at DESC";
     private static final String AMOUNT_WARNS = "SELECT COUNT(id_discord) FROM warned_user WHERE id_discord = ?";
     private static final String AMOUNT_MUTES = "SELECT COUNT(id_discord) FROM muted_user WHERE id_discord = ?";
@@ -376,34 +375,6 @@ public final class QueryHelper {
 
     }
 
-    public static LocalDateTime getLastJoinDateTimeBy(long userId) {
-
-        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(LAST_JOIN_DATE)) {
-
-            preparedStatement.setLong(1, userId);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            LocalDateTime lastDatetimeJoined;
-
-            if (resultSet.next()) {
-
-                lastDatetimeJoined =  resultSet.getTimestamp(1).toLocalDateTime();
-                return lastDatetimeJoined;
-            }
-
-
-        } catch (SQLException sqlException) {
-
-            System.out.println(sqlException.getMessage());
-
-            CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
-        }
-
-        return null;
-
-    }
-
     public static LocalDateTime getLastActivityDateTimeBy(long userId) {
 
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(LAST_ACTIVITY)) {
@@ -582,7 +553,7 @@ public final class QueryHelper {
             CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
         }
 
-        return sanctionHistory.toString();
+        return sanctionHistory.length() > 0 ? sanctionHistory.toString() : "```Keine Sanktionen```";
     }
 
 }
