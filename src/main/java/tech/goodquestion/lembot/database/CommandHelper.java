@@ -23,21 +23,22 @@ public final class CommandHelper {
     public static final String WARN_DATA = "INSERT INTO warned_user (id,id_discord,user_tag, username, warn_author, reason, channel_name) " +
             "VALUES (NULL,?,?,?,?,?,?)";
     public static final String ACTIVE_MEMBER_LOG = "INSERT INTO user_online (amount) VALUES (?);";
-    public static final String ADJUSTING_NEW_USERNAME_IN_BUMPER = "UPDATE user_bump SET username = ? WHERE id_discord = ?;";
-    public static final String ADJUSTING_NEW_USERNAME_IN_MESSAGE = "UPDATE user_message SET username = ? WHERE id_discord = ?;";
+    public static final String ADJUSTING_NICKNAME_IN_BUMPER = "UPDATE user_bump SET username = ? WHERE id_discord = ?;";
+    public static final String ADJUSTING_NICKNAME_IN_MESSAGE = "UPDATE user_message SET username = ? WHERE id_discord = ?;";
+    public static final String NICKNAME_UPDATED_LOG = "INSERT INTO updated_nickname (id, id_discord, user_tag, old_nickname, new_nickname) VALUES (NULL,?,?,?,?);";
     public static final String USERNAME_UPDATED_LOG = "INSERT INTO updated_username (id, id_discord, user_tag, old_username, new_username) VALUES (NULL,?,?,?,?);";
     public static final String EXCEPTION_LOG = "INSERT INTO exception (id_exception, occurred_in, type, details) VALUES (NULL,?,?,?);";
     public static final String INVITE_TRACKING_LOG = "INSERT INTO invite_tracking (id, url, used_by, invited_by, amount) VALUES (NULL,?,?,?,?);";
     private static final String CLASS_NAME = CommandHelper.class.getName();
     private static final String ADVERTISING = "INSERT INTO advertising (id, id_discord, user_tag) VALUES (NULL, ?, ?)";
     private static final String MUTE_DATA = "INSERT INTO muted_user (id,id_discord, user_tag, username, mute_author, duration, reason, channel_name) " +
-            "VALUES (NULL,?,?,?,?,?,?,?)"; ;
+            "VALUES (NULL,?,?,?,?,?,?,?)";
 
     private CommandHelper() {
 
     }
 
-    public static void adjustUsername(final String adjustingDateQuery, final String newUsername, final long userId) {
+    public static void adjustNickname(final String adjustingDateQuery, final String newUsername, final long userId) {
 
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(adjustingDateQuery)) {
 
@@ -60,6 +61,22 @@ public final class CommandHelper {
 
         } catch (SQLException sqlException) {
             System.out.println(sqlException.getMessage());
+            logException(OccurredException.getOccurredExceptionData(sqlException, CLASS_NAME));
+        }
+    }
+
+    public static void logUpdatedNickname(final long userId, final String userTag, final String oldUsername, final String newUsername) {
+
+        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(NICKNAME_UPDATED_LOG)) {
+            preparedStatement.setLong(1, userId);
+            preparedStatement.setBlob(2, Helper.changeCharacterEncoding(preparedStatement, userTag));
+            preparedStatement.setBlob(3, Helper.changeCharacterEncoding(preparedStatement, oldUsername));
+            preparedStatement.setBlob(4, Helper.changeCharacterEncoding(preparedStatement, newUsername));
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
+
             logException(OccurredException.getOccurredExceptionData(sqlException, CLASS_NAME));
         }
     }

@@ -128,7 +128,7 @@ public class BotMain {
         jda.addEventListener(new RoleEvents());
         jda.addEventListener(new SpamDetection());
         jda.addEventListener(new UpdatedMessageStorage());
-        jda.addEventListener(new UpdatingUsername());
+        jda.addEventListener(new ProfileUpdating());
         jda.addEventListener(new UserMessageCounter());
         jda.addEventListener(new VoiceAutoCreation());
         jda.addEventListener(new VoiceJoinedStorage());
