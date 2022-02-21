@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Erstellungszeit: 20. Feb 2022 um 02:56
+-- Erstellungszeit: 21. Feb 2022 um 06:53
 -- Server-Version: 10.3.31-MariaDB-0+deb10u1
 -- PHP-Version: 7.4.27
 
@@ -129,6 +129,7 @@ CREATE TABLE `muted_user` (
   `username` varchar(255) NOT NULL,
   `mute_author` varchar(255) NOT NULL,
   `reason` text NOT NULL,
+  `duration` varchar(255) NOT NULL,
   `channel_name` varchar(255) NOT NULL,
   `activ` tinyint(4) NOT NULL DEFAULT 1,
   `muted_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -177,17 +178,32 @@ CREATE TABLE `updated_message` (
 -- --------------------------------------------------------
 
 --
+-- Tabellenstruktur für Tabelle `updated_nickname`
+--
+
+CREATE TABLE `updated_nickname` (
+  `id` bigint(20) NOT NULL,
+  `id_discord` bigint(20) NOT NULL,
+  `user_tag` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `old_nickname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `new_nickname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `updated_username`
 --
 
 CREATE TABLE `updated_username` (
-  `id` bigint(20) NOT NULL,
+  `id` int(11) NOT NULL,
   `id_discord` bigint(20) NOT NULL,
   `user_tag` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `old_username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `new_username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -442,6 +458,12 @@ ALTER TABLE `updated_message`
   ADD KEY `id_message` (`id_message`);
 
 --
+-- Indizes für die Tabelle `updated_nickname`
+--
+ALTER TABLE `updated_nickname`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indizes für die Tabelle `updated_username`
 --
 ALTER TABLE `updated_username`
@@ -571,10 +593,16 @@ ALTER TABLE `updated_message`
   MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT für Tabelle `updated_nickname`
+--
+ALTER TABLE `updated_nickname`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT für Tabelle `updated_username`
 --
 ALTER TABLE `updated_username`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT für Tabelle `user_bump_time`

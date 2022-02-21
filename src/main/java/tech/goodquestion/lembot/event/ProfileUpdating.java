@@ -27,9 +27,8 @@ public final class ProfileUpdating extends ListenerAdapter {
 
         final long userId = event.getUser().getIdLong();
         final String userTag = event.getUser().getAsTag();
-
-        String oldUsername = event.getOldName();
-        String newUsername = event.getNewName();
+        final String oldUsername = event.getOldName();
+        final String newUsername = event.getNewName();
 
         CommandHelper.logUpdatedUsername(userId, userTag, oldUsername, newUsername);
 
