@@ -54,7 +54,7 @@ public final class MemberInfoCommand implements IBotCommand {
         final String accountCreationDate = LocalDateTimeFormatter.toGermanFormat(user.getTimeCreated().toLocalDateTime());
         final String lastActivityDateTime = QueryHelper.getLastActivityDateTimeBy(userId) == null
                 ? "N/A"
-                : LocalDateTimeFormatter.toGermanFormat(Objects.requireNonNull(QueryHelper.getLastActivityDateTimeBy(userId)).minusHours(1));
+                : LocalDateTimeFormatter.toGermanFormat(Objects.requireNonNull(QueryHelper.getLastActivityDateTimeBy(userId)));
         final long amountMessages = QueryHelper.getAmountMessagesBy(userId);
         final long amountBumps = QueryHelper.getAmountBumpsBy(userId);
         final String lastActivity = !member.getOnlineStatus().equals(OnlineStatus.OFFLINE)

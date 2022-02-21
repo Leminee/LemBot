@@ -7,9 +7,7 @@ import tech.goodquestion.lembot.library.parser.LocalDateTimeFormatter;
 
 import java.sql.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public final class QueryHelper {
 
@@ -388,8 +386,10 @@ public final class QueryHelper {
 
             if (resultSet.next()) {
 
-                lastActivityDateTime = resultSet.getTimestamp(1).toLocalDateTime();
 
+                lastActivityDateTime = resultSet
+                        .getTimestamp(1, Calendar.getInstance(TimeZone.getDefault()))
+                        .toLocalDateTime();
 
                return lastActivityDateTime;
             }
@@ -536,7 +536,8 @@ public final class QueryHelper {
                 sanctionHistory
                         .append(resultSet.getString(1))
                         .append("**")
-                        .append(LocalDateTimeFormatter.toGermanFormat(resultSet.getTimestamp(2).toLocalDateTime()))
+                        .append(LocalDateTimeFormatter.toGermanFormat(resultSet.getTimestamp(2, Calendar.getInstance(TimeZone.getDefault()
+                        )).toLocalDateTime()))
                         .append("**")
                         .append(resultSet.getString(3))
                         .append("**")
