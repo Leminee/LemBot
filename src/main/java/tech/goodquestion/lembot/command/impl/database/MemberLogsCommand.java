@@ -65,7 +65,7 @@ public final class MemberLogsCommand implements IBotCommand {
 
         final String lastActivityDateTime = QueryHelper.getLastActivityDateTimeBy(userId) == null
                 ? "N/A"
-                : LocalDateTimeFormatter.toGermanFormat(Objects.requireNonNull(QueryHelper.getLastActivityDateTimeBy(userId)));
+                : LocalDateTimeFormatter.toGermanFormat(Objects.requireNonNull(QueryHelper.getLastActivityDateTimeBy(userId)).minusHours(1));
 
         final long amountMessages = QueryHelper.getAmountMessagesBy(userId);
         final long amountBumps = QueryHelper.getAmountBumpsBy(userId);
