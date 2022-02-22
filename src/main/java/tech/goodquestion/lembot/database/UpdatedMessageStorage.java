@@ -32,6 +32,7 @@ public final class UpdatedMessageStorage extends ListenerAdapter {
         final String updatedMessageAuthorAsMention = "<@" + authorId + ">";
         final String channelAsMention = "<#" + event.getChannel().getIdLong() + ">";
         final String authorAvatarUrl = event.getAuthor().getEffectiveAvatarUrl();
+        final String messageUrl = event.getMessage().getJumpUrl();
         String updatedMessageOldContent = QueryHelper.getUpdatedMessageOldContent(updatedMessageId, QueryHelper.UPDATED_MESSAGE_LAST_CONTENT);
         System.out.println(updatedMessageOldContent);
 
@@ -63,6 +64,7 @@ public final class UpdatedMessageStorage extends ListenerAdapter {
                 .addField("Author", updatedMessageAuthorAsMention, true)
                 .addField("Author ID", String.valueOf(authorId), true)
                 .addField("Kanal", channelAsMention, true)
+                .addField("Jumpurl", messageUrl, false)
                 .addField("Alter Inhalt", updatedMessageOldContent, false)
                 .addField("Neuer Inhalt", updatedMessageContent, false)
                 .setTimestamp(Instant.now());
