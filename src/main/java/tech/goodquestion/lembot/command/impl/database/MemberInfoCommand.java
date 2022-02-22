@@ -55,11 +55,13 @@ public final class MemberInfoCommand implements IBotCommand {
         final String lastActivityDateTime = QueryHelper.getLastActivityDateTimeBy(userId) == null
                 ? "N/A"
                 : LocalDateTimeFormatter.toGermanFormat(Objects.requireNonNull(QueryHelper.getLastActivityDateTimeBy(userId)));
+
         final long amountMessages = QueryHelper.getAmountMessagesBy(userId);
         final long amountBumps = QueryHelper.getAmountBumpsBy(userId);
+
         final String lastActivity = !member.getOnlineStatus().equals(OnlineStatus.OFFLINE)
                 ? ":green_circle: Online"
-                : "```js\nZuletzt aktiv am " + lastActivityDateTime + "```";
+                : String.format("```js\nZuletzt online am %s```" ,lastActivityDateTime);
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle("Member Informationen");
@@ -67,14 +69,15 @@ public final class MemberInfoCommand implements IBotCommand {
         embedBuilder.setAuthor(user.getAsTag(), null, Helper.getUserFromCommandInput(message, args).getEffectiveAvatarUrl());
         embedBuilder.setThumbnail(user.getAvatarUrl());
         embedBuilder.addField("Member", userAsMention, true);
-        embedBuilder.addField("Erstellungsdatum", accountCreationDate, true);
-        embedBuilder.addField("Letztes Beitrittsdatum", getLastJoinDate(member), true);
+        embedBuilder.addField("Erstellungsdatum", accountCreationDate.replace("um", ""), true);
+        embedBuilder.addField("Letztes Beitrittsdatum", getLastJoinDate(member).replace("um", ""), true);
         embedBuilder.addField("Nachrichten", String.valueOf(amountMessages), true);
         embedBuilder.addField("Bumps", String.valueOf(amountBumps), true);
         embedBuilder.addField("Rollen", String.valueOf(getAmountRoles(member)), true);
         embedBuilder.addField("Aktivität", lastActivity, false);
 
         Helper.sendEmbed(embedBuilder, message, true);
+
     }
     
     private String getLastJoinDate(Member member){

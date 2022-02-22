@@ -119,7 +119,7 @@ public class BotMain {
         jda.addEventListener(new InviteLinkDeletion());
         jda.addEventListener(new InviteTracking());
         jda.addEventListener(new LinkDeletion());
-        jda.addEventListener(new MediaOnly());
+        jda.addEventListener(new MemesOnlyChannel());
         jda.addEventListener(new MemberAuthorization());
         jda.addEventListener(new MemberJoinStorage());
         jda.addEventListener(new MemberLeftStorage());

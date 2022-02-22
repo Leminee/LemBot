@@ -181,7 +181,7 @@ public final class Helper {
         return "-1";
     }
 
-    public static String getGermanDateTime() {
+    public static String getCurrentCETDateTime() {
 
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy").withLocale(Locale.GERMAN);
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm").withLocale(Locale.GERMAN);
@@ -204,4 +204,5 @@ public final class Helper {
 
         return user;
     }
+
 }

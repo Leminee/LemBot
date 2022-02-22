@@ -28,7 +28,7 @@ public final class ParserCommand implements IBotCommand {
             final LocalDateTime parsedInput = LocalDateTimeParser.parse(message.getContentRaw());
 
             assert parsedInput != null;
-            final String description = "```js\n" + LocalDateTimeFormatter.toGermanFormat(parsedInput) + "```\n";
+            final String description = "```js\n" + LocalDateTimeFormatter.toGermanFormat(parsedInput).replace("um","") + "```\n";
 
             Helper.createEmbed(embedBuilder, title, description, EmbedColorHelper.SUCCESS);
 

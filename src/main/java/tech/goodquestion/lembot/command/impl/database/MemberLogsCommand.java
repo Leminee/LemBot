@@ -70,7 +70,9 @@ public final class MemberLogsCommand implements IBotCommand {
         final long amountMessages = QueryHelper.getAmountMessagesBy(userId);
         final long amountBumps = QueryHelper.getAmountBumpsBy(userId);
 
-        final String lastActivity = !member.getOnlineStatus().equals(OnlineStatus.OFFLINE) ? ":green_circle: Online" : String.format("```js\nZuletzt aktiv am %s```" ,lastActivityDateTime);
+        final String lastActivity = !member.getOnlineStatus().equals(OnlineStatus.OFFLINE)
+                ? ":green_circle: Online"
+                : String.format("```js\nZuletzt online am %s```" ,lastActivityDateTime);
 
         final String activeSanction = QueryHelper.hasActiveSanction(userId) ? "*Mute*" : "*Keine*";
 
@@ -80,8 +82,8 @@ public final class MemberLogsCommand implements IBotCommand {
         embedBuilder.setAuthor(user.getAsTag(), null, Helper.getUserFromCommandInput(message, args).getEffectiveAvatarUrl());
         embedBuilder.setThumbnail(user.getAvatarUrl());
         embedBuilder.addField("Member", userAsMention, true);
-        embedBuilder.addField("Erstellungsdatum", accountCreationDate, true);
-        embedBuilder.addField("Letztes Beitrittsdatum", getLastJoinDate(member), true);
+        embedBuilder.addField("Erstellungsdatum", accountCreationDate.replace("um",""), true);
+        embedBuilder.addField("Letztes Beitrittsdatum", getLastJoinDate(member).replace("um",""), true);
         embedBuilder.addField("Nachrichten", String.valueOf(amountMessages), true);
         embedBuilder.addField("Bumps", String.valueOf(amountBumps), true);
         embedBuilder.addField("Rollen", String.valueOf(getAmountRoles(member)), true);
@@ -102,6 +104,7 @@ public final class MemberLogsCommand implements IBotCommand {
     private int getAmountRoles(Member member){
         return member.getRoles().size();
     }
+
 
     @Override
     public String getName() {
