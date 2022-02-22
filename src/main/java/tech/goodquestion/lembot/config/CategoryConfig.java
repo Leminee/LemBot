@@ -4,9 +4,9 @@ import net.dv8tion.jda.api.entities.Category;
 
 public final class CategoryConfig {
 
-    private long voiceFun;
+    private long voice;
 
-    public Category getVoiceFunCategory() {
-        return Config.getInstance().getGuild().getCategoryById(voiceFun);
+    public Category getVoiceCategory() {
+        return Config.getInstance().getGuild().getCategoryById(voice);
     }
 }
