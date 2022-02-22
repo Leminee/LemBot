@@ -1,9 +1,9 @@
-package tech.goodquestion.lembot.event;
+package tech.goodquestion.lembot.database;
 
 import net.dv8tion.jda.api.events.guild.member.update.GuildMemberUpdateNicknameEvent;
+import net.dv8tion.jda.api.events.user.update.UserUpdateDiscriminatorEvent;
 import net.dv8tion.jda.api.events.user.update.UserUpdateNameEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import tech.goodquestion.lembot.database.CommandHelper;
 
 public final class ProfileUpdating extends ListenerAdapter {
 
@@ -24,13 +24,22 @@ public final class ProfileUpdating extends ListenerAdapter {
     @Override
     public void onUserUpdateName(final UserUpdateNameEvent event) {
 
-
         final long userId = event.getUser().getIdLong();
         final String userTag = event.getUser().getAsTag();
         final String oldUsername = event.getOldName();
         final String newUsername = event.getNewName();
 
         CommandHelper.logUpdatedUsername(userId, userTag, oldUsername, newUsername);
+    }
 
+    @Override
+    public void onUserUpdateDiscriminator(final UserUpdateDiscriminatorEvent event) {
+
+        final long userId = event.getUser().getIdLong();
+        final String userTag = event.getUser().getAsTag();
+        final String oldUsername = event.getOldDiscriminator();
+        final String newUsername = event.getNewDiscriminator();
+
+        CommandHelper.logUpdatedUsername(userId, userTag, oldUsername, newUsername);
     }
 }

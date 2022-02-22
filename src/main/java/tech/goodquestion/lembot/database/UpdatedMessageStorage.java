@@ -34,7 +34,6 @@ public final class UpdatedMessageStorage extends ListenerAdapter {
         final String authorAvatarUrl = event.getAuthor().getEffectiveAvatarUrl();
         final String messageUrl = event.getMessage().getJumpUrl();
         String updatedMessageOldContent = QueryHelper.getUpdatedMessageOldContent(updatedMessageId, QueryHelper.UPDATED_MESSAGE_LAST_CONTENT);
-        System.out.println(updatedMessageOldContent);
 
         
         if (isNotValidLength(updatedMessageContent)) {
