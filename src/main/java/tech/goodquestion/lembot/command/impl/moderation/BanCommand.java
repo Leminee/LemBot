@@ -23,7 +23,6 @@ public final class BanCommand extends UserBanishment {
     public void banishUser(final User toBanish, final Sanction sanction, final Message originMessage) {
 
         final String performedSanction = SanctionType.BAN.getVerbalizedSanctionTyp();
-        final SanctionType sanctionType = SanctionType.BAN;
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
 
@@ -40,21 +39,21 @@ public final class BanCommand extends UserBanishment {
 
         Helper.sendEmbed(embedBuilder,originMessage,false);
 
-        notifyBannedUser(toBanish,sanctionType, performedSanction, sanction.reason, Objects.requireNonNull(originMessage.getMember()));
+        notifyBannedUser(toBanish, performedSanction, sanction.reason, Objects.requireNonNull(originMessage.getMember()));
 
-        originMessage.getGuild().ban(toBanish,0, sanction.reason).complete();
+        Config.getInstance().getGuild().ban(toBanish,0,sanction.reason).queue();
 
         CommandHelper.logUserBan(sanction);
     }
 
 
-      private void notifyBannedUser(final User sanctionedUser, final SanctionType sanctionType, final String performedSanction, final String reason, final Member sanctionAuthor) {
+      private void notifyBannedUser(final User sanctionedUser, final String performedSanction, final String reason, final Member sanctionAuthor) {
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
 
         try {
 
-            Helper.createEmbed(embedBuilder, ":no_entry: " + sanctionType, "Du wurdest auf **GoodQuestion** " + " **" + performedSanction + "**", EmbedColorHelper.BAN);
+            Helper.createEmbed(embedBuilder, ":no_entry: " + SanctionType.BAN, "Du wurdest auf **GoodQuestion** " + " **" + performedSanction + "**", EmbedColorHelper.BAN);
             embedBuilder.addField("Dauer", "permanent", true);
             embedBuilder.addField("Gebannt von", sanctionAuthor.getAsMention(), true);
             embedBuilder.addField("Grund", "```" + reason + "```", false);

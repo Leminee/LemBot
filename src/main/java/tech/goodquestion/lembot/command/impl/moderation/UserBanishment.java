@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.entity.Sanction;
@@ -39,43 +40,77 @@ public abstract sealed class UserBanishment implements IBotCommand permits BanCo
 
         user = Helper.getUserFromCommandInput(message, args);
 
-        Member member = Config.getInstance().getGuild().retrieveMember(user).complete();
 
-        if (member.hasPermission(Permission.ADMINISTRATOR)) {
-            final EmbedBuilder embedBuilder = new EmbedBuilder();
-            final String embedDescription = ":x: Admins/Moderatoren können nicht gebannt werden!";
-            Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
-            Helper.sendEmbed(embedBuilder, message, true);
-            return;
+        Member member;
+        try {
+
+            member = Config.getInstance().getGuild().retrieveMember(user).complete();
+
+            if (member.hasPermission(Permission.ADMINISTRATOR)) {
+                final EmbedBuilder embedBuilder = new EmbedBuilder();
+                final String embedDescription = ":x: Admins/Moderatoren können nicht gebannt werden!";
+                Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
+                Helper.sendEmbed(embedBuilder, message, true);
+                return;
+            }
+
+            final StringBuilder reason = new StringBuilder();
+
+            for (int i = 1; i < args.length; i++) {
+                reason.append(args[i]).append(" ");
+            }
+
+            final Sanction sanction = new Sanction();
+
+            sanction.userId = user.getIdLong();
+            sanction.userTag = user.getAsTag();
+            sanction.userName = user.getName();
+            sanction.author = message.getAuthor().getAsTag();
+            sanction.reason = reason.toString();
+            sanction.channelName = channel.getName();
+
+            if (requiresAdmin() && !Objects.requireNonNull(message.getMember()).hasPermission(Permission.MANAGE_ROLES)) {
+                final EmbedBuilder embedBuilder = new EmbedBuilder();
+                final String embedDescription = ":x: Permission denied";
+                Helper.createEmbed(embedBuilder, "", embedDescription, EmbedColorHelper.ERROR);
+                Helper.sendEmbed(embedBuilder, message, true);
+                return;
+            }
+
+
+            banishUser(user, sanction, message);
+        }
+        catch (ErrorResponseException errorResponseException){
+
+            final StringBuilder reason = new StringBuilder();
+
+            for (int i = 1; i < args.length; i++) {
+                reason.append(args[i]).append(" ");
+            }
+
+            final Sanction sanction = new Sanction();
+
+            sanction.userId = user.getIdLong();
+            sanction.userTag = user.getAsTag();
+            sanction.userName = user.getName();
+            sanction.author = message.getAuthor().getAsTag();
+            sanction.reason = reason.toString();
+            sanction.channelName = channel.getName();
+
+            if (requiresAdmin() && !Objects.requireNonNull(message.getMember()).hasPermission(Permission.MANAGE_ROLES)) {
+                final EmbedBuilder embedBuilder = new EmbedBuilder();
+                final String embedDescription = ":x: Permission denied";
+                Helper.createEmbed(embedBuilder, "", embedDescription, EmbedColorHelper.ERROR);
+                Helper.sendEmbed(embedBuilder, message, true);
+                return;
+            }
+
+
+            banishUser(user, sanction, message);
+
         }
 
-        final StringBuilder reason = new StringBuilder();
-
-        for (int i = 1; i < args.length; i++) {
-            reason.append(args[i]).append(" ");
-        }
-
-        final Sanction sanction = new Sanction();
-
-        sanction.userId = user.getIdLong();
-        sanction.userTag = user.getAsTag();
-        sanction.userName = user.getName();
-        sanction.author = message.getAuthor().getAsTag();
-        sanction.reason = reason.toString();
-        sanction.channelName = channel.getName();
-
-        if (requiresAdmin() && !Objects.requireNonNull(message.getMember()).hasPermission(Permission.MANAGE_ROLES)) {
-            final EmbedBuilder embedBuilder = new EmbedBuilder();
-            final String embedDescription = ":x: Permission denied";
-            Helper.createEmbed(embedBuilder, "", embedDescription, EmbedColorHelper.ERROR);
-            Helper.sendEmbed(embedBuilder, message, true);
-            return;
-        }
-
-
-        banishUser(user, sanction, message);
     }
-
 
     public abstract void banishUser(User toBanish, Sanction sanction, Message originMessage);
 

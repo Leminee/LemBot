@@ -34,7 +34,7 @@ public final class WarnCommand extends UserBanishment {
         embedBuilder.setAuthor(toBanish.getAsTag(), null,toBanish.getEffectiveAvatarUrl());
         embedBuilder.setDescription("**" + ":warning: Member verwarnt" + "**");
         embedBuilder.addField("Verwarnter Member", toBanish.getAsMention(), true);
-        embedBuilder.addField("Verwarnt von",originMessage.getMember().getAsMention(), true);
+        embedBuilder.addField("Verwarnt von", Objects.requireNonNull(originMessage.getMember()).getAsMention(), true);
         embedBuilder.addField("Grund",  "```" + sanction.reason + "```", false);
         embedBuilder.setFooter(originMessage.getMember().getUser().getAsTag(),originMessage.getMember().getEffectiveAvatarUrl());
         embedBuilder.setTimestamp(Instant.now());
@@ -42,39 +42,40 @@ public final class WarnCommand extends UserBanishment {
         Helper.sendEmbed(embedBuilder,originMessage,false);
 
         final String performedSanction = SanctionType.WARN.getVerbalizedSanctionTyp();
-        final SanctionType sanctionType = SanctionType.WARN;
 
-        notifyWarnedUser(toBanish, sanctionType, performedSanction, sanction.reason, Objects.requireNonNull(originMessage.getMember()));
+        Member member = originMessage.getGuild().retrieveMember(toBanish).complete();
 
-        CommandHelper.logUserWarn(sanction);
+        notifyWarnedMember(member, performedSanction, sanction.reason, Objects.requireNonNull(originMessage.getMember()));
+
+        CommandHelper.logMemberWarn(sanction);
 
     }
 
-    private void notifyWarnedUser(final User sanctionedUser, final SanctionType sanctionType, final String performedSanction, final String reason, final Member sanctionAuthor){
+    private void notifyWarnedMember(final Member sanctionedMember, final String performedSanction, final String reason, final Member sanctionAuthor){
 
         try {
 
             final  EmbedBuilder embedBuilder = new EmbedBuilder();
             final String defaultWarnDuration = "28 Tage";
 
-            Helper.createEmbed(embedBuilder, ":warning: " + sanctionType, "Du wurdest auf **GoodQuestion** " + " **" + performedSanction + "**", EmbedColorHelper.WARN);
+            Helper.createEmbed(embedBuilder, ":warning: " + SanctionType.WARN, "Du wurdest auf **GoodQuestion** " + " **" + performedSanction + "**", EmbedColorHelper.WARN);
             embedBuilder.addField("Dauer", defaultWarnDuration, true);
             embedBuilder.addField("Verwarnt von", sanctionAuthor.getAsMention(), true);
             embedBuilder.addField("Grund",  "```" + reason + "```", false);
             embedBuilder.setFooter(sanctionAuthor.getUser().getAsTag(),sanctionAuthor.getUser().getEffectiveAvatarUrl());
             embedBuilder.setTimestamp(Instant.now());
 
-            sanctionedUser.openPrivateChannel()
+            sanctionedMember.getUser().openPrivateChannel()
                     .flatMap(channel -> channel.sendMessageEmbeds(embedBuilder.build()))
                     .complete();
 
-            scheduleReminder(28, TimeUnit.DAYS,sanctionAuthor);
+            scheduleReminder(28, TimeUnit.DAYS,sanctionedMember);
 
         } catch (ErrorResponseException errorResponseException) {
 
             Objects.requireNonNull(Config.getInstance().getGuild()
                     .getTextChannelById(Config.getInstance().getChannelConfig().getAutoModerationChannel().getIdLong()))
-                    .sendMessage(errorResponseException.getMessage() + " " +  sanctionedUser.getAsTag()).queue();
+                    .sendMessage(errorResponseException.getMessage() + " " +  sanctionedMember.getUser().getAsTag()).queue();
 
             System.out.println(errorResponseException.getMessage());
             CommandHelper.logException(OccurredException.getOccurredExceptionData(errorResponseException, this.getClass().getName()));
@@ -84,7 +85,12 @@ public final class WarnCommand extends UserBanishment {
     public void scheduleReminder(final long delay, final TimeUnit timeUnit, Member sanctionedMember) {
 
 
-        final Runnable runnable = () -> notifyStaff(sanctionedMember);
+        final Runnable runnable = () -> {
+
+            removeSanction(sanctionedMember);
+            notifyStaff(sanctionedMember);
+
+        };
 
         scheduledExecutorService.schedule(runnable, delay, timeUnit);
 
@@ -96,10 +102,11 @@ public final class WarnCommand extends UserBanishment {
 
         embedBuilder.setColor(Color.decode(EmbedColorHelper.AUTO_MODERATION));
 
-        embedBuilder.setTitle(" :mute: Verwarnung entfernt");
+        embedBuilder.setTitle(" :warning: Verwarnung automatisch entfernt");
         embedBuilder.setAuthor(sanctionedMember.getUser().getAsTag(), null,sanctionedMember.getUser().getEffectiveAvatarUrl());
         embedBuilder.addField("Member", sanctionedMember.getAsMention(), true);
-        embedBuilder.addField("Grund",  "```Ende der Mutedauer```", false);
+        embedBuilder.addField("Member ID", String.valueOf(sanctionedMember.getIdLong()), true);
+        embedBuilder.addField("Grund",  "```Ende der Verwarnungsdauer```", false);
         embedBuilder.setTimestamp(Instant.now());
 
         Config.getInstance().getChannelConfig().getAutoModerationChannel().sendMessageEmbeds(embedBuilder.build()).queue();
@@ -117,6 +124,13 @@ public final class WarnCommand extends UserBanishment {
 
     @Override
     public String getDescription() {
-        return "`warn <user> <reason>`: Weist " + Config.getInstance().getRoleConfig().getWarnRole().getAsMention() + " zu";
+        return "`warn <member> <reason>`: Weist " + Config.getInstance().getRoleConfig().getWarnRole().getAsMention() + " zu";
+    }
+
+    public void removeSanction(Member sanctionedMember) {
+
+        sanctionedMember.getGuild()
+                .removeRoleFromMember(sanctionedMember, Config.getInstance().getRoleConfig().getWarnRole())
+                .queue();
     }
 }

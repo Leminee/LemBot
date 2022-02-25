@@ -48,7 +48,7 @@ public final class ParserCommand implements IBotCommand {
 
     @Override
     public String getDescription() {
-        return "`p`: Parst den Input in DateTime";
+        return "`p <input>`: Parst den Input in DateTime";
     }
 
     @Override

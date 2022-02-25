@@ -31,7 +31,7 @@ public final class ClearCommand implements IBotCommand {
             embedBuilder.setColor(Color.decode(EmbedColorHelper.SUCCESS));
 
             channel.sendMessageEmbeds(embedBuilder.build())
-                    .queue( m -> m.delete().queueAfter(3, TimeUnit.HOURS));
+                    .queue( m -> m.delete().queueAfter(1, TimeUnit.HOURS));
 
         } catch (IllegalArgumentException illegalArgumentException) {
 

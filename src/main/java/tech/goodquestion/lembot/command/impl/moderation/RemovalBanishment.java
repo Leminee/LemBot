@@ -1,10 +1,9 @@
 package tech.goodquestion.lembot.command.impl.moderation;
 
-import tech.goodquestion.lembot.command.IBotCommand;
+import net.dv8tion.jda.api.entities.Message;
 
-public abstract sealed class RemovalBanishment implements IBotCommand permits UnbanCommand,UnmuteCommand,UnwarnCommand{
+public interface RemovalBanishment {
 
-
-
+    void removeSanction(Message message, String[] args);
 
 }

@@ -31,13 +31,30 @@ public final class MuteCommand implements IBotCommand {
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) throws IOException {
 
-        if (args.length < 1) return;
+        if (args.length < 3) {
+            final EmbedBuilder embedBuilder = new EmbedBuilder();
+            final String embedDescription = ":x: Gebe eine Dauer und einen Grund an!";
+            Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
+            Helper.sendEmbed(embedBuilder, message, true);
+            return;
+        }
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         final String performedSanction = SanctionType.MUTE.getVerbalizedSanctionTyp();
-        final SanctionType sanctionType = SanctionType.MUTE;
 
-        Member sanctionedMember = getMemberFromCommandInput(message, args);
+        Member sanctionedMember;
+        try {
+
+            sanctionedMember = getMemberFromCommandInput(message, args);
+
+        } catch (ErrorResponseException errorResponseException){
+
+            final EmbedBuilder embedBuilder1 = new EmbedBuilder();
+            Helper.createEmbed(embedBuilder1, "Error", ":x: Kein Member gefunden", EmbedColorHelper.ERROR);
+            Helper.sendEmbed(embedBuilder1, message, true);
+            return;
+
+        }
 
         Sanction sanction = new Sanction();
         sanction.author = sender.getUser().getAsTag();
@@ -86,7 +103,7 @@ public final class MuteCommand implements IBotCommand {
 
         Helper.sendEmbed(embedBuilder, message, false);
 
-        notifyMutedUser(sanctionedMember, sanctionType, performedSanction, sanction.reason, sanction.duration, sender);
+        notifyMutedUser(sanctionedMember, performedSanction, sanction.reason, sanction.duration, sender);
 
         CommandHelper.logMemberMute(sanction);
 
@@ -97,21 +114,16 @@ public final class MuteCommand implements IBotCommand {
     public void scheduleReminder(final long delay, final TimeUnit timeUnit, Member sanctionedMember) {
 
         final Runnable runnable = () -> {
-            unmute(sanctionedMember);
+
             notifyStaff(sanctionedMember);
+            sanctionedMember.getGuild().removeRoleFromMember(sanctionedMember,Config.getInstance().getRoleConfig().getMuteRole()).queue();
+
         };
+
 
         scheduledExecutorService.schedule(runnable, delay, timeUnit);
     }
 
-    private void unmute(Member sanctionedMember) {
-
-        Objects.requireNonNull(Config.getInstance()
-                .getGuild()
-                .getTextChannelById(Config.getInstance().getChannelConfig().getAutoModerationChannel().getIdLong()))
-                .sendMessage("?unmute " + sanctionedMember.getIdLong())
-                .queue(message -> message.delete().queueAfter(30, TimeUnit.SECONDS));
-    }
 
     private void notifyStaff(Member sanctionedMember) {
 
@@ -121,6 +133,7 @@ public final class MuteCommand implements IBotCommand {
         embedBuilder.setTitle(" :mute: Member automatisch ungemutet");
         embedBuilder.setAuthor(sanctionedMember.getUser().getAsTag(), null, sanctionedMember.getUser().getEffectiveAvatarUrl());
         embedBuilder.addField("Ungemuteter Member", sanctionedMember.getAsMention(), true);
+        embedBuilder.addField("Ungemuteter Member ID", String.valueOf(sanctionedMember.getIdLong()), true);
         embedBuilder.addField("Grund", "```Ende der Mutedauer```", false);
         embedBuilder.setTimestamp(Instant.now());
 
@@ -128,13 +141,13 @@ public final class MuteCommand implements IBotCommand {
     }
 
 
-    private void notifyMutedUser(final Member sanctionedMember, final SanctionType sanctionType, final String performedSanction, final String reason, final String duration, final Member sanctionAuthor) {
+    private void notifyMutedUser(final Member sanctionedMember, final String performedSanction, final String reason, final String duration, final Member sanctionAuthor) {
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
 
         try {
 
-            Helper.createEmbed(embedBuilder, ":mute: " + sanctionType, "Du wurdest auf **GoodQuestion** " + " **" + performedSanction + "**", EmbedColorHelper.MUTE);
+            Helper.createEmbed(embedBuilder, ":mute: " + SanctionType.MUTE, "Du wurdest auf **GoodQuestion** " + " **" + performedSanction + "**", EmbedColorHelper.MUTE);
             embedBuilder.addField("Dauer", duration, true);
             embedBuilder.addField("Gemutet von", sanctionAuthor.getAsMention(), true);
             embedBuilder.addField("Grund", "```" + reason + "```", false);
