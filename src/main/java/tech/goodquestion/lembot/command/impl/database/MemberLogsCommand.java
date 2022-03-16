@@ -72,7 +72,7 @@ public final class MemberLogsCommand implements IBotCommand {
 
         final String lastActivity = !member.getOnlineStatus().equals(OnlineStatus.OFFLINE)
                 ? ":green_circle: Online"
-                : String.format("```js\nZuletzt online am %s```" ,lastActivityDateTime);
+                : String.format("```js\nZuletzt aktiv am %s```" ,lastActivityDateTime);
 
         final String activeSanction = QueryHelper.hasActiveSanction(userId) ? "*Mute*" : "*Keine*";
 

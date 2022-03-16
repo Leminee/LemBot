@@ -61,7 +61,7 @@ public final class MemberInfoCommand implements IBotCommand {
 
         final String lastActivity = !member.getOnlineStatus().equals(OnlineStatus.OFFLINE)
                 ? ":green_circle: Online"
-                : String.format("```js\nZuletzt online am %s```" ,lastActivityDateTime);
+                : String.format("```js\nZuletzt aktiv am %s```" ,lastActivityDateTime);
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle("Member Informationen");
