@@ -23,14 +23,14 @@ public final class UnbanCommand implements IBotCommand, RemovalBanishment {
         
         removeSanction(message, args);
 
-        Member member = MuteCommand.getMemberFromCommandInput(message,args);
+        User user = Helper.getUserFromCommandInput(message,args);
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setColor(Color.decode(EmbedColorHelper.SUCCESS));
         embedBuilder.setTitle("Bestätigung");
-        embedBuilder.setAuthor(member.getUser().getAsTag(), null,member.getUser().getEffectiveAvatarUrl());
+        embedBuilder.setAuthor(user.getAsTag(), null,user.getEffectiveAvatarUrl());
         embedBuilder.setDescription("**" + ":no_entry: Ban rückgängig gemacht" + "**");
-        embedBuilder.addField("Member",member.getAsMention() , true);
+        embedBuilder.addField("Member",user.getAsMention() , true);
         embedBuilder.addField("Rückgängig gemacht von",sender.getAsMention(), true);
         embedBuilder.setFooter(sender.getUser().getAsTag(),sender.getEffectiveAvatarUrl());
         embedBuilder.setTimestamp(Instant.now());
