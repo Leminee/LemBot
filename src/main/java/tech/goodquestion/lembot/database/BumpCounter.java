@@ -14,8 +14,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public final class BumpCounter extends ListenerAdapter {
 
@@ -25,49 +23,42 @@ public final class BumpCounter extends ListenerAdapter {
         final List<MessageEmbed> disBoardEmbed = event.getMessage().getEmbeds();
         final User embedAuthor = event.getAuthor();
         final Message message = event.getMessage();
-        final String pingedUser = "<@(\\d+)>";
 
         if (Helper.isNotSuccessfulBump(disBoardEmbed, embedAuthor)) return;
 
-        final String embedContent = message.getEmbeds().get(0).getDescription();
-        final Pattern pattern = Pattern.compile(pingedUser);
-        final Matcher matcher = pattern.matcher(Objects.requireNonNull(embedContent));
-
-        if (!matcher.find()) return;
-
+        final String idBumper = Objects.requireNonNull(Objects.requireNonNull(Objects.requireNonNull(message.getInteraction()).getMember()).getId());
         final int firstBump = 1;
-        final String idPingedUser = matcher.group(1);
-        final String pingedUserName = event.getJDA().retrieveUserById(idPingedUser).complete().getName();
+        final String pingedUserName = event.getJDA().retrieveUserById(idBumper).complete().getName();
 
         final Connection connection = DatabaseConnector.openConnection();
         final String userExists = "SELECT id_discord FROM user_bump WHERE id_discord = ? ";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(userExists)) {
-            preparedStatement.setString(1, idPingedUser);
+            preparedStatement.setString(1, idBumper);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
                 final String currentNumberBump = "UPDATE user_bump SET number_bumps = (number_bumps +1) WHERE id_discord = ?";
                 PreparedStatement prepareStatementOne = connection.prepareStatement(currentNumberBump);
-                prepareStatementOne.setString(1, idPingedUser);
+                prepareStatementOne.setString(1, idBumper);
                 prepareStatementOne.executeUpdate();
 
                 final String bumpTime = "INSERT INTO user_bump_time (id_user_bump_time, id_discord) VALUES (NULL,?)";
                 PreparedStatement insert = connection.prepareStatement(bumpTime);
-                insert.setString(1, idPingedUser);
+                insert.setString(1, idBumper);
                 insert.executeUpdate();
             } else {
                 final String bumpData = "INSERT INTO user_bump (id_discord, username, number_bumps) VALUES (?,?,?);";
 
                 PreparedStatement prepareStatementThree = connection.prepareStatement(bumpData);
-                prepareStatementThree.setString(1, idPingedUser);
+                prepareStatementThree.setString(1, idBumper);
                 prepareStatementThree.setString(2, pingedUserName);
                 prepareStatementThree.setInt(3, firstBump);
                 prepareStatementThree.executeUpdate();
 
                 final String bumpTime = "INSERT INTO user_bump_time (id_user_bump_time, id_discord) VALUES (NULL,?)";
                 PreparedStatement insert = connection.prepareStatement(bumpTime);
-                insert.setString(1, idPingedUser);
+                insert.setString(1, idBumper);
                 insert.executeUpdate();
             }
         } catch (SQLException sqlException) {
