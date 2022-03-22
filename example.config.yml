@@ -6,7 +6,7 @@ bot:
   id: 820468009764257792
   name: "LemBot"
   prefix: "?"
-  version: "v1.1.2"
+  version: "v1.2.2"
 
 database:
   uri: "jdbc:mysql://localhost:3306/lembot?autoReconnect=true&serverTimezone=UTC"
@@ -36,6 +36,7 @@ role:
   coding: 919074433556160534
   hacking: 919074433556160533
   moderator: 919074433556160538
+  admin:
 
 category:
   voice: 919074435410042924

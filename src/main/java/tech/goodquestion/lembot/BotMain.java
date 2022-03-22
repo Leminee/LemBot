@@ -87,7 +87,6 @@ public class BotMain {
         commandManager.registerCommand(new MessageCountCommand());
         commandManager.registerCommand(new MuteCommand());
         commandManager.registerCommand(new NextBumpTimeCommand());
-        commandManager.registerCommand(new PasswordCheckCommand());
         commandManager.registerCommand(new ServerDataCommand());
         commandManager.registerCommand(new ServerRoleListCommand());
         commandManager.registerCommand(new TopActiveChannelsCommand());
@@ -152,7 +151,7 @@ public class BotMain {
     }
 
     private static void setupRoleCommands(CommandManager commandManager) {
-        for (CommandRole role : Config.getInstance().getCommandRoles()) {
+        for (final CommandRole role : Config.getInstance().getCommandRoles()) {
             RoleToggleCommand.register(commandManager, role.getAbbr(), role.getRole());
         }
     }

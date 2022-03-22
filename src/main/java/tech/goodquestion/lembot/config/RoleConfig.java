@@ -10,6 +10,7 @@ public final class RoleConfig {
     private long coding;
     private long hacking;
     private long moderator;
+    private long admin;
 
     public long getBumpRoleId() {
         return bump;
@@ -33,6 +34,10 @@ public final class RoleConfig {
 
     public Role getModeratorRole() {
         return Config.getInstance().getGuild().getRoleById(moderator);
+    }
+
+    public Role getAdminRole(){
+        return Config.getInstance().getGuild().getRoleById(admin);
     }
 
 }
