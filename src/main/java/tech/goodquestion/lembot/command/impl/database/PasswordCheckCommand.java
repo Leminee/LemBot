@@ -61,7 +61,7 @@ public final class PasswordCheckCommand implements IBotCommand {
             return true;
         }
 
-        final String bRockYouApiUrl = "https://goodquestion.tech:8443/brockyou/api/v2/" + password;
+        final String bRockYouApiUrl = "http://localhost:8080/brockyou/api/v2/" + password;
 
         try {
 
