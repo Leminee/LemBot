@@ -58,7 +58,7 @@ public final class MuteCommand implements IBotCommand {
 
         Sanction sanction = new Sanction();
         sanction.author = sender.getUser().getAsTag();
-        sanction.channelName = channel.getAsMention();
+        sanction.channelName = channel.getName();
         sanction.userName = sanctionedMember.getUser().getName();
         sanction.userId = sanctionedMember.getIdLong();
         sanction.userTag = sanctionedMember.getUser().getAsTag();
