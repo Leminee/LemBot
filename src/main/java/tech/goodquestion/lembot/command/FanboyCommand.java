@@ -1,10 +1,7 @@
 package tech.goodquestion.lembot.command;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.*;
 import tech.goodquestion.lembot.command.impl.moderation.MuteCommand;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.library.Helper;
@@ -18,8 +15,10 @@ public class FanboyCommand implements IBotCommand {
         Member member = MuteCommand.getMemberFromCommandInput(message, args);
         String memberNickname = member.getNickname() == null ? member.getUser().getName():member.getNickname();
         sender.modifyNickname(memberNickname+"_fanboy").queue();
+        Role role = sender.getGuild().createRole().setName(memberNickname+"_fanboy").complete();
+        sender.getGuild().addRoleToMember(sender, role).queue();
         EmbedBuilder embedBuilder = new EmbedBuilder();
-        embedBuilder.setDescription("Du bist nun der fanboy von" + member.getAsMention());
+        embedBuilder.setDescription("Du bist nun der fanboy von " + member.getAsMention());
 
         message.replyEmbeds(embedBuilder.build()).queue();
 
