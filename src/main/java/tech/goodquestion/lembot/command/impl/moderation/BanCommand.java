@@ -7,7 +7,6 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.database.CommandHelper;
-import tech.goodquestion.lembot.entity.OccurredException;
 import tech.goodquestion.lembot.entity.Sanction;
 import tech.goodquestion.lembot.entity.SanctionType;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
@@ -70,7 +69,6 @@ public final class BanCommand extends UserBanishment {
                     .sendMessage(errorResponseException.getMessage() + " " +  sanctionedUser.getAsTag()).queue();
 
             System.out.println(errorResponseException.getMessage());
-            CommandHelper.logException(OccurredException.getOccurredExceptionData(errorResponseException, this.getClass().getName()));
         }
     }
     @Override
