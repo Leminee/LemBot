@@ -95,7 +95,6 @@ public class BotMain {
         commandManager.registerCommand(new MemberInfoCommand());
         commandManager.registerCommand(new MemberLogsCommand());
         commandManager.registerCommand(new WarnCommand());
-        commandManager.registerCommand(new ParserCommand());
         commandManager.registerCommand(new BotsCommand());
         commandManager.registerCommand(new UnbanCommand());
         commandManager.registerCommand(new UnwarnCommand());
