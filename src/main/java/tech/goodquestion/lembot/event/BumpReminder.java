@@ -11,7 +11,6 @@ import tech.goodquestion.lembot.library.Helper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
-import java.util.stream.Collectors;
 
 public final class BumpReminder extends ListenerAdapter {
 
@@ -63,8 +62,7 @@ public final class BumpReminder extends ListenerAdapter {
 
         final List<ScheduledFuture<?>> runningTasks = tasks
                 .stream()
-                .filter(task -> !task.isCancelled())
-                .collect(Collectors.toList());
+                .filter(task -> !task.isCancelled()).toList();
 
         runningTasks.get(1).cancel(false);
     }

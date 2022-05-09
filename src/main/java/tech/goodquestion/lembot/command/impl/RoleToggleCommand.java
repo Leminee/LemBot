@@ -2,10 +2,7 @@ package tech.goodquestion.lembot.command.impl;
 
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.Role;
-import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.*;
 import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
@@ -29,10 +26,10 @@ public record RoleToggleCommand(String roleAbbr, long roleId,
 
         assert role != null;
         if (mode == Mode.ADD) {
-            message.getGuild().addRoleToMember(Objects.requireNonNull(message.getMember()).getIdLong(), role).complete();
+            message.getGuild().addRoleToMember(UserSnowflake.fromId(Objects.requireNonNull(message.getMember()).getIdLong()), role).complete();
             embedDescription = "<@&" + roleId + "> wurde dir erfolgreich zugewiesen ";
         } else {
-            message.getGuild().removeRoleFromMember(Objects.requireNonNull(message.getMember()).getIdLong(), role).complete();
+            message.getGuild().removeRoleFromMember(UserSnowflake.fromId(Objects.requireNonNull(message.getMember()).getIdLong()), role).complete();
             embedDescription = "<@&" + roleId + "> wurde dir erfolgreich entfernt ";
         }
 

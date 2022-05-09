@@ -49,7 +49,7 @@ public final class MemesOnlyChannel extends ListenerAdapter {
 
     private boolean containsOnlyURL(final String messageContent) {
 
-        Pattern pattern = Pattern.compile("^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]");
+        Pattern pattern = Pattern.compile("^(https?|ftp|file)://[-a-zA-Z\\d+&@#/%?=~_|!:,.;]*[-a-zA-Z\\d+&@#/%=~_|]");
         Matcher matcher = pattern.matcher(messageContent);
 
         return matcher.matches();

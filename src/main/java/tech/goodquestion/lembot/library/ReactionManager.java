@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.MessageReaction;
+import net.dv8tion.jda.api.entities.UserSnowflake;
 import net.dv8tion.jda.api.events.message.react.GenericMessageReactionEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
@@ -88,7 +89,7 @@ public final class ReactionManager {
                 jda.getTextChannelById(channelId).addReactionById(messageId, emoji).queue();
                 optional = message.getReactions().stream().filter(r -> r.getReactionEmote().isEmoji() && r.getReactionEmote().getEmoji().equals(emoji)).findFirst();
             }
-            optional.ifPresent(r -> r.retrieveUsers().queue(l -> l.forEach(u -> g.addRoleToMember(u.getId(), g.getRoleById(roleId)))));
+            optional.ifPresent(r -> r.retrieveUsers().queue(l -> l.forEach(u -> g.addRoleToMember(UserSnowflake.fromId(u.getId()), g.getRoleById(roleId)))));
         });
         return this;
     }
@@ -97,13 +98,13 @@ public final class ReactionManager {
         @Override
         public void onMessageReactionAdd(@NotNull MessageReactionAddEvent e) {
             if (e.getUserId().equals(e.getJDA().getSelfUser().getId())) return;
-            getByEvent(e).ifPresent(r -> e.getGuild().addRoleToMember(e.getUserId(), e.getGuild().getRoleById(r.getRoleId())).queue());
+            getByEvent(e).ifPresent(r -> e.getGuild().addRoleToMember(UserSnowflake.fromId(e.getUserId()), e.getGuild().getRoleById(r.getRoleId())).queue());
         }
 
         @Override
         public void onMessageReactionRemove(@NotNull MessageReactionRemoveEvent e) {
             if (e.getUserId().equals(e.getJDA().getSelfUser().getId())) return;
-            getByEvent(e).ifPresent(r -> e.getGuild().removeRoleFromMember(e.getUserId(), e.getGuild().getRoleById(r.getRoleId())).queue());
+            getByEvent(e).ifPresent(r -> e.getGuild().removeRoleFromMember(UserSnowflake.fromId(e.getUserId()), e.getGuild().getRoleById(r.getRoleId())).queue());
         }
     }
 

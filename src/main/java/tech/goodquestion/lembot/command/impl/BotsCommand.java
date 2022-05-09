@@ -12,7 +12,6 @@ import tech.goodquestion.lembot.library.Helper;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public final class BotsCommand implements IBotCommand {
 
@@ -23,8 +22,7 @@ public final class BotsCommand implements IBotCommand {
 
         final List<Member> bots = members
                 .stream()
-                .filter(member -> member.getUser().isBot())
-                .collect(Collectors.toList());
+                .filter(member -> member.getUser().isBot()).toList();
 
         final StringBuilder stringBuilder = new StringBuilder();
 

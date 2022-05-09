@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.UserSnowflake;
 import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.database.CommandHelper;
@@ -54,7 +55,7 @@ public final class UnmuteCommand implements IBotCommand, RemovalBanishment{
         Member member = MuteCommand.getMemberFromCommandInput(message, args);
 
 
-        Config.getInstance().getGuild().removeRoleFromMember(member.getIdLong(), Config.getInstance().getRoleConfig().getMuteRole()).queue();
+        Config.getInstance().getGuild().removeRoleFromMember(UserSnowflake.fromId(member.getIdLong()), Config.getInstance().getRoleConfig().getMuteRole()).queue();
 
         Connection connection = DatabaseConnector.openConnection();
 

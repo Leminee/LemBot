@@ -1,5 +1,6 @@
 package tech.goodquestion.lembot.event;
 
+import net.dv8tion.jda.api.entities.UserSnowflake;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
@@ -38,7 +39,7 @@ public final class MemberAuthorization extends ListenerAdapter {
 
                 if (isMuted) {
 
-                    event.getGuild().addRoleToMember(userId, Config.getInstance().getRoleConfig().getMuteRole()).queue();
+                    event.getGuild().addRoleToMember(UserSnowflake.fromId(userId), Config.getInstance().getRoleConfig().getMuteRole()).queue();
                 }
             }
 

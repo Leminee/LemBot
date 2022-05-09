@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.UserSnowflake;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.database.CommandHelper;
@@ -26,7 +27,7 @@ public final class WarnCommand extends UserBanishment {
     @Override
     public void banishUser(final User toBanish, final Sanction sanction, final Message originMessage) {
 
-        originMessage.getGuild().addRoleToMember(sanction.userId, Config.getInstance().getRoleConfig().getWarnRole()).queue();
+        originMessage.getGuild().addRoleToMember(UserSnowflake.fromId(sanction.userId), Config.getInstance().getRoleConfig().getWarnRole()).queue();
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setColor(Color.decode(EmbedColorHelper.SUCCESS));

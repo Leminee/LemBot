@@ -11,7 +11,6 @@ import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import tech.goodquestion.lembot.command.CommandManager;
-import tech.goodquestion.lembot.command.FanboyCommand;
 import tech.goodquestion.lembot.command.impl.*;
 import tech.goodquestion.lembot.command.impl.database.*;
 import tech.goodquestion.lembot.command.impl.moderation.*;
@@ -101,7 +100,6 @@ public class BotMain {
         commandManager.registerCommand(new UnbanCommand());
         commandManager.registerCommand(new UnwarnCommand());
         commandManager.registerCommand(new UserSanctionHistory());
-        commandManager.registerCommand(new FanboyCommand());
 
         BumpReminder bumpReminder = new BumpReminder();
 
@@ -134,6 +132,7 @@ public class BotMain {
         jda.addEventListener(new VoiceMovedStorage());
         jda.addEventListener(new WelcomingMemberJoin());
         jda.addEventListener(new HoppingDetection());
+
 
 
         setupRoleCommands(commandManager);
