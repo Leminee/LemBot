@@ -4,9 +4,6 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.database.CommandHelper;
@@ -15,7 +12,6 @@ import tech.goodquestion.lembot.entity.OccurredException;
 import tech.goodquestion.lembot.entity.UserData;
 
 import java.awt.*;
-import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -161,24 +157,6 @@ public final class Helper {
             System.out.println(sqlException.getMessage());
             CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, Helper.class.getName()));
         }
-    }
-
-
-    public static String getAmountContributors(final String repositoryUrl) {
-
-        try {
-
-            final Document document = Jsoup.connect(repositoryUrl)
-                    .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36")
-                    .get();
-            final Elements element = document.getElementsByClass("Counter");
-
-            return element.get(element.size() - 1).text();
-
-        } catch (IOException ioException) {
-            System.out.println(ioException.getMessage());
-        }
-        return "-1";
     }
 
     public static String getCurrentCETDateTime() {

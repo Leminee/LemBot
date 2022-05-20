@@ -55,7 +55,7 @@ public final class SpamDetection extends ListenerAdapter {
     private void timeOutScammer(final Member member, MessageReceivedEvent event) {
 
         final int durationInHours = 5;
-        member.timeoutFor(Duration.ofSeconds(durationInHours)).queue();
+        member.timeoutFor(Duration.ofHours(durationInHours)).queue();
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
 
