@@ -1,12 +1,6 @@
 version: "3.0"
 
 services:
-  lembot:
-    container_name: "lembot"
-    build: .
-    restart: "always"
-    depends_on:
-      - "database"
 
   database:
     container_name: "database"
