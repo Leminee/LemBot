@@ -124,7 +124,6 @@ lembot.config.yml
 attachments
 *.png
 /target/
-!target/lembotv1.jar
 src/main/java/tech/goodquestion/lembot/music/Test.kt
 note.txt
 
