@@ -37,6 +37,7 @@ public final class SpamDetection extends ListenerAdapter {
         sanction.reason = "Verdacht auf Scam";
         sanction.channelName = event.getMessage().getChannel().getName();
         sanction.reason = "5 Hours";
+        sanction.duration = "5 Hours";
 
         if (senderIsBot || senderIsStaff || messageContent.length() < 10) return;
 
