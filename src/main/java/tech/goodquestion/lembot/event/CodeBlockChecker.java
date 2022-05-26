@@ -70,17 +70,17 @@ public final class CodeBlockChecker extends ListenerAdapter {
 
         final String messageContent = event.getMessage().getContentRaw();
 
-        if (containsCode(messageContent) && messageContent.length() >= 30 && !containsCodeBlock(messageContent)) {
-
+        if (containsCode(messageContent) && messageContent.length() >= 150 && !containsCodeBlock(messageContent)) {
 
             event.getMessage()
-                    .reply("Deine Nachricht enthält möglicherweise Quellcode, aber keine Codeblöcke. Bitte füge zwecks besserer Lesbarkeit Codeblöcke hinzu!\n" +
-                            "Führe den folgenden Command aus, um angezeigt zu bekommen, wie das geht: `?hcb`")
+                    .reply("""
+                            Deine Nachricht enthält möglicherweise Quellcode, aber keine Codeblöcke. Bitte füge zwecks besserer Lesbarkeit Codeblöcke hinzu!
+                            Führe den folgenden Command aus, um angezeigt zu bekommen, wie das geht: `?hcb`
+                            """)
                     .queue( m -> m.delete().queueAfter(5, TimeUnit.MINUTES));
         }
 
     }
-
 
 
     private boolean containsCode(final String messageContent) {
@@ -88,7 +88,7 @@ public final class CodeBlockChecker extends ListenerAdapter {
 
         for (final String keyword : KEYWORDS) {
 
-            if (messageContent.equalsIgnoreCase(keyword)) {
+            if (messageContent.contains(keyword)) {
                 return true;
             }
         }
