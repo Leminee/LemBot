@@ -2,12 +2,13 @@ package tech.goodquestion.lembot.event;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import tech.goodquestion.lembot.config.Config;
 
 import java.util.concurrent.TimeUnit;
 
 public final class CodeBlockChecker extends ListenerAdapter {
 
-    private static final String [] KEYWORDS  = {
+    private static final String[] KEYWORDS = {
             "from",
             "break",
             "case",
@@ -62,34 +63,41 @@ public final class CodeBlockChecker extends ListenerAdapter {
             "package",
     };
 
-
-
     @Override
     public void onMessageReceived(final MessageReceivedEvent event) {
 
+        if (event.getMessage().getAttachments().size() != 0) return;
+
+        final long channelId = event.getChannel().getIdLong();
+        if (channelId == Config.getInstance().getChannelConfig().getGeneralChannel().getIdLong()) return;
 
         final String messageContent = event.getMessage().getContentRaw();
+        final boolean isLongMessage = messageContent.length() >= 500;
+        if (containsCode(messageContent) && isLongMessage && !containsCodeBlock(messageContent)) {
 
-        if (containsCode(messageContent) && messageContent.length() >= 150 && !containsCodeBlock(messageContent)) {
-
-            event.getMessage()
-                    .reply("""
+            final String content =
+                            """
                             Deine Nachricht enthält möglicherweise Quellcode, aber keine Codeblöcke. Bitte füge zwecks besserer Lesbarkeit Codeblöcke hinzu!
                             Führe den folgenden Command aus, um angezeigt zu bekommen, wie das geht: `?hcb`
-                            """)
-                    .queue( m -> m.delete().queueAfter(5, TimeUnit.MINUTES));
+                            """;
+            event.getMessage()
+                    .reply(content)
+                    .queue(m -> m.delete().queueAfter(5, TimeUnit.MINUTES));
         }
 
     }
 
-
     private boolean containsCode(final String messageContent) {
 
+        final String[] words = messageContent.split(" ");
 
         for (final String keyword : KEYWORDS) {
 
-            if (messageContent.contains(keyword)) {
-                return true;
+            for (final String word : words) {
+
+                if (word.equalsIgnoreCase(keyword)) {
+                    return true;
+                }
             }
         }
 
