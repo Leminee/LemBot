@@ -58,9 +58,6 @@ public final class CodeBlockChecker extends ListenerAdapter {
             "true",
             "false",
             "null",
-            "new",
-            "import",
-            "package",
     };
 
     @Override
@@ -76,7 +73,7 @@ public final class CodeBlockChecker extends ListenerAdapter {
         if (containsCode(messageContent) && isLongMessage && !containsCodeBlock(messageContent)) {
 
             final String content =
-                            """
+                    """
                             Deine Nachricht enthält möglicherweise Quellcode, aber keine Codeblöcke. Bitte füge zwecks besserer Lesbarkeit Codeblöcke hinzu!
                             Führe den folgenden Command aus, um angezeigt zu bekommen, wie das geht: `?hcb`
                             """;
@@ -89,24 +86,44 @@ public final class CodeBlockChecker extends ListenerAdapter {
 
     private boolean containsCode(final String messageContent) {
 
-        final String[] words = messageContent.split(" ");
+        int probability = 0;
 
-        for (final String keyword : KEYWORDS) {
+        final String[] splitByWitheSpace = messageContent.split(" ");
 
-            for (final String word : words) {
+        final String[] splitByLine = messageContent.split("\n");
+
+        for (final String word : splitByWitheSpace) {
+
+            for (final String keyword : KEYWORDS) {
 
                 if (word.equalsIgnoreCase(keyword)) {
-                    return true;
+                    probability += 10;
                 }
             }
         }
 
-        return false;
+        for (final String line : splitByLine) {
+
+            if (line.startsWith(" ")) {
+
+                probability += 10;
+            }
+
+
+            if (line.contains("{") || line.contains("}")) {
+                probability += 10;
+            }
+        }
+
+        return probability >= 90;
     }
 
     private boolean containsCodeBlock(final String messageContent) {
 
-        return messageContent.startsWith("```") && messageContent.endsWith("```");
+        final int firstOccurrence = messageContent.indexOf("```");
+        final int lastOccurrence = messageContent.lastIndexOf("```");
+
+        return (firstOccurrence != -1) && (lastOccurrence != firstOccurrence);
     }
 
 }
