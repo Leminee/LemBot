@@ -14,6 +14,7 @@ public final class CodeBlockChecker extends ListenerAdapter {
             "case",
             "char",
             "const",
+            "Integer",
             "continue",
             "default",
             "do",
@@ -152,7 +153,7 @@ public final class CodeBlockChecker extends ListenerAdapter {
             "<textarea>",
             "<label>",
             "<fieldset>",
-            "<legend>"
+            "<legend>",
     };
 
     @Override
@@ -164,17 +165,14 @@ public final class CodeBlockChecker extends ListenerAdapter {
         if (channelId == Config.getInstance().getChannelConfig().getGeneralChannel().getIdLong()) return;
 
         final String messageContent = event.getMessage().getContentRaw();
-        final boolean isLongMessage = messageContent.length() >= 500;
-        if (containsCode(messageContent) && isLongMessage && !containsCodeBlock(messageContent)) {
+        if (containsCode(messageContent) && isLongMessage(messageContent) && !containsCodeBlock(messageContent)) {
 
             final String content =
                     """
                             Deine Nachricht enthält möglicherweise Quellcode, aber keine Codeblöcke. Bitte füge zwecks besserer Lesbarkeit Codeblöcke hinzu!
                             Führe den folgenden Command aus, um angezeigt zu bekommen, wie das geht: `?hcb`
                             """;
-            event.getMessage()
-                    .reply(content)
-                    .queue(m -> m.delete().queueAfter(5, TimeUnit.MINUTES));
+            event.getMessage().reply(content).queue(m -> m.delete().queueAfter(5, TimeUnit.MINUTES));
         }
 
     }
@@ -200,8 +198,9 @@ public final class CodeBlockChecker extends ListenerAdapter {
 
             if (line.contains("{") || line.contains("}")) probability += 5;
 
-            if (line.contains("=") || line.contains("()") || line.contains(":")) probability += 5;
+            if (line.contains("=") || line.contains("()")) probability += 5;
         }
+
 
         return probability >= 95;
     }
@@ -212,6 +211,13 @@ public final class CodeBlockChecker extends ListenerAdapter {
         final int lastOccurrence = messageContent.lastIndexOf("```");
 
         return (firstOccurrence != -1) && (lastOccurrence != firstOccurrence);
+    }
+
+    private boolean isLongMessage(final String messageContent) {
+
+        final String[] lines = messageContent.split("\n");
+
+    	return lines.length >= 10;
     }
 
 }
