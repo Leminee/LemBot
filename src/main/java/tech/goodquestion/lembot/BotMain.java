@@ -134,8 +134,10 @@ public class BotMain {
         jda.addEventListener(new CodeBlockChecker());
 
 
-
         setupRoleCommands(commandManager);
+
+        
+        
     }
 
     private static void setupReactionRoles() {

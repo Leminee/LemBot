@@ -39,6 +39,15 @@ public final class MuteCommand implements IBotCommand {
             return;
         }
 
+
+        if (channel.getIdLong() != Config.getInstance().getChannelConfig().getSanctionChannel().getIdLong()) {
+            final EmbedBuilder embedBuilder = new EmbedBuilder();
+            final String embedDescription = ":x: Dieser Befehl kann nur in [channel] ausgeführt werden!".replace("[channel]", Config.getInstance().getChannelConfig().getSanctionChannel().getAsMention());
+            Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
+            Helper.sendEmbed(embedBuilder, message, true);
+            return;
+        }
+
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         final String performedSanction = SanctionType.MUTE.getVerbalizedSanctionTyp();
 

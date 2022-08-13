@@ -1,4 +1,5 @@
 FROM openjdk:latest
-ADD target/lembotv1.jar lembotv1.jar
-ADD example.config.yml example.config.yml
+ADD lembotv1.jar lembotv1.jar
+ADD lembot.config.yml lembot.config.yml
+RUN mkdir /attachments
 ENTRYPOINT ["java", "-jar","/lembotv1.jar"]
