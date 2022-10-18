@@ -184,7 +184,7 @@ public final class MuteCommand implements IBotCommand {
         Member member;
 
         if (mentionedMembers.size() == 0) {
-            member = Config.getInstance().getGuild().retrieveMemberById(args[0], true).complete();
+            member = Config.getInstance().getGuild().retrieveMemberById(args[0]).complete();
         } else {
             member = mentionedMembers.get(0);
         }

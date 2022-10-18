@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
+import tech.goodquestion.lembot.BotMain;
 import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.entity.Sanction;
@@ -46,7 +47,27 @@ public abstract sealed class UserBanishment implements IBotCommand permits BanCo
 
             member = Config.getInstance().getGuild().retrieveMember(user).complete();
 
-            if (member.hasPermission(Permission.ADMINISTRATOR)) {
+
+            final boolean isThemSelf = member.getIdLong() == sender.getIdLong();
+            if (isThemSelf) {
+                final EmbedBuilder embedBuilder = new EmbedBuilder();
+                final String embedDescription = ":x: Du kannst dich selbst nicht bannen!";
+                Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
+                Helper.sendEmbed(embedBuilder, message, true);
+                return;
+            }
+
+
+            if (BotMain.jda.getSelfUser().getIdLong() == member.getIdLong()) {
+
+                final EmbedBuilder embedBuilder = new EmbedBuilder();
+                final String embedDescription = String.format(":x: %s kann nicht gebannt werden!", Config.getInstance().getBotConfig().getName());
+                Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
+                Helper.sendEmbed(embedBuilder, message, true);
+                return;
+            }
+
+            if (member.hasPermission(Permission.MANAGE_CHANNEL)) {
                 final EmbedBuilder embedBuilder = new EmbedBuilder();
                 final String embedDescription = ":x: Admins/Moderatoren können nicht gebannt werden!";
                 Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);

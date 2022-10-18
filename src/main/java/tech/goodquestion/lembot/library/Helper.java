@@ -171,7 +171,7 @@ public final class Helper {
 
     public static User getUserFromCommandInput(final Message message, final String[] args) {
 
-        List<User> mentionedUsers = message.getMentions().getUsers();
+        List<User> mentionedUsers = message.getMentionedUsers();
         User user;
 
         if (mentionedUsers.size() == 0) {

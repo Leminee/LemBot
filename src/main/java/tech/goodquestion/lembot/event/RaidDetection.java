@@ -34,6 +34,18 @@ public final class RaidDetection extends ListenerAdapter {
                     .queue();
         }
 
+
+
+        /*
+
+        pause invites
+
+        List<String> features = new ArrayList<>(guild.getFeatures());
+        features.add("INVITES_DISABLED");
+
+        */
+
+
         final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
         final Runnable runnable = () -> isSameAttack = false;
