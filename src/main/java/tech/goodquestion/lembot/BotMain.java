@@ -105,7 +105,6 @@ public class BotMain {
         jda.addEventListener(bumpReminder);
         jda.addEventListener(new AddingRole());
         jda.addEventListener(new AmountMemberStatus());
-        jda.addEventListener(new AttachmentStorage());
         jda.addEventListener(new BumpCounter());
         jda.addEventListener(new BumpReminderReactivation(bumpReminder));
         jda.addEventListener(new ChannelMessageCounter());
