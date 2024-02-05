@@ -19,7 +19,7 @@ import java.util.Objects;
 public final class SpamDetection extends ListenerAdapter {
 
     @Override
-    public void onMessageReceived(final MessageReceivedEvent event) {
+    public void onMessageReceived(@SuppressWarnings("null") final MessageReceivedEvent event) {
 
         final long userId = event.getMessage().getAuthor().getIdLong();
         final boolean senderIsBot = event.getMessage().getAuthor().isBot();
@@ -53,6 +53,7 @@ public final class SpamDetection extends ListenerAdapter {
         }
     }
 
+    @SuppressWarnings("null")
     private void timeOutScammer(final Member member, MessageReceivedEvent event) {
 
         final int durationInHours = 5;

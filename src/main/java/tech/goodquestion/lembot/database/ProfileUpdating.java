@@ -8,7 +8,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 public final class ProfileUpdating extends ListenerAdapter {
 
     @Override
-    public void onGuildMemberUpdateNickname(final GuildMemberUpdateNicknameEvent event) {
+    public void onGuildMemberUpdateNickname(@SuppressWarnings("null") final GuildMemberUpdateNicknameEvent event) {
 
         final long memberId = event.getMember().getIdLong();
         final String memberTag = event.getMember().getUser().getAsTag();
@@ -22,7 +22,7 @@ public final class ProfileUpdating extends ListenerAdapter {
     }
 
     @Override
-    public void onUserUpdateName(final UserUpdateNameEvent event) {
+    public void onUserUpdateName(@SuppressWarnings("null") final UserUpdateNameEvent event) {
 
         final long userId = event.getUser().getIdLong();
         final String userTag = event.getUser().getAsTag();
@@ -33,7 +33,7 @@ public final class ProfileUpdating extends ListenerAdapter {
     }
 
     @Override
-    public void onUserUpdateDiscriminator(final UserUpdateDiscriminatorEvent event) {
+    public void onUserUpdateDiscriminator(@SuppressWarnings("null") final UserUpdateDiscriminatorEvent event) {
 
         final long userId = event.getUser().getIdLong();
         final String userTag = event.getUser().getAsTag();

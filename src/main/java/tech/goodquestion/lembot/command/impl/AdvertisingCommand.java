@@ -76,6 +76,7 @@ public final class AdvertisingCommand implements IBotCommand {
         }
     }
 
+    @SuppressWarnings("null")
     private void advertiseServer(String[] args, Message message) {
 
         final User user = Helper.getUserFromCommandInput(message,args);

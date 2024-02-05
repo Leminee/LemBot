@@ -15,7 +15,7 @@ import java.util.Objects;
 public final class LinkDeletion extends ListenerAdapter {
 
     @Override
-    public void onMessageReceived(final MessageReceivedEvent event) {
+    public void onMessageReceived(@SuppressWarnings("null") final MessageReceivedEvent event) {
 
         final String userMessage = event.getMessage().getContentRaw();
 
@@ -24,6 +24,7 @@ public final class LinkDeletion extends ListenerAdapter {
         long channelId = event.getChannel().getIdLong();
         Member author = event.getMember();
         assert author != null;
+        @SuppressWarnings("null")
         boolean isStaff = author.hasPermission(Permission.MESSAGE_MANAGE);
 
         if (channelId != Config.getInstance().getChannelConfig().getNewArrivalsChannel().getIdLong() || isStaff) {

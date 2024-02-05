@@ -169,6 +169,7 @@ public final class Helper {
         return dateNow + " um " + timeNow;
     }
 
+    @SuppressWarnings("null")
     public static User getUserFromCommandInput(final Message message, final String[] args) {
 
         List<User> mentionedUsers = message.getMentionedUsers();

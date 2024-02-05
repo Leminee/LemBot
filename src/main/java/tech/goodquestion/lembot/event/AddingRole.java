@@ -20,7 +20,7 @@ public final class AddingRole extends ListenerAdapter {
     private final Map<Long, ScheduledFuture<?>> tasks = new HashMap<>();
 
     @Override
-    public void onGuildMemberJoin(@NotNull final GuildMemberJoinEvent event) {
+    public void onGuildMemberJoin(@SuppressWarnings("null") @NotNull final GuildMemberJoinEvent event) {
 
         final Member member = event.getMember();
         final Guild guild = member.getGuild();
@@ -28,11 +28,13 @@ public final class AddingRole extends ListenerAdapter {
 
         final int delayInDays = 1;
         assert codingRole != null;
+        @SuppressWarnings("null")
         ScheduledFuture<?> task = guild.addRoleToMember(member, codingRole).queueAfter(delayInDays, TimeUnit.DAYS);
         tasks.put(member.getIdLong(), task);
 
     }
 
+    @SuppressWarnings("null")
     @Override
     public void onGuildMemberRoleAdd(final GuildMemberRoleAddEvent event) {
 

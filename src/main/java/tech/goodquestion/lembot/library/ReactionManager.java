@@ -69,6 +69,7 @@ public final class ReactionManager {
      * @param roleId    Die Discord Role ID, die vergeben werden soll, wenn man auf die Nachricht reagiert
      * @return Diesen ReactionManager für Chain Calls
      */
+    @SuppressWarnings("null")
     public ReactionManager registerReaction(String channelId, String messageId, String emoji, String roleId) {
         try {
             jda.awaitReady();
@@ -95,14 +96,16 @@ public final class ReactionManager {
     }
 
     private class ReactionListener extends ListenerAdapter {
+        @SuppressWarnings("null")
         @Override
-        public void onMessageReactionAdd(@NotNull MessageReactionAddEvent e) {
+        public void onMessageReactionAdd(@SuppressWarnings("null") @NotNull MessageReactionAddEvent e) {
             if (e.getUserId().equals(e.getJDA().getSelfUser().getId())) return;
             getByEvent(e).ifPresent(r -> e.getGuild().addRoleToMember(UserSnowflake.fromId(e.getUserId()), e.getGuild().getRoleById(r.getRoleId())).queue());
         }
 
+        @SuppressWarnings("null")
         @Override
-        public void onMessageReactionRemove(@NotNull MessageReactionRemoveEvent e) {
+        public void onMessageReactionRemove(@SuppressWarnings("null") @NotNull MessageReactionRemoveEvent e) {
             if (e.getUserId().equals(e.getJDA().getSelfUser().getId())) return;
             getByEvent(e).ifPresent(r -> e.getGuild().removeRoleFromMember(UserSnowflake.fromId(e.getUserId()), e.getGuild().getRoleById(r.getRoleId())).queue());
         }

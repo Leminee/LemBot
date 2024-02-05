@@ -1,5 +1,12 @@
 package tech.goodquestion.lembot.command.impl.moderation;
 
+import java.awt.Color;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.Instant;
+
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
@@ -12,13 +19,6 @@ import tech.goodquestion.lembot.database.DatabaseConnector;
 import tech.goodquestion.lembot.entity.OccurredException;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
 import tech.goodquestion.lembot.library.Helper;
-
-import java.awt.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.Instant;
 
 public final class UnmuteCommand implements IBotCommand, RemovalBanishment{
 
@@ -48,6 +48,7 @@ public final class UnmuteCommand implements IBotCommand, RemovalBanishment{
         //TODO delete the mute from the database
     }
 
+    @SuppressWarnings("null")
     @Override
     public void removeSanction(Message message, String[] args) {
 

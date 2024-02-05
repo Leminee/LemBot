@@ -11,6 +11,7 @@ import java.util.Objects;
 
 public final class RoleEvents extends ListenerAdapter {
 
+    @SuppressWarnings("null")
     @Override
     public void onRoleCreate(@Nonnull final RoleCreateEvent event) {
 
@@ -20,6 +21,7 @@ public final class RoleEvents extends ListenerAdapter {
                 .sendMessage(String.format("Es wurde soeben folgende Rolle **erstellt** %s", newCreatedRole)).queue();
     }
 
+    @SuppressWarnings("null")
     @Override
     public void onRoleDelete(@Nonnull final RoleDeleteEvent event) {
 
@@ -29,6 +31,7 @@ public final class RoleEvents extends ListenerAdapter {
                 .sendMessage(String.format("Es wurde soeben folgende Rolle **entfernt** `@%s`", deletedRole)).queue();
     }
 
+    @SuppressWarnings("null")
     public void onRoleUpdateName(@Nonnull final RoleUpdateNameEvent event) {
 
         final String oldName = event.getOldName();

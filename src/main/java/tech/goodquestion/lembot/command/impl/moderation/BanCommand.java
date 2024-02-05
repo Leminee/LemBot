@@ -18,6 +18,7 @@ import java.util.Objects;
 
 public final class BanCommand extends UserBanishment {
 
+    @SuppressWarnings("null")
     @Override
     public void banishUser(final User toBanish, final Sanction sanction, final Message originMessage) {
 

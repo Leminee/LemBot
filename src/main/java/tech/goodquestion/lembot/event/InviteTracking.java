@@ -30,20 +30,21 @@ public final class InviteTracking extends ListenerAdapter {
     private final Map<String, InviteData> invitesCache = new ConcurrentHashMap<>();
 
     @Override
-    public void onGuildInviteCreate(final GuildInviteCreateEvent event) {
+    public void onGuildInviteCreate(@SuppressWarnings("null") final GuildInviteCreateEvent event) {
         final String code = event.getCode();
         final InviteData inviteData = new InviteData(event.getInvite());
         invitesCache.put(code, inviteData);
     }
 
     @Override
-    public void onGuildInviteDelete(final GuildInviteDeleteEvent event) {
+    public void onGuildInviteDelete(@SuppressWarnings("null") final GuildInviteDeleteEvent event) {
         final String code = event.getCode();
         invitesCache.remove(code);
     }
 
+    @SuppressWarnings("null")
     @Override
-    public void onGuildMemberJoin(final GuildMemberJoinEvent event) {
+    public void onGuildMemberJoin(@SuppressWarnings("null") final GuildMemberJoinEvent event) {
 
         final Guild guild = event.getGuild();
         final User user = event.getUser();
@@ -96,20 +97,20 @@ public final class InviteTracking extends ListenerAdapter {
     }
 
     @Override
-    public void onGuildReady(final GuildReadyEvent event) {
+    public void onGuildReady(@SuppressWarnings("null") final GuildReadyEvent event) {
 
         final Guild guild = event.getGuild();
         attemptInviteCaching(guild);
     }
 
     @Override
-    public void onGuildJoin(final GuildJoinEvent event) {
+    public void onGuildJoin(@SuppressWarnings("null") final GuildJoinEvent event) {
         final Guild guild = event.getGuild();
         attemptInviteCaching(guild);
     }
 
     @Override
-    public void onGuildLeave(final GuildLeaveEvent event) {
+    public void onGuildLeave(@SuppressWarnings("null") final GuildLeaveEvent event) {
         final long guildId = event.getGuild().getIdLong();
         invitesCache.entrySet().removeIf(entry -> entry.getValue().getGuildId() == guildId);
     }

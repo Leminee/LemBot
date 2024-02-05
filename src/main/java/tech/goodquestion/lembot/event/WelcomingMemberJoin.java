@@ -9,8 +9,9 @@ import tech.goodquestion.lembot.library.Helper;
 
 public final class WelcomingMemberJoin extends ListenerAdapter {
 
-    @Override
-    public void onGuildMemberJoin(@NotNull final GuildMemberJoinEvent event) {
+    @SuppressWarnings("null")
+@Override
+    public void onGuildMemberJoin(@SuppressWarnings("null") @NotNull final GuildMemberJoinEvent event) {
 
         final String welcomeMessage = """
                 Hallo [member], Willkommen auf **GoodQuestion (GQ)**!

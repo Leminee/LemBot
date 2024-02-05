@@ -10,6 +10,7 @@ import java.util.Objects;
 
 public final class MemberLeftStorage extends ListenerAdapter {
 
+    @SuppressWarnings("null")
     @Override
     public void onGuildMemberRemove(@NotNull GuildMemberRemoveEvent event) {
         CommandHelper.logUserLeave(event.getUser());

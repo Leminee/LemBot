@@ -250,7 +250,7 @@ public final class VoiceAutoCreation extends ListenerAdapter {
     final Random random = new Random();
 
     @Override
-    public void onGuildVoiceJoin(@NotNull final GuildVoiceJoinEvent event) {
+    public void onGuildVoiceJoin(@SuppressWarnings("null") @NotNull final GuildVoiceJoinEvent event) {
 
         final boolean areThereToManyCreatedVoice = event.getGuild().getVoiceChannels().size() >= 10;
 
@@ -270,7 +270,7 @@ public final class VoiceAutoCreation extends ListenerAdapter {
     }
 
     @Override
-    public void onGuildVoiceLeave(@NotNull final GuildVoiceLeaveEvent event) {
+    public void onGuildVoiceLeave(@SuppressWarnings("null") @NotNull final GuildVoiceLeaveEvent event) {
 
         final boolean isVoiceLeftEmpty = event.getChannelLeft().getMembers().size() == 0;
 
@@ -280,7 +280,7 @@ public final class VoiceAutoCreation extends ListenerAdapter {
     }
 
     @Override
-    public void onGuildVoiceMove(@NotNull GuildVoiceMoveEvent event) {
+    public void onGuildVoiceMove(@SuppressWarnings("null") @NotNull GuildVoiceMoveEvent event) {
 
         final boolean areThereToManyCreatedVoice = event.getGuild().getVoiceChannels().size() >= 10;
 

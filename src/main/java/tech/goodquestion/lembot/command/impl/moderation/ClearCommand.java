@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 public final class ClearCommand implements IBotCommand {
 
+    @SuppressWarnings("null")
     @Override
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) {
 

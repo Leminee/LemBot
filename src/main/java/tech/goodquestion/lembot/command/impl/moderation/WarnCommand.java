@@ -24,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 public final class WarnCommand extends UserBanishment {
 
     private final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
+    @SuppressWarnings("null")
     @Override
     public void banishUser(final User toBanish, final Sanction sanction, final Message originMessage) {
 
@@ -128,6 +129,7 @@ public final class WarnCommand extends UserBanishment {
         return "`warn <member> <reason>`: Weist " + Config.getInstance().getRoleConfig().getWarnRole().getAsMention() + " zu";
     }
 
+    @SuppressWarnings("null")
     public void removeSanction(Member sanctionedMember) {
 
         sanctionedMember.getGuild()

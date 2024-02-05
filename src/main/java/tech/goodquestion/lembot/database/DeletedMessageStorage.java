@@ -41,6 +41,7 @@ public final class DeletedMessageStorage extends ListenerAdapter {
                 String deletedMessageContent = resultSet.getString(3);
                 final String channelAsMention = "<#" + event.getChannel().getIdLong() + ">";
 
+                @SuppressWarnings("null")
                 final User authorDeletedMessage = event.getJDA().retrieveUserById(resultSet.getString(2)).complete();
 
                 assert authorDeletedMessage != null;

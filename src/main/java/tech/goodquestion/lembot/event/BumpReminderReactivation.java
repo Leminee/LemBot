@@ -16,7 +16,7 @@ public final class BumpReminderReactivation extends ListenerAdapter {
     }
 
     @Override
-    public void onReady(@NotNull final ReadyEvent event) {
+    public void onReady(@SuppressWarnings("null") @NotNull final ReadyEvent event) {
 
         bumpReminder.scheduleReminder(QueryHelper.getMinutesToNextBump() + 1, TimeUnit.MINUTES);
     }

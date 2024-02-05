@@ -18,17 +18,18 @@ import java.util.Objects;
 public final class HoppingDetection extends ListenerAdapter {
 
     @Override
-    public void onGuildVoiceMove(@NotNull final GuildVoiceMoveEvent event) {
+    public void onGuildVoiceMove(@SuppressWarnings("null") @NotNull final GuildVoiceMoveEvent event) {
 
         if (QueryHelper.isHopper(event.getMember().getIdLong())) timeOutHopper(event.getMember());
     }
 
     @Override
-    public void onGuildVoiceJoin(@NotNull final GuildVoiceJoinEvent event) {
+    public void onGuildVoiceJoin(@SuppressWarnings("null") @NotNull final GuildVoiceJoinEvent event) {
 
         if (QueryHelper.isHopper(event.getMember().getIdLong())) timeOutHopper(event.getMember());
     }
 
+    @SuppressWarnings("null")
     private void timeOutHopper(final Member member) {
 
         final int durationInMinutes = 1;

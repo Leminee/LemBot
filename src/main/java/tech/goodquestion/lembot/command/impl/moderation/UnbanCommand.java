@@ -42,6 +42,7 @@ public final class UnbanCommand implements IBotCommand, RemovalBanishment {
 
     }
 
+    @SuppressWarnings("null")
     @Override
     public void removeSanction(Message message, String [] args) {
 

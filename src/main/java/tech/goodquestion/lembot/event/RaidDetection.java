@@ -16,8 +16,9 @@ public final class RaidDetection extends ListenerAdapter {
 
     private boolean isSameAttack = false;
 
+    @SuppressWarnings("null")
     @Override
-    public void onGuildMemberJoin(final @NotNull GuildMemberJoinEvent event) {
+    public void onGuildMemberJoin(@SuppressWarnings("null") final @NotNull GuildMemberJoinEvent event) {
 
         if (isSameAttack) return;
 

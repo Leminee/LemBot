@@ -49,7 +49,7 @@ public final class CommandManager extends ListenerAdapter {
     }
 
     @Override
-    public void onMessageReceived(@NotNull final MessageReceivedEvent event) {
+    public void onMessageReceived(@SuppressWarnings("null") @NotNull final MessageReceivedEvent event) {
 
         final Message message = event.getMessage();
 

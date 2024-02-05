@@ -13,7 +13,7 @@ import java.util.Objects;
 public final class ChannelMessageCounter extends ListenerAdapter {
 
     @Override
-    public void onMessageReceived(@NotNull final MessageReceivedEvent event) {
+    public void onMessageReceived(@SuppressWarnings("null") @NotNull final MessageReceivedEvent event) {
 
         final String userMessage = event.getMessage().getContentRaw();
         final String channelId = event.getChannel().getId();

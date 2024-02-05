@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 public final class MemesOnlyChannel extends ListenerAdapter {
 
     @Override
-    public void onMessageReceived(final MessageReceivedEvent event) {
+    public void onMessageReceived(@SuppressWarnings("null") final MessageReceivedEvent event) {
 
         final long memeChannelId = Config.getInstance().getChannelConfig().getMemesChannel().getIdLong();
         final String messageContent = event.getMessage().getContentRaw();

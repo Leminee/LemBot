@@ -18,7 +18,7 @@ public final class BumpReminder extends ListenerAdapter {
     private final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
 
     @Override
-    public void onMessageReceived(@NotNull final MessageReceivedEvent event) {
+    public void onMessageReceived(@SuppressWarnings("null") @NotNull final MessageReceivedEvent event) {
 
         final List<MessageEmbed> disBoardEmbed = event.getMessage().getEmbeds();
         final User embedAuthor = event.getAuthor();
@@ -48,6 +48,7 @@ public final class BumpReminder extends ListenerAdapter {
                 "Bumpe den Server jetzt " + bumperRoleAsMention + " :grinning:"
         };
 
+        @SuppressWarnings("null")
         final Runnable runnable = () -> {
             final int randomNumber = ThreadLocalRandom.current().nextInt(pingContent.length);
             Config.getInstance().getChannelConfig().getBumpChannel().sendMessage(pingContent[randomNumber]).queue();

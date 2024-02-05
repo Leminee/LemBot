@@ -6,7 +6,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 public final class MemberJoinStorage extends ListenerAdapter {
 
     @Override
-    public void onGuildMemberJoin(GuildMemberJoinEvent event) {
+    public void onGuildMemberJoin(@SuppressWarnings("null") GuildMemberJoinEvent event) {
         CommandHelper.logUserJoin(event.getUser());
         CommandHelper.logMemberAmount(event.getGuild());
     }

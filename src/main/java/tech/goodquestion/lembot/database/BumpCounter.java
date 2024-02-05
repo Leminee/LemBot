@@ -18,7 +18,7 @@ import java.util.Objects;
 public final class BumpCounter extends ListenerAdapter {
 
     @Override
-    public void onMessageReceived(final MessageReceivedEvent event) {
+    public void onMessageReceived(@SuppressWarnings("null") final MessageReceivedEvent event) {
 
         final List<MessageEmbed> disBoardEmbed = event.getMessage().getEmbeds();
         final User embedAuthor = event.getAuthor();

@@ -18,6 +18,7 @@ public record RoleToggleCommand(String roleAbbr, long roleId,
         commandManager.registerCommand(new RoleToggleCommand(roleAbbr, roleId, Mode.REMOVE));
     }
 
+    @SuppressWarnings("null")
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
         Role role = message.getGuild().getRoleById(roleId);

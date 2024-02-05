@@ -18,6 +18,7 @@ import java.util.Objects;
 
 public abstract sealed class UserBanishment implements IBotCommand permits BanCommand, WarnCommand {
 
+    @SuppressWarnings("null")
     @Override
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) {
 

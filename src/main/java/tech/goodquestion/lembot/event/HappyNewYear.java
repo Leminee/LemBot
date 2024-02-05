@@ -18,13 +18,14 @@ public final class HappyNewYear extends ListenerAdapter {
     private final String HAPPY_NEW_YEAR_GIF_URL = "https://happynewyear2021status.com/wp-content/uploads/2021/11/new-year-gifs-2022-1.gif";
 
     @Override
-    public void onReady(final @NotNull ReadyEvent event) {
+    public void onReady(@SuppressWarnings("null") final @NotNull ReadyEvent event) {
 
         final LocalDateTime localDateTimeNow = LocalDateTime.now();
         final int currentYear = LocalDateTime.now().getYear();
         final LocalDateTime localDateTimeNextYear = LocalDateTime.of(currentYear, 12, 31, 23, 59, 49);
         final long delay = ChronoUnit.SECONDS.between(localDateTimeNow, localDateTimeNextYear);
 
+        @SuppressWarnings("null")
         final Runnable runnable = () -> {
 
             for (int i = 10; i > 0; i--) {

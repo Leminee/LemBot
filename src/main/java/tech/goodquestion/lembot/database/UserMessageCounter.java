@@ -14,10 +14,11 @@ import java.util.Objects;
 public final class UserMessageCounter extends ListenerAdapter {
 
     @Override
-    public void onMessageReceived(final MessageReceivedEvent event) {
+    public void onMessageReceived(@SuppressWarnings("null") final MessageReceivedEvent event) {
 
         String userMessageContent = event.getMessage().getContentRaw();
         final String userId = Objects.requireNonNull(event.getMember()).getId();
+        @SuppressWarnings("null")
         final String userName = event.getMember().getEffectiveName();
         final String messageId = event.getMessageId();
 
