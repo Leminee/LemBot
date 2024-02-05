@@ -135,8 +135,6 @@ public class BotMain {
 
         setupRoleCommands(commandManager);
 
-        
-        
     }
 
     private static void setupReactionRoles() {

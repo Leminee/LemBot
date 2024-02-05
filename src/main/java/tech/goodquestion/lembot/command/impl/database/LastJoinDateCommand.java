@@ -7,7 +7,6 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
 import tech.goodquestion.lembot.library.Helper;
-import tech.goodquestion.lembot.library.parser.LocalDateTimeFormatter;
 
 public final class LastJoinDateCommand implements IBotCommand {
 

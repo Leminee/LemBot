@@ -35,6 +35,7 @@ public final class ServerRoleListCommand implements IBotCommand {
         Helper.sendEmbed(embedBuilder, message, true);
     }
 
+
     @Override
     public String getName() {
         return "sr";

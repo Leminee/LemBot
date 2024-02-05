@@ -8,8 +8,6 @@ import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.entity.VoiceChannel;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
 import tech.goodquestion.lembot.library.Helper;
-import tech.goodquestion.lembot.library.parser.LocalDateTimeFormatter;
-
 import java.time.LocalTime;
 
 public final class VoiceLeftStorage extends ListenerAdapter {
