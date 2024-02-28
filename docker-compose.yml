@@ -1,33 +1,53 @@
-version: "3.0"
+version: "3.8"
 
 services:
+
+  lembot:
+    container_name: "lembot"
+    build: "."
+    restart: "always"
+    depends_on:
+      - "database"
+    networks:
+      - "lembot"
 
   database:
     container_name: "database"
     image: "mariadb:10.11"
     restart: "always"
     ports:
-      - "3306:3306"
+      - "127.0.0.1:3306:3306"
     environment:
       MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: "no"
       MYSQL_DATABASE: "lembot"
       MYSQL_USER: "lembot"
       MYSQL_PASSWORD: "lembot"
     volumes:
-      - "/Users/lemine/lembot_lembot:/var/lib/mysql"
+      - "lembot:/var/lib/mysql"
       - "/etc/timezone:/etc/timezone:ro"
       - "/etc/localtime:/etc/localtime:ro"
-
+    networks:
+      - "lembot"
 
   phpmyadmin:
-    image: phpmyadmin:5.2.0
-    container_name: PhpMyAdmin
-    restart: always
+    image: "phpmyadmin:5.2.0"
+    container_name: "PhpMyAdmin"
+    restart: "always"
+    depends_on:
+      - "database"
     ports:
-      - 80:80
+      - "80:80"
     environment:
-      - PMA_ARBITRARY=1
+      - "PMA_ARBITRARY=1"
+    networks:
+      - "lembot"
 
+
+networks:
+  lembot:
+     driver: "bridge"
+volumes:
+  lembot:
 
 
 
