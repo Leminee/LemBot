@@ -8,12 +8,14 @@ import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.entity.VoiceChannel;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
 import tech.goodquestion.lembot.library.Helper;
+import tech.goodquestion.lembot.library.parser.LocalDateTimeFormatter;
+
 import java.time.LocalTime;
 
 public final class VoiceJoinedStorage extends ListenerAdapter {
 
     @Override
-    public void onGuildVoiceJoin(@NotNull final GuildVoiceJoinEvent event) {
+    public void onGuildVoiceJoin(@SuppressWarnings("null") @NotNull final GuildVoiceJoinEvent event) {
 
         final String insertQuery = "INSERT INTO voice_join (id_discord, user_tag, username, name) VALUES (?,?,?,?);";
         final VoiceChannel voiceChannel = new VoiceChannel();

@@ -48,8 +48,7 @@ public final class BumpReminder extends ListenerAdapter {
                 "Bumpe den Server jetzt " + bumperRoleAsMention + " :grinning:"
         };
 
-        @SuppressWarnings("null")
-        final Runnable runnable = () -> {
+        @SuppressWarnings("null") final Runnable runnable = () -> {
             final int randomNumber = ThreadLocalRandom.current().nextInt(pingContent.length);
             Config.getInstance().getChannelConfig().getBumpChannel().sendMessage(pingContent[randomNumber]).queue();
             tasks.clear();
@@ -68,3 +67,4 @@ public final class BumpReminder extends ListenerAdapter {
         runningTasks.get(1).cancel(false);
     }
 }
+

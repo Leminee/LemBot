@@ -1,7 +1,10 @@
 package tech.goodquestion.lembot.command.impl.moderation;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.config.Config;
@@ -11,6 +14,9 @@ import tech.goodquestion.lembot.entity.Sanction;
 import tech.goodquestion.lembot.entity.SanctionType;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
 import tech.goodquestion.lembot.library.Helper;
+import tech.goodquestion.lembot.library.parser.LocalDateTimeDurationCalculator;
+import tech.goodquestion.lembot.library.parser.LocalDateTimeParser;
+
 import java.awt.*;
 import java.io.IOException;
 import java.time.Instant;
@@ -25,6 +31,7 @@ public final class MuteCommand implements IBotCommand {
     private final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
 
 
+    @SuppressWarnings("null")
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) throws IOException {
 
@@ -119,6 +126,7 @@ public final class MuteCommand implements IBotCommand {
 
     public void scheduleReminder(final long delay, final TimeUnit timeUnit, Member sanctionedMember) {
 
+        @SuppressWarnings("null")
         final Runnable runnable = () -> {
 
             notifyStaff(sanctionedMember);
@@ -175,6 +183,7 @@ public final class MuteCommand implements IBotCommand {
     }
 
 
+    @SuppressWarnings("null")
     public static Member getMemberFromCommandInput(final Message message, final String[] args) {
 
         List<Member> mentionedMembers = message.getMentionedMembers();

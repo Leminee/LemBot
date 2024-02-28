@@ -42,6 +42,7 @@
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -54,6 +55,7 @@
                     </archive>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
@@ -158,10 +160,11 @@
             <artifactId>JDA</artifactId>
             <version>5.0.0-alpha.11</version>
         </dependency>
+
         <dependency>
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
-            <version>2.0</version>
+            <version>1.33</version>
 
         </dependency>
 
@@ -238,6 +241,12 @@
         </dependency>
 
 
+    
+      <dependency>
+        <groupId>com.raedghazal</groupId>
+        <artifactId>kotlinx_datetime_ext-desktop</artifactId>
+        <version>1.2.0</version>
+      </dependency>
     </dependencies>
 
 </project>

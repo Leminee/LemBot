@@ -291,7 +291,7 @@ public final class VoiceAutoCreation extends ListenerAdapter {
         final String randomlyCombinedVoiceName = LEFT[random.nextInt(LEFT.length)] + "_" + RIGHT[random.nextInt(RIGHT.length)];
         final Category voiceFunCategory = Config.getInstance().getCategoryConfig().getVoiceCategory();
 
-        final boolean isVoiceLeftEmpty = event.getChannelLeft().getMembers().size() == 0;
+        final boolean isVoiceLeftEmpty = event.getChannelLeft().getMembers().isEmpty();
         final boolean wasVoiceJoinedEmpty = event.getChannelJoined().getMembers().size() == 1;
 
         if (isVoiceLeftEmpty && wasVoiceJoinedEmpty) {

@@ -34,7 +34,7 @@ public final class Config {
 
     public static Config load(String filePath) {
         File configFile = new File(filePath);
-        Yaml configParser = new Yaml(new Constructor(Config.class));
+        Yaml configParser = new Yaml(new Constructor(Config.class, null));
         configParser.setBeanAccess(BeanAccess.FIELD);
         try {
             return configParser.load(new FileInputStream(configFile));

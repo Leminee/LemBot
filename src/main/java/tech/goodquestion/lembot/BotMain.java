@@ -29,6 +29,7 @@ public class BotMain {
 
     public static JDA jda;
 
+    //Test
     public static void main(String[] args) {
 
         try {

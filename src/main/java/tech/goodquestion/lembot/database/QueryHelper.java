@@ -3,9 +3,12 @@ package tech.goodquestion.lembot.database;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import tech.goodquestion.lembot.entity.OccurredException;
+import tech.goodquestion.lembot.library.parser.LocalDateTimeFormatter;
+
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.*;
+
 
 public final class QueryHelper {
 
@@ -535,7 +538,8 @@ public final class QueryHelper {
                 sanctionHistory
                         .append(resultSet.getString(1))
                         .append("**")
-                        .append(LocalDateTimeFormatter.toGermanFormat(resultSet.getTimestamp(2, Calendar.getInstance(TimeZone.getDefault()
+                        .append(LocalDateTimeFormatter.toGermanFormat(resultSet.getTimestamp(2, Calendar.getInstance(
+                                TimeZone.getDefault()
                         )).toLocalDateTime()))
                         .append("**")
                         .append(resultSet.getString(3))

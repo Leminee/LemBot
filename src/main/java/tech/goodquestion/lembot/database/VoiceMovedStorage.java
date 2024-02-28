@@ -8,12 +8,14 @@ import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.entity.VoiceChannel;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
 import tech.goodquestion.lembot.library.Helper;
+import tech.goodquestion.lembot.library.parser.LocalDateTimeFormatter;
+
 import java.time.LocalTime;
 
 public final class VoiceMovedStorage extends ListenerAdapter {
 
     @Override
-    public void onGuildVoiceMove(@NotNull final GuildVoiceMoveEvent event) {
+    public void onGuildVoiceMove(@SuppressWarnings("null") @NotNull final GuildVoiceMoveEvent event) {
 
         final String insertQuery = "INSERT INTO voice_move (id_discord, user_tag, username, moved_from) VALUES (?,?,?,?);";
 

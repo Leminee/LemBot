@@ -8,12 +8,14 @@ import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.entity.VoiceChannel;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
 import tech.goodquestion.lembot.library.Helper;
+import tech.goodquestion.lembot.library.parser.LocalDateTimeFormatter;
+
 import java.time.LocalTime;
 
 public final class VoiceLeftStorage extends ListenerAdapter {
 
     @Override
-    public void onGuildVoiceLeave(@NotNull final GuildVoiceLeaveEvent event) {
+    public void onGuildVoiceLeave(@SuppressWarnings("null") @NotNull final GuildVoiceLeaveEvent event) {
 
         final String insertQuery = "INSERT INTO voice_leave (id_discord, user_tag, username, name) VALUES (?,?,?,?);";
 

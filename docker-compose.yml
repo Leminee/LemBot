@@ -4,19 +4,30 @@ services:
 
   database:
     container_name: "database"
-    image: "mariadb:latest"
+    image: "mariadb:10.11"
     restart: "always"
     ports:
       - "3306:3306"
     environment:
-      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: "yes"
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: "no"
       MYSQL_DATABASE: "lembot"
       MYSQL_USER: "lembot"
       MYSQL_PASSWORD: "lembot"
     volumes:
-      - "lembot:/var/lib/mysql"
+      - "/Users/lemine/lembot_lembot:/var/lib/mysql"
       - "/etc/timezone:/etc/timezone:ro"
       - "/etc/localtime:/etc/localtime:ro"
 
-volumes:
-  lembot:
+
+  phpmyadmin:
+    image: phpmyadmin:5.2.0
+    container_name: PhpMyAdmin
+    restart: always
+    ports:
+      - 80:80
+    environment:
+      - PMA_ARBITRARY=1
+
+
+
+
