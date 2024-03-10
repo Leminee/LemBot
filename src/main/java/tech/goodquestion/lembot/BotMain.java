@@ -129,7 +129,6 @@ public class BotMain {
         jda.addEventListener(new VoiceJoinedStorage());
         jda.addEventListener(new VoiceLeftStorage());
         jda.addEventListener(new VoiceMovedStorage());
-        jda.addEventListener(new WelcomingMemberJoin());
         jda.addEventListener(new HoppingDetection());
         jda.addEventListener(new CodeBlockChecker());
 
