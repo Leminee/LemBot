@@ -4,7 +4,7 @@ services:
 
   lembot:
     container_name: "lembot"
-    build: "."
+    image: "leminee/lembot:latest"
     restart: "always"
     depends_on:
       - "database"
