@@ -245,6 +245,11 @@ public final class VoiceAutoCreation extends ListenerAdapter {
             "wing",
             // Steve Wozniak invented the Apple I and Apple II. https://en.wikipedia.org/wiki/Steve_Wozniak
             "wozniak",
+            "martin",
+            "lemine",
+            "lem",
+            "lembot",
+            "erarnitox"
     };
 
     final Random random = new Random();
@@ -264,6 +269,7 @@ public final class VoiceAutoCreation extends ListenerAdapter {
 
         if (isOnlyOneMemberInVoice) {
 
+            System.out.println(Config.getInstance().getCategoryConfig().getVoiceCategory());
             Category voiceFunCategory = Config.getInstance().getCategoryConfig().getVoiceCategory();
             event.getGuild().createVoiceChannel(voiceName, voiceFunCategory).queue();
         }
