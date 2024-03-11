@@ -175,7 +175,7 @@ public final class Helper {
         List<User> mentionedUsers = message.getMentionedUsers();
         User user;
 
-        if (mentionedUsers.size() == 0) {
+        if (mentionedUsers.isEmpty()) {
             user = CommandManager.getInstance().getJDA().retrieveUserById(args[0], true).complete();
         } else {
             user = mentionedUsers.get(0);

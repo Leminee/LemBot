@@ -49,7 +49,7 @@ public final class UpdatedMessageStorage extends ListenerAdapter {
                     + "\n\n ```Hinweis: Der Inhalt der beabeiteten Nachricht war länger als die erlaubten Zeichen (1024).```";
         }
 
-        final boolean containsAttachment = event.getMessage().getAttachments().size() != 0;
+        final boolean containsAttachment = !event.getMessage().getAttachments().isEmpty();
 
         if (containsAttachment) {
             updatedMessageContent += "\n__Bildurl__\n" + event.getMessage().getAttachments().get(0).getUrl();

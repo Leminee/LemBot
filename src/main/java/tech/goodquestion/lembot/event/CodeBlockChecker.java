@@ -159,7 +159,7 @@ public final class CodeBlockChecker extends ListenerAdapter {
     @Override
     public void onMessageReceived(@SuppressWarnings("null") final MessageReceivedEvent event) {
 
-        if (event.getMessage().getAttachments().size() != 0) return;
+        if (!event.getMessage().getAttachments().isEmpty()) return;
 
         final long channelId = event.getChannel().getIdLong();
         if (channelId == Config.getInstance().getChannelConfig().getGeneralChannel().getIdLong()) return;

@@ -44,7 +44,7 @@ public final class MemesOnlyChannel extends ListenerAdapter {
 
     private boolean containsMedia(final Message message) {
 
-        return message.getAttachments().size() != 0;
+        return !message.getAttachments().isEmpty();
     }
 
     private boolean containsOnlyURL(final String messageContent) {

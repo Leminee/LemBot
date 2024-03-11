@@ -33,7 +33,7 @@ public final class HelpListCommand implements IBotCommand {
         }
 
 
-        if (!CommandManager.getInstance().getHelpLists().toString().contains(queriedHelpList) || queriedHelpList.equals("")) {
+        if (!CommandManager.getInstance().getHelpLists().toString().contains(queriedHelpList) || queriedHelpList.isEmpty()) {
             EmbedBuilder embedBuilder1 = new EmbedBuilder().setColor(Color.decode(EmbedColorHelper.HELP))
                     .setTitle("Verfügbare Help-Listen")
                     .setDescription(prefix + "help " + String.join("\n" + prefix + "help ", CommandManager.getInstance().getHelpLists()));

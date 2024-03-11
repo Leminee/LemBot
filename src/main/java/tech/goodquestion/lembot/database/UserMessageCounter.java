@@ -22,7 +22,7 @@ public final class UserMessageCounter extends ListenerAdapter {
         final String userName = event.getMember().getEffectiveName();
         final String messageId = event.getMessageId();
 
-        final boolean containsAttachment = event.getMessage().getAttachments().size() != 0;
+        final boolean containsAttachment = !event.getMessage().getAttachments().isEmpty();
 
         if (containsAttachment) {
             userMessageContent += "\n__Bildurl__\n" + event.getMessage().getAttachments().get(0).getUrl();

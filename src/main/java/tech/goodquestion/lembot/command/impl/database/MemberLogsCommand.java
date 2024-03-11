@@ -2,7 +2,6 @@ package tech.goodquestion.lembot.command.impl.database;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.OnlineStatus;
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -114,11 +113,6 @@ public final class MemberLogsCommand implements IBotCommand {
     @Override
     public String getDescription() {
         return "`ml <member>`: Member Logs";
-    }
-
-    @Override
-    public boolean isPermitted(Member member) {
-        return member.hasPermission(Permission.MESSAGE_MANAGE);
     }
 
     @Override

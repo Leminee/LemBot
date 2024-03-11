@@ -272,7 +272,7 @@ public final class VoiceAutoCreation extends ListenerAdapter {
     @Override
     public void onGuildVoiceLeave(@SuppressWarnings("null") @NotNull final GuildVoiceLeaveEvent event) {
 
-        final boolean isVoiceLeftEmpty = event.getChannelLeft().getMembers().size() == 0;
+        final boolean isVoiceLeftEmpty = event.getChannelLeft().getMembers().isEmpty();
 
         if (isVoiceLeftEmpty) {
             event.getChannelLeft().delete().queue();
