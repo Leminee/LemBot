@@ -101,6 +101,8 @@ public class BotMain {
         commandManager.registerCommand(new UnwarnCommand());
         commandManager.registerCommand(new UserSanctionHistory());
         commandManager.registerCommand(new ServerRoleListInfoCommand());
+        commandManager.registerCommand(new MonthlyBumpsCommand());
+        commandManager.registerCommand(new MonthlyMessagesCommand());
 
         BumpReminder bumpReminder = new BumpReminder();
 

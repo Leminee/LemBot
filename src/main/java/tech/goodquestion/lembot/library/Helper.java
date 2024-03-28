@@ -66,7 +66,7 @@ public final class Helper {
 
             if (resultSet.next()) {
 
-                userData.amountOf = resultSet.getInt(1);
+                userData.amountOf = resultSet.getLong(1);
 
                 PreparedStatement prepareStatementOne = connection.prepareStatement(nextHigherUser);
                 prepareStatementOne.setLong(1, userData.amountOf);

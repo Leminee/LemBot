@@ -38,6 +38,7 @@ public final class QueryHelper {
     public static String ADMINS_MENTIONED = "SELECT mention FROM staff WHERE role_name = 'Administrator' ORDER BY staff_since;";
     public static String MODERATORS_MENTIONED = "SELECT mention FROM staff WHERE role_name = 'Moderator' ORDER BY staff_since;";
     public static final String AMOUNT_BUMPS = "SELECT number_bumps FROM user_bump WHERE id_discord = ?";
+
     //SELECT number_bumps AS b, (SELECT COUNT(id_discord) FROM user_bump WHERE number_bumps > (b)) +1 AS 'TOP' FROM `user_bump` WHERE id_discord = ?
     public static final String NEXT_HIGHER_USER_AMOUNT_BUMPS = "SELECT id_discord, number_bumps FROM user_bump WHERE number_bumps > ? ORDER BY number_bumps, username LIMIT 1";
     public static final List<String> adminsAsMention = new ArrayList<>();
@@ -45,6 +46,9 @@ public final class QueryHelper {
     public static final List<String> contributorsAsMention = new ArrayList<>();
     public static String FIRST_CONTENT_AFTER_UPDATING_MESSAGE = "SELECT content FROM user_message_content WHERE id_message = ? ";
     public static String UPDATED_MESSAGE_LAST_CONTENT = "SELECT content FROM updated_message WHERE id_message = ? ORDER BY updated_at DESC LIMIT 1 ";
+    public static String AMOUNT_MONTHLY_BUMPS = "SELECT COUNT(user_bump_time.id_discord) FROM `user_bump_time` INNER JOIN user_bump ON user_bump_time.id_discord = user_bump.id_discord  WHERE bumped_at > (SELECT DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 MONTH)) AND user_bump_time.id_discord = ? GROUP BY user_bump_time.id_discord;";
+    public static String NEXT_HIGHER_USER_AMOUNT_MONTHLY_BUMPS = "SELECT user_bump_time.id_discord, COUNT(user_bump_time.id_discord) FROM `user_bump_time` INNER JOIN user_bump ON user_bump_time.id_discord = user_bump.id_discord  WHERE bumped_at > (SELECT DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 MONTH)) AND user_bump_time.id_discord = ? GROUP BY user_bump_time.id_discord;";
+    public static String AMOUNT_MONTHLY_MESSAGES = "";
     public static String RAID_DETECTION = "SELECT COUNT(DISTINCT id_discord) FROM `user_join` WHERE joined_at >= NOW() - INTERVAL 30 SECOND";
 
 
@@ -290,7 +294,7 @@ public final class QueryHelper {
 
     public static List<String> getAdminsAsMention() {
 
-        if (adminsAsMention.size() > 0) return adminsAsMention;
+        if (!adminsAsMention.isEmpty()) return adminsAsMention;
 
         return getStaffAsMention(ADMINS_MENTIONED, adminsAsMention);
 
@@ -317,7 +321,7 @@ public final class QueryHelper {
 
     public static List<String> getModeratorsAsMention() {
 
-        if (moderatorsAsMention.size() > 0) return moderatorsAsMention;
+        if (!moderatorsAsMention.isEmpty()) return moderatorsAsMention;
 
         return getStaffAsMention(MODERATORS_MENTIONED, moderatorsAsMention);
 
@@ -503,7 +507,7 @@ public final class QueryHelper {
 
     public static List<String> getContributorsAsMention() {
 
-        if (contributorsAsMention.size() > 0) return contributorsAsMention;
+        if (!contributorsAsMention.isEmpty()) return contributorsAsMention;
 
         try (Connection connection = DatabaseConnector.openConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(CONTRIBUTORS)) {
 
@@ -557,7 +561,7 @@ public final class QueryHelper {
             CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
         }
 
-        return sanctionHistory.length() > 0 ? sanctionHistory.toString() : "```Keine Sanktionen```";
+        return !sanctionHistory.isEmpty() ? sanctionHistory.toString() : "```Keine Sanktionen```";
     }
 
 }

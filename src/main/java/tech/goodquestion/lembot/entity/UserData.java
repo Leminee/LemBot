@@ -3,7 +3,7 @@ package tech.goodquestion.lembot.entity;
 public final class UserData {
 
     public Long userId;
-    public Integer amountOf;
+    public Long amountOf;
     public Long nextHigherUserId;
     public Integer nextHigherUserAmountOf;
 
