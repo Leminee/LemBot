@@ -38,8 +38,6 @@ public final class QueryHelper {
     public static String ADMINS_MENTIONED = "SELECT mention FROM staff WHERE role_name = 'Administrator' ORDER BY staff_since;";
     public static String MODERATORS_MENTIONED = "SELECT mention FROM staff WHERE role_name = 'Moderator' ORDER BY staff_since;";
     public static final String AMOUNT_BUMPS = "SELECT number_bumps FROM user_bump WHERE id_discord = ?";
-
-    //SELECT number_bumps AS b, (SELECT COUNT(id_discord) FROM user_bump WHERE number_bumps > (b)) +1 AS 'TOP' FROM `user_bump` WHERE id_discord = ?
     public static final String NEXT_HIGHER_USER_AMOUNT_BUMPS = "SELECT id_discord, number_bumps FROM user_bump WHERE number_bumps > ? ORDER BY number_bumps, username LIMIT 1";
     public static final List<String> adminsAsMention = new ArrayList<>();
     public static final List<String> moderatorsAsMention = new ArrayList<>();
@@ -48,7 +46,8 @@ public final class QueryHelper {
     public static String UPDATED_MESSAGE_LAST_CONTENT = "SELECT content FROM updated_message WHERE id_message = ? ORDER BY updated_at DESC LIMIT 1 ";
     public static String AMOUNT_MONTHLY_BUMPS = "SELECT COUNT(user_bump_time.id_discord) FROM `user_bump_time` INNER JOIN user_bump ON user_bump_time.id_discord = user_bump.id_discord  WHERE bumped_at > (SELECT DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 MONTH)) AND user_bump_time.id_discord = ? GROUP BY user_bump_time.id_discord;";
     public static String NEXT_HIGHER_USER_AMOUNT_MONTHLY_BUMPS = "SELECT user_bump_time.id_discord, COUNT(user_bump_time.id_discord) FROM `user_bump_time` INNER JOIN user_bump ON user_bump_time.id_discord = user_bump.id_discord  WHERE bumped_at > (SELECT DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 MONTH)) AND user_bump_time.id_discord = ? GROUP BY user_bump_time.id_discord;";
-    public static String AMOUNT_MONTHLY_MESSAGES = "";
+    public static String AMOUNT_MONTHLY_MESSAGES = "SELECT COUNT(user_message_content.id_discord) FROM `user_message_content` INNER JOIN user_message ON user_message_content.id_discord = user_message.id_discord  WHERE posted_at > (SELECT DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 MONTH)) AND user_message_content.id_discord = ? GROUP BY user_message.id_discord;";
+    public static String NEXT_HIGHER_USER_AMOUNT_MONTHLY_MESSAGES = "SELECT COUNT(user_message_content.id_discord) FROM `user_message_content` INNER JOIN user_message ON user_message_content.id_discord = user_message.id_discord  WHERE posted_at > (SELECT DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 MONTH)) AND user_message_content.id_discord = ? GROUP BY user_message.id_discord;";
     public static String RAID_DETECTION = "SELECT COUNT(DISTINCT id_discord) FROM `user_join` WHERE joined_at >= NOW() - INTERVAL 30 SECOND";
 
 
