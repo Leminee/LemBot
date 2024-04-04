@@ -1,4 +1,4 @@
-package tech.goodquestion.lembot.archiv;
+package tech.goodquestion.lembot.archive;
 
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
