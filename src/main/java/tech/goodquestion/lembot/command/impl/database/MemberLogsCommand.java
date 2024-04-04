@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import tech.goodquestion.lembot.command.IBotCommand;
+import tech.goodquestion.lembot.command.impl.AdvertisingCommand;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.database.QueryHelper;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
@@ -23,13 +24,7 @@ public final class MemberLogsCommand implements IBotCommand {
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) throws IOException {
 
 
-        if (channel.getIdLong() != Config.getInstance().getChannelConfig().getStaffCommandsChannel().getIdLong()) {
-            final EmbedBuilder embedBuilder = new EmbedBuilder();
-            final String embedDescription = ":x: Dieser Befehl kann nur in [channel] ausgeführt werden!".replace("[channel]", Config.getInstance().getChannelConfig().getStaffCommandsChannel().getAsMention());
-            Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
-            Helper.sendEmbed(embedBuilder, message, true);
-            return;
-        }
+        if (Helper.isStaffChannel(message, channel)) return;
 
         User user;
 

@@ -47,11 +47,12 @@ public final class RaidDetection extends ListenerAdapter {
         */
 
 
-        final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        try (ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1)) {
 
-        final Runnable runnable = () -> isSameAttack = false;
+            final Runnable runnable = () -> isSameAttack = false;
 
-        final int delay = 30;
-        scheduler.schedule(runnable, delay, TimeUnit.MINUTES);
+            final int delay = 30;
+            scheduler.schedule(runnable, delay, TimeUnit.MINUTES);
+        }
     }
 }

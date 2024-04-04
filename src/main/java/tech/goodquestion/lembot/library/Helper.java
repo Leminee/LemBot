@@ -3,6 +3,7 @@ package tech.goodquestion.lembot.library;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.config.Config;
@@ -114,9 +115,7 @@ public final class Helper {
     }
 
     public static void createEmbed(final EmbedBuilder embedBuilder, final String title, final String description, final String embedColor, final String thumbnail) {
-        embedBuilder.setTitle(title);
-        embedBuilder.setDescription(description);
-        embedBuilder.setColor(Color.decode(embedColor));
+        createEmbed(embedBuilder, title, description, embedColor);
         embedBuilder.setThumbnail(thumbnail);
     }
 
@@ -184,4 +183,14 @@ public final class Helper {
         return user;
     }
 
+    public static boolean isStaffChannel(Message message, TextChannel channel) {
+        if (channel.getIdLong() != Config.getInstance().getChannelConfig().getStaffCommandsChannel().getIdLong()) {
+            final EmbedBuilder embedBuilder = new EmbedBuilder();
+            final String embedDescription = ":x: Dieser Befehl kann nur in [channel] ausgeführt werden!".replace("[channel]", Config.getInstance().getChannelConfig().getStaffCommandsChannel().getAsMention());
+            Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
+            Helper.sendEmbed(embedBuilder, message, true);
+            return true;
+        }
+        return false;
+    }
 }

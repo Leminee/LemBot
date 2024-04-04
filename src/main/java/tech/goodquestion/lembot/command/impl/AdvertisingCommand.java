@@ -33,13 +33,7 @@ public final class AdvertisingCommand implements IBotCommand {
             return;
         }
 
-        if (channel.getIdLong() != Config.getInstance().getChannelConfig().getStaffCommandsChannel().getIdLong()) {
-            final EmbedBuilder embedBuilder = new EmbedBuilder();
-            final String embedDescription = ":x: Dieser Befehl kann nur in [channel] ausgeführt werden!".replace("[channel]", Config.getInstance().getChannelConfig().getStaffCommandsChannel().getAsMention());
-            Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
-            Helper.sendEmbed(embedBuilder, message, true);
-            return;
-        }
+        if (Helper.isStaffChannel(message, channel)) return;
 
         final User user = Helper.getUserFromCommandInput(message, args);
 
@@ -75,6 +69,7 @@ public final class AdvertisingCommand implements IBotCommand {
             Helper.sendEmbed(embedBuilder1, message, true);
         }
     }
+
 
     @SuppressWarnings("null")
     private void advertiseServer(String[] args, Message message) {

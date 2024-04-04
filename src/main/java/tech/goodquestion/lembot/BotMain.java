@@ -135,7 +135,6 @@ public class BotMain {
         jda.addEventListener(new HoppingDetection());
         jda.addEventListener(new CodeBlockChecker());
 
-
         setupRoleCommands(commandManager);
 
     }
