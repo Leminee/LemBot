@@ -24,6 +24,7 @@ public final class EmbedColorHelper {
     public static final String BAN = "0xFF0000";
     public static final String AUTO_MODERATION = "#fff3cd";
     public static final String MEMBER_INFO = "#586e5e";
+    public static final String META = "#73797f";
 
     private EmbedColorHelper() {
 

@@ -103,6 +103,7 @@ public class BotMain {
         commandManager.registerCommand(new ServerRoleListInfoCommand());
         commandManager.registerCommand(new MonthlyBumpsCommand());
         commandManager.registerCommand(new MonthlyMessagesCommand());
+        commandManager.registerCommand(new MetaCommand());
 
         BumpReminder bumpReminder = new BumpReminder();
 
