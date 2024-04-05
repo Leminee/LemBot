@@ -6,7 +6,7 @@ bot:
   id: 820468009764257792
   name: "LemBot"
   prefix: "?"
-  version: "v1.5.1"
+  version: "v1.6.0"
 
 database:
   uri: "jdbc:mysql://localhost:3306/lembot?autoReconnect=true&serverTimezone=UTC"
