@@ -15,7 +15,7 @@ public class MonthlyMessagesCommand implements IBotCommand {
 
         final UserData userData = new UserData();
         userData.userId = sender.getIdLong();
-        final String embedTitle = "Nachrichten";
+        final String embedTitle = "Monthly Nachrichten";
 
         Helper.getAmount(userData, QueryHelper.AMOUNT_MONTHLY_MESSAGES, QueryHelper.NEXT_HIGHER_USER_AMOUNT_MONTHLY_MESSAGES);
         Helper.sendAmount(userData, EmbedColorHelper.FLOOD, "monthly Nachrichten", message, embedTitle);
