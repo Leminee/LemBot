@@ -14,11 +14,7 @@ public final class KillSwitchCommand implements IBotCommand {
     @Override
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) throws IOException {
 
-        Objects.requireNonNull(Config.getInstance()
-                .getGuild()
-                .getTextChannelById(Config.getInstance().getChannelConfig().getStaffRoomChannel().getIdLong()))
-                .sendMessage(":warning: Bot wurde durch " + sender.getAsMention() + " gekillt!")
-                .queue();
+        Objects.requireNonNull(Config.getInstance().getGuild().getTextChannelById(Config.getInstance().getChannelConfig().getStaffRoomChannel().getIdLong())).sendMessage(":warning: Bot wurde durch " + sender.getAsMention() + " gekillt!").queue();
 
         System.exit(0);
     }

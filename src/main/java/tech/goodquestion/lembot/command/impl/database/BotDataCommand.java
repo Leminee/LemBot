@@ -27,32 +27,17 @@ public final class BotDataCommand implements IBotCommand {
         final String botIconUrl = Objects.requireNonNull(Config.getInstance().getGuild().getMemberById(Config.getInstance().getBotConfig().getId())).getUser().getEffectiveAvatarUrl();
         final String botAuthor = Objects.requireNonNull(message.getGuild().getMemberById(739143338975952959L)).getAsMention();
 
-        final EmbedBuilder embedBuilder = new EmbedBuilder()
-                .setAuthor(bot, gitHubRepositoryUrl, botIconUrl)
-                .setTitle("Informationen zum " + Config.getInstance().getBotConfig().getName())
-                .setColor(Color.decode(EmbedColorHelper.SERVER))
-                .setThumbnail("https://cdn.discordapp.com/attachments/919074434021736507/920552764784914472/logoqg1_1.gif")
-                .addField("Geschrieben in", "Java (JDA)", true)
-                .addField("Geschrieben von", botAuthor, true)
-                .addField("Akutelle Version", Config.getInstance().getBotConfig().getVersion(), true)
-                .addField("**" + getAmountContributors() + "**" + " Mitwirkende", (QueryHelper.getContributorsAsMention() + "\n")
-                        .replace("[", "")
-                        .replace("]", "")
-                        .replace(",", "\n"), true)
-                .addField("Source Code", gitHubRepositoryUrl, true);
+        final EmbedBuilder embedBuilder = new EmbedBuilder().setAuthor(bot, gitHubRepositoryUrl, botIconUrl).setTitle("Informationen zum " + Config.getInstance().getBotConfig().getName()).setColor(Color.decode(EmbedColorHelper.SERVER)).setThumbnail("https://cdn.discordapp.com/attachments/919074434021736507/920552764784914472/logoqg1_1.gif").addField("Geschrieben in", "Java (JDA)", true).addField("Geschrieben von", botAuthor, true).addField("Akutelle Version", Config.getInstance().getBotConfig().getVersion(), true).addField("**" + getAmountContributors() + "**" + " Mitwirkende", (QueryHelper.getContributorsAsMention() + "\n").replace("[", "").replace("]", "").replace(",", "\n"), true).addField("Source Code", gitHubRepositoryUrl, true);
 
         Helper.sendEmbed(embedBuilder, message, true);
     }
-
 
 
     private String getAmountContributors() {
 
         try {
 
-            final Document document = Jsoup.connect("https://github.com/Leminee/LemBot")
-                    .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36")
-                    .get();
+            final Document document = Jsoup.connect("https://github.com/Leminee/LemBot").userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36").get();
             final Elements element = document.getElementsByClass("Counter");
 
             return element.get(element.size() - 1).text();

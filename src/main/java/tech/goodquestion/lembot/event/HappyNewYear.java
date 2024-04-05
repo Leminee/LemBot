@@ -25,8 +25,7 @@ public final class HappyNewYear extends ListenerAdapter {
         final LocalDateTime localDateTimeNextYear = LocalDateTime.of(currentYear, 12, 31, 23, 59, 49);
         final long delay = ChronoUnit.SECONDS.between(localDateTimeNow, localDateTimeNextYear);
 
-        @SuppressWarnings("null")
-        final Runnable runnable = () -> {
+        @SuppressWarnings("null") final Runnable runnable = () -> {
 
             for (int i = 10; i > 0; i--) {
                 try {
@@ -39,12 +38,9 @@ public final class HappyNewYear extends ListenerAdapter {
             }
 
 
-            Objects.requireNonNull(Config.getInstance().getChannelConfig().getGeneralChannel())
-                    .sendMessage(HAPPY_NEW_YEAR_GIF_URL)
-                    .queue();
+            Objects.requireNonNull(Config.getInstance().getChannelConfig().getGeneralChannel()).sendMessage(HAPPY_NEW_YEAR_GIF_URL).queue();
         };
 
         scheduledExecutorService.schedule(runnable, delay, TimeUnit.SECONDS);
     }
 }
-

@@ -24,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 public final class WarnCommand extends UserBanishment {
 
     private final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
+
     @SuppressWarnings("null")
     @Override
     public void banishUser(final User toBanish, final Sanction sanction, final Message originMessage) {
@@ -33,15 +34,15 @@ public final class WarnCommand extends UserBanishment {
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setColor(Color.decode(EmbedColorHelper.SUCCESS));
         embedBuilder.setTitle("Bestätigung");
-        embedBuilder.setAuthor(toBanish.getAsTag(), null,toBanish.getEffectiveAvatarUrl());
+        embedBuilder.setAuthor(toBanish.getAsTag(), null, toBanish.getEffectiveAvatarUrl());
         embedBuilder.setDescription("**" + ":warning: Member verwarnt" + "**");
         embedBuilder.addField("Verwarnter Member", toBanish.getAsMention(), true);
         embedBuilder.addField("Verwarnt von", Objects.requireNonNull(originMessage.getMember()).getAsMention(), true);
-        embedBuilder.addField("Grund",  "```" + sanction.reason + "```", false);
-        embedBuilder.setFooter(originMessage.getMember().getUser().getAsTag(),originMessage.getMember().getEffectiveAvatarUrl());
+        embedBuilder.addField("Grund", "```" + sanction.reason + "```", false);
+        embedBuilder.setFooter(originMessage.getMember().getUser().getAsTag(), originMessage.getMember().getEffectiveAvatarUrl());
         embedBuilder.setTimestamp(Instant.now());
 
-        Helper.sendEmbed(embedBuilder,originMessage,false);
+        Helper.sendEmbed(embedBuilder, originMessage, false);
 
         final String performedSanction = SanctionType.WARN.getVerbalizedSanctionTyp();
 
@@ -53,31 +54,27 @@ public final class WarnCommand extends UserBanishment {
 
     }
 
-    private void notifyWarnedMember(final Member sanctionedMember, final String performedSanction, final String reason, final Member sanctionAuthor){
+    private void notifyWarnedMember(final Member sanctionedMember, final String performedSanction, final String reason, final Member sanctionAuthor) {
 
         try {
 
-            final  EmbedBuilder embedBuilder = new EmbedBuilder();
+            final EmbedBuilder embedBuilder = new EmbedBuilder();
             final String defaultWarnDuration = "28 Tage";
 
             Helper.createEmbed(embedBuilder, ":warning: " + SanctionType.WARN, "Du wurdest auf **GoodQuestion** " + " **" + performedSanction + "**", EmbedColorHelper.WARN);
             embedBuilder.addField("Dauer", defaultWarnDuration, true);
             embedBuilder.addField("Verwarnt von", sanctionAuthor.getAsMention(), true);
-            embedBuilder.addField("Grund",  "```" + reason + "```", false);
-            embedBuilder.setFooter(sanctionAuthor.getUser().getAsTag(),sanctionAuthor.getUser().getEffectiveAvatarUrl());
+            embedBuilder.addField("Grund", "```" + reason + "```", false);
+            embedBuilder.setFooter(sanctionAuthor.getUser().getAsTag(), sanctionAuthor.getUser().getEffectiveAvatarUrl());
             embedBuilder.setTimestamp(Instant.now());
 
-            sanctionedMember.getUser().openPrivateChannel()
-                    .flatMap(channel -> channel.sendMessageEmbeds(embedBuilder.build()))
-                    .complete();
+            sanctionedMember.getUser().openPrivateChannel().flatMap(channel -> channel.sendMessageEmbeds(embedBuilder.build())).complete();
 
-            scheduleReminder(28, TimeUnit.DAYS,sanctionedMember);
+            scheduleReminder(28, TimeUnit.DAYS, sanctionedMember);
 
         } catch (ErrorResponseException errorResponseException) {
 
-            Objects.requireNonNull(Config.getInstance().getGuild()
-                    .getTextChannelById(Config.getInstance().getChannelConfig().getAutoModerationChannel().getIdLong()))
-                    .sendMessage(errorResponseException.getMessage() + " " +  sanctionedMember.getUser().getAsTag()).queue();
+            Objects.requireNonNull(Config.getInstance().getGuild().getTextChannelById(Config.getInstance().getChannelConfig().getAutoModerationChannel().getIdLong())).sendMessage(errorResponseException.getMessage() + " " + sanctionedMember.getUser().getAsTag()).queue();
 
             System.out.println(errorResponseException.getMessage());
             CommandHelper.logException(OccurredException.getOccurredExceptionData(errorResponseException, this.getClass().getName()));
@@ -98,17 +95,17 @@ public final class WarnCommand extends UserBanishment {
 
     }
 
-    private void notifyStaff(Member sanctionedMember){
+    private void notifyStaff(Member sanctionedMember) {
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
 
         embedBuilder.setColor(Color.decode(EmbedColorHelper.AUTO_MODERATION));
 
         embedBuilder.setTitle(" :warning: Verwarnung automatisch entfernt");
-        embedBuilder.setAuthor(sanctionedMember.getUser().getAsTag(), null,sanctionedMember.getUser().getEffectiveAvatarUrl());
+        embedBuilder.setAuthor(sanctionedMember.getUser().getAsTag(), null, sanctionedMember.getUser().getEffectiveAvatarUrl());
         embedBuilder.addField("Member", sanctionedMember.getAsMention(), true);
         embedBuilder.addField("Member ID", String.valueOf(sanctionedMember.getIdLong()), true);
-        embedBuilder.addField("Grund",  "```Ende der Verwarnungsdauer```", false);
+        embedBuilder.addField("Grund", "```Ende der Verwarnungsdauer```", false);
         embedBuilder.setTimestamp(Instant.now());
 
         Config.getInstance().getChannelConfig().getAutoModerationChannel().sendMessageEmbeds(embedBuilder.build()).queue();
@@ -132,8 +129,6 @@ public final class WarnCommand extends UserBanishment {
     @SuppressWarnings("null")
     public void removeSanction(Member sanctionedMember) {
 
-        sanctionedMember.getGuild()
-                .removeRoleFromMember(sanctionedMember, Config.getInstance().getRoleConfig().getWarnRole())
-                .queue();
+        sanctionedMember.getGuild().removeRoleFromMember(sanctionedMember, Config.getInstance().getRoleConfig().getWarnRole()).queue();
     }
 }

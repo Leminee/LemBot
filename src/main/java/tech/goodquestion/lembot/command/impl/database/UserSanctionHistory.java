@@ -28,7 +28,7 @@ public class UserSanctionHistory implements IBotCommand {
 
             user = Helper.getUserFromCommandInput(message, args);
 
-        }catch (ErrorResponseException errorResponseException){
+        } catch (ErrorResponseException errorResponseException) {
 
             final EmbedBuilder embedBuilder = new EmbedBuilder();
             Helper.createEmbed(embedBuilder, "Error", ":x: Kein User gefunden", EmbedColorHelper.ERROR);
@@ -37,9 +37,9 @@ public class UserSanctionHistory implements IBotCommand {
         }
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
-        embedBuilder.setAuthor(user.getAsTag(),null,user.getEffectiveAvatarUrl());
+        embedBuilder.setAuthor(user.getAsTag(), null, user.getEffectiveAvatarUrl());
         Helper.createEmbed(embedBuilder, "Historie der Sanktionen", QueryHelper.getSanctionHistoryBy(user.getIdLong()), EmbedColorHelper.MEMBER_INFO);
-        Helper.sendEmbed(embedBuilder,message, true);
+        Helper.sendEmbed(embedBuilder, message, true);
     }
 
     @Override

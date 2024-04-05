@@ -28,8 +28,7 @@ public final class AddingRole extends ListenerAdapter {
 
         final int delayInHours = 1;
         assert codingRole != null;
-        @SuppressWarnings("null")
-        ScheduledFuture<?> task = guild.addRoleToMember(member, codingRole).queueAfter(delayInHours, TimeUnit.HOURS);
+        @SuppressWarnings("null") ScheduledFuture<?> task = guild.addRoleToMember(member, codingRole).queueAfter(delayInHours, TimeUnit.HOURS);
         tasks.put(member.getIdLong(), task);
 
     }

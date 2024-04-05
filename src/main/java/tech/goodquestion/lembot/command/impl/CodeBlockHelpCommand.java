@@ -19,9 +19,7 @@ public final class CodeBlockHelpCommand implements IBotCommand {
         final String description = String.format("So sendest du farbige Codeblöcke:\n%s", highlightedCodeBlock);
 
 
-        Helper.createEmbed(embedBuilder, title,
-                description,
-                EmbedColorHelper.HIGHLIGHTED_CODE_BLOCK);
+        Helper.createEmbed(embedBuilder, title, description, EmbedColorHelper.HIGHLIGHTED_CODE_BLOCK);
         embedBuilder.setImage("https://cdn.discordapp.com/attachments/844681147203977248/985018234262659132/Bildschirmfoto_2022-06-11_um_05.10.40.png");
 
         Helper.sendEmbed(embedBuilder, message, false);

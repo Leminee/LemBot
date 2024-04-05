@@ -36,7 +36,7 @@ public final class RoleConfig {
         return Config.getInstance().getGuild().getRoleById(moderator);
     }
 
-    public Role getAdminRole(){
+    public Role getAdminRole() {
         return Config.getInstance().getGuild().getRoleById(admin);
     }
 

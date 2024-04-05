@@ -30,9 +30,7 @@ public final class RaidDetection extends ListenerAdapter {
 
             isSameAttack = true;
 
-            Objects.requireNonNull(guild.getTextChannelById(Config.getInstance().getChannelConfig().getAutoModerationChannel().getIdLong()))
-                    .sendMessage(String.format(":red_circle: Es findet gerade einen Raid statt %s %s ", moderatorRoleAsMention, adminRoleAsMention))
-                    .queue();
+            Objects.requireNonNull(guild.getTextChannelById(Config.getInstance().getChannelConfig().getAutoModerationChannel().getIdLong())).sendMessage(String.format(":red_circle: Es findet gerade einen Raid statt %s %s ", moderatorRoleAsMention, adminRoleAsMention)).queue();
         }
 
 

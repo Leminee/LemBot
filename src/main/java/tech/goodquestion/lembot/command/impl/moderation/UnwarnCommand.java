@@ -19,19 +19,19 @@ public final class UnwarnCommand implements IBotCommand, RemovalBanishment {
 
         removeSanction(message, args);
 
-        Member member = MuteCommand.getMemberFromCommandInput(message,args);
+        Member member = MuteCommand.getMemberFromCommandInput(message, args);
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setColor(Color.decode(EmbedColorHelper.SUCCESS));
         embedBuilder.setTitle("Bestätigung");
-        embedBuilder.setAuthor(member.getUser().getAsTag(), null,member.getUser().getEffectiveAvatarUrl());
+        embedBuilder.setAuthor(member.getUser().getAsTag(), null, member.getUser().getEffectiveAvatarUrl());
         embedBuilder.setDescription("**" + ":warning: Verwarnung rückgängig gemacht" + "**");
-        embedBuilder.addField("Member",member.getAsMention() , true);
-        embedBuilder.addField("Rückgängig gemacht von",sender.getAsMention(), true);
-        embedBuilder.setFooter(sender.getUser().getAsTag(),sender.getEffectiveAvatarUrl());
+        embedBuilder.addField("Member", member.getAsMention(), true);
+        embedBuilder.addField("Rückgängig gemacht von", sender.getAsMention(), true);
+        embedBuilder.setFooter(sender.getUser().getAsTag(), sender.getEffectiveAvatarUrl());
         embedBuilder.setTimestamp(Instant.now());
 
-        Helper.sendEmbed(embedBuilder,message,false);
+        Helper.sendEmbed(embedBuilder, message, false);
 
 
         //TODO delete the warn from the database

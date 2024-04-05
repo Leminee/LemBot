@@ -24,8 +24,7 @@ public final class NextBumpTimeCommand implements IBotCommand {
             if (minutesBeforeNextBump < 0) minutesBeforeNextBump = -1;
 
             final String title = "Uhrzeit nächsten Bumps";
-            final String description = "Nächster Bump um **" + nextBumpTime
-                    + "** " + "Uhr " + "(in **" + minutesBeforeNextBump + "** Minuten) ";
+            final String description = "Nächster Bump um **" + nextBumpTime + "** " + "Uhr " + "(in **" + minutesBeforeNextBump + "** Minuten) ";
             final EmbedBuilder embedBuilder = new EmbedBuilder();
 
             Helper.createEmbed(embedBuilder, title, description, EmbedColorHelper.BUMP);

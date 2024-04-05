@@ -22,14 +22,14 @@ public final class ServerRoleListCommand implements IBotCommand {
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         final List<Role> serverRoles = Objects.requireNonNull(message.getGuild().getRoles());
 
-        embedBuilder.setTitle(String.format("Liste aller %s Rollen auf " + Config.getInstance().getServerName(), serverRoles.size() -2));
+        embedBuilder.setTitle(String.format("Liste aller %s Rollen auf " + Config.getInstance().getServerName(), serverRoles.size() - 2));
         embedBuilder.setColor(Color.decode(EmbedColorHelper.SERVER_ROLES));
 
         final StringBuilder stringBuilder = new StringBuilder();
 
         final int amountServerRoles = serverRoles.size();
         final int amountNonVisibleRoles = 2;
-        for (int i = 0; i < amountServerRoles- amountNonVisibleRoles; i++) {
+        for (int i = 0; i < amountServerRoles - amountNonVisibleRoles; i++) {
             stringBuilder.append(serverRoles.get(i).getAsMention()).append("\n");
         }
 

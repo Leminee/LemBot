@@ -63,8 +63,7 @@ public record RoleToggleCommand(String roleAbbr, long roleId,
     }
 
     public enum Mode {
-        ADD("+"),
-        REMOVE("-");
+        ADD("+"), REMOVE("-");
 
         private final String symbol;
 

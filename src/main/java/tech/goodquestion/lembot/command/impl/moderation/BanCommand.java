@@ -29,25 +29,25 @@ public final class BanCommand extends UserBanishment {
         embedBuilder.setColor(Color.decode(EmbedColorHelper.SUCCESS));
 
         embedBuilder.setTitle("Bestätigung");
-        embedBuilder.setAuthor(toBanish.getAsTag(), null,toBanish.getEffectiveAvatarUrl());
+        embedBuilder.setAuthor(toBanish.getAsTag(), null, toBanish.getEffectiveAvatarUrl());
         embedBuilder.setDescription("**" + ":no_entry: User gebannt" + "**");
         embedBuilder.addField("Gebannter User", toBanish.getAsMention(), true);
         embedBuilder.addField("Gebannt von", Objects.requireNonNull(originMessage.getMember()).getAsMention(), true);
-        embedBuilder.addField("Grund",  "```" + sanction.reason + "```", false);
-        embedBuilder.setFooter(originMessage.getMember().getUser().getAsTag(),originMessage.getMember().getEffectiveAvatarUrl());
+        embedBuilder.addField("Grund", "```" + sanction.reason + "```", false);
+        embedBuilder.setFooter(originMessage.getMember().getUser().getAsTag(), originMessage.getMember().getEffectiveAvatarUrl());
         embedBuilder.setTimestamp(Instant.now());
 
-        Helper.sendEmbed(embedBuilder,originMessage,false);
+        Helper.sendEmbed(embedBuilder, originMessage, false);
 
         notifyBannedUser(toBanish, performedSanction, sanction.reason, Objects.requireNonNull(originMessage.getMember()));
 
-        Config.getInstance().getGuild().ban(toBanish,0,sanction.reason).queue();
+        Config.getInstance().getGuild().ban(toBanish, 0, sanction.reason).queue();
 
         CommandHelper.logUserBan(sanction);
     }
 
 
-      private void notifyBannedUser(final User sanctionedUser, final String performedSanction, final String reason, final Member sanctionAuthor) {
+    private void notifyBannedUser(final User sanctionedUser, final String performedSanction, final String reason, final Member sanctionAuthor) {
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
 
@@ -60,18 +60,15 @@ public final class BanCommand extends UserBanishment {
             embedBuilder.setFooter(sanctionAuthor.getUser().getAsTag(), sanctionAuthor.getUser().getEffectiveAvatarUrl());
             embedBuilder.setTimestamp(Instant.now());
 
-            sanctionedUser.openPrivateChannel()
-                    .flatMap(channel -> channel.sendMessageEmbeds(embedBuilder.build()))
-                    .complete();
+            sanctionedUser.openPrivateChannel().flatMap(channel -> channel.sendMessageEmbeds(embedBuilder.build())).complete();
         } catch (ErrorResponseException errorResponseException) {
 
-            Objects.requireNonNull(Config.getInstance().getGuild()
-                    .getTextChannelById(Config.getInstance().getChannelConfig().getAutoModerationChannel().getIdLong()))
-                    .sendMessage(errorResponseException.getMessage() + " " +  sanctionedUser.getAsTag()).queue();
+            Objects.requireNonNull(Config.getInstance().getGuild().getTextChannelById(Config.getInstance().getChannelConfig().getAutoModerationChannel().getIdLong())).sendMessage(errorResponseException.getMessage() + " " + sanctionedUser.getAsTag()).queue();
 
             System.out.println(errorResponseException.getMessage());
         }
     }
+
     @Override
     public String getName() {
         return "ban";

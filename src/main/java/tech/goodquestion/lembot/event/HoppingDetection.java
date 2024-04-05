@@ -46,9 +46,6 @@ public final class HoppingDetection extends ListenerAdapter {
         embedBuilder.setColor(Color.decode(EmbedColorHelper.AUTO_MODERATION));
         embedBuilder.setTimestamp(Instant.now());
 
-        Objects.requireNonNull(Config.getInstance()
-                .getGuild()
-                .getTextChannelById(Config.getInstance().getChannelConfig().getAutoModerationChannel().getIdLong()))
-                .sendMessageEmbeds(embedBuilder.build()).queue();
+        Objects.requireNonNull(Config.getInstance().getGuild().getTextChannelById(Config.getInstance().getChannelConfig().getAutoModerationChannel().getIdLong())).sendMessageEmbeds(embedBuilder.build()).queue();
     }
 }

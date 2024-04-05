@@ -42,11 +42,7 @@ public final class BumpReminder extends ListenerAdapter {
 
         final String bumperRoleAsMention = "<@&" + Config.getInstance().getRoleConfig().getBumpRoleId() + ">";
 
-        final String[] pingContent = {
-                "Jetzt kann wieder gebumpt werden " + bumperRoleAsMention + " :grin:",
-                "Es ist wieder Zeit zu bumpen " + bumperRoleAsMention + " :timer:",
-                "Bumpe den Server jetzt " + bumperRoleAsMention + " :grinning:"
-        };
+        final String[] pingContent = {"Jetzt kann wieder gebumpt werden " + bumperRoleAsMention + " :grin:", "Es ist wieder Zeit zu bumpen " + bumperRoleAsMention + " :timer:", "Bumpe den Server jetzt " + bumperRoleAsMention + " :grinning:"};
 
         @SuppressWarnings("null") final Runnable runnable = () -> {
             final int randomNumber = ThreadLocalRandom.current().nextInt(pingContent.length);
@@ -60,11 +56,8 @@ public final class BumpReminder extends ListenerAdapter {
 
     private void cancelRedundantTask() {
 
-        final List<ScheduledFuture<?>> runningTasks = tasks
-                .stream()
-                .filter(task -> !task.isCancelled()).toList();
+        final List<ScheduledFuture<?>> runningTasks = tasks.stream().filter(task -> !task.isCancelled()).toList();
 
         runningTasks.get(1).cancel(false);
     }
 }
-

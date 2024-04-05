@@ -20,7 +20,7 @@ import tech.goodquestion.lembot.entity.OccurredException;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
 import tech.goodquestion.lembot.library.Helper;
 
-public final class UnmuteCommand implements IBotCommand, RemovalBanishment{
+public final class UnmuteCommand implements IBotCommand, RemovalBanishment {
 
 
     @Override
@@ -30,19 +30,19 @@ public final class UnmuteCommand implements IBotCommand, RemovalBanishment{
 
         removeSanction(message, args);
 
-        Member member = MuteCommand.getMemberFromCommandInput(message,args);
+        Member member = MuteCommand.getMemberFromCommandInput(message, args);
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setColor(Color.decode(EmbedColorHelper.SUCCESS));
         embedBuilder.setTitle("Bestätigung");
-        embedBuilder.setAuthor(member.getUser().getAsTag(), null,member.getUser().getEffectiveAvatarUrl());
+        embedBuilder.setAuthor(member.getUser().getAsTag(), null, member.getUser().getEffectiveAvatarUrl());
         embedBuilder.setDescription("**" + ":mute: Mute rückgängig gemacht" + "**");
-        embedBuilder.addField("Member",member.getAsMention() , true);
-        embedBuilder.addField("Rückgängig gemacht von",sender.getAsMention(), true);
-        embedBuilder.setFooter(sender.getUser().getAsTag(),sender.getEffectiveAvatarUrl());
+        embedBuilder.addField("Member", member.getAsMention(), true);
+        embedBuilder.addField("Rückgängig gemacht von", sender.getAsMention(), true);
+        embedBuilder.setFooter(sender.getUser().getAsTag(), sender.getEffectiveAvatarUrl());
         embedBuilder.setTimestamp(Instant.now());
 
-        Helper.sendEmbed(embedBuilder,message,false);
+        Helper.sendEmbed(embedBuilder, message, false);
 
 
         //TODO delete the mute from the database

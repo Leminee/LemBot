@@ -19,15 +19,16 @@ public final class InviteLinkDeletion extends ListenerAdapter {
 
         final String userMessage = event.getMessage().getContentRaw();
 
-        if (!(userMessage.contains("https://discord.gg") || userMessage.contains("https://discord.com/invite/") || userMessage.contains("https://discord.io/"))) return;
+        if (!(userMessage.contains("https://discord.gg") || userMessage.contains("https://discord.com/invite/") || userMessage.contains("https://discord.io/")))
+            return;
 
-        if (event.getChannel().getIdLong() == Config.getInstance().getChannelConfig().getNewArrivalsChannel().getIdLong()) return;
+        if (event.getChannel().getIdLong() == Config.getInstance().getChannelConfig().getNewArrivalsChannel().getIdLong())
+            return;
 
         final long channelId = event.getChannel().getIdLong();
         final Member author = event.getMember();
         assert author != null;
-        @SuppressWarnings("null")
-        final boolean isStaff = author.hasPermission(Permission.MESSAGE_MANAGE);
+        @SuppressWarnings("null") final boolean isStaff = author.hasPermission(Permission.MESSAGE_MANAGE);
 
         if (isStaff || channelId == Config.getInstance().getChannelConfig().getYourProjectsChannel().getIdLong()) {
             return;
@@ -51,8 +52,6 @@ public final class InviteLinkDeletion extends ListenerAdapter {
         embedBuilder.setColor(Color.decode(EmbedColorHelper.AUTO_MODERATION));
         embedBuilder.setTimestamp(Instant.now());
 
-        Objects.requireNonNull(event.getGuild().getTextChannelById(logChannelId))
-                .sendMessageEmbeds(embedBuilder.build())
-                .queue();
+        Objects.requireNonNull(event.getGuild().getTextChannelById(logChannelId)).sendMessageEmbeds(embedBuilder.build()).queue();
     }
 }

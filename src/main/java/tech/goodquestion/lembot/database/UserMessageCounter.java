@@ -18,8 +18,7 @@ public final class UserMessageCounter extends ListenerAdapter {
 
         String userMessageContent = event.getMessage().getContentRaw();
         final String userId = Objects.requireNonNull(event.getMember()).getId();
-        @SuppressWarnings("null")
-        final String userName = event.getMember().getEffectiveName();
+        @SuppressWarnings("null") final String userName = event.getMember().getEffectiveName();
         final String messageId = event.getMessageId();
 
         final boolean containsAttachment = !event.getMessage().getAttachments().isEmpty();

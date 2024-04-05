@@ -11,16 +11,12 @@ public final class AmountMemberStatus extends ListenerAdapter {
     @Override
     public void onGuildMemberJoin(@SuppressWarnings("null") final GuildMemberJoinEvent event) {
 
-        Config.getInstance().getChannelConfig().getMemberCountChannel().getManager()
-                .setName("Members: " + event.getGuild().getMemberCount())
-                .queue();
+        Config.getInstance().getChannelConfig().getMemberCountChannel().getManager().setName("Members: " + event.getGuild().getMemberCount()).queue();
     }
 
     @Override
     public void onGuildMemberRemove(@SuppressWarnings("null") @NotNull final GuildMemberRemoveEvent event) {
 
-        Config.getInstance().getChannelConfig().getMemberCountChannel().getManager()
-                .setName("Members: " + event.getGuild().getMemberCount())
-                .queue();
+        Config.getInstance().getChannelConfig().getMemberCountChannel().getManager().setName("Members: " + event.getGuild().getMemberCount()).queue();
     }
 }

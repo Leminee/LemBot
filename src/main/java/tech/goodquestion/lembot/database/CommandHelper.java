@@ -20,8 +20,7 @@ public final class CommandHelper {
     public static final String LEAVE_LOG = "INSERT INTO user_leave (id,id_discord,user_tag,username,avatar_url) VALUES (NULL,?,?,?,?);";
     public static final String JOIN_LOG = "INSERT INTO user_join (id,id_discord,user_tag,username,avatar_url) VALUES (NULL,?,?,?,?);";
     public static final String BAN_DATA = "INSERT INTO banned_user (id,id_discord,user_tag, username, ban_author, reason, channel_name) VALUES (NULL,?,?,?,?,?,?)";
-    public static final String WARN_DATA = "INSERT INTO warned_user (id,id_discord,user_tag, username, warn_author, reason, channel_name) " +
-            "VALUES (NULL,?,?,?,?,?,?)";
+    public static final String WARN_DATA = "INSERT INTO warned_user (id,id_discord,user_tag, username, warn_author, reason, channel_name) " + "VALUES (NULL,?,?,?,?,?,?)";
     public static final String ACTIVE_MEMBER_LOG = "INSERT INTO user_online (amount) VALUES (?);";
     public static final String ADJUSTING_NICKNAME_IN_BUMPER = "UPDATE user_bump SET username = ? WHERE id_discord = ?;";
     public static final String ADJUSTING_NICKNAME_IN_MESSAGE = "UPDATE user_message SET username = ? WHERE id_discord = ?;";
@@ -31,8 +30,7 @@ public final class CommandHelper {
     public static final String INVITE_TRACKING_LOG = "INSERT INTO invite_tracking (id, url, used_by, invited_by, amount) VALUES (NULL,?,?,?,?);";
     private static final String CLASS_NAME = CommandHelper.class.getName();
     private static final String ADVERTISING = "INSERT INTO advertising (id, id_discord, user_tag) VALUES (NULL, ?, ?)";
-    private static final String MUTE_DATA = "INSERT INTO muted_user (id,id_discord, user_tag, username, mute_author, duration, reason, channel_name) " +
-            "VALUES (NULL,?,?,?,?,?,?,?)";
+    private static final String MUTE_DATA = "INSERT INTO muted_user (id,id_discord, user_tag, username, mute_author, duration, reason, channel_name) " + "VALUES (NULL,?,?,?,?,?,?,?)";
 
     private CommandHelper() {
 
@@ -53,8 +51,8 @@ public final class CommandHelper {
     }
 
     public static void logMemberStatusChange(final long userId, final String userTag, final OnlineStatus newStatus) {
-        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement= connection.prepareStatement(MEMBER_STATUS)) {
-           preparedStatement.setLong(1, userId);
+        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(MEMBER_STATUS)) {
+            preparedStatement.setLong(1, userId);
             preparedStatement.setBlob(2, Helper.changeCharacterEncoding(preparedStatement, userTag));
             preparedStatement.setString(3, String.valueOf(newStatus));
             preparedStatement.executeUpdate();
@@ -151,7 +149,7 @@ public final class CommandHelper {
             preparedStatement.setString(2, sanction.userTag);
             preparedStatement.setString(3, sanction.userName);
             preparedStatement.setString(4, sanction.author);
-            preparedStatement.setString(5,sanction.duration);
+            preparedStatement.setString(5, sanction.duration);
             preparedStatement.setString(6, sanction.reason);
             preparedStatement.setString(7, sanction.channelName);
             preparedStatement.executeUpdate();
@@ -232,9 +230,9 @@ public final class CommandHelper {
         }
     }
 
-    public static void logAdvertising(final long userId, final String userTag){
+    public static void logAdvertising(final long userId, final String userTag) {
 
-        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement= connection.prepareStatement(ADVERTISING)) {
+        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(ADVERTISING)) {
             preparedStatement.setLong(1, userId);
             preparedStatement.setBlob(2, Helper.changeCharacterEncoding(preparedStatement, userTag));
             preparedStatement.executeUpdate();

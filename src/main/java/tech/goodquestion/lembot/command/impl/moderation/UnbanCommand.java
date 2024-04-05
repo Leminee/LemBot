@@ -20,22 +20,22 @@ public final class UnbanCommand implements IBotCommand, RemovalBanishment {
 
 
         if (args.length < 1) return;
-        
+
         removeSanction(message, args);
 
-        User user = Helper.getUserFromCommandInput(message,args);
+        User user = Helper.getUserFromCommandInput(message, args);
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setColor(Color.decode(EmbedColorHelper.SUCCESS));
         embedBuilder.setTitle("Bestätigung");
-        embedBuilder.setAuthor(user.getAsTag(), null,user.getEffectiveAvatarUrl());
+        embedBuilder.setAuthor(user.getAsTag(), null, user.getEffectiveAvatarUrl());
         embedBuilder.setDescription("**" + ":no_entry: Ban rückgängig gemacht" + "**");
-        embedBuilder.addField("Member",user.getAsMention() , true);
-        embedBuilder.addField("Rückgängig gemacht von",sender.getAsMention(), true);
-        embedBuilder.setFooter(sender.getUser().getAsTag(),sender.getEffectiveAvatarUrl());
+        embedBuilder.addField("Member", user.getAsMention(), true);
+        embedBuilder.addField("Rückgängig gemacht von", sender.getAsMention(), true);
+        embedBuilder.setFooter(sender.getUser().getAsTag(), sender.getEffectiveAvatarUrl());
         embedBuilder.setTimestamp(Instant.now());
 
-        Helper.sendEmbed(embedBuilder,message,false);
+        Helper.sendEmbed(embedBuilder, message, false);
 
 
         //TODO delete the ban from the database
@@ -44,7 +44,7 @@ public final class UnbanCommand implements IBotCommand, RemovalBanishment {
 
     @SuppressWarnings("null")
     @Override
-    public void removeSanction(Message message, String [] args) {
+    public void removeSanction(Message message, String[] args) {
 
         User user = Helper.getUserFromCommandInput(message, args);
 

@@ -74,12 +74,11 @@ public final class AdvertisingCommand implements IBotCommand {
     @SuppressWarnings("null")
     private void advertiseServer(String[] args, Message message) {
 
-        final User user = Helper.getUserFromCommandInput(message,args);
+        final User user = Helper.getUserFromCommandInput(message, args);
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         final String title = "Bewerte unseren Server";
-        final String description = "Wir hoffen, dass wir Dir behilflich sein konnten und sein werden, und freuen uns darüber, dass Du Teil der Community bist!\n" +
-                "Wir würden uns freuen, wenn Du unseren Server auf [**disboard.org**](https://disboard.org/de/server/779105997792083969) (Webseite, die Server und Personen verbindet) bewertest.";
+        final String description = "Wir hoffen, dass wir Dir behilflich sein konnten und sein werden, und freuen uns darüber, dass Du Teil der Community bist!\n" + "Wir würden uns freuen, wenn Du unseren Server auf [**disboard.org**](https://disboard.org/de/server/779105997792083969) (Webseite, die Server und Personen verbindet) bewertest.";
         final String embedColor = EmbedColorHelper.SERVER;
         embedBuilder.addField("Geschätzte Ausfüllzeit", "1 bis 3 Minuten", true);
 
@@ -87,14 +86,12 @@ public final class AdvertisingCommand implements IBotCommand {
         embedBuilder.setThumbnail("https://cdn.discordapp.com/attachments/919074434021736507/920552764784914472/logoqg1_1.gif");
         embedBuilder.setImage("https://cdn.discordapp.com/attachments/942585447383728159/942688214278369320/Bildschirmfoto_2022-02-14_um_08.46.20.png");
         embedBuilder.addField("Hinweis", "```Du musst auf disboard.org mit Deinem Discord-Account eingeloggt sein, um den Server bewerten zu können.```", false);
-        embedBuilder.setFooter(Objects.requireNonNull(Config.getInstance().getGuild().getOwner()).getUser().getAsTag() +" | Danke <3",Config.getInstance().getGuild().getOwner().getUser().getEffectiveAvatarUrl());
+        embedBuilder.setFooter(Objects.requireNonNull(Config.getInstance().getGuild().getOwner()).getUser().getAsTag() + " | Danke <3", Config.getInstance().getGuild().getOwner().getUser().getEffectiveAvatarUrl());
         embedBuilder.setTimestamp(Instant.now());
 
         Helper.createEmbed(embedBuilder, title, description, embedColor);
 
-        user.openPrivateChannel()
-                .flatMap(channel -> channel.sendMessageEmbeds(embedBuilder.build()))
-                .complete();
+        user.openPrivateChannel().flatMap(channel -> channel.sendMessageEmbeds(embedBuilder.build())).complete();
 
         final String userTag = user.getAsTag();
 

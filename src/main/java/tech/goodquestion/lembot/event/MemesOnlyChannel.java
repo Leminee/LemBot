@@ -19,23 +19,19 @@ public final class MemesOnlyChannel extends ListenerAdapter {
         final String messageContent = event.getMessage().getContentRaw();
         final Message message = event.getMessage();
         final boolean senderIsBot = event.getMessage().getAuthor().isBot();
-        final Set<Long> memesOnlyChannels = Set.of(
-                memeChannelId
-        );
+        final Set<Long> memesOnlyChannels = Set.of(memeChannelId);
 
 
         final long currentChannelId = event.getChannel().getIdLong();
 
         if (!memesOnlyChannels.contains(currentChannelId)) return;
 
-        if(senderIsBot) return;
+        if (senderIsBot) return;
 
 
         if (!containsMedia(message) && !containsOnlyURL(messageContent)) {
 
-            event.getMessage()
-                    .reply("In diesem Kanal dürfen nur Memes (als Media-Dateien oder Links) gepostet werden")
-                    .queue(m -> m.delete().queueAfter(20,TimeUnit.SECONDS));
+            event.getMessage().reply("In diesem Kanal dürfen nur Memes (als Media-Dateien oder Links) gepostet werden").queue(m -> m.delete().queueAfter(20, TimeUnit.SECONDS));
 
             deleteTextMessage(message);
 

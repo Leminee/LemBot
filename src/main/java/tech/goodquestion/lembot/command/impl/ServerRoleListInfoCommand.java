@@ -20,19 +20,7 @@ public final class ServerRoleListInfoCommand implements IBotCommand {
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) {
 
 
-        final String[] rolesInfo = {
-                "Der Server-Bot",
-                "Admin ist zugleich ein Moderator und hat Administrationsrechte.",
-                "Moderator hat unter anderem die Berechtigung, Rollen zuzuweisen, diese zu entfernen und Mitglieder zu sanktionieren, die gegen die in ⁠rules aufgeführten Regeln verstoßen.",
-                "Helper ist jeder, der die Grundlagen einer Programmiersprache beherrscht und somit in der Lage ist, anderen zu helfen - und ihnen hilft.",
-                "User, die sich diese Rolle selbst zugewiesen haben, um beim Bumpen des Servers mit zu helfen.",
-                "User, die den Server geboostet haben.",
-                "<@815894805896888362>-Developper mit mindestens 2 Commits.",
-                "User, die ein Rätsel gelöst haben",
-                "User, die Programmierer sind oder Programmiersprachen lernen.",
-                "User, die sich für Ethical-Hacking interessieren.",
-                "...sind Discord-Bots. Wer hätte es gedacht?"
-        };
+        final String[] rolesInfo = {"Der Server-Bot", "Admin ist zugleich ein Moderator und hat Administrationsrechte.", "Moderator hat unter anderem die Berechtigung, Rollen zuzuweisen, diese zu entfernen und Mitglieder zu sanktionieren, die gegen die in ⁠rules aufgeführten Regeln verstoßen.", "Helper ist jeder, der die Grundlagen einer Programmiersprache beherrscht und somit in der Lage ist, anderen zu helfen - und ihnen hilft.", "User, die sich diese Rolle selbst zugewiesen haben, um beim Bumpen des Servers mit zu helfen.", "User, die den Server geboostet haben.", "<@815894805896888362>-Developper mit mindestens 2 Commits.", "User, die ein Rätsel gelöst haben", "User, die Programmierer sind oder Programmiersprachen lernen.", "User, die sich für Ethical-Hacking interessieren.", "...sind Discord-Bots. Wer hätte es gedacht?"};
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         final List<Role> serverRoles = Objects.requireNonNull(message.getGuild().getRoles());
@@ -46,12 +34,7 @@ public final class ServerRoleListInfoCommand implements IBotCommand {
         final int amountNonVisibleRoles = 8;
 
         for (int i = 0; i < amountServerRoles - amountNonVisibleRoles; i++) {
-            stringBuilder.
-                    append(serverRoles.get(i).getAsMention()).
-                    append(": ").
-                    append(rolesInfo[i]).
-                    append("\n").
-                    append("\n");
+            stringBuilder.append(serverRoles.get(i).getAsMention()).append(": ").append(rolesInfo[i]).append("\n").append("\n");
         }
 
         embedBuilder.setDescription(stringBuilder);
@@ -74,4 +57,3 @@ public final class ServerRoleListInfoCommand implements IBotCommand {
         return true;
     }
 }
-

@@ -45,9 +45,6 @@ services:
 
 networks:
   lembot:
-     driver: "bridge"
+    driver: "bridge"
 volumes:
   lembot:
-
-
-

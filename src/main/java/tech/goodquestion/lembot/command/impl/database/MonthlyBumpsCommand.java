@@ -23,6 +23,7 @@ public class MonthlyBumpsCommand implements IBotCommand {
         Helper.sendAmount(userData, EmbedColorHelper.BUMP, "monthly Bumps", message, embedTitle);
 
     }
+
     @Override
     public String getName() {
         return "hmmb";

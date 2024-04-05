@@ -25,10 +25,8 @@ public final class MemberInfoCommand implements IBotCommand {
         User user;
 
         try {
-             user = Helper.getUserFromCommandInput(message, args);
-        }
-
-        catch (NumberFormatException numberFormatException) {
+            user = Helper.getUserFromCommandInput(message, args);
+        } catch (NumberFormatException numberFormatException) {
 
             final EmbedBuilder embedBuilder = new EmbedBuilder();
             Helper.createEmbed(embedBuilder, "Error", ":x: Command nicht valid", EmbedColorHelper.ERROR);
@@ -52,16 +50,12 @@ public final class MemberInfoCommand implements IBotCommand {
         }
 
         final String accountCreationDate = LocalDateTimeFormatter.toGermanFormat(user.getTimeCreated().toLocalDateTime());
-        final String lastActivityDateTime = QueryHelper.getLastActivityDateTimeBy(userId) == null
-                ? "N/A"
-                : LocalDateTimeFormatter.toGermanFormat(Objects.requireNonNull(QueryHelper.getLastActivityDateTimeBy(userId)));
+        final String lastActivityDateTime = QueryHelper.getLastActivityDateTimeBy(userId) == null ? "N/A" : LocalDateTimeFormatter.toGermanFormat(Objects.requireNonNull(QueryHelper.getLastActivityDateTimeBy(userId)));
 
         final long amountMessages = QueryHelper.getAmountMessagesBy(userId);
         final long amountBumps = QueryHelper.getAmountBumpsBy(userId);
 
-        final String lastActivity = !member.getOnlineStatus().equals(OnlineStatus.OFFLINE)
-                ? ":green_circle: Online"
-                : String.format("```js\nZuletzt aktiv am %s```" ,lastActivityDateTime);
+        final String lastActivity = !member.getOnlineStatus().equals(OnlineStatus.OFFLINE) ? ":green_circle: Online" : String.format("```js\nZuletzt aktiv am %s```", lastActivityDateTime);
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle("Member Informationen");
@@ -79,13 +73,13 @@ public final class MemberInfoCommand implements IBotCommand {
         Helper.sendEmbed(embedBuilder, message, true);
 
     }
-    
-    private String getLastJoinDate(Member member){
+
+    private String getLastJoinDate(Member member) {
 
         return LocalDateTimeFormatter.toGermanFormat(member.getTimeJoined().toLocalDateTime());
     }
 
-    private int getAmountRoles(Member member){
+    private int getAmountRoles(Member member) {
 
         return member.getRoles().size();
     }

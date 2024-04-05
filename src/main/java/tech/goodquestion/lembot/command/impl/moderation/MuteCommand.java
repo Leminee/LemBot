@@ -60,7 +60,7 @@ public final class MuteCommand implements IBotCommand {
 
             sanctionedMember = getMemberFromCommandInput(message, args);
 
-        } catch (ErrorResponseException errorResponseException){
+        } catch (ErrorResponseException errorResponseException) {
 
             final EmbedBuilder embedBuilder1 = new EmbedBuilder();
             Helper.createEmbed(embedBuilder1, "Error", ":x: Kein Member gefunden", EmbedColorHelper.ERROR);
@@ -126,11 +126,10 @@ public final class MuteCommand implements IBotCommand {
 
     public void scheduleReminder(final long delay, final TimeUnit timeUnit, Member sanctionedMember) {
 
-        @SuppressWarnings("null")
-        final Runnable runnable = () -> {
+        @SuppressWarnings("null") final Runnable runnable = () -> {
 
             notifyStaff(sanctionedMember);
-            sanctionedMember.getGuild().removeRoleFromMember(sanctionedMember,Config.getInstance().getRoleConfig().getMuteRole()).queue();
+            sanctionedMember.getGuild().removeRoleFromMember(sanctionedMember, Config.getInstance().getRoleConfig().getMuteRole()).queue();
 
         };
 
@@ -168,14 +167,10 @@ public final class MuteCommand implements IBotCommand {
             embedBuilder.setFooter(sanctionAuthor.getUser().getAsTag(), sanctionAuthor.getUser().getEffectiveAvatarUrl());
             embedBuilder.setTimestamp(Instant.now());
 
-            sanctionedMember.getUser().openPrivateChannel()
-                    .flatMap(channel -> channel.sendMessageEmbeds(embedBuilder.build()))
-                    .complete();
+            sanctionedMember.getUser().openPrivateChannel().flatMap(channel -> channel.sendMessageEmbeds(embedBuilder.build())).complete();
         } catch (ErrorResponseException errorResponseException) {
 
-            Objects.requireNonNull(Config.getInstance().getGuild()
-                    .getTextChannelById(Config.getInstance().getChannelConfig().getAutoModerationChannel().getIdLong()))
-                    .sendMessage(errorResponseException.getMessage() + " " + sanctionedMember.getUser().getAsTag()).queue();
+            Objects.requireNonNull(Config.getInstance().getGuild().getTextChannelById(Config.getInstance().getChannelConfig().getAutoModerationChannel().getIdLong())).sendMessage(errorResponseException.getMessage() + " " + sanctionedMember.getUser().getAsTag()).queue();
 
             System.out.println(errorResponseException.getMessage());
             CommandHelper.logException(OccurredException.getOccurredExceptionData(errorResponseException, this.getClass().getName()));

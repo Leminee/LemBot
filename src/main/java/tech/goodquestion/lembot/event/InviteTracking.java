@@ -69,15 +69,7 @@ public final class InviteTracking extends ListenerAdapter {
                 final String invitedByAsMention = Objects.requireNonNull(retrievedInvite.getInviter()).getAsMention();
                 final String usedByAsMention = user.getAsMention();
 
-                embedBuilder.setTitle(title)
-                        .setAuthor(user.getAsTag(), null, user.getEffectiveAvatarUrl())
-                        .setColor(Color.decode(EmbedColorHelper.INVITE_TRACKING))
-                        .addField("Einladender", invitedByAsMention, true)
-                        .addField("Eingeladener", usedByAsMention, true)
-                        .addField("Verwendungen", String.valueOf(uses), true)
-                        .addField("URL", url, true)
-                        .setFooter(retrievedInvite.getInviter().getAsTag(), retrievedInvite.getInviter().getEffectiveAvatarUrl())
-                        .setTimestamp(Instant.now());
+                embedBuilder.setTitle(title).setAuthor(user.getAsTag(), null, user.getEffectiveAvatarUrl()).setColor(Color.decode(EmbedColorHelper.INVITE_TRACKING)).addField("Einladender", invitedByAsMention, true).addField("Eingeladener", usedByAsMention, true).addField("Verwendungen", String.valueOf(uses), true).addField("URL", url, true).setFooter(retrievedInvite.getInviter().getAsTag(), retrievedInvite.getInviter().getEffectiveAvatarUrl()).setTimestamp(Instant.now());
 
                 InviteTrackingData inviteTrackingData = new InviteTrackingData();
                 inviteTrackingData.url = url;
@@ -85,10 +77,7 @@ public final class InviteTracking extends ListenerAdapter {
                 inviteTrackingData.usedBy = user.getIdLong();
                 inviteTrackingData.uses = uses;
 
-                Objects.requireNonNull(event.getGuild().getTextChannelById(Config.getInstance()
-                        .getChannelConfig().getJoinLeftChannel().getIdLong()))
-                        .sendMessageEmbeds(embedBuilder.build())
-                        .queue();
+                Objects.requireNonNull(event.getGuild().getTextChannelById(Config.getInstance().getChannelConfig().getJoinLeftChannel().getIdLong())).sendMessageEmbeds(embedBuilder.build()).queue();
 
                 CommandHelper.logInviteLinkTracking(inviteTrackingData);
                 break;
@@ -118,11 +107,8 @@ public final class InviteTracking extends ListenerAdapter {
     private void attemptInviteCaching(final Guild guild) {
         final Member selfMember = guild.getSelfMember();
 
-        if (!selfMember.hasPermission(Permission.MANAGE_SERVER))
-            return;
+        if (!selfMember.hasPermission(Permission.MANAGE_SERVER)) return;
 
-        guild.retrieveInvites().queue(retrievedInvites ->
-                retrievedInvites.forEach(retrievedInvite ->
-                        invitesCache.put(retrievedInvite.getCode(), new InviteData(retrievedInvite))));
+        guild.retrieveInvites().queue(retrievedInvites -> retrievedInvites.forEach(retrievedInvite -> invitesCache.put(retrievedInvite.getCode(), new InviteData(retrievedInvite))));
     }
 }

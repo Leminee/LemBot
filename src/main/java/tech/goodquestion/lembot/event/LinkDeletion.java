@@ -24,8 +24,7 @@ public final class LinkDeletion extends ListenerAdapter {
         long channelId = event.getChannel().getIdLong();
         Member author = event.getMember();
         assert author != null;
-        @SuppressWarnings("null")
-        boolean isStaff = author.hasPermission(Permission.MESSAGE_MANAGE);
+        @SuppressWarnings("null") boolean isStaff = author.hasPermission(Permission.MESSAGE_MANAGE);
 
         if (channelId != Config.getInstance().getChannelConfig().getNewArrivalsChannel().getIdLong() || isStaff) {
             return;
@@ -47,8 +46,6 @@ public final class LinkDeletion extends ListenerAdapter {
         embedBuilder.setColor(Color.decode(EmbedColorHelper.AUTO_MODERATION));
         embedBuilder.setTimestamp(Instant.now());
 
-        Objects.requireNonNull(event.getGuild().getTextChannelById(Config.getInstance().getChannelConfig().getAutoModerationChannel().getIdLong()))
-                .sendMessageEmbeds(embedBuilder.build())
-                .queue();
+        Objects.requireNonNull(event.getGuild().getTextChannelById(Config.getInstance().getChannelConfig().getAutoModerationChannel().getIdLong())).sendMessageEmbeds(embedBuilder.build()).queue();
     }
 }

@@ -101,8 +101,7 @@ public abstract sealed class UserBanishment implements IBotCommand permits BanCo
 
 
             banishUser(user, sanction, message);
-        }
-        catch (ErrorResponseException errorResponseException){
+        } catch (ErrorResponseException errorResponseException) {
 
             final StringBuilder reason = new StringBuilder();
 

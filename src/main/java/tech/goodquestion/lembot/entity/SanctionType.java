@@ -1,9 +1,7 @@
 package tech.goodquestion.lembot.entity;
 
 public enum SanctionType {
-    BAN("gebannt"),
-    MUTE("gemutet"),
-    WARN("verwarnt");
+    BAN("gebannt"), MUTE("gemutet"), WARN("verwarnt");
 
     private final String verbalizedSanctionTyp;
 

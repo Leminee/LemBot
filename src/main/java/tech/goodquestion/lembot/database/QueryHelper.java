@@ -25,14 +25,14 @@ public final class QueryHelper {
     public static final String SPAM_VERIFICATION = "SELECT COUNT(DISTINCT id_channel) FROM `channel` INNER JOIN user_message_content ON channel.id_message = user_message_content.id_message WHERE user_message_content.id_discord = ? AND content = ? AND posted_at >= NOW() - INTERVAL 30 SECOND";
     public static final String SPAM_DATA = "SELECT id_channel, channel.id_message FROM `channel` INNER JOIN user_message_content ON channel.id_message = user_message_content.id_message WHERE user_message_content.id_discord = ? AND content = ? AND posted_at >= NOW() - INTERVAL 30 SECOND";
     public static final String HOPPING_CHECK = "SELECT COUNT(id_discord) FROM voice_join WHERE id_discord = ? AND joined_at >= NOW() - INTERVAL 60 SECOND UNION ALL SELECT COUNT(id_discord) FROM voice_move WHERE id_discord = ? AND moved_in_at >= NOW() - INTERVAL 60 SECOND";
-    private static final String ADVERTISING_CHECK = "SELECT * FROM advertising WHERE id_discord = ?" ;
+    private static final String ADVERTISING_CHECK = "SELECT * FROM advertising WHERE id_discord = ?";
     private static final String LAST_ACTIVITY = "SELECT * FROM((SELECT changed_at FROM `user_status` WHERE id_discord = ? AND status = 'OFFLINE' ORDER BY changed_at DESC LIMIT 1) UNION ALL (SELECT posted_at FROM `user_message_content` WHERE id_discord = ? ORDER BY `posted_at` DESC LIMIT 1)) t ORDER BY t.changed_at DESC";
     private static final String AMOUNT_WARNS = "SELECT COUNT(id_discord) FROM warned_user WHERE id_discord = ?";
     private static final String AMOUNT_MUTES = "SELECT COUNT(id_discord) FROM muted_user WHERE id_discord = ?";
-    private static final String AMOUNT_BANS= "SELECT COUNT(id_discord) FROM banned_user WHERE id_discord = ?" ;
+    private static final String AMOUNT_BANS = "SELECT COUNT(id_discord) FROM banned_user WHERE id_discord = ?";
     private static final String INVITER = "SELECT invited_by FROM invite_tracking WHERE used_by = ?";
     private static final String ACTIVE_SANCTION = "SELECT activ FROM `muted_user` WHERE id_discord = ? ORDER BY activ DESC LIMIT 1";
-    private static final String CONTRIBUTORS ="SELECT mention FROM contributor ORDER BY contributor_since" ;
+    private static final String CONTRIBUTORS = "SELECT mention FROM contributor ORDER BY contributor_since";
     private static final String SANCTION_HISTORY = "SELECT * FROM ((SELECT ':warning: VERWARNT am ' , warned_at, ' durch ', warn_author, ' mit folgender Begründung:', CONCAT('```',warned_user.reason, '```') FROM warned_user WHERE warned_user.id_discord = ?) UNION ALL (SELECT CONCAT(':mute: GEMUTET ', '**', duration, '**', ' am ') , muted_at, ' durch ' , mute_author, ' mit folgender Begründung:' , CONCAT('```',muted_user.reason,'```') FROM muted_user WHERE muted_user.id_discord = ?) UNION ALL (SELECT ':no_entry: GEBANNT am ' , banned_at, ' durch ' , ban_author, ' mit folgender Begründung:' , CONCAT('```',banned_user.reason,'```') FROM banned_user WHERE banned_user.id_discord = ?)) AS t ORDER BY t.warned_at";
     public static String MESSAGE_COUNT = "SELECT COUNT(user_message_content.id_discord) + 40000 FROM user_message_content";
     public static String ADMINS_MENTIONED = "SELECT mention FROM staff WHERE role_name = 'Administrator' ORDER BY staff_since;";
@@ -196,10 +196,7 @@ public final class QueryHelper {
 
             while (resultSet.next()) {
 
-                Objects.requireNonNull(event.getGuild()
-                        .getTextChannelById(resultSet.getLong("id_channel")))
-                        .deleteMessageById(resultSet.getLong("id_message"))
-                        .queue();
+                Objects.requireNonNull(event.getGuild().getTextChannelById(resultSet.getLong("id_channel"))).deleteMessageById(resultSet.getLong("id_message")).queue();
 
             }
 
@@ -358,11 +355,11 @@ public final class QueryHelper {
     public static boolean hasAlreadyReceivedAdvertising(final long userid) {
 
 
-       try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(ADVERTISING_CHECK)) {
+        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(ADVERTISING_CHECK)) {
 
-           preparedStatement.setLong(1, userid);
+            preparedStatement.setLong(1, userid);
 
-           ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
 
@@ -392,11 +389,9 @@ public final class QueryHelper {
             if (resultSet.next()) {
 
 
-                lastActivityDateTime = resultSet
-                        .getTimestamp(1, Calendar.getInstance(TimeZone.getDefault()))
-                        .toLocalDateTime();
+                lastActivityDateTime = resultSet.getTimestamp(1, Calendar.getInstance(TimeZone.getDefault())).toLocalDateTime();
 
-               return lastActivityDateTime;
+                return lastActivityDateTime;
             }
 
 
@@ -447,16 +442,16 @@ public final class QueryHelper {
     }
 
 
-    public static long getAmountWarns(long userId){
-        return getAmountOfBy(userId,AMOUNT_WARNS);
+    public static long getAmountWarns(long userId) {
+        return getAmountOfBy(userId, AMOUNT_WARNS);
     }
 
-    public static long getAmountMutes(long userId){
-        return getAmountOfBy(userId,AMOUNT_MUTES);
+    public static long getAmountMutes(long userId) {
+        return getAmountOfBy(userId, AMOUNT_MUTES);
     }
 
-    public static long getAmountBans(long userId){
-        return getAmountOfBy(userId,AMOUNT_BANS);
+    public static long getAmountBans(long userId) {
+        return getAmountOfBy(userId, AMOUNT_BANS);
     }
 
     public static String getInviter(long userId) {
@@ -480,7 +475,7 @@ public final class QueryHelper {
         return "N/A";
     }
 
-    public static boolean hasActiveSanction(long userId){
+    public static boolean hasActiveSanction(long userId) {
 
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(ACTIVE_SANCTION)) {
 
@@ -524,7 +519,7 @@ public final class QueryHelper {
         return contributorsAsMention;
     }
 
-    public static String getSanctionHistoryBy(final long userId){
+    public static String getSanctionHistoryBy(final long userId) {
 
 
         final StringBuilder sanctionHistory = new StringBuilder();
@@ -538,20 +533,7 @@ public final class QueryHelper {
 
             while (resultSet.next()) {
 
-                sanctionHistory
-                        .append(resultSet.getString(1))
-                        .append("**")
-                        .append(LocalDateTimeFormatter.toGermanFormat(resultSet.getTimestamp(2, Calendar.getInstance(
-                                TimeZone.getDefault()
-                        )).toLocalDateTime()))
-                        .append("**")
-                        .append(resultSet.getString(3))
-                        .append("**")
-                        .append(resultSet.getString(4))
-                        .append("**")
-                        .append(resultSet.getString(5))
-                        .append(resultSet.getString(6))
-                        .append("\n");
+                sanctionHistory.append(resultSet.getString(1)).append("**").append(LocalDateTimeFormatter.toGermanFormat(resultSet.getTimestamp(2, Calendar.getInstance(TimeZone.getDefault())).toLocalDateTime())).append("**").append(resultSet.getString(3)).append("**").append(resultSet.getString(4)).append("**").append(resultSet.getString(5)).append(resultSet.getString(6)).append("\n");
             }
 
         } catch (SQLException sqlException) {

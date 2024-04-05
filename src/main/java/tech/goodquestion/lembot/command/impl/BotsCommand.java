@@ -20,9 +20,7 @@ public final class BotsCommand implements IBotCommand {
 
         final List<Member> members = Config.getInstance().getGuild().getMembers();
 
-        final List<Member> bots = members
-                .stream()
-                .filter(member -> member.getUser().isBot()).toList();
+        final List<Member> bots = members.stream().filter(member -> member.getUser().isBot()).toList();
 
         final StringBuilder stringBuilder = new StringBuilder();
 

@@ -35,18 +35,16 @@ public final class UpdatedMessageStorage extends ListenerAdapter {
         final String messageUrl = event.getMessage().getJumpUrl();
         String updatedMessageOldContent = QueryHelper.getUpdatedMessageOldContent(updatedMessageId, QueryHelper.UPDATED_MESSAGE_LAST_CONTENT);
 
-        
+
         if (isNotValidLength(updatedMessageContent)) {
 
-            updatedMessageContent = updatedMessageContent.substring(0, 900)
-                    + "\n\n ```Hinweis: Der Inhalt der beabeiteten Nachricht war länger als  die erlaubten Zeichen (1024).```";
+            updatedMessageContent = updatedMessageContent.substring(0, 900) + "\n\n ```Hinweis: Der Inhalt der beabeiteten Nachricht war länger als  die erlaubten Zeichen (1024).```";
 
         }
 
         if (isNotValidLength(updatedMessageOldContent)) {
 
-            updatedMessageOldContent = updatedMessageOldContent.substring(0, 900)
-                    + "\n\n ```Hinweis: Der Inhalt der beabeiteten Nachricht war länger als die erlaubten Zeichen (1024).```";
+            updatedMessageOldContent = updatedMessageOldContent.substring(0, 900) + "\n\n ```Hinweis: Der Inhalt der beabeiteten Nachricht war länger als die erlaubten Zeichen (1024).```";
         }
 
         final boolean containsAttachment = !event.getMessage().getAttachments().isEmpty();
@@ -57,23 +55,10 @@ public final class UpdatedMessageStorage extends ListenerAdapter {
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
 
-        embedBuilder.setTitle("Bearbeitete Nachricht")
-                .setAuthor(authorUpdatedMessageAsTag, null, authorAvatarUrl)
-                .setColor(Color.decode(EmbedColorHelper.UPDATED))
-                .addField("Author", updatedMessageAuthorAsMention, true)
-                .addField("Author ID", String.valueOf(authorId), true)
-                .addField("Kanal", channelAsMention, true)
-                .addField("Jumpurl", messageUrl, false)
-                .addField("Alter Inhalt", updatedMessageOldContent, false)
-                .addField("Neuer Inhalt", updatedMessageContent, false)
-                .setTimestamp(Instant.now());
+        embedBuilder.setTitle("Bearbeitete Nachricht").setAuthor(authorUpdatedMessageAsTag, null, authorAvatarUrl).setColor(Color.decode(EmbedColorHelper.UPDATED)).addField("Author", updatedMessageAuthorAsMention, true).addField("Author ID", String.valueOf(authorId), true).addField("Kanal", channelAsMention, true).addField("Jumpurl", messageUrl, false).addField("Alter Inhalt", updatedMessageOldContent, false).addField("Neuer Inhalt", updatedMessageContent, false).setTimestamp(Instant.now());
 
 
-        Config.getInstance()
-                .getChannelConfig()
-                .getUpdatedDeletedChannel()
-                .sendMessageEmbeds(embedBuilder.build())
-                .queue(m -> m.delete().queueAfter(7, TimeUnit.DAYS));
+        Config.getInstance().getChannelConfig().getUpdatedDeletedChannel().sendMessageEmbeds(embedBuilder.build()).queue(m -> m.delete().queueAfter(7, TimeUnit.DAYS));
 
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(updatedMessageData)) {
@@ -96,4 +81,3 @@ public final class UpdatedMessageStorage extends ListenerAdapter {
         return message.length() >= fieldMaxLength;
     }
 }
-
