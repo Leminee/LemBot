@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 public final class HappyNewYear extends ListenerAdapter {
 
     private final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
-    private final String HAPPY_NEW_YEAR_GIF_URL = "https://happynewyear2021status.com/wp-content/uploads/2021/11/new-year-gifs-2022-1.gif";
+    private final String HAPPY_NEW_YEAR_GIF_URL = "https://media1.tenor.com/m/WIIzr-XGVu4AAAAC/blessed-new-year-2024.gif";
 
     @Override
     public void onReady(@SuppressWarnings("null") final @NotNull ReadyEvent event) {
