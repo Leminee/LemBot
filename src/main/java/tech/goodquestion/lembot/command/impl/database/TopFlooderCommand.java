@@ -29,7 +29,7 @@ public final class TopFlooderCommand implements IBotCommand {
 
             final String embedTitle = "User mit den meisten Nachrichten";
             final String embedDescription = "";
-            final String embedThumbnail = "https://cdn.discordapp.com/attachments/819694809765380146/844312789531230208/typing.png";
+            final String embedThumbnail = "https://cdn.discordapp.com/attachments/943983785547030598/1226480321718124585/typing.png?ex=6624ebcf&is=661276cf&hm=db304851e769b8677e3ce165ba5fdf77613f5ff2bc3286014a2d06348c9d4cce&";
             final String amountOf = "Nachrichten";
 
             Helper.addTopToEmbed(resultSet, topFlooderEmbed, embedTitle, embedDescription, embedThumbnail, EmbedColorHelper.FLOOD, message, amountOf);

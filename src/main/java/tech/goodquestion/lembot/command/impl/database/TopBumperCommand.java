@@ -30,7 +30,7 @@ public final class TopBumperCommand implements IBotCommand {
 
             final String embedTitle = "User mit den meisten Bumps";
             final String embedDescription = "";
-            final String embedThumbnail = "https://cdn.discordapp.com/attachments/819694809765380146/869248076446052402/Bildschirmfoto_2021-07-26_um_17.48.08.png";
+            final String embedThumbnail = "https://cdn.discordapp.com/attachments/943983785547030598/1226480239824343111/disboard.png?ex=6624ebbc&is=661276bc&hm=ab30d01f562247b1553a8d570b774c4fe504568c43ed5cbd4cfeae785329b57c&";
             final String amountOf = "Bumps";
 
             Helper.addTopToEmbed(resultSet, topBumperEmbed, embedTitle, embedDescription, embedThumbnail, EmbedColorHelper.BUMP, message, amountOf);

@@ -19,7 +19,7 @@ public final class TopActiveChannelsCommand implements IBotCommand {
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) {
 
         try {
-            MessageEmbed messageEmbed = QueryHelper.getTopChannels().setColor(Color.decode(EmbedColorHelper.TOP_CHANNELS)).setTitle("Die 5 aktivsten Channels").setThumbnail("https://cdn.discordapp.com/attachments/819694809765380146/872673996280303616/Bildschirmfoto_2021-08-05_um_04.54.26.png").build();
+            MessageEmbed messageEmbed = QueryHelper.getTopChannels().setColor(Color.decode(EmbedColorHelper.TOP_CHANNELS)).setTitle("Die 5 aktivsten Channels").setThumbnail("https://cdn.discordapp.com/attachments/943983785547030598/1226480271780614154/channel.png?ex=6624ebc3&is=661276c3&hm=f1f339793655f68644bcd4bf7e2e7f80c87ee3de0578ff56cd4c0c7c5313976a&").build();
             message.replyEmbeds(messageEmbed).queue();
 
         } catch (SQLException sqlException) {
