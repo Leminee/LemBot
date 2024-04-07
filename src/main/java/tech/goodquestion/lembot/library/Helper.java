@@ -193,4 +193,22 @@ public final class Helper {
         }
         return false;
     }
+
+    public static void addTopCommandToEmbed(ResultSet resultSet, final EmbedBuilder embedBuilder, final Message message, final String amountOf) {
+        int top = 1;
+
+        try {
+            while (resultSet.next()) {
+
+                embedBuilder.addField("TOP " + top, "`" + resultSet.getString(1) + "` " + "**(" + resultSet.getString(2) + amountOf + ")**", false);
+                top++;
+            }
+
+            sendEmbed(embedBuilder, message, true);
+
+        } catch (SQLException sqlException) {
+            System.out.println(sqlException.getMessage());
+            CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, Helper.class.getName()));
+        }
+    }
 }

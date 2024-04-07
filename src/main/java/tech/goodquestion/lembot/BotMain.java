@@ -105,6 +105,7 @@ public class BotMain {
         commandManager.registerCommand(new MonthlyMessagesCommand());
         commandManager.registerCommand(new MetaCommand());
         commandManager.registerCommand(new ParserCommand());
+        commandManager.registerCommand(new TopUsedCommand());
 
         BumpReminder bumpReminder = new BumpReminder();
 

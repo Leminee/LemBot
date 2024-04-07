@@ -12,6 +12,7 @@ import tech.goodquestion.lembot.library.EmbedColorHelper;
 import tech.goodquestion.lembot.library.Helper;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -81,7 +82,7 @@ public final class CommandManager extends ListenerAdapter {
 
         try {
             executor.dispatch(message, (TextChannel) event.getChannel(), event.getMember(), args);
-        } catch (IOException ioException) {
+        } catch (IOException | SQLException ioException) {
             System.out.println(ioException.getMessage());
         }
     }

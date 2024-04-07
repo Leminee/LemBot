@@ -6,11 +6,12 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 
 public interface IBotCommand {
 
-    void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) throws IOException;
+    void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) throws IOException, SQLException;
 
     String getName();
 
