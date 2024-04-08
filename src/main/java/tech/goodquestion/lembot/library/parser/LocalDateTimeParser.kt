@@ -59,7 +59,28 @@ class LocalDateTimeParser private constructor() {
             "weihnachten" to LocalDateTime.of(LocalDateTime.now().year, 12, 25, 0, 0, 0), // Weihnachten
             "ostern" to calculateEasterDate(LocalDateTime.now().year), // Ostern
             "pfingsten" to calculateEasterDate(LocalDateTime.now().year).plusDays(49), // Pfingsten
-            "cannabislegalisierung" to LocalDateTime.of(2024, 3, 22, 0, 0, 0)
+            "cannabislegalisierung" to LocalDateTime.of(2024, 3, 22, 0, 0, 0),
+            "martinlutherkingjr" to LocalDateTime.of(1929, 1, 15, 0, 0, 0), // Geburtstag von Martin Luther King Jr.
+            "internationalwomensday" to LocalDateTime.of(LocalDateTime.now().year, 3, 8, 0, 0, 0), // Internationaler Frauentag
+            "worldenvironmentday" to LocalDateTime.of(LocalDateTime.now().year, 6, 5, 0, 0, 0), // Weltumwelttag
+            "worldaidsday" to LocalDateTime.of(LocalDateTime.now().year, 12, 1, 0, 0, 0), // Welt-AIDS-Tag
+            "unitednationsday" to LocalDateTime.of(LocalDateTime.now().year, 10, 24, 0, 0, 0), // Tag der Vereinten Nationen
+            "worldwaterday" to LocalDateTime.of(LocalDateTime.now().year, 3, 22, 0, 0, 0), // Weltwassertag
+            "worldhungerday" to LocalDateTime.of(LocalDateTime.now().year, 10, 16, 0, 0, 0), // Welthungertag
+            "worldrefugeeday" to LocalDateTime.of(LocalDateTime.now().year, 6, 20, 0, 0, 0), // Weltflüchtlingstag
+            "worldmentalhealthday" to LocalDateTime.of(LocalDateTime.now().year, 10, 10, 0, 0, 0), // Welttag der seelischen Gesundheit
+            "internationalpeaceday" to LocalDateTime.of(LocalDateTime.now().year, 9, 21, 0, 0, 0), // Internationaler Tag des Friedens
+            "worldheartday" to LocalDateTime.of(LocalDateTime.now().year, 9, 29, 0, 0, 0), // Welt-Herz-Tag
+            "worldcancerday" to LocalDateTime.of(LocalDateTime.now().year, 2, 4, 0, 0, 0), // Weltkrebstag
+            "worlddiabetesday" to LocalDateTime.of(LocalDateTime.now().year, 11, 14, 0, 0, 0), // Welt-Diabetes-Tag
+            "worldoceansday" to LocalDateTime.of(LocalDateTime.now().year, 6, 8, 0, 0, 0), // Welttag der Ozeane
+            "worldasthmaday" to LocalDateTime.of(LocalDateTime.now().year, 5, 5, 0, 0, 0), // Welt-Asthma-Tag
+            "worldnotobaccoday" to LocalDateTime.of(LocalDateTime.now().year, 5, 31, 0, 0, 0), // Welt-Nichtrauchertag
+            "worldsleepday" to LocalDateTime.of(LocalDateTime.now().year, 3, 19, 0, 0, 0), // Welttag des Schlafes
+            "worldwildlifeday" to LocalDateTime.of(LocalDateTime.now().year, 3, 3, 0, 0, 0), // Welt-Wildtier-Tag
+            "worldhumanitarianday" to LocalDateTime.of(LocalDateTime.now().year, 8, 19, 0, 0, 0
+            ) // Welttag der humanitären Hilfe
+
         )
 
 
