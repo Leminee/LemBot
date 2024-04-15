@@ -1,6 +1,7 @@
 package tech.goodquestion.lembot.event;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
@@ -19,6 +20,10 @@ public final class HoppingDetection extends ListenerAdapter {
 
     @Override
     public void onGuildVoiceMove(@SuppressWarnings("null") @NotNull final GuildVoiceMoveEvent event) {
+
+        final boolean isStaff = event.getMember().hasPermission(Permission.MANAGE_PERMISSIONS);
+
+        if (isStaff) return;
 
         if (QueryHelper.isHopper(event.getMember().getIdLong())) timeOutHopper(event.getMember());
     }
