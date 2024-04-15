@@ -22,9 +22,6 @@ public final class InviteLinkDeletion extends ListenerAdapter {
         if (!(userMessage.contains("https://discord.gg") || userMessage.contains("https://discord.com/invite/") || userMessage.contains("https://discord.io/")))
             return;
 
-        if (event.getChannel().getIdLong() == Config.getInstance().getChannelConfig().getNewArrivalsChannel().getIdLong())
-            return;
-
         final long channelId = event.getChannel().getIdLong();
         final Member author = event.getMember();
         assert author != null;

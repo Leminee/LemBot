@@ -119,7 +119,6 @@ public class BotMain {
         jda.addEventListener(new HappyNewYear());
         jda.addEventListener(new InviteLinkDeletion());
         jda.addEventListener(new InviteTracking());
-        jda.addEventListener(new LinkDeletion());
         jda.addEventListener(new MemesOnlyChannel());
         jda.addEventListener(new MemberAuthorization());
         jda.addEventListener(new MemberJoinStorage());

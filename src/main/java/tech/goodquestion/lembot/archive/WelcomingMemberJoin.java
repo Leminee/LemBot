@@ -26,7 +26,7 @@ public final class WelcomingMemberJoin extends ListenerAdapter {
                 .replace("[member]", newMemberAsMention)
                 .replace("[channel]", Config.getInstance().getChannelConfig().getSelfRolesChannel().getAsMention());
 
-        Config.getInstance().getChannelConfig().getNewArrivalsChannel().sendMessage(personalizedWelcomeMessage).queue();
+       // Config.getInstance().getChannelConfig().getNewArrivalsChannel().sendMessage(personalizedWelcomeMessage).queue();
 
         Config.getInstance().getChannelConfig().getJoinLeftChannel()
                 .sendMessage(":arrow_right: User " + newMemberAsMention + " ist am " + Helper.getCurrentCETDateTime() + " **gejoint**")

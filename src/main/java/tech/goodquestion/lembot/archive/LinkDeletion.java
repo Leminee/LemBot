@@ -1,4 +1,4 @@
-package tech.goodquestion.lembot.event;
+package tech.goodquestion.lembot.archive;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
@@ -21,12 +21,11 @@ public final class LinkDeletion extends ListenerAdapter {
 
         if (!userMessage.contains("https://") && !userMessage.contains("http://")) return;
 
-        long channelId = event.getChannel().getIdLong();
         Member author = event.getMember();
         assert author != null;
         @SuppressWarnings("null") boolean isStaff = author.hasPermission(Permission.MESSAGE_MANAGE);
 
-        if (channelId != Config.getInstance().getChannelConfig().getNewArrivalsChannel().getIdLong() || isStaff) {
+        if (isStaff) {
             return;
         }
 

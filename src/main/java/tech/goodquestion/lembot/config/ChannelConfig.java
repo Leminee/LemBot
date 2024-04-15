@@ -6,7 +6,6 @@ import net.dv8tion.jda.api.entities.VoiceChannel;
 public final class ChannelConfig {
 
     private long sanction;
-    private long newArrivals;
     private long bump;
     private long voice;
     private long yourProjects;
@@ -24,9 +23,6 @@ public final class ChannelConfig {
         return Config.getInstance().getGuild().getTextChannelById(sanction);
     }
 
-    public TextChannel getNewArrivalsChannel() {
-        return Config.getInstance().getGuild().getTextChannelById(newArrivals);
-    }
 
     public TextChannel getBumpChannel() {
         return Config.getInstance().getGuild().getTextChannelById(bump);
