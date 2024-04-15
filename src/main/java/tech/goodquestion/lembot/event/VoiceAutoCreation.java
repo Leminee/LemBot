@@ -269,7 +269,6 @@ public final class VoiceAutoCreation extends ListenerAdapter {
 
         if (isOnlyOneMemberInVoice) {
 
-            System.out.println(Config.getInstance().getCategoryConfig().getVoiceCategory());
             Category voiceFunCategory = Config.getInstance().getCategoryConfig().getVoiceCategory();
             event.getGuild().createVoiceChannel(voiceName, voiceFunCategory).queue();
         }
