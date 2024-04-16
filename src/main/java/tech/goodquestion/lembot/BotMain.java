@@ -106,6 +106,7 @@ public class BotMain {
         commandManager.registerCommand(new MetaCommand());
         commandManager.registerCommand(new ParserCommand());
         commandManager.registerCommand(new TopUsedCommand());
+        commandManager.registerCommand(new BumpCountByIdCommand());
 
         BumpReminder bumpReminder = new BumpReminder();
 
