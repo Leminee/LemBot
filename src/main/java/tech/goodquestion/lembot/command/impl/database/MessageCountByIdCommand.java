@@ -21,7 +21,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class BumpCountByIdCommand implements IBotCommand {
+public class MessageCountByIdCommand implements IBotCommand {
     @Override
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) throws IOException, SQLException {
 
@@ -42,22 +42,22 @@ public class BumpCountByIdCommand implements IBotCommand {
             return;
         }
 
-        final long amountBump = getAmountBumpsOf(userId);
+        final long amountMessages= getAmountMessagesOf(userId);
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
-        embedBuilder.setTitle("Bumps");
-        embedBuilder.setColor(Color.decode(EmbedColorHelper.BUMP));
-        embedBuilder.setDescription("Anzahl der Bumps von " + member.getAsMention() + " **" + amountBump + "**");
+        embedBuilder.setTitle("Nachrichten");
+        embedBuilder.setColor(Color.decode(EmbedColorHelper.FLOOD));
+        embedBuilder.setDescription("Anzahl der Nachrichten von " + member.getAsMention() + " **" + amountMessages + "**");
 
         Helper.sendEmbed(embedBuilder,message,true);
 
     }
 
-    private long getAmountBumpsOf(final long userId) {
+    private long getAmountMessagesOf(final long userId) {
 
         Connection connection = DatabaseConnector.openConnection();
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(QueryHelper.AMOUNT_BUMPS)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(QueryHelper.AMOUNT_MESSAGES)) {
 
             preparedStatement.setLong(1, userId);
 
@@ -72,16 +72,17 @@ public class BumpCountByIdCommand implements IBotCommand {
             CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, Helper.class.getName()));
         }
         return -1;
+
     }
 
     @Override
     public String getName() {
-        return "abby";
+        return "amby";
     }
 
     @Override
     public String getDescription() {
-        return "`abby <id>`: Anzahl der Bumps des Members";
+        return "`amby <id>`: Anzahl der Nachrichten des Members";
     }
 
     @Override
