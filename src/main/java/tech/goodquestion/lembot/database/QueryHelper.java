@@ -186,7 +186,6 @@ public final class QueryHelper {
 
     public static void deleteScammerMessages(final MessageReceivedEvent event, final long userId, final String messageContent) {
 
-
         try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(SPAM_DATA)) {
 
 
@@ -208,7 +207,6 @@ public final class QueryHelper {
         }
 
     }
-
 
     public static boolean isHopper(final long userId) {
 
@@ -504,20 +502,7 @@ public final class QueryHelper {
 
         if (!contributorsAsMention.isEmpty()) return contributorsAsMention;
 
-        try (Connection connection = DatabaseConnector.openConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(CONTRIBUTORS)) {
-
-            while (resultSet.next()) {
-
-                contributorsAsMention.add(resultSet.getString(1));
-            }
-
-        } catch (SQLException sqlException) {
-            System.out.println(sqlException.getMessage());
-
-            CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
-        }
-
-        return contributorsAsMention;
+        return getStaffAsMention(CONTRIBUTORS, contributorsAsMention);
     }
 
     public static String getSanctionHistoryBy(final long userId) {
