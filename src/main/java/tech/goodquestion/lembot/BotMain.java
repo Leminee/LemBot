@@ -28,8 +28,7 @@ import java.time.format.DateTimeFormatter;
 public class BotMain {
 
     public static JDA jda;
-
-    //Test
+    
     public static void main(String[] args) {
 
         try {
@@ -108,6 +107,7 @@ public class BotMain {
         commandManager.registerCommand(new TopUsedCommand());
         commandManager.registerCommand(new BumpCountByIdCommand());
         commandManager.registerCommand(new MessageCountByIdCommand());
+        commandManager.registerCommand(new GTFYCommand());
 
         BumpReminder bumpReminder = new BumpReminder();
 

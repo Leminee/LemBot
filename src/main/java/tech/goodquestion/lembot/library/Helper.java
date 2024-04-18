@@ -211,4 +211,10 @@ public final class Helper {
             CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, Helper.class.getName()));
         }
     }
+
+    public static void showError(final Message message, final String embedDescription) {
+        final EmbedBuilder embedBuilder = new EmbedBuilder();
+        Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
+        Helper.sendEmbed(embedBuilder, message, true);
+    }
 }

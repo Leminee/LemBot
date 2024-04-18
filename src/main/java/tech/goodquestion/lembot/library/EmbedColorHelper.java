@@ -26,6 +26,7 @@ public final class EmbedColorHelper {
     public static final String MEMBER_INFO = "#586e5e";
     public static final String META = "#73797f";
     public static final String TOP_USED_COMMANDS = "#72007f";
+    public static final String GTFY = "#320237f";
 
     private EmbedColorHelper() {
 
