@@ -30,9 +30,7 @@ public final class MemberLogsCommand implements IBotCommand {
             user = Helper.getUserFromCommandInput(message, args);
         } catch (NumberFormatException numberFormatException) {
 
-            final EmbedBuilder embedBuilder = new EmbedBuilder();
-            Helper.createEmbed(embedBuilder, "Error", ":x: Command nicht valid", EmbedColorHelper.ERROR);
-            Helper.sendEmbed(embedBuilder, message, true);
+            Helper.sendError(message, ":x: Command nicht valid!");
             return;
         }
 
@@ -45,9 +43,7 @@ public final class MemberLogsCommand implements IBotCommand {
 
         } catch (ErrorResponseException errorResponseException) {
 
-            final EmbedBuilder embedBuilder = new EmbedBuilder();
-            Helper.createEmbed(embedBuilder, "Error", ":x: Kein Member gefunden", EmbedColorHelper.ERROR);
-            Helper.sendEmbed(embedBuilder, message, true);
+            Helper.sendError(message, ":x: Kein Member gefunden!");
             return;
         }
 

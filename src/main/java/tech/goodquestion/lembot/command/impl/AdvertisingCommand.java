@@ -25,11 +25,7 @@ public final class AdvertisingCommand implements IBotCommand {
 
         if (args.length != 1) {
 
-
-            final EmbedBuilder embedBuilder = new EmbedBuilder();
-            final String embedDescription = "Command nicht valid";
-            Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
-            Helper.sendEmbed(embedBuilder, message, true);
+            Helper.sendError(message, ":x: Command nicht valid!");
             return;
         }
 
@@ -39,12 +35,7 @@ public final class AdvertisingCommand implements IBotCommand {
 
         if (QueryHelper.hasAlreadyReceivedAdvertising(user.getIdLong())) {
 
-            final EmbedBuilder embedBuilder = new EmbedBuilder();
-            final String title = "Fehler";
-            final String description = ":x: User hat schon eine Werbung erhalten";
-
-            Helper.createEmbed(embedBuilder, title, description, EmbedColorHelper.ERROR);
-            Helper.sendEmbed(embedBuilder, message, true);
+            Helper.sendError(message, ":x: User hat schon eine Werbung erhalten!");
             return;
         }
 

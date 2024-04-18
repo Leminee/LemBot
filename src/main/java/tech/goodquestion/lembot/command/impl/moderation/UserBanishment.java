@@ -1,6 +1,5 @@
 package tech.goodquestion.lembot.command.impl.moderation;
 
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
@@ -11,7 +10,6 @@ import tech.goodquestion.lembot.BotMain;
 import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.entity.Sanction;
-import tech.goodquestion.lembot.library.EmbedColorHelper;
 import tech.goodquestion.lembot.library.Helper;
 
 import java.util.Objects;
@@ -23,18 +21,12 @@ public abstract sealed class UserBanishment implements IBotCommand permits BanCo
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) {
 
         if (args.length < 2) {
-            final EmbedBuilder embedBuilder = new EmbedBuilder();
-            final String embedDescription = ":x: Gebe einen Grund an!";
-            Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
-            Helper.sendEmbed(embedBuilder, message, true);
+            Helper.sendError(message, ":x: Gebe einen Grund an!");
             return;
         }
 
         if (channel.getIdLong() != Config.getInstance().getChannelConfig().getSanctionChannel().getIdLong()) {
-            final EmbedBuilder embedBuilder = new EmbedBuilder();
-            final String embedDescription = ":x: Dieser Befehl kann nur in [channel] ausgeführt werden!".replace("[channel]", Config.getInstance().getChannelConfig().getSanctionChannel().getAsMention());
-            Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
-            Helper.sendEmbed(embedBuilder, message, true);
+            Helper.sendError(message, ":x: Dieser Befehl kann nur in [channel] ausgeführt werden!".replace("[channel]", Config.getInstance().getChannelConfig().getSanctionChannel().getAsMention()));
             return;
         }
 
@@ -51,28 +43,18 @@ public abstract sealed class UserBanishment implements IBotCommand permits BanCo
 
             final boolean isThemSelf = member.getIdLong() == sender.getIdLong();
             if (isThemSelf) {
-                final EmbedBuilder embedBuilder = new EmbedBuilder();
-                final String embedDescription = ":x: Du kannst dich selbst nicht bannen!";
-                Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
-                Helper.sendEmbed(embedBuilder, message, true);
+                Helper.sendError(message, ":x: Du kannst dich selbst nicht bannen!");
                 return;
             }
 
 
             if (BotMain.jda.getSelfUser().getIdLong() == member.getIdLong()) {
-
-                final EmbedBuilder embedBuilder = new EmbedBuilder();
-                final String embedDescription = String.format(":x: %s kann nicht gebannt werden!", Config.getInstance().getBotConfig().getName());
-                Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
-                Helper.sendEmbed(embedBuilder, message, true);
+                Helper.sendError(message, String.format(":x: %s kann nicht gebannt werden! %s", Config.getInstance().getBotConfig().getName(), "!"));
                 return;
             }
 
             if (member.hasPermission(Permission.MANAGE_CHANNEL)) {
-                final EmbedBuilder embedBuilder = new EmbedBuilder();
-                final String embedDescription = ":x: Admins/Moderatoren können nicht gebannt werden!";
-                Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
-                Helper.sendEmbed(embedBuilder, message, true);
+                Helper.sendError(message, ":x: Admins/Moderatoren können nicht gebannt werden!");
                 return;
             }
 
@@ -92,10 +74,7 @@ public abstract sealed class UserBanishment implements IBotCommand permits BanCo
             sanction.channelName = channel.getName();
 
             if (requiresAdmin() && !Objects.requireNonNull(message.getMember()).hasPermission(Permission.MANAGE_ROLES)) {
-                final EmbedBuilder embedBuilder = new EmbedBuilder();
-                final String embedDescription = ":x: Permission denied";
-                Helper.createEmbed(embedBuilder, "", embedDescription, EmbedColorHelper.ERROR);
-                Helper.sendEmbed(embedBuilder, message, true);
+                Helper.sendError(message, ":x: Permission denied!");
                 return;
             }
 
@@ -119,10 +98,7 @@ public abstract sealed class UserBanishment implements IBotCommand permits BanCo
             sanction.channelName = channel.getName();
 
             if (requiresAdmin() && !Objects.requireNonNull(message.getMember()).hasPermission(Permission.MANAGE_ROLES)) {
-                final EmbedBuilder embedBuilder = new EmbedBuilder();
-                final String embedDescription = ":x: Permission denied";
-                Helper.createEmbed(embedBuilder, "", embedDescription, EmbedColorHelper.ERROR);
-                Helper.sendEmbed(embedBuilder, message, true);
+                Helper.sendError(message, ":x: Permission denied!");
                 return;
             }
 

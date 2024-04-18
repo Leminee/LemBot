@@ -36,9 +36,7 @@ public class BumpCountByIdCommand implements IBotCommand {
 
         } catch (ErrorResponseException errorResponseException) {
 
-            final EmbedBuilder embedBuilder1 = new EmbedBuilder();
-            Helper.createEmbed(embedBuilder1, "Error", ":x: Kein Member gefunden", EmbedColorHelper.ERROR);
-            Helper.sendEmbed(embedBuilder1, message, true);
+           Helper.sendError(message,":x: Kein Member gefunden!");
             return;
         }
 

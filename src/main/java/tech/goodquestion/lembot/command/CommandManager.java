@@ -1,6 +1,5 @@
 package tech.goodquestion.lembot.command;
 
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -8,7 +7,6 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import tech.goodquestion.lembot.config.Config;
-import tech.goodquestion.lembot.library.EmbedColorHelper;
 import tech.goodquestion.lembot.library.Helper;
 
 import java.io.IOException;
@@ -73,10 +71,7 @@ public final class CommandManager extends ListenerAdapter {
         IBotCommand executor = commands.get(command);
 
         if (!executor.isPermitted(Objects.requireNonNull(message.getMember()))) {
-            EmbedBuilder embedBuilder = new EmbedBuilder();
-            String embedDescription = ":x: Permission Denied";
-            Helper.createEmbed(embedBuilder, "Error", embedDescription, EmbedColorHelper.ERROR);
-            Helper.sendEmbed(embedBuilder, message, true);
+            Helper.sendError(message, ":x: Permission Denied!");
             return;
         }
 

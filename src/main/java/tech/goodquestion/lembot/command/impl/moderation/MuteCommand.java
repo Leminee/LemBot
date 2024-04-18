@@ -36,19 +36,13 @@ public final class MuteCommand implements IBotCommand {
     public void dispatch(Message message, TextChannel channel, Member sender, String[] args) throws IOException {
 
         if (args.length < 3) {
-            final EmbedBuilder embedBuilder = new EmbedBuilder();
-            final String embedDescription = ":x: Gebe eine Dauer und einen Grund an!";
-            Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
-            Helper.sendEmbed(embedBuilder, message, true);
+            Helper.sendError(message, ":x: Gebe eine Dauer und einen Grund an!");
             return;
         }
 
 
         if (channel.getIdLong() != Config.getInstance().getChannelConfig().getSanctionChannel().getIdLong()) {
-            final EmbedBuilder embedBuilder = new EmbedBuilder();
-            final String embedDescription = ":x: Dieser Befehl kann nur in [channel] ausgeführt werden!".replace("[channel]", Config.getInstance().getChannelConfig().getSanctionChannel().getAsMention());
-            Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
-            Helper.sendEmbed(embedBuilder, message, true);
+            Helper.sendError(message, ":x: Dieser Befehl kann nur in [channel] ausgeführt werden!".replace("[channel]", Config.getInstance().getChannelConfig().getSanctionChannel().getAsMention()));
             return;
         }
 
@@ -62,9 +56,7 @@ public final class MuteCommand implements IBotCommand {
 
         } catch (ErrorResponseException errorResponseException) {
 
-            final EmbedBuilder embedBuilder1 = new EmbedBuilder();
-            Helper.createEmbed(embedBuilder1, "Error", ":x: Kein Member gefunden", EmbedColorHelper.ERROR);
-            Helper.sendEmbed(embedBuilder1, message, true);
+            Helper.sendError(message, ":x: Kein Member gefunden!");
             return;
 
         }

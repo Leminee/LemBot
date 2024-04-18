@@ -18,7 +18,7 @@ public class GTFYCommand implements IBotCommand {
 
         if (args.length < 1) {
 
-            Helper.showError(message, ":x: Gebe eine Frage an!");
+            Helper.sendError(message, ":x: Gebe eine Frage an!");
             return;
         }
         final StringBuilder stringBuilder = new StringBuilder();

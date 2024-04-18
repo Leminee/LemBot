@@ -185,10 +185,7 @@ public final class Helper {
 
     public static boolean isStaffChannel(Message message, TextChannel channel) {
         if (channel.getIdLong() != Config.getInstance().getChannelConfig().getStaffCommandsChannel().getIdLong()) {
-            final EmbedBuilder embedBuilder = new EmbedBuilder();
-            final String embedDescription = ":x: Dieser Befehl kann nur in [channel] ausgeführt werden!".replace("[channel]", Config.getInstance().getChannelConfig().getStaffCommandsChannel().getAsMention());
-            Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
-            Helper.sendEmbed(embedBuilder, message, true);
+            Helper.sendError(message, ":x: Dieser Befehl kann nur in [channel] ausgeführt werden!".replace("[channel]", Config.getInstance().getChannelConfig().getStaffCommandsChannel().getAsMention()));
             return true;
         }
         return false;
@@ -212,7 +209,7 @@ public final class Helper {
         }
     }
 
-    public static void showError(final Message message, final String embedDescription) {
+    public static void sendError(final Message message, final String embedDescription) {
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
         Helper.sendEmbed(embedBuilder, message, true);
