@@ -109,6 +109,7 @@ public class BotMain {
         commandManager.registerCommand(new MessageCountByIdCommand());
         commandManager.registerCommand(new GTFYCommand());
         commandManager.registerCommand(new MemberRecordCommand());
+        commandManager.registerCommand(new CommandInfo());
 
         BumpReminder bumpReminder = new BumpReminder();
 
