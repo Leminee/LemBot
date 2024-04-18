@@ -15,7 +15,7 @@ public final class QueryHelper {
     public static final String TOP_CHANNELS = "SELECT id_channel, COUNT(id_channel) FROM `channel` GROUP BY id_channel ORDER BY COUNT(id_channel) DESC LIMIT 5;";
     public static final String NEXT_BUMP_TIME = "SELECT TIME(TIMESTAMPADD(HOUR,2, bumped_at)) FROM user_bump_time ORDER BY bumped_at DESC LIMIT 1";
     public static final String NEXT_BUMP = "SELECT TIMESTAMPDIFF(MINUTE,CURRENT_TIMESTAMP, TIMESTAMPADD(HOUR,2, bumped_at)) FROM user_bump_time ORDER BY bumped_at DESC LIMIT 1";
-    public static final String ACTIVE_USER_RECORD = "SELECT MAX(user_online.amount) FROM user_online;";
+    public static final String ACTIVE_MEMBER_RECORD = "SELECT MAX(user_online.amount) FROM user_online;";
     public static final String TOP_MONTHLY_BUMPER = "SELECT user_bump_time.id_discord, COUNT(user_bump_time.id_discord) FROM `user_bump_time` INNER JOIN user_bump ON user_bump_time.id_discord = user_bump.id_discord  WHERE bumped_at > (SELECT DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 MONTH)) GROUP BY user_bump_time.id_discord ORDER BY COUNT(user_bump_time.id_discord) DESC LIMIT 3";
     public static final String TOP_MONTHLY_FLOODER = "SELECT user_message.id_discord, COUNT(user_message_content.id_discord) FROM `user_message_content` INNER JOIN user_message ON user_message_content.id_discord = user_message.id_discord  WHERE posted_at > (SELECT DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 MONTH)) GROUP BY user_message.id_discord ORDER BY COUNT(user_message_content.id_discord) DESC LIMIT 3;";
     public static final String TOP_BUMPER = "SELECT id_discord, number_bumps FROM user_bump ORDER BY number_bumps DESC, username LIMIT 3;";
@@ -50,6 +50,7 @@ public final class QueryHelper {
     public static String NEXT_HIGHER_USER_AMOUNT_MONTHLY_MESSAGES = "SELECT user_message.id_discord, COUNT(user_message_content.id_discord) AS num_messages FROM `user_message_content` INNER JOIN user_message ON user_message_content.id_discord = user_message.id_discord  WHERE posted_at > (SELECT DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 MONTH)) GROUP BY user_message.id_discord HAVING num_messages > ? ORDER BY num_messages ASC LIMIT 1;";
     public static String RAID_DETECTION = "SELECT COUNT(DISTINCT id_discord) FROM `user_join` WHERE joined_at >= NOW() - INTERVAL 30 SECOND";
     public static String TOP_USED_COMMANDS = "SELECT content, COUNT(id_discord) FROM user_message_content WHERE content IN (\"?help general\", \"?help stats\", \"?help roles\", \"?help staff\", \"?hcb\", \"?help\", \"?lembot\", \"?meta\", \"?mi\", \"?p\", \"?server\", \"?sr\", \"?sri\", \"?aur\", \"?hmb\", \"?hmm\", \"?hmmb\", \"?hmmm\", \"?ljd\", \"?sb\", \"?topb\", \"?topc\", \"?topf\", \"?topmb\", \"?topmf\", \"?+bumper\", \"?-bumper\", \"?ad\", \"?ban\", \"?clear\", \"?ks\", \"?ml\", \"?mute\", \"?unban\", \"?unmute\", \"?unwarn\", \"?ush\", \"?warn\", \"?tuc\") GROUP BY content ORDER BY COUNT(id_discord) DESC LIMIT 5;";
+    public static String MEMBER_RECORD = "SELECT MAX(number_member.total_member) FROM `number_member`";
 
 
     private QueryHelper() {
@@ -130,16 +131,21 @@ public final class QueryHelper {
         return minutesBeforeBump;
     }
 
-    public static int getActiveUserRecord() {
+    public static int getActiveMemberRecord() {
 
-        return getServerData(ACTIVE_USER_RECORD);
+        return getServerData(ACTIVE_MEMBER_RECORD);
+    }
+
+    public static int getMemberRecord(){
+
+        return getServerData(MEMBER_RECORD);
     }
 
 
     public static boolean isActiveUserRecord(final int approximatePresentMember) {
 
 
-        try (Connection connection = DatabaseConnector.openConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(ACTIVE_USER_RECORD)) {
+        try (Connection connection = DatabaseConnector.openConnection(); Statement statement = connection.createStatement(); ResultSet resultSet = statement.executeQuery(ACTIVE_MEMBER_RECORD)) {
 
 
             if (resultSet.next()) {

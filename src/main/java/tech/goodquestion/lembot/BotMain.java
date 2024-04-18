@@ -71,7 +71,7 @@ public class BotMain {
 
         CommandManager commandManager = new CommandManager(jda);
 
-        commandManager.registerCommand(new ActiveUserRecordCommand());
+        commandManager.registerCommand(new ActiveMemberRecordCommand());
         commandManager.registerCommand(new AdvertisingCommand());
         commandManager.registerCommand(new BanCommand());
         commandManager.registerCommand(new BotDataCommand());
@@ -108,6 +108,7 @@ public class BotMain {
         commandManager.registerCommand(new BumpCountByIdCommand());
         commandManager.registerCommand(new MessageCountByIdCommand());
         commandManager.registerCommand(new GTFYCommand());
+        commandManager.registerCommand(new MemberRecordCommand());
 
         BumpReminder bumpReminder = new BumpReminder();
 
