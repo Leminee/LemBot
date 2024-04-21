@@ -11,8 +11,6 @@ import tech.goodquestion.lembot.library.EmbedColorHelper;
 import tech.goodquestion.lembot.library.Helper;
 
 import java.awt.*;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Set;
 
 public class CommandInfo implements IBotCommand {
@@ -20,7 +18,7 @@ public class CommandInfo implements IBotCommand {
     public final static CommandManager commandManagerInstance = CommandManager.getInstance();
 
     @Override
-    public void dispatch(Message message, TextChannel channel, Member sender, String[] args) throws IOException, SQLException {
+    public void dispatch(Message message, TextChannel channel, Member sender, String[] args)  {
         final char commandPrefix = Config.getInstance().getBotConfig().getPrefix();
 
 
