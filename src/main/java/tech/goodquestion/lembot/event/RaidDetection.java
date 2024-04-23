@@ -6,7 +6,6 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.database.QueryHelper;
-
 import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -20,7 +19,8 @@ public final class RaidDetection extends ListenerAdapter {
     @Override
     public void onGuildMemberJoin(@SuppressWarnings("null") final @NotNull GuildMemberJoinEvent event) {
 
-        if (isSameAttack) return;
+        if (isSameAttack)
+            return;
 
         final Guild guild = event.getGuild();
         final String moderatorRoleAsMention = Config.getInstance().getRoleConfig().getModeratorRole().getAsMention();
@@ -30,27 +30,26 @@ public final class RaidDetection extends ListenerAdapter {
 
             isSameAttack = true;
 
-            Objects.requireNonNull(guild.getTextChannelById(Config.getInstance().getChannelConfig().getAutoModerationChannel().getIdLong())).sendMessage(String.format(":red_circle: Es findet gerade einen Raid statt %s %s ", moderatorRoleAsMention, adminRoleAsMention)).queue();
+            Objects.requireNonNull(guild
+                    .getTextChannelById(Config.getInstance().getChannelConfig().getAutoModerationChannel().getIdLong()))
+                    .sendMessage(String.format(":red_circle: Es findet gerade einen Raid statt %s %s ",
+                            moderatorRoleAsMention, adminRoleAsMention))
+                    .queue();
+
+            /*
+             * Pause invite
+             * 
+             * final List<String> features = new ArrayList<>(guild.getFeatures());
+             * features.add("INVITES_DISABLED");
+             */
         }
-
-
-
-        /*
-
-        pause invites
-
-        List<String> features = new ArrayList<>(guild.getFeatures());
-        features.add("INVITES_DISABLED");
-
-        */
-
 
         try (ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1)) {
 
             final Runnable runnable = () -> isSameAttack = false;
 
-            final int delay = 30;
-            scheduler.schedule(runnable, delay, TimeUnit.MINUTES);
+            final int delayInMinutes = 30;
+            scheduler.schedule(runnable, delayInMinutes, TimeUnit.MINUTES);
         }
     }
 }
