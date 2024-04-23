@@ -8,9 +8,6 @@ import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.database.QueryHelper;
 
 import java.util.Objects;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public final class RaidDetection extends ListenerAdapter {
 
@@ -45,12 +42,12 @@ public final class RaidDetection extends ListenerAdapter {
         */
 
 
-        try (ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1)) {
+        /*try (ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1)) {
 
             final Runnable runnable = () -> isSameAttack = false;
 
             final int delay = 30;
             scheduler.schedule(runnable, delay, TimeUnit.MINUTES);
-        }
+        }*/
     }
 }

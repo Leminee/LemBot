@@ -11,27 +11,19 @@ import tech.goodquestion.lembot.library.EmbedColorHelper;
 import tech.goodquestion.lembot.library.Helper;
 
 import java.awt.*;
-import java.util.Set;
+import java.util.*;
+
 
 public class CommandInfo implements IBotCommand {
 
     public final static CommandManager commandManagerInstance = CommandManager.getInstance();
 
     @Override
-    public void dispatch(Message message, TextChannel channel, Member sender, String[] args)  {
+    public void dispatch(Message message, TextChannel channel, Member sender, String[] args) {
+
         final char commandPrefix = Config.getInstance().getBotConfig().getPrefix();
 
-
-        Set<String> commandList = commandManagerInstance.getHelpLists();
-        // Die Commands, für die der User keine Rechte hat sollen nicht angezeigt werden
-        commandList.removeIf(commandName -> !commandManagerInstance.getCommand(commandName).isPermitted(sender));
-
-        String[] commandListArray = commandList.toArray(new String[0]);
-
-        int commandsPerPage = 20;
-        int minPage = 0;
-        int maxPage = commandListArray.length / commandsPerPage;
-
+        // Wird als Embed ausgegeben
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle("Command Info\n");
         embedBuilder.setColor(Color.decode(EmbedColorHelper.HELP));
@@ -45,36 +37,57 @@ public class CommandInfo implements IBotCommand {
                 "\n"+
                 "\n";
 
-        if(args.length != 0 && !isNumeric(args[0])) {
-            // Die Information für einen bestimmten Command wird angefragt
+        // Alle commands
+        Map<String, IBotCommand> commandsMap = commandManagerInstance.getCommands();
+        // Eine liste der Commands, auf die der User Zugriff hat
+        Set<String> availableCommands = commandsMap.keySet();
 
-            if(commandList.contains(args[0])) {
-                // Command existiert
-                IBotCommand command = commandManagerInstance.getCommand(args[0]);
-
-                embedBuilder.addField(command.getName(), command.getDescription(), false);
+        // Prüft bei jedem Command, ob der User diesen ausführen darf
+        for(IBotCommand command : commandsMap.values()) {
+            if (!command.isPermitted(sender)) {
+                // Wenn der User keine Rechte für den Command hat, wird dieser aus dem Set entfernt
+                availableCommands.remove(command.getName());
             }
-        } else {
-            // Kein bestimmter Command angegeben, es werden alle der angegebenen Seite (args[0]) angezeigt
-            int page;
-            if(args.length == 0) {
-                page = 0;
-            } else {
-                page = Integer.parseInt(args[0]) - 1;
-            }
-
-            if(!(page < minPage || page > maxPage)) {
-                page = 0;
-            }
-
-            int firstCommandNumber = page * commandsPerPage;
-            for(int commandNumber = firstCommandNumber; commandNumber < (firstCommandNumber + commandsPerPage); commandNumber++) {
-                IBotCommand command = commandManagerInstance.getCommand(commandListArray[commandNumber]);
-
-                embedBuilder.addField(command.getName(), command.getDescription(), false);
-            }
-            embedBuilder.setFooter("Seite " + (page + 1) + " von " + (maxPage + 1) + ". ("+ commandPrefix + getName() +" [Seite])");
         }
+
+
+        if(args.length != 0 && isNotNumeric(args[0])) {
+            // Die Information für einen bestimmten oder mehrere bestimmte Commands wird angefragt.
+            try {
+                availableCommands.removeIf(commandName -> !Arrays.asList(args).contains(commandName));
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        // Es sollen alle Commands auf mehrere Seiten verteilt werden
+        int page;
+        int commandsPerPage = 20;
+        int minPage = 0;
+
+        // In ein Array umgewandelt, damit die Commands einer bestimmten Seite angezeigt werden
+        String[] availableCommandsArray = availableCommands.toArray(new String[0]);
+        // Ceiling round (immer aufrunden)
+        int maxPage = availableCommandsArray.length / commandsPerPage;
+
+        // Prüft, ob eine gültige Seitenzahl vom User angegeben wird, wenn nicht, wird die erste Seite aufgerufen
+        if(args.length == 0 || isNotNumeric(args[args.length - 1])) {
+            page = 0;
+        } else {
+            page = Integer.parseInt(args[args.length-1]) - 1;
+        }
+        if(page < minPage || page > maxPage) {
+            page = 0;
+        }
+
+        int firstCommandNumber = page * commandsPerPage;
+        // Die Commands der Seite werden nacheinander ausgegeben
+        for(int commandNumber = firstCommandNumber; commandNumber <= (firstCommandNumber + commandsPerPage) && commandNumber < availableCommandsArray.length; commandNumber++) {
+            IBotCommand command = commandManagerInstance.getCommand(availableCommandsArray[commandNumber]);
+            embedBuilder.addField(commandPrefix + command.getName(), command.getDescription(), false);
+        }
+        embedBuilder.setFooter("Seite " + (page + 1) + " von " + (maxPage + 1) + ". ("+availableCommands.size()+" Commands. Syntax: "+ commandPrefix + getName() +" [Command Filter] [Seite])");
+
         embedBuilder.setDescription(description);
         Helper.sendEmbed(embedBuilder, message, false);
     }
@@ -94,15 +107,15 @@ public class CommandInfo implements IBotCommand {
         return true;
     }
 
-    private static boolean isNumeric(String strNum) {
+    private static boolean isNotNumeric(String strNum) {
         if (strNum == null) {
-            return false;
+            return true;
         }
         try {
             Integer.parseInt(strNum);
         } catch (NumberFormatException nfe) {
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 }
