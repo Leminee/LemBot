@@ -15,11 +15,13 @@ import java.sql.SQLException;
 
 public class MemberRecordCommand implements IBotCommand {
     @Override
-    public void dispatch(Message message, TextChannel channel, Member sender, String[] args) throws IOException, SQLException {
+    public void dispatch(Message message, TextChannel channel, Member sender, String[] args)
+            throws IOException, SQLException {
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         final String title = "Rekord an Anzahl der Member";
-        final String description = "Der aktuelle Rekord liegt bei " + "**" + QueryHelper.getMemberRecord() + "**" + " gleichzeitig aktiven Membern";
+        final String description = "Der aktuelle Rekord liegt bei " + "**" + QueryHelper.getMemberRecord() + "**"
+                + " Membern";
 
         Helper.createEmbed(embedBuilder, title, description, EmbedColorHelper.RECORD);
         Helper.sendEmbed(embedBuilder, message, true);
