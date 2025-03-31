@@ -40,17 +40,15 @@ public final class AddingRole extends ListenerAdapter {
         final Member member = event.getMember();
         final Guild guild = member.getGuild();
         final Role codingRole = Config.getInstance().getRoleConfig().getCodingRole();
-        final Role hackingRole = Config.getInstance().getRoleConfig().getHackingRole();
         final Role mutedRole = Config.getInstance().getRoleConfig().getMuteRole();
         final List<Role> memberAddedRoles = member.getRoles();
 
         for (final Role addedRole : memberAddedRoles) {
 
             assert codingRole != null;
-            assert hackingRole != null;
             assert mutedRole != null;
 
-            final boolean hasAlreadyAccess = addedRole.getIdLong() == codingRole.getIdLong() || addedRole.getIdLong() == hackingRole.getIdLong();
+            final boolean hasAlreadyAccess = addedRole.getIdLong() == codingRole.getIdLong();
             final boolean isMuted = addedRole.getIdLong() == mutedRole.getIdLong();
 
             if (hasAlreadyAccess || isMuted) {
