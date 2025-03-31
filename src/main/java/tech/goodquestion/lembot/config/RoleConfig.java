@@ -8,7 +8,6 @@ public final class RoleConfig {
     private long mute;
     private long warn;
     private long coding;
-    private long hacking;
     private long moderator;
     private long admin;
 
@@ -18,10 +17,6 @@ public final class RoleConfig {
 
     public Role getCodingRole() {
         return Config.getInstance().getGuild().getRoleById(coding);
-    }
-
-    public Role getHackingRole() {
-        return Config.getInstance().getGuild().getRoleById(hacking);
     }
 
     public Role getMuteRole() {
