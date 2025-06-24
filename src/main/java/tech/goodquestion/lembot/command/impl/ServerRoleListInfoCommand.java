@@ -31,7 +31,7 @@ public final class ServerRoleListInfoCommand implements IBotCommand {
         final StringBuilder stringBuilder = new StringBuilder();
 
         final int amountServerRoles = serverRoles.size();
-        final int amountNonVisibleRoles = 9;
+        final int amountNonVisibleRoles = 13;
 
         for (int i = 0; i < amountServerRoles - amountNonVisibleRoles; i++) {
             stringBuilder.append(serverRoles.get(i).getAsMention()).append(": ").append(rolesInfo[i]).append("\n").append("\n");
