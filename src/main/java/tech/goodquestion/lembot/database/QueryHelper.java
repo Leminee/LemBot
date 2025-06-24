@@ -329,33 +329,28 @@ public final class QueryHelper {
     }
 
     public static String getUpdatedMessageOldContent(final long updatedMessageId, final String query) {
+        String[] queries = { query, FIRST_CONTENT_AFTER_UPDATING_MESSAGE };
 
-        String oldContent = "";
+        for (String q : queries) {
+            try (Connection connection = DatabaseConnector.openConnection();
+                 PreparedStatement preparedStatement = connection.prepareStatement(q)) {
 
-        try (Connection connection = DatabaseConnector.openConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setLong(1, updatedMessageId);
+                ResultSet resultSet = preparedStatement.executeQuery();
 
-            preparedStatement.setLong(1, updatedMessageId);
+                if (resultSet.next()) {
+                    return resultSet.getString(1);
+                }
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-
-                oldContent = resultSet.getString(1);
-
-            } else {
-
-                return getUpdatedMessageOldContent(updatedMessageId, FIRST_CONTENT_AFTER_UPDATING_MESSAGE);
+            } catch (SQLException sqlException) {
+                System.out.println(sqlException.getMessage());
+                CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
             }
-
-
-        } catch (SQLException sqlException) {
-            System.out.println(sqlException.getMessage());
-
-            CommandHelper.logException(OccurredException.getOccurredExceptionData(sqlException, QueryHelper.class.getName()));
         }
 
-        return oldContent;
+        return "";
     }
+
 
     public static boolean hasAlreadyReceivedAdvertising(final long userid) {
 
