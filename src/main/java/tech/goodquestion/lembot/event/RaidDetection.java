@@ -35,13 +35,6 @@ public final class RaidDetection extends ListenerAdapter {
                     .sendMessage(String.format(":red_circle: Es findet gerade einen Raid statt %s %s ",
                             moderatorRoleAsMention, adminRoleAsMention))
                     .queue();
-
-            /*
-             * Pause invite
-             * 
-             * final List<String> features = new ArrayList<>(guild.getFeatures());
-             * features.add("INVITES_DISABLED");
-             */
         }
 
         try (ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1)) {

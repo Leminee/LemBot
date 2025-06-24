@@ -1,5 +1,6 @@
 package tech.goodquestion.lembot.database;
 
+import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
@@ -17,7 +18,9 @@ public final class ChannelMessageCounter extends ListenerAdapter {
 
         final String userMessage = event.getMessage().getContentRaw();
         final String channelId = event.getChannel().getId();
-        final String channelName = Objects.requireNonNull(event.getJDA().getTextChannelById(channelId)).getName();
+        TextChannel channel = event.getJDA().getTextChannelById(channelId);
+        if (channel == null)  return;
+        final String channelName = channel.getName();
         final String messageId = event.getMessageId();
 
         if (userMessage.isEmpty()) return;

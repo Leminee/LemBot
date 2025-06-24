@@ -28,7 +28,7 @@ import java.time.format.DateTimeFormatter;
 public class BotMain {
 
     public static JDA jda;
-    
+
     public static void main(String[] args) {
 
         try {
@@ -163,3 +163,4 @@ public class BotMain {
         }
     }
 }
+

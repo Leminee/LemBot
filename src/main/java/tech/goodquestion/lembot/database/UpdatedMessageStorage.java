@@ -21,10 +21,13 @@ public final class UpdatedMessageStorage extends ListenerAdapter {
     @Override
     public void onMessageUpdate(@Nonnull final MessageUpdateEvent event) {
 
+
         final long updatedMessageId = event.getMessageIdLong();
         final long authorId = event.getAuthor().getIdLong();
         final String authorUpdatedMessageAsTag = event.getAuthor().getAsTag();
         String updatedMessageContent = event.getMessage().getContentRaw();
+
+        if (authorId == Config.getInstance().getBotConfig().getId()) return;
 
         Connection connection = DatabaseConnector.openConnection();
         final String updatedMessageData = "INSERT INTO updated_message (id, id_message, id_discord, username,content) VALUES (NULL,?,?,?,?);";
