@@ -31,9 +31,9 @@ public final class VoiceMovedStorage extends ListenerAdapter {
 
         final EmbedBuilder embedBuilder = new EmbedBuilder();
 
-        final String embedDescription = memberAsMention + " ist von " + "**" + voiceChannelLeft + "**" + " in " + "**" + voiceChannelJoined + "**" + " um " + LocalDateTimeFormatter.formatTime(LocalTime.now()) + " Uhr **gemovt**.";
+        final String embedDescription = memberAsMention + " ist von " + "**" + voiceChannelLeft + "**" + " in " + "**" + voiceChannelJoined + "**" + " um " + LocalDateTimeFormatter.formatTime(LocalTime.now()) + " Uhr **gemoved**.";
 
-        Helper.createEmbed(embedBuilder, "Voice gewechselt ", embedDescription, EmbedColorHelper.VOICE_MOVED, "https://cdn.discordapp.com/attachments/819694809765380146/880646674366754856/Bildschirmfoto_2021-08-27_um_04.55.07.png");
+        Helper.createEmbed(embedBuilder, "Voice gemoved ", embedDescription, EmbedColorHelper.VOICE_MOVED, "https://cdn.discordapp.com/attachments/819694809765380146/880646674366754856/Bildschirmfoto_2021-08-27_um_04.55.07.png");
 
         Config.getInstance().getChannelConfig().getVoiceChatChannel().sendMessageEmbeds(embedBuilder.build()).queue();
 
