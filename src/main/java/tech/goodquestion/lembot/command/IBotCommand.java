@@ -18,7 +18,7 @@ public interface IBotCommand {
     String getDescription();
 
     default boolean isPermitted(final Member member) {
-        return member.hasPermission(Permission.MESSAGE_MANAGE);
+        return member.getRoles().stream().anyMatch(role -> role.getName().equalsIgnoreCase("administrator")) || member.getRoles().stream().anyMatch(role -> role.getName().equalsIgnoreCase("moderator"));
     }
 
     default String getHelpList() {

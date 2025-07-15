@@ -53,8 +53,10 @@ public abstract sealed class UserBanishment implements IBotCommand permits BanCo
                 return;
             }
 
-            if (member.hasPermission(Permission.MANAGE_CHANNEL)) {
-                Helper.sendError(message, ":x: Admins/Moderatoren können nicht gebannt werden!");
+
+
+            if (isStaff(member)) {
+                Helper.sendError(message, ":x: Staff-Mitglieder können nicht über Command sanktioniert werden!");
                 return;
             }
 
@@ -73,7 +75,7 @@ public abstract sealed class UserBanishment implements IBotCommand permits BanCo
             sanction.reason = reason.toString();
             sanction.channelName = channel.getName();
 
-            if (requiresAdmin() && !Objects.requireNonNull(message.getMember()).hasPermission(Permission.MANAGE_ROLES)) {
+            if (requiresAdmin() && !isStaff(member)) {
                 Helper.sendError(message, ":x: Permission denied!");
                 return;
             }
@@ -97,7 +99,7 @@ public abstract sealed class UserBanishment implements IBotCommand permits BanCo
             sanction.reason = reason.toString();
             sanction.channelName = channel.getName();
 
-            if (requiresAdmin() && !Objects.requireNonNull(message.getMember()).hasPermission(Permission.MANAGE_ROLES)) {
+            if (requiresAdmin() && !isStaff(sender)) {
                 Helper.sendError(message, ":x: Permission denied!");
                 return;
             }
@@ -109,6 +111,12 @@ public abstract sealed class UserBanishment implements IBotCommand permits BanCo
 
     }
 
+
+    private boolean isStaff(Member member) {
+
+        return member.getRoles().stream().anyMatch(role -> role.getName().equalsIgnoreCase("administrator")) || member.getRoles().stream().anyMatch(role -> role.getName().equalsIgnoreCase("moderator"));
+
+    }
     public abstract void banishUser(User toBanish, Sanction sanction, Message originMessage);
 
     public abstract boolean requiresAdmin();
