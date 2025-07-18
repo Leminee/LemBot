@@ -11,13 +11,15 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+
 public final class RaidDetection extends ListenerAdapter {
 
     private boolean isSameAttack = false;
 
-    @SuppressWarnings("null")
+    private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+
     @Override
-    public void onGuildMemberJoin(@SuppressWarnings("null") final @NotNull GuildMemberJoinEvent event) {
+    public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
 
         if (isSameAttack)
             return;
@@ -31,18 +33,12 @@ public final class RaidDetection extends ListenerAdapter {
             isSameAttack = true;
 
             Objects.requireNonNull(guild
-                    .getTextChannelById(Config.getInstance().getChannelConfig().getAutoModerationChannel().getIdLong()))
-                    .sendMessage(String.format(":red_circle: Es findet gerade einen Raid statt %s %s ",
+                            .getTextChannelById(Config.getInstance().getChannelConfig().getAutoModerationChannel().getIdLong()))
+                    .sendMessage(String.format(":red_circle: Es findet gerade ein Raid statt %s %s",
                             moderatorRoleAsMention, adminRoleAsMention))
                     .queue();
-        }
 
-        try (ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1)) {
-
-            final Runnable runnable = () -> isSameAttack = false;
-
-            final int delayInMinutes = 30;
-            scheduler.schedule(runnable, delayInMinutes, TimeUnit.MINUTES);
+            scheduler.schedule(() -> isSameAttack = false, 30, TimeUnit.MINUTES);
         }
     }
 }
