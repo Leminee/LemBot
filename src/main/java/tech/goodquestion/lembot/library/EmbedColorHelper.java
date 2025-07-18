@@ -20,7 +20,7 @@ public final class EmbedColorHelper {
     public static final String DELETED = "0xdc3544";
     public static final String UPDATED = "0xffc007";
     public static final String WARN = "0xffc007";
-    public static final String MUTE = "#616168";
+    public static final String TIMEOUT = "#616168";
     public static final String BAN = "0xFF0000";
     public static final String AUTO_MODERATION = "#fff3cd";
     public static final String MEMBER_INFO = "#586e5e";
