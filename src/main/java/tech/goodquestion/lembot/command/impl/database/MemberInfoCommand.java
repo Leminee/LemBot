@@ -6,7 +6,6 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import tech.goodquestion.lembot.command.IBotCommand;
 import tech.goodquestion.lembot.database.QueryHelper;
 import tech.goodquestion.lembot.library.EmbedColorHelper;
@@ -15,7 +14,7 @@ import tech.goodquestion.lembot.library.parser.LocalDateTimeFormatter;
 
 import java.awt.*;
 import java.io.IOException;
-import java.util.Objects;
+import java.time.LocalDateTime;
 
 public final class MemberInfoCommand implements IBotCommand {
 
@@ -23,61 +22,55 @@ public final class MemberInfoCommand implements IBotCommand {
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) throws IOException {
 
         User user;
-
         try {
             user = Helper.getUserFromCommandInput(message, args);
         } catch (NumberFormatException numberFormatException) {
-
-            Helper.sendError(message,":x: Command nicht valid!");
+            Helper.sendError(message, ":x: Command nicht valid!");
             return;
         }
 
         final long userId = user.getIdLong();
         final String userAsMention = user.getAsMention();
-
-        Member member;
-        try {
-            member = message.getGuild().retrieveMember(user).complete();
-
-        } catch (ErrorResponseException errorResponseException) {
-
-            Helper.sendError(message,":x: Kein Member gefunden!");
-            return;
-        }
-
+        final String avatarUrl = user.getEffectiveAvatarUrl();
+        final String userTag = user.getAsTag();
         final String accountCreationDate = LocalDateTimeFormatter.toGermanFormat(user.getTimeCreated().toLocalDateTime());
-        final String lastActivityDateTime = QueryHelper.getLastActivityDateTimeBy(userId) == null ? "N/A" : LocalDateTimeFormatter.toGermanFormat(Objects.requireNonNull(QueryHelper.getLastActivityDateTimeBy(userId)));
 
-        final long amountMessages = QueryHelper.getAmountMessagesBy(userId);
-        final long amountBumps = QueryHelper.getAmountBumpsBy(userId);
+        message.getGuild().retrieveMember(user).queue(member -> {
 
-        final String lastActivity = !member.getOnlineStatus().equals(OnlineStatus.OFFLINE) ? ":green_circle: Online" : String.format("```js\nZuletzt aktiv am %s```", lastActivityDateTime);
+            final String lastSeenRaw = String.valueOf(QueryHelper.getLastActivityDateTimeBy(userId));
+            final String lastActivityDateTime = (lastSeenRaw == null)
+                    ? "N/A"
+                    : LocalDateTimeFormatter.toGermanFormat(LocalDateTime.parse(lastSeenRaw));
 
-        final EmbedBuilder embedBuilder = new EmbedBuilder();
-        embedBuilder.setTitle("Member Informationen");
-        embedBuilder.setColor(Color.decode(EmbedColorHelper.MEMBER_INFO));
-        embedBuilder.setAuthor(user.getAsTag(), null, Helper.getUserFromCommandInput(message, args).getEffectiveAvatarUrl());
-        embedBuilder.setThumbnail(user.getAvatarUrl());
-        embedBuilder.addField("Member", userAsMention, true);
-        embedBuilder.addField("Erstellungsdatum", accountCreationDate.replace("um", ""), true);
-        embedBuilder.addField("Letztes Beitrittsdatum", getLastJoinDate(member).replace("um", ""), true);
-        embedBuilder.addField("Nachrichten", String.valueOf(amountMessages), true);
-        embedBuilder.addField("Bumps", String.valueOf(amountBumps), true);
-        embedBuilder.addField("Rollen", String.valueOf(getAmountRoles(member)), true);
-        embedBuilder.addField("Aktivität", lastActivity, false);
+            final long amountMessages = QueryHelper.getAmountMessagesBy(userId);
+            final long amountBumps = QueryHelper.getAmountBumpsBy(userId);
 
-        Helper.sendEmbed(embedBuilder, message, true);
+            final String lastActivity = !member.getOnlineStatus().equals(OnlineStatus.OFFLINE)
+                    ? ":green_circle: Online"
+                    : String.format("```js\nZuletzt aktiv am %s```", lastActivityDateTime);
 
+            final EmbedBuilder embedBuilder = new EmbedBuilder();
+            embedBuilder.setTitle("Member Informationen");
+            embedBuilder.setColor(Color.decode(EmbedColorHelper.MEMBER_INFO));
+            embedBuilder.setAuthor(userTag, null, avatarUrl);
+            embedBuilder.setThumbnail(user.getAvatarUrl());
+            embedBuilder.addField("Member", userAsMention, true);
+            embedBuilder.addField("Erstellungsdatum", accountCreationDate.replace("um", ""), true);
+            embedBuilder.addField("Letztes Beitrittsdatum", getLastJoinDate(member).replace("um", ""), true);
+            embedBuilder.addField("Nachrichten", String.valueOf(amountMessages), true);
+            embedBuilder.addField("Bumps", String.valueOf(amountBumps), true);
+            embedBuilder.addField("Rollen", String.valueOf(member.getRoles().size()), true);
+            embedBuilder.addField("Aktivität", lastActivity, false);
+
+            Helper.sendEmbed(embedBuilder, message, true);
+
+        }, error -> {
+            Helper.sendError(message, ":x: Kein Member gefunden!");
+        });
     }
 
     private String getLastJoinDate(Member member) {
-
         return LocalDateTimeFormatter.toGermanFormat(member.getTimeJoined().toLocalDateTime());
-    }
-
-    private int getAmountRoles(Member member) {
-
-        return member.getRoles().size();
     }
 
     @Override
