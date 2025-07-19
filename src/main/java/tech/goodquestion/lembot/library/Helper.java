@@ -1,10 +1,8 @@
 package tech.goodquestion.lembot.library;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.*;
 import tech.goodquestion.lembot.command.CommandManager;
 import tech.goodquestion.lembot.config.Config;
 import tech.goodquestion.lembot.database.CommandHelper;
@@ -213,5 +211,25 @@ public final class Helper {
         final EmbedBuilder embedBuilder = new EmbedBuilder();
         Helper.createEmbed(embedBuilder, "Fehler", embedDescription, EmbedColorHelper.ERROR);
         Helper.sendEmbed(embedBuilder, message, true);
+    }
+
+    public static Member getMemberFromCommandInput(final Message message, final String[] args) {
+
+        List<Member> mentionedMembers = message.getMentionedMembers();
+        Member member;
+
+        if (mentionedMembers.isEmpty()) {
+            member = Config.getInstance().getGuild().retrieveMemberById(args[0]).complete();
+        } else {
+            member = mentionedMembers.get(0);
+        }
+
+        return member;
+    }
+
+
+    public static  boolean isStaff(Member member){
+        
+        return member.hasPermission(Permission.MANAGE_ROLES);
     }
 }
