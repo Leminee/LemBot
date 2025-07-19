@@ -27,7 +27,7 @@ public final class UpdatedMessageStorage extends ListenerAdapter {
         final String authorUpdatedMessageAsTag = event.getAuthor().getAsTag();
         String updatedMessageContent = event.getMessage().getContentRaw();
 
-        if (event.getAuthor().isBot() || event.getAuthor().isSystem()) return;
+        if (event.getAuthor().isBot()) return;
 
         Connection connection = DatabaseConnector.openConnection();
         final String updatedMessageData = "INSERT INTO updated_message (id, id_message, id_discord, username,content) VALUES (NULL,?,?,?,?);";
@@ -39,15 +39,19 @@ public final class UpdatedMessageStorage extends ListenerAdapter {
         String updatedMessageOldContent = QueryHelper.getUpdatedMessageOldContent(updatedMessageId, QueryHelper.UPDATED_MESSAGE_LAST_CONTENT);
 
 
+        if (updatedMessageOldContent.equals(updatedMessageContent)) {
+            return;
+        }
+
         if (isNotValidLength(updatedMessageContent)) {
 
-            updatedMessageContent = updatedMessageContent.substring(0, 900) + "\n\n ```Hinweis: Der Inhalt der beabeiteten Nachricht war länger als  die erlaubten Zeichen (1024).```";
+            updatedMessageContent = updatedMessageContent.substring(0, 900) + "\n\n ```Hinweis: Der Inhalt der bearbeiteten Nachricht war länger als  die erlaubten Zeichen (1024).```";
 
         }
 
         if (isNotValidLength(updatedMessageOldContent)) {
 
-            updatedMessageOldContent = updatedMessageOldContent.substring(0, 900) + "\n\n ```Hinweis: Der Inhalt der beabeiteten Nachricht war länger als die erlaubten Zeichen (1024).```";
+            updatedMessageOldContent = updatedMessageOldContent.substring(0, 900) + "\n\n ```Hinweis: Der Inhalt der bearbeiteten Nachricht war länger als die erlaubten Zeichen (1024).```";
         }
 
         final boolean containsAttachment = !event.getMessage().getAttachments().isEmpty();
