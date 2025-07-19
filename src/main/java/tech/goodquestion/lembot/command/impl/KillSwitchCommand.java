@@ -1,5 +1,6 @@
 package tech.goodquestion.lembot.command.impl;
 
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -13,6 +14,8 @@ public final class KillSwitchCommand implements IBotCommand {
 
     @Override
     public void dispatch(final Message message, final TextChannel channel, final Member sender, final String[] args) throws IOException {
+
+        if (!Objects.requireNonNull(sender).hasPermission(Permission.ADMINISTRATOR)) return;
 
         Objects.requireNonNull(Config.getInstance().getGuild().getTextChannelById(Config.getInstance().getChannelConfig().getStaffRoomChannel().getIdLong())).sendMessage(":warning: Bot wurde durch " + sender.getAsMention() + " gekillt!").queue();
 
